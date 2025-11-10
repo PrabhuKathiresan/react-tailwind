@@ -1,7 +1,7 @@
 {
-  "name": "react-tailwind",
+  "name": "@pk-design/react-tailwind",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "main": "dist/react-tailwind.cjs.js",
   "module": "dist/react-tailwind.es.js",
   "types": "dist/types/index.d.ts",
@@ -20,7 +20,8 @@
     "build": "rollup -c && tsc --emitDeclarationOnly",
     "prepare": "husky",
     "format": "prettier --write .",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@headlessui/react": "^2.2.9",
@@ -75,5 +76,14 @@
     "*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PrabhuKathiresan/react-tailwind.git"
+  },
+  "author": "PrabhuKathiresan"
 }
