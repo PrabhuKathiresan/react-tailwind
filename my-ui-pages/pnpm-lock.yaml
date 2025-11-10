@@ -36,8 +36,8 @@ importers:
         specifier: ^16.1.0
         version: 16.1.0(react@19.2.0)
       react-tailwind:
-        specifier: file:../react-tailwind
-        version: file:../react-tailwind(@headlessui/react@2.2.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwind-merge@3.3.1)
+        specifier: file:..
+        version: file:..(@headlessui/react@2.2.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwind-merge@3.3.1)
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -1559,8 +1559,8 @@ packages:
     peerDependencies:
       react: '>= 0.14.0'
 
-  react-tailwind@file:../react-tailwind:
-    resolution: {directory: ../react-tailwind, type: directory}
+  react-tailwind@file:..:
+    resolution: {directory: .., type: directory}
     peerDependencies:
       '@headlessui/react': ^2.2.9
       react: '>=18'
@@ -3336,7 +3336,7 @@ snapshots:
       react: 19.2.0
       refractor: 5.0.0
 
-  react-tailwind@file:../react-tailwind(@headlessui/react@2.2.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwind-merge@3.3.1):
+  react-tailwind@file:..(@headlessui/react@2.2.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwind-merge@3.3.1):
     dependencies:
       '@headlessui/react': 2.2.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0

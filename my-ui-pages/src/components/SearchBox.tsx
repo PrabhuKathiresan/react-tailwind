@@ -1,13 +1,12 @@
 // src/components/SearchBox.tsx
 import { useState } from 'react';
 import Fuse from 'fuse.js';
-import data from '../data/components.json';
 
-const fuse = new Fuse(data, { keys: ['name', 'description'], threshold: 0.3 });
+const fuse = new Fuse([], { keys: ['name', 'description'], threshold: 0.3 });
 
 export function SearchBox() {
   const [query, setQuery] = useState('');
-  const results = query ? fuse.search(query).map(r => r.item) : [];
+  const results: any[] = query ? fuse.search(query).map(r => r.item) : [];
 
   return (
     <div className="relative max-w-md mx-auto">
