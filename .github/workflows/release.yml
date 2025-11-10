@@ -29,6 +29,7 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 10.19.0
+          run_install: false # we'll run install manually
 
       - name: Install Dependencies
         run: pnpm install
