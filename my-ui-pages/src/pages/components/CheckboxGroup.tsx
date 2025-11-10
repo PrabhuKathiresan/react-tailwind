@@ -1,41 +1,41 @@
-import { useState, type ChangeEvent } from "react";
-import { CheckboxGroup, type CheckboxGroupItem } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { useState, type ChangeEvent } from 'react'
+import { CheckboxGroup, type CheckboxGroupItem } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
-const getOptions = (idx: number): CheckboxGroupItem[] => ([
-  { label: "Option 1", value: "opt1" + idx },
-  { label: "Option 2", value: "opt2" + idx },
-  { label: "Option 3", value: "opt3" + idx },
-]);
+const getOptions = (idx: number): CheckboxGroupItem[] => [
+  { label: 'Option 1', value: 'opt1' + idx },
+  { label: 'Option 2', value: 'opt2' + idx },
+  { label: 'Option 3', value: 'opt3' + idx },
+]
 
 export default function CheckboxGroupDocsPage() {
   const [selected, setSelected] = useState<Record<string, string[]>>({
-    group3: ['opt13', 'opt33']
+    group3: ['opt13', 'opt33'],
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelected(prev => {
-      const prevGroup = prev[e.target.name] || [];
+    setSelected((prev) => {
+      const prevGroup = prev[e.target.name] || []
       // Create a fresh copy instead of mutating prevGroup
-      let nextGroup: string[];
+      let nextGroup: string[]
       if (e.target.checked) {
         // Add only if not already present
-        nextGroup = [...new Set([...prevGroup, e.target.value])];
+        nextGroup = [...new Set([...prevGroup, e.target.value])]
       } else {
         // Remove unchecked value
-        nextGroup = prevGroup.filter(v => v !== e.target.value);
+        nextGroup = prevGroup.filter((v) => v !== e.target.value)
       }
       return {
         ...prev,
         [e.target.name]: nextGroup,
-      };
-    });
+      }
+    })
   }
 
   const examples = [
     {
-      title: "Basic Checkbox Group",
-      description: "A simple checkbox group using an array of items.",
+      title: 'Basic Checkbox Group',
+      description: 'A simple checkbox group using an array of items.',
       render: (
         <CheckboxGroup
           name="group1"
@@ -67,8 +67,8 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 />`,
     },
     {
-      title: "Checkbox Group with Label and Hint",
-      description: "Add a label and hint for better accessibility and guidance.",
+      title: 'Checkbox Group with Label and Hint',
+      description: 'Add a label and hint for better accessibility and guidance.',
       render: (
         <CheckboxGroup
           name="group2"
@@ -90,8 +90,8 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 />`,
     },
     {
-      title: "Preselected Values",
-      description: "You can set initial selected values using the `value` prop.",
+      title: 'Preselected Values',
+      description: 'You can set initial selected values using the `value` prop.',
       render: (
         <CheckboxGroup
           name="group3"
@@ -109,9 +109,8 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 />`,
     },
     {
-      title: "Custom Styling",
-      description:
-        "Override container, label wrapper, and label classes for custom styling.",
+      title: 'Custom Styling',
+      description: 'Override container, label wrapper, and label classes for custom styling.',
       render: (
         <CheckboxGroup
           name="group4"
@@ -137,7 +136,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 />`,
     },
     {
-      title: "Inline checkbox",
+      title: 'Inline checkbox',
       description: "Display's checkbox inline",
       render: (
         <CheckboxGroup
@@ -159,7 +158,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
   inline
 />`,
     },
-  ];
+  ]
 
   return (
     <DocsPageLayout
@@ -167,5 +166,5 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       description="CheckboxGroup allows rendering multiple checkboxes in a group with optional label, hint, and custom styling."
       examples={examples}
     />
-  );
+  )
 }

@@ -15,12 +15,7 @@
       "name": "type",
       "type": "enum",
       "raw": "\"success\" | \"error\" | \"info\" | \"warning\"",
-      "enumValues": [
-        "success",
-        "error",
-        "info",
-        "warning"
-      ],
+      "enumValues": ["success", "error", "info", "warning"],
       "required": true,
       "defaultValue": null,
       "description": ""

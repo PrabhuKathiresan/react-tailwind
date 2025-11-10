@@ -2,15 +2,18 @@ import React, { forwardRef, type HTMLAttributes, type JSX, type JSXElementConstr
 import { buildClassName } from '../../utils/build-classname'
 
 export interface TextContentProps extends HTMLAttributes<HTMLSpanElement> {
-  xsmall?: boolean;
-  small?: boolean;
-  strong?: boolean;
-  muted?: boolean;
-  error?: boolean;
-  as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
+  xsmall?: boolean
+  small?: boolean
+  strong?: boolean
+  muted?: boolean
+  error?: boolean
+  as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>
 }
 
-export const TextContent: React.FC<TextContentProps> = forwardRef<HTMLSpanElement, TextContentProps>((props, ref) => {
+export const TextContent: React.FC<TextContentProps> = forwardRef<
+  HTMLSpanElement,
+  TextContentProps
+>((props, ref) => {
   const {
     as = 'span',
     xsmall = false,

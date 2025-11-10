@@ -1,5 +1,5 @@
-import { Alert } from 'react-tailwind';
-import { DocsPageLayout } from '../../components/DocsPageLayout';
+import { Alert } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function AlertDocsPage() {
   const examples = [
@@ -41,7 +41,7 @@ export default function AlertDocsPage() {
 />
       `,
     },
-  ];
+  ]
 
   return (
     <DocsPageLayout
@@ -49,5 +49,5 @@ export default function AlertDocsPage() {
       description="Alerts provide contextual feedback messages for user actions."
       examples={examples}
     />
-  );
+  )
 }

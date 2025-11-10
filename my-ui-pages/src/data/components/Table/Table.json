@@ -6,10 +6,7 @@
       "name": "layout",
       "type": "enum",
       "raw": "\"fixed\" | \"auto\"",
-      "enumValues": [
-        "fixed",
-        "auto"
-      ],
+      "enumValues": ["fixed", "auto"],
       "required": false,
       "defaultValue": "auto",
       "description": ""

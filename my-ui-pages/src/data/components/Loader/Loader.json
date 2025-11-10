@@ -6,12 +6,7 @@
       "name": "size",
       "type": "enum",
       "raw": "LoaderSize",
-      "enumValues": [
-        "xs",
-        "sm",
-        "md",
-        "lg"
-      ],
+      "enumValues": ["xs", "sm", "md", "lg"],
       "required": false,
       "defaultValue": "md",
       "description": ""

@@ -14,49 +14,49 @@ export interface BaseAlertProps {
    * Defines alert type
    * @default "info"
    */
-  type?: AlertType;
-  className?: string;
+  type?: AlertType
+  className?: string
   /**
    * Defines if alert is removable
    */
-  removable?: boolean;
+  removable?: boolean
   /**
    * Handler when closing / dismissing alert
    * @returns void
    */
-  onRemove?: () => void;
+  onRemove?: () => void
 }
 
 /**
  * Alert component used to display important messages.
- * 
+ *
  * One of `message` or `children` is required.
  * @remarks Only one should be provided at a time.
  */
 export type AlertProps =
   | (BaseAlertProps & {
       /** Text content to display in alert */
-      message: string;
-      children?: never;
+      message: string
+      children?: never
     })
   | (BaseAlertProps & {
       /** ReactNode to display in alert */
-      children: ReactNode;
-      message?: never;
-    });
+      children: ReactNode
+      message?: never
+    })
 
 const AlertTypeIconMap = {
   success: BadgeCheckIcon,
   danger: CircleXIcon,
   warning: CircleAlertIcon,
-  info: InfoIcon
+  info: InfoIcon,
 }
 
 const TypeClassMap = {
   success: 'bg-green-50 ring-green-600/20 text-green-700',
   danger: 'bg-red-50 ring-red-600/20 text-red-700',
   warning: 'bg-orange-50 ring-orange-600/20 text-orange-700',
-  info: 'bg-blue-50 ring-blue-600/20 text-blue-700'
+  info: 'bg-blue-50 ring-blue-600/20 text-blue-700',
 }
 
 export const Alert: React.FC<AlertProps> = (props) => {
@@ -74,26 +74,29 @@ export const Alert: React.FC<AlertProps> = (props) => {
 
   return (
     <div
-      className={
-        buildClassName(
-          className,
-          'flex items-center justify-between rounded-md p-3 text-sm ring-1 ring-inset gap-2',
-          TypeClassMap[type]
-        )
-      }
+      className={buildClassName(
+        className,
+        'flex items-center justify-between rounded-md p-3 text-sm ring-1 ring-inset gap-2',
+        TypeClassMap[type],
+      )}
       {...restProps}
     >
       <span className="inline-flex items-center gap-2">
-        <Icon className='size-5' />
-        <span className='pr-2 inline-flex items-center'>{message || children}</span>
+        <Icon className="size-5" />
+        <span className="pr-2 inline-flex items-center">{message || children}</span>
       </span>
-      {
-        removable && (
-          <Button iconOnly size="xs" variant="plain" theme="secondary" className="hover:bg-black/5 text-gray-600 dark:hover:bg-black/5 dark:text-gray-600" onClick={() => onRemove()}>
-            <XIcon className="size-4.5" />
-          </Button>
-        )
-      }
+      {removable && (
+        <Button
+          iconOnly
+          size="xs"
+          variant="plain"
+          theme="secondary"
+          className="hover:bg-black/5 text-gray-600 dark:hover:bg-black/5 dark:text-gray-600"
+          onClick={() => onRemove()}
+        >
+          <XIcon className="size-4.5" />
+        </Button>
+      )}
     </div>
   )
 }

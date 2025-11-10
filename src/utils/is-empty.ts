@@ -1,4 +1,4 @@
-import { isArray } from "./is-array";
+import { isArray } from './is-array'
 
 /**
  * Checks if a value is empty.
@@ -6,19 +6,19 @@ import { isArray } from "./is-array";
  * Equivalent to lodash's _.isEmpty.
  */
 export function isEmpty(value: any): boolean {
-  if (value == null) return true; // null or undefined
+  if (value == null) return true // null or undefined
 
-  if (typeof value === "string" || isArray(value)) {
-    return value.length === 0;
+  if (typeof value === 'string' || isArray(value)) {
+    return value.length === 0
   }
 
   if (value instanceof Map || value instanceof Set) {
-    return value.size === 0;
+    return value.size === 0
   }
 
-  if (typeof value === "object") {
-    return Object.keys(value).length === 0;
+  if (typeof value === 'object') {
+    return Object.keys(value).length === 0
   }
 
-  return false; // for numbers, booleans, functions, etc.
+  return false // for numbers, booleans, functions, etc.
 }

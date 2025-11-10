@@ -5,11 +5,13 @@ import { buildClassName } from '../../utils/build-classname'
 import { Input } from '../Input'
 
 export type RangeValue = {
-  min: any;
-  max: any;
+  min: any
+  max: any
 }
 
-export interface RangeInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>, InputCustomProps {
+export interface RangeInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>,
+    InputCustomProps {
   value?: RangeValue
 }
 
@@ -34,7 +36,7 @@ export const RangeInput: React.FC<RangeInputProps> = (props) => {
     let changedValue = parseInt(_value)
     let nextValue = {
       ...props.value,
-      [_name]: changedValue
+      [_name]: changedValue,
     }
     if (e.target.name === 'max' && value?.min && changedValue < parseInt(value.min || '0')) {
       nextValue[_name as keyof RangeValue] = parseInt(value.min)
@@ -44,24 +46,27 @@ export const RangeInput: React.FC<RangeInputProps> = (props) => {
       nextValue[_name as keyof RangeValue] = parseInt(value.max)
     }
 
-    onChange && onChange({
-      target: {
-        name,
-        value: nextValue
-      }
-    } as ChangeEvent<HTMLInputElement>)
+    onChange &&
+      onChange({
+        target: {
+          name,
+          value: nextValue,
+        },
+      } as ChangeEvent<HTMLInputElement>)
   }
 
   return (
     <div className={buildClassName('mb-3 relative', containerClass)}>
-      {
-        label && (
-          <div className={buildClassName('flex items-center justify-between mb-4', labelWrapperClass)}>
-            <Label className={labelClass} htmlFor={id}>{label}</Label>
-            {labelHint}
-          </div>
-        )
-      }
+      {label && (
+        <div
+          className={buildClassName('flex items-center justify-between mb-4', labelWrapperClass)}
+        >
+          <Label className={labelClass} htmlFor={id}>
+            {label}
+          </Label>
+          {labelHint}
+        </div>
+      )}
       <div className="flex w-full gap-4 items-center">
         <Input
           {...rangeProps}

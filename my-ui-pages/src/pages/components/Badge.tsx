@@ -1,13 +1,13 @@
-import { Badge } from "react-tailwind";
-import { XIcon } from "lucide-react";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { Badge } from 'react-tailwind'
+import { XIcon } from 'lucide-react'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function BadgeDocsPage() {
   const examples = [
     {
-      title: "Themes",
+      title: 'Themes',
       description:
-        "Badges are available in multiple color themes to convey different states or categories.",
+        'Badges are available in multiple color themes to convey different states or categories.',
       render: (
         <div className="flex gap-3 flex-wrap">
           <Badge theme="success">Success</Badge>
@@ -25,8 +25,8 @@ export default function BadgeDocsPage() {
 <Badge theme="secondary">Secondary</Badge>`,
     },
     {
-      title: "Rounded Badges",
-      description: "Add the `rounded` prop to create pill-like badges.",
+      title: 'Rounded Badges',
+      description: 'Add the `rounded` prop to create pill-like badges.',
       render: (
         <div className="flex gap-3 flex-wrap">
           <Badge theme="success" rounded>
@@ -46,18 +46,18 @@ export default function BadgeDocsPage() {
 <Badge theme="warning" rounded>Warning</Badge>`,
     },
     {
-      title: "Removable Badges",
+      title: 'Removable Badges',
       description:
-        "When `removable` is true, the badge shows a close icon and can trigger `onRemove` when clicked.",
+        'When `removable` is true, the badge shows a close icon and can trigger `onRemove` when clicked.',
       render: (
         <div className="flex gap-3 flex-wrap">
-          <Badge theme="info" removable onRemove={() => alert("Removed Info")}>
+          <Badge theme="info" removable onRemove={() => alert('Removed Info')}>
             Info
           </Badge>
-          <Badge theme="success" removable onRemove={() => alert("Removed Success")}>
+          <Badge theme="success" removable onRemove={() => alert('Removed Success')}>
             Success
           </Badge>
-          <Badge theme="danger" removable onRemove={() => alert("Removed Danger")}>
+          <Badge theme="danger" removable onRemove={() => alert('Removed Danger')}>
             Danger
           </Badge>
         </div>
@@ -68,9 +68,8 @@ export default function BadgeDocsPage() {
 <Badge theme="danger" removable onRemove={() => alert("Removed Danger")}>Danger</Badge>`,
     },
     {
-      title: "Badges with Icons or Custom Content",
-      description:
-        "Badges can contain icons or any custom children to match your design needs.",
+      title: 'Badges with Icons or Custom Content',
+      description: 'Badges can contain icons or any custom children to match your design needs.',
       render: (
         <div className="flex gap-3 flex-wrap">
           <Badge theme="info">
@@ -99,7 +98,7 @@ export default function BadgeDocsPage() {
   Done
 </Badge>`,
     },
-  ];
+  ]
 
   return (
     <DocsPageLayout
@@ -107,5 +106,5 @@ export default function BadgeDocsPage() {
       description="Badges are used to display short status labels, categories, or dynamic information. They support different themes, optional rounded corners, and removable behavior with callbacks."
       examples={examples}
     />
-  );
+  )
 }

@@ -6,13 +6,7 @@
       "name": "theme",
       "type": "enum",
       "raw": "BadgeTheme",
-      "enumValues": [
-        "success",
-        "danger",
-        "warning",
-        "info",
-        "secondary"
-      ],
+      "enumValues": ["success", "danger", "warning", "info", "secondary"],
       "required": false,
       "defaultValue": "\"info\"",
       "description": "Defines theme of the Badge"

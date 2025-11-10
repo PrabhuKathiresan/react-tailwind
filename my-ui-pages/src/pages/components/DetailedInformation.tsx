@@ -1,5 +1,5 @@
-import { DetailedInformation } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { DetailedInformation } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function DetailedInformationDocsPage() {
   return (
@@ -8,16 +8,16 @@ export default function DetailedInformationDocsPage() {
       description="Displays structured label-value pairs with optional title, hoverable state, and divider options."
       examples={[
         {
-          title: "Default",
-          description: "Basic example showing details with a title and values.",
+          title: 'Default',
+          description: 'Basic example showing details with a title and values.',
           render: (
             <DetailedInformation
               title="User Information"
               details={[
-                { label: "Name", value: "Prabhu Kathiresan" },
-                { label: "Email", value: "prabhu@example.com" },
-                { label: "Role", value: "Founder" },
-                { label: "Phone", value: "+91 9876543210" },
+                { label: 'Name', value: 'Prabhu Kathiresan' },
+                { label: 'Email', value: 'prabhu@example.com' },
+                { label: 'Role', value: 'Founder' },
+                { label: 'Phone', value: '+91 9876543210' },
               ]}
             />
           ),
@@ -34,8 +34,8 @@ export default function DetailedInformationDocsPage() {
           `,
         },
         {
-          title: "Compact information",
-          description: "Adds divider effects with a compact layout.",
+          title: 'Compact information',
+          description: 'Adds divider effects with a compact layout.',
           render: (
             <DetailedInformation
               title="Account Details"
@@ -43,9 +43,9 @@ export default function DetailedInformationDocsPage() {
               bordered
               divider
               details={[
-                { label: "Plan", value: "Pro" },
-                { label: "Renewal Date", value: "Nov 20, 2025" },
-                { label: "Status", value: <span className='text-green-600'>Active</span> },
+                { label: 'Plan', value: 'Pro' },
+                { label: 'Renewal Date', value: 'Nov 20, 2025' },
+                { label: 'Status', value: <span className="text-green-600">Active</span> },
               ]}
             />
           ),
@@ -65,15 +65,15 @@ export default function DetailedInformationDocsPage() {
           `,
         },
         {
-          title: "Hidden and Custom Content",
-          description: "Demonstrates hidden rows and JSX values for customization.",
+          title: 'Hidden and Custom Content',
+          description: 'Demonstrates hidden rows and JSX values for customization.',
           render: (
             <DetailedInformation
               title="Profile Overview"
               details={[
-                { label: "Username", value: "theprabhu" },
-                { label: "Followers", value: <strong>120K</strong> },
-                { label: "Private Notes", value: "Confidential", hidden: true },
+                { label: 'Username', value: 'theprabhu' },
+                { label: 'Followers', value: <strong>120K</strong> },
+                { label: 'Private Notes', value: 'Confidential', hidden: true },
               ]}
             />
           ),
@@ -90,5 +90,5 @@ export default function DetailedInformationDocsPage() {
         },
       ]}
     />
-  );
+  )
 }

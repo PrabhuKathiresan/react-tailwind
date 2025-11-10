@@ -2,9 +2,7 @@ export default function Home() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">React Tailwind UI</h1>
-      <p className="text-gray-600">
-        A reusable React + Tailwind component library.
-      </p>
+      <p className="text-gray-600">A reusable React + Tailwind component library.</p>
 
       <h2 className="text-xl font-semibold">Installation</h2>
       <pre className="bg-gray-100 rounded-md p-4 text-sm">
@@ -22,9 +20,10 @@ export default function Home() {
       <h2 className="text-xl font-semibold">Usage</h2>
       <p>That's it — now you can import components:</p>
       <pre className="bg-gray-100 p-4 rounded-md">
-        import { 'Button' } from "my-lib";{'\n'}{'\n'}
+        import {'Button'} from "my-lib";{'\n'}
+        {'\n'}
         {`<Button>Click me</Button>`}
       </pre>
     </div>
-  );
+  )
 }

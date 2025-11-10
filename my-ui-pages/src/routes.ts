@@ -1,6 +1,6 @@
 export const routes = [
   { path: '/', label: 'Home' },
-  { path: '/alert', label: 'Alert'},
+  { path: '/alert', label: 'Alert' },
   { path: '/badge', label: 'Badge' },
   { path: '/banner', label: 'Banner' },
   { path: '/body-text', label: 'BodyText' },
@@ -17,4 +17,4 @@ export const routes = [
   { path: '/password-input', label: 'PasswordInput' },
   // { path: '/input', label: 'Input' },
   // ... add all 31 components here
-];
+]

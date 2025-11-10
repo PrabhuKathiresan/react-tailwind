@@ -24,14 +24,7 @@
       "name": "align",
       "type": "enum",
       "raw": "DrawerAlignment",
-      "enumValues": [
-        "center",
-        "start",
-        "end",
-        "top",
-        "bottom",
-        "top-center"
-      ],
+      "enumValues": ["center", "start", "end", "top", "bottom", "top-center"],
       "required": false,
       "defaultValue": "end",
       "description": "Drawer alignment on the page"
@@ -85,15 +78,7 @@
       "name": "size",
       "type": "enum",
       "raw": "DrawerSize",
-      "enumValues": [
-        "xs",
-        "sm",
-        "md",
-        "lg",
-        "xl",
-        "2xl",
-        "full"
-      ],
+      "enumValues": ["xs", "sm", "md", "lg", "xl", "2xl", "full"],
       "required": false,
       "defaultValue": "md",
       "description": "Drawer size"

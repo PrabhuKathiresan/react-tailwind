@@ -12,17 +12,17 @@ export default {
     {
       file: 'dist/react-tailwind.es.js',
       format: 'es',
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: 'dist/react-tailwind.cjs.js',
       format: 'cjs',
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   ],
   plugins: [
     svgr({
-      exportType: "default",
+      exportType: 'default',
       svgoConfig: {
         plugins: [
           {
@@ -32,9 +32,9 @@ export default {
                 removeViewBox: false,
               },
             },
-          }
-        ]
-      }
+          },
+        ],
+      },
     }),
     peerDepsExternal(), // prevents bundling react/react-dom
     nodeResolve(),
@@ -44,27 +44,19 @@ export default {
       declaration: true,
       declarationDir: 'dist/types',
       rootDir: 'src',
-      exclude: ['**/*.test.ts', '**/*.test.tsx']
+      exclude: ['**/*.test.ts', '**/*.test.tsx'],
     }),
     postcss({
       extract: 'react-tailwind.css',
       minimize: true,
-      sourceMap: true
-    })
+      sourceMap: true,
+    }),
   ],
-  external: [
-    'react',
-    'react-dom',
-    'tailwind-merge',
-    '@headlessui/react'
-  ],
+  external: ['react', 'react-dom', 'tailwind-merge', '@headlessui/react'],
   onwarn(warning, warn) {
-    if (
-      warning.code === 'MODULE_LEVEL_DIRECTIVE' &&
-      /use client/.test(warning.message)
-    ) {
-      return;
+    if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && /use client/.test(warning.message)) {
+      return
     }
-    warn(warning);
+    warn(warning)
   },
 }

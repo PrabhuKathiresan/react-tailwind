@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Pagination, type PaginationProps} from 'react-tailwind'
+import { Pagination, type PaginationProps } from 'react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const PaginationDocsPage = () => {
@@ -24,14 +24,7 @@ const PaginationDocsPage = () => {
   total={100} 
   onChange={handleChange} 
 />`,
-          render: (
-            <Pagination
-              page={page}
-              limit={10}
-              total={100}
-              onChange={handleChange}
-            />
-          )
+          render: <Pagination page={page} limit={10} total={100} onChange={handleChange} />,
         },
         {
           title: 'Pagination Without Ellipsis',
@@ -44,16 +37,8 @@ const PaginationDocsPage = () => {
   ellipsis={false} 
   onChange={() => {}} 
 />`,
-          render: (
-            <Pagination
-              page={1}
-              limit={5}
-              total={25}
-              ellipsis={false}
-              onChange={() => {}}
-            />
-          )
-        }
+          render: <Pagination page={1} limit={5} total={25} ellipsis={false} onChange={() => {}} />,
+        },
       ]}
     />
   )

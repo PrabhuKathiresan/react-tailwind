@@ -33,13 +33,7 @@
       "name": "variant",
       "type": "enum",
       "raw": "TagVariant",
-      "enumValues": [
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-        "error"
-      ],
+      "enumValues": ["primary", "secondary", "success", "warning", "error"],
       "required": false,
       "defaultValue": null,
       "description": ""

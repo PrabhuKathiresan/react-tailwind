@@ -1,6 +1,6 @@
-import React from "react";
-import { Drawer, Button } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import React from 'react'
+import { Drawer, Button } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 /**
  * Drawer docs page — examples show controlled usage of Drawer.
@@ -10,8 +10,8 @@ import { DocsPageLayout } from "../../components/DocsPageLayout";
 export default function DrawerDocsPage() {
   const examples = [
     {
-      title: "Basic usage",
-      description: "A simple controlled Drawer with title, content and close handler.",
+      title: 'Basic usage',
+      description: 'A simple controlled Drawer with title, content and close handler.',
       render: (
         <div>
           {/* local state inside render example */}
@@ -39,8 +39,8 @@ function ExampleBasicDrawer() {
       `.trim(),
     },
     {
-      title: "Sizes",
-      description: "Drawer supports multiple sizes. Try different `size` props.",
+      title: 'Sizes',
+      description: 'Drawer supports multiple sizes. Try different `size` props.',
       render: (
         <div className="flex flex-wrap gap-3">
           <ExampleSizeDrawer size="sm" />
@@ -55,8 +55,9 @@ function ExampleBasicDrawer() {
       `.trim(),
     },
     {
-      title: "Alignments",
-      description: "Control where the drawer appears with `align` (top, bottom, start, end, center).",
+      title: 'Alignments',
+      description:
+        'Control where the drawer appears with `align` (top, bottom, start, end, center).',
       render: (
         <div className="flex flex-wrap gap-3">
           <ExampleAlignDrawer align="center" label="Center" />
@@ -77,18 +78,18 @@ function ExampleBasicDrawer() {
       `.trim(),
     },
     {
-      title: "Backdrop & Click outside",
+      title: 'Backdrop & Click outside',
       description:
-        "Toggle backdrop with `backdrop`. When `backdrop` is true, clicking outside should close the drawer if you wire `onClose`.",
+        'Toggle backdrop with `backdrop`. When `backdrop` is true, clicking outside should close the drawer if you wire `onClose`.',
       render: <ExampleBackdropDrawer />,
       code: `
 <Drawer isOpen={open} onClose={() => setOpen(false)} backdrop={true} title="With backdrop" />
       `.trim(),
     },
     {
-      title: "Sticky title & Back button",
+      title: 'Sticky title & Back button',
       description:
-        "Use `titleSticky` to keep the title visible. `showBackButton` shows a back control — combine with a handler.",
+        'Use `titleSticky` to keep the title visible. `showBackButton` shows a back control — combine with a handler.',
       render: <ExampleStickyBackDrawer />,
       code: `
 <Drawer
@@ -101,9 +102,9 @@ function ExampleBasicDrawer() {
       `.trim(),
     },
     {
-      title: "Custom classes (panel/content/title)",
+      title: 'Custom classes (panel/content/title)',
       description:
-        "Customize drawer internals using `panelClass`, `contentClass`, and `titleClass` to fit your design system.",
+        'Customize drawer internals using `panelClass`, `contentClass`, and `titleClass` to fit your design system.',
       render: <ExampleCustomClassDrawer />,
       code: `
 <Drawer
@@ -116,7 +117,7 @@ function ExampleBasicDrawer() {
 />
       `.trim(),
     },
-  ];
+  ]
 
   return (
     <DocsPageLayout
@@ -124,7 +125,7 @@ function ExampleBasicDrawer() {
       description="Drawer presents a panel over the page. It's controlled with isOpen/onClose and supports size, alignment, backdrop, sticky title and back button."
       examples={examples}
     />
-  );
+  )
 }
 
 /* -------------------------
@@ -132,7 +133,7 @@ function ExampleBasicDrawer() {
    ------------------------- */
 
 function ExampleBasicDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Drawer</Button>
@@ -145,11 +146,11 @@ function ExampleBasicDrawer() {
         </div>
       </Drawer>
     </>
-  );
+  )
 }
 
 function ExampleSizeDrawer({ size }: { size: string }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>{size.toUpperCase()}</Button>
@@ -162,11 +163,11 @@ function ExampleSizeDrawer({ size }: { size: string }) {
         <div className="p-4">Content for size {size}</div>
       </Drawer>
     </>
-  );
+  )
 }
 
 function ExampleAlignDrawer({ align, label }: { align: any; label: string }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>{label}</Button>
@@ -179,30 +180,25 @@ function ExampleAlignDrawer({ align, label }: { align: any; label: string }) {
         <div className="p-4">Aligned: {align}</div>
       </Drawer>
     </>
-  );
+  )
 }
 
 function ExampleBackdropDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open with backdrop</Button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        backdrop
-        title="Backdrop Drawer"
-      >
+      <Drawer isOpen={open} onClose={() => setOpen(false)} backdrop title="Backdrop Drawer">
         <div className="p-4">
           <p>Click outside to trigger onClose (if implemented in Drawer).</p>
         </div>
       </Drawer>
     </>
-  );
+  )
 }
 
 function ExampleStickyBackDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open sticky</Button>
@@ -216,11 +212,11 @@ function ExampleStickyBackDrawer() {
         <div className="p-4">This drawer has sticky title and a back button.</div>
       </Drawer>
     </>
-  );
+  )
 }
 
 function ExampleCustomClassDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open styled</Button>
@@ -237,5 +233,5 @@ function ExampleCustomClassDrawer() {
         </div>
       </Drawer>
     </>
-  );
+  )
 }

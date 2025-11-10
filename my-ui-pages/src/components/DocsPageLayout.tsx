@@ -1,22 +1,22 @@
-import React, { type ReactNode, useEffect, useState } from 'react';
-import { PropsTable } from './PropsTable';
-import { Card, CardContent } from './Card';
-import { CodeBlock } from './CodeBlock';
+import React, { type ReactNode, useEffect, useState } from 'react'
+import { PropsTable } from './PropsTable'
+import { Card, CardContent } from './Card'
+import { CodeBlock } from './CodeBlock'
 
 interface ExampleSection {
-  title: string;
-  description?: string;
-  code: string;
-  render: ReactNode;
+  title: string
+  description?: string
+  code: string
+  render: ReactNode
 }
 
 interface DocsPageLayoutProps {
   /** Name of the component (used to auto-load docs) */
-  component: string;
+  component: string
   /** Short component description */
-  description?: string;
+  description?: string
   /** Example sections to showcase usage */
-  examples?: ExampleSection[];
+  examples?: ExampleSection[]
 }
 
 export const docsMap: Record<string, any> = {
@@ -28,7 +28,8 @@ export const docsMap: Record<string, any> = {
   Button: () => import('../data/components/Button/Button.json'),
   Checkbox: () => import('../data/components/Checkbox/Checkbox.json'),
   CheckboxGroup: () => import('../data/components/CheckboxGroup/CheckboxGroup.json'),
-  DetailedInformation: () => import('../data/components/DetailedInformation/DetailedInformation.json'),
+  DetailedInformation: () =>
+    import('../data/components/DetailedInformation/DetailedInformation.json'),
   Drawer: () => import('../data/components/Drawer/Drawer.json'),
   Dropdown: () => import('../data/components/Dropdown/Dropdown.json'),
   HeadingText: () => import('../data/components/HeadingText/Title.json'),
@@ -36,20 +37,22 @@ export const docsMap: Record<string, any> = {
   Pagination: () => import('../data/components/Pagination/Pagination.json'),
   PasswordInput: () => import('../data/components/PasswordInput/PasswordInput.json'),
   // add more components here
-};
+}
 
 export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
   component,
   description,
   examples = [],
 }) => {
-  const [docs, setDocs] = useState<any>(null);
+  const [docs, setDocs] = useState<any>(null)
 
   useEffect(() => {
     if (docsMap[component]) {
-      docsMap[component]().then(setDocs).catch(() => setDocs(null));
+      docsMap[component]()
+        .then(setDocs)
+        .catch(() => setDocs(null))
     }
-  }, [component]);
+  }, [component])
 
   return (
     <div className="space-y-8">
@@ -63,9 +66,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
       {examples.map((example, idx) => (
         <section key={idx} className="space-y-4">
           <h2 className="text-xl font-semibold">{example.title}</h2>
-          {example.description && (
-            <p className="text-muted-foreground">{example.description}</p>
-          )}
+          {example.description && <p className="text-muted-foreground">{example.description}</p>}
           <Card>
             <CardContent className="space-y-2">{example.render}</CardContent>
           </Card>
@@ -81,5 +82,5 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
         </section>
       ) : null}
     </div>
-  );
-};
+  )
+}

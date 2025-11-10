@@ -1,64 +1,64 @@
 import React, { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Checkbox } from '../Checkbox'
-import { Label } from '../Label';
-import { buildClassName } from '../../utils/build-classname';
-import { BodyText } from '../BodyText';
+import { Label } from '../Label'
+import { buildClassName } from '../../utils/build-classname'
+import { BodyText } from '../BodyText'
 
 export type CheckboxGroupItem = {
   /**
    * Checkbox item label
    */
-  label: string,
+  label: string
   /**
    * Checkbox item value
    */
-  value: any,
+  value: any
 }
 
 export interface CheckboxGroupProps {
   /**
    * Group name
    */
-  name?: string,
+  name?: string
   /**
    * Selected value
    */
-  value?: any;
+  value?: any
   /**
    * Label of checkbox group field
    */
-  label?: ReactNode;
+  label?: ReactNode
   /**
    * Label class for checkbox group field
    */
-  labelClass?: string;
+  labelClass?: string
   /**
    * Label wrapper class for checkbox group field
    */
-  labelWrapperClass?: string;
+  labelWrapperClass?: string
   /**
    * Group field hint
    */
-  labelHint?: ReactNode;
+  labelHint?: ReactNode
   /**
    * Group field container
    */
-  containerClass?: string;
+  containerClass?: string
   /**
    * On change handler
    * @param e ChangeEvent<HTMLInputElement>
    * @returns void
    */
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   /**
    * List of checkbox field option
    */
-  options: string[] | CheckboxGroupItem[];
+  options: string[] | CheckboxGroupItem[]
 
   /**
    * Defines whether to list the checkbox inline
    */
-  inline?: boolean;
+  inline?: boolean
 }
 
 export const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
@@ -72,43 +72,43 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
     containerClass = '',
     value = [],
     onChange,
-    inline
+    inline,
   } = props
   const [items, setItems] = useState<CheckboxGroupItem[]>([])
 
   useEffect(() => {
-    setItems(() => options.map((option) => {
-      if (typeof option === 'string') {
-        return { label: option, value: option }
-      }
-      return option
-    }))
+    setItems(() =>
+      options.map((option) => {
+        if (typeof option === 'string') {
+          return { label: option, value: option }
+        }
+        return option
+      }),
+    )
   }, [options])
 
   return (
     <div className={buildClassName('mb-3 space-y-3', containerClass)}>
-      {
-        label && (
-          <div className={buildClassName('flex items-center justify-between', labelWrapperClass)}>
-            <Label className={labelClass}>{label}</Label>
-            <BodyText muted small>{labelHint}</BodyText>
-          </div>
-        )
-      }
+      {label && (
+        <div className={buildClassName('flex items-center justify-between', labelWrapperClass)}>
+          <Label className={labelClass}>{label}</Label>
+          <BodyText muted small>
+            {labelHint}
+          </BodyText>
+        </div>
+      )}
       <div className={buildClassName('flex gap-3', inline ? 'flex-wrap' : 'flex-col')}>
-        {
-          items.map((item) => (
-            <Checkbox
-              key={item.value}
-              label={item.label}
-              value={item.value}
-              checked={value.includes(item.value)}
-              name={name}
-              id={item.value}
-              onChange={onChange}
-            />
-          ))
-        }
+        {items.map((item) => (
+          <Checkbox
+            key={item.value}
+            label={item.label}
+            value={item.value}
+            checked={value.includes(item.value)}
+            name={name}
+            id={item.value}
+            onChange={onChange}
+          />
+        ))}
       </div>
     </div>
   )

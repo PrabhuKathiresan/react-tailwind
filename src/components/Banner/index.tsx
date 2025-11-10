@@ -13,7 +13,7 @@ export interface BannerProps {
    * Defines banner type
    * @default "info"
    */
-  type?: BannerType;
+  type?: BannerType
   children: any
   /**
    * Controls the icon size
@@ -27,7 +27,7 @@ const sizeMap = {
   7: `size-7`,
   8: `size-8`,
   9: `size-9`,
-  10: `size-10`
+  10: `size-10`,
 }
 
 const IconMap = {
@@ -37,31 +37,27 @@ const IconMap = {
   warning: TriangleAlertIcon,
 }
 
-export const Banner: React.FC<BannerProps> = forwardRef<HTMLDivElement, BannerProps>((props, ref) => {
-  const {
-    type = 'info',
-    iconSize = 5,
-    children
-  } = props
-  const className = buildClassName(
-    'text-sm banner rounded-md flex w-full p-3 mb-4 items-center',
-    type === 'info' ? 'bg-blue-50 text-blue-700' : '',
-    type === 'error' ? 'bg-red-50 text-red-700' : '',
-    type === 'success' ? 'bg-green-50 text-green-700' : '',
-    type === 'warning' ? 'bg-orange-50 border border-orange-200 text-orange-700' : ''
-  )
+export const Banner: React.FC<BannerProps> = forwardRef<HTMLDivElement, BannerProps>(
+  (props, ref) => {
+    const { type = 'info', iconSize = 5, children } = props
+    const className = buildClassName(
+      'text-sm banner rounded-md flex w-full p-3 mb-4 items-center',
+      type === 'info' ? 'bg-blue-50 text-blue-700' : '',
+      type === 'error' ? 'bg-red-50 text-red-700' : '',
+      type === 'success' ? 'bg-green-50 text-green-700' : '',
+      type === 'warning' ? 'bg-orange-50 border border-orange-200 text-orange-700' : '',
+    )
 
-  const renderIcon = () => {
-    const Icon = IconMap[type]
-    return <Icon className={buildClassName('ml-1 mr-3', sizeMap[iconSize])} />
-  }
+    const renderIcon = () => {
+      const Icon = IconMap[type]
+      return <Icon className={buildClassName('ml-1 mr-3', sizeMap[iconSize])} />
+    }
 
-  return (
-    <div ref={ref} className={className}>
-      {renderIcon()}
-      <div className='flex items-center w-full justify-between'>
-        {children}
+    return (
+      <div ref={ref} className={className}>
+        {renderIcon()}
+        <div className="flex items-center w-full justify-between">{children}</div>
       </div>
-    </div>
-  )
-})
+    )
+  },
+)

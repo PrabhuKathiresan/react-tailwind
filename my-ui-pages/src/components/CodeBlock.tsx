@@ -1,24 +1,29 @@
-import React from "react";
-import { Copy, Check } from "lucide-react";
-import { buildClassName } from "react-tailwind";
+import React from 'react'
+import { Copy, Check } from 'lucide-react'
+import { buildClassName } from 'react-tailwind'
 
 interface CodeBlockProps {
-  code: string;
-  language?: string;
-  className?: string;
+  code: string
+  language?: string
+  className?: string
 }
 
 export function CodeBlock({ code, className }: CodeBlockProps) {
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = React.useState(false)
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    await navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
-    <div className={buildClassName("relative rounded-lg bg-gray-900 text-gray-100 font-mono text-sm", className)}>
+    <div
+      className={buildClassName(
+        'relative rounded-lg bg-gray-900 text-gray-100 font-mono text-sm',
+        className,
+      )}
+    >
       {/* Copy Button */}
       <button
         onClick={handleCopy}
@@ -33,5 +38,5 @@ export function CodeBlock({ code, className }: CodeBlockProps) {
         <code>{code}</code>
       </pre>
     </div>
-  );
+  )
 }

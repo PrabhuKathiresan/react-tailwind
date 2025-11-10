@@ -43,7 +43,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       autoClose: options?.autoClose ?? true,
     }
 
-    setToasts(prev => [...prev, newToast])
+    setToasts((prev) => [...prev, newToast])
 
     if (newToast.autoClose) {
       setTimeout(() => closeToast(id), newToast.duration)
@@ -51,7 +51,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
 
   const closeToast = (id: number) => {
-    setToasts(prev => prev.filter(t => t.id !== id))
+    setToasts((prev) => prev.filter((t) => t.id !== id))
   }
 
   return (
@@ -59,8 +59,8 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       {children}
 
       {/* Toast Container */}
-      <div className='fixed top-4 right-4 z-50 space-y-3'>
-        {toasts.map(toast => (
+      <div className="fixed top-4 right-4 z-50 space-y-3">
+        {toasts.map((toast) => (
           <Toast key={toast.id} {...toast} onClose={() => closeToast(toast.id)} />
         ))}
       </div>

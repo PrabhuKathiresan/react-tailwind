@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-  Dialog
-} from '@headlessui/react'
+import { DialogBackdrop, DialogPanel, DialogTitle, Dialog } from '@headlessui/react'
 import { buildClassName } from '../../utils/build-classname'
 import { Button } from '../Button'
 import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
@@ -24,7 +19,7 @@ const panelAlignmentMap: AlignmentMap = {
   start: 'data-[closed]:transform-[translateX(-50%)] rounded-r-lg',
   end: 'data-[closed]:transform-[translateX(50%)] rounded-l-lg',
   top: 'data-[closed]:transform-[translateY(-50%)] rounded-b-lg',
-  bottom: 'data-[closed]:transform-[translateY(50%)] rounded-t-lg'
+  bottom: 'data-[closed]:transform-[translateY(50%)] rounded-t-lg',
 }
 const panelSizeMap: SizeMap = {
   xs: 'max-w-xs',
@@ -33,12 +28,12 @@ const panelSizeMap: SizeMap = {
   lg: 'max-w-lg',
   xl: 'max-w-xl',
   '2xl': 'max-w-2xl',
-  full: 'w-full'
+  full: 'w-full',
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
   isOpen,
-  onClose = () => { },
+  onClose = () => {},
   align = 'end',
   size = 'md',
   backdrop = true,
@@ -63,24 +58,36 @@ export const Drawer: React.FC<DrawerProps> = ({
               'w-full bg-white dark:bg-gray-800 backdrop-blur-2xl duration-200 ease-out data-[closed]:opacity-0 shadow-sm overflow-y-auto space-y-4',
               panelAlignmentMap[align],
               panelSizeMap[size],
-              panelClass
+              panelClass,
             )}
           >
-            <div className={buildClassName('space-y-2 pt-2 md:pt-4 px-4 md:px-6', titleSticky && 'sticky top-0 bg-white dark:bg-gray-800 z-10')}>
-              <DialogTitle as="h3" className={buildClassName('text-lg/7 font-medium dark:text-white flex items-center gap-2', titleClass)}>
-                {showBackButton && <Button iconOnly variant="plain" theme="secondary" size="sm" onClick={onClose}><ChevronLeftIcon className="size-5" /></Button>}
+            <div
+              className={buildClassName(
+                'space-y-2 pt-2 md:pt-4 px-4 md:px-6',
+                titleSticky && 'sticky top-0 bg-white dark:bg-gray-800 z-10',
+              )}
+            >
+              <DialogTitle
+                as="h3"
+                className={buildClassName(
+                  'text-lg/7 font-medium dark:text-white flex items-center gap-2',
+                  titleClass,
+                )}
+              >
+                {showBackButton && (
+                  <Button iconOnly variant="plain" theme="secondary" size="sm" onClick={onClose}>
+                    <ChevronLeftIcon className="size-5" />
+                  </Button>
+                )}
                 {title}
               </DialogTitle>
-              {
-                description &&
+              {description && (
                 <p className={buildClassName('text-sm/6 dark:text-white/50', descriptionClass)}>
                   {description}
                 </p>
-              }
+              )}
             </div>
-            <div className={buildClassName(contentClass)}>
-              {children}
-            </div>
+            <div className={buildClassName(contentClass)}>{children}</div>
           </DialogPanel>
         </div>
       </div>

@@ -2,33 +2,27 @@ import React from 'react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { buildClassName } from '../../utils/build-classname'
 
-const Recent: React.FC = () => (
-  <div>Recent</div>
-)
+const Recent: React.FC = () => <div>Recent</div>
 
-const Popular: React.FC = () => (
-  <div>Popular</div>
-)
+const Popular: React.FC = () => <div>Popular</div>
 
-const Trending: React.FC = () => (
-  <div>Trending</div>
-)
+const Trending: React.FC = () => <div>Trending</div>
 
 const categories = [
   {
     name: 'Recent',
     component: Recent,
-    props: {}
+    props: {},
   },
   {
     name: 'Popular',
     component: Popular,
-    props: {}
+    props: {},
   },
   {
     name: 'Trending',
     component: Trending,
-    props: {}
+    props: {},
   },
 ]
 
@@ -41,16 +35,14 @@ export const Tabs: React.FC = () => {
             {categories.map(({ name }) => (
               <Tab
                 key={name}
-                className={
-                  buildClassName(
-                    'rounded-full py-1 px-3 text-sm/6 font-semibold dark:text-white border border-transparent',
-                    'data-[selected]:bg-blue-100 dark:data-[selected]:bg-white/10 data-[selected]:text-blue-500',
-                    'data-[hover]:bg-blue-50 dark:data-[hover]:bg-white/5',
-                    'data-[selected]:data-[hover]:bg-blue-100 dark:data-[selected]:data-[hover]:bg-white/10',
-                    'focus:outline-none data-[focus]:outline-1 data-[focus]:outline-blue-800 dark:data-[focus]:outline-white',
-                    'data-[selected]:border-blue-500'
-                  )
-                }
+                className={buildClassName(
+                  'rounded-full py-1 px-3 text-sm/6 font-semibold dark:text-white border border-transparent',
+                  'data-[selected]:bg-blue-100 dark:data-[selected]:bg-white/10 data-[selected]:text-blue-500',
+                  'data-[hover]:bg-blue-50 dark:data-[hover]:bg-white/5',
+                  'data-[selected]:data-[hover]:bg-blue-100 dark:data-[selected]:data-[hover]:bg-white/10',
+                  'focus:outline-none data-[focus]:outline-1 data-[focus]:outline-blue-800 dark:data-[focus]:outline-white',
+                  'data-[selected]:border-blue-500',
+                )}
               >
                 {name}
               </Tab>

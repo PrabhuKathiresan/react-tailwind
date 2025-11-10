@@ -2,8 +2,8 @@ import React, { type ReactNode } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 
 export interface HeadingTextProps {
-  children: ReactNode;
-  className?: string;
+  children: ReactNode
+  className?: string
 }
 
 const Title: React.FC<HeadingTextProps> = ({ children, className }) => (
@@ -31,5 +31,5 @@ export const HeadingText = {
   SubTitle,
   SubTitle2,
   SubTitle3,
-  SubTitle4
+  SubTitle4,
 }

@@ -1,21 +1,21 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router";
-import { routes } from "./routes";
-import Home from "./pages/Home";
-import AlertDocsPage from "./pages/components/Alert";
-import BadgeDocsPage from "./pages/components/Badge";
-import ButtonDocsPage from "./pages/components/Button";
-import BannerDocsPage from "./pages/components/Banner";
-import BodyTextDocsPage from "./pages/components/BodyText";
-import BreadcrumbDocsPage from "./pages/components/Breadcrumb";
-import CheckboxDocsPage from "./pages/components/Checkbox";
-import CheckboxGroupDocsPage from "./pages/components/CheckboxGroup";
-import DetailedInformationDocsPage from "./pages/components/DetailedInformation";
-import DrawerDocsPage from "./pages/components/Drawer";
-import DropdownDocsPage from "./pages/components/Dropdown";
-import HeadingTextDocsPage from "./pages/components/HeadingText";
-import InputDocsPage from "./pages/components/Input";
-import PaginationDocsPage from "./pages/components/Pagination";
-import PasswordInputDocsPage from "./pages/components/PasswordInput";
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router'
+import { routes } from './routes'
+import Home from './pages/Home'
+import AlertDocsPage from './pages/components/Alert'
+import BadgeDocsPage from './pages/components/Badge'
+import ButtonDocsPage from './pages/components/Button'
+import BannerDocsPage from './pages/components/Banner'
+import BodyTextDocsPage from './pages/components/BodyText'
+import BreadcrumbDocsPage from './pages/components/Breadcrumb'
+import CheckboxDocsPage from './pages/components/Checkbox'
+import CheckboxGroupDocsPage from './pages/components/CheckboxGroup'
+import DetailedInformationDocsPage from './pages/components/DetailedInformation'
+import DrawerDocsPage from './pages/components/Drawer'
+import DropdownDocsPage from './pages/components/Dropdown'
+import HeadingTextDocsPage from './pages/components/HeadingText'
+import InputDocsPage from './pages/components/Input'
+import PaginationDocsPage from './pages/components/Pagination'
+import PasswordInputDocsPage from './pages/components/PasswordInput'
 
 // ... import other pages
 
@@ -32,7 +32,7 @@ export default function App() {
                 to={r.path}
                 className={({ isActive }) =>
                   `block rounded-md px-2 py-1 text-sm ${
-                    isActive ? "bg-blue-500 text-white" : "hover:bg-gray-100"
+                    isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
                   }`
                 }
               >
@@ -65,5 +65,5 @@ export default function App() {
         </main>
       </div>
     </BrowserRouter>
-  );
+  )
 }

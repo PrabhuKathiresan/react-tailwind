@@ -1,5 +1,5 @@
-import { HeadingText } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { HeadingText } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const HeadingTextDocsPage = () => {
   return (
@@ -8,8 +8,9 @@ const HeadingTextDocsPage = () => {
       description="The HeadingText component provides a consistent set of typographic styles for different heading levels, ensuring visual hierarchy and readability throughout your application."
       examples={[
         {
-          title: "Basic Usage",
-          description: "The HeadingText object includes predefined heading levels such as Title, SubTitle, SubTitle2, SubTitle3, and SubTitle4.",
+          title: 'Basic Usage',
+          description:
+            'The HeadingText object includes predefined heading levels such as Title, SubTitle, SubTitle2, SubTitle3, and SubTitle4.',
           code: `
 <HeadingText.Title>Heading Level 1 (Title)</HeadingText.Title>
 <HeadingText.SubTitle>Heading Level 2 (SubTitle)</HeadingText.SubTitle>
@@ -28,8 +29,9 @@ const HeadingTextDocsPage = () => {
           ),
         },
         {
-          title: "With Custom Class Names",
-          description: "You can add a `className` prop to customize the typography or color styles for each heading level.",
+          title: 'With Custom Class Names',
+          description:
+            'You can add a `className` prop to customize the typography or color styles for each heading level.',
           code: `
 <HeadingText.Title className="text-indigo-600">
   Custom Styled Title
@@ -40,9 +42,7 @@ const HeadingTextDocsPage = () => {
           `,
           render: (
             <div className="space-y-2">
-              <HeadingText.Title className="text-indigo-600">
-                Custom Styled Title
-              </HeadingText.Title>
+              <HeadingText.Title className="text-indigo-600">Custom Styled Title</HeadingText.Title>
               <HeadingText.SubTitle className="text-green-500">
                 Custom Styled SubTitle
               </HeadingText.SubTitle>
@@ -51,7 +51,7 @@ const HeadingTextDocsPage = () => {
         },
       ]}
     />
-  );
-};
+  )
+}
 
-export default HeadingTextDocsPage;
+export default HeadingTextDocsPage

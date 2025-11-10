@@ -28,7 +28,7 @@ export const PasswordInputDocsPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          )
+          ),
         },
         {
           title: 'Password Input with Error Message',
@@ -46,8 +46,8 @@ export const PasswordInputDocsPage = () => {
               error="Password must contain at least 8 characters"
               showErrorMessage
             />
-          )
-        }
+          ),
+        },
       ]}
     />
   )

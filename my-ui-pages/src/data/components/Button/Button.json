@@ -6,11 +6,7 @@
       "name": "theme",
       "type": "enum",
       "raw": "ButtonTheme",
-      "enumValues": [
-        "primary",
-        "secondary",
-        "danger"
-      ],
+      "enumValues": ["primary", "secondary", "danger"],
       "required": false,
       "defaultValue": "\"primary\"",
       "description": "Controls button theme"
@@ -19,11 +15,7 @@
       "name": "variant",
       "type": "enum",
       "raw": "ButtonVariant",
-      "enumValues": [
-        "outlined",
-        "default",
-        "plain"
-      ],
+      "enumValues": ["outlined", "default", "plain"],
       "required": false,
       "defaultValue": "\"default\"",
       "description": "Controls button variant"
@@ -32,12 +24,7 @@
       "name": "size",
       "type": "enum",
       "raw": "ButtonSize",
-      "enumValues": [
-        "xs",
-        "sm",
-        "md",
-        "lg"
-      ],
+      "enumValues": ["xs", "sm", "md", "lg"],
       "required": false,
       "defaultValue": "\"md\"",
       "description": "Controls button size"
@@ -118,11 +105,7 @@
       "name": "type",
       "type": "enum",
       "raw": "\"button\" | \"submit\" | \"reset\"",
-      "enumValues": [
-        "button",
-        "submit",
-        "reset"
-      ],
+      "enumValues": ["button", "submit", "reset"],
       "required": false,
       "defaultValue": null,
       "description": ""

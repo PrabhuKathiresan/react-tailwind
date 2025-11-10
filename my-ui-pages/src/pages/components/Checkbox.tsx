@@ -1,24 +1,18 @@
-import { Checkbox } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { Checkbox } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function CheckboxDocsPage() {
   const examples = [
     {
-      title: "Default Checkbox",
-      description: "A simple checkbox without any label or custom styling.",
+      title: 'Default Checkbox',
+      description: 'A simple checkbox without any label or custom styling.',
       render: <Checkbox type="checkbox" id="checkbox-1" />,
       code: `<Checkbox type="checkbox" id="checkbox-1" />`,
     },
     {
-      title: "Checkbox with Label",
-      description: "Use the `label` prop to display text next to the checkbox.",
-      render: (
-        <Checkbox
-          id="checkbox-2"
-          type="checkbox"
-          label="Accept terms and conditions"
-        />
-      ),
+      title: 'Checkbox with Label',
+      description: 'Use the `label` prop to display text next to the checkbox.',
+      render: <Checkbox id="checkbox-2" type="checkbox" label="Accept terms and conditions" />,
       code: `
 <Checkbox
   id="checkbox-2"
@@ -27,8 +21,8 @@ export default function CheckboxDocsPage() {
 />`,
     },
     {
-      title: "Error State",
-      description: "Use the `error` prop to display an error message.",
+      title: 'Error State',
+      description: 'Use the `error` prop to display an error message.',
       render: (
         <Checkbox
           id="checkbox-4"
@@ -48,9 +42,9 @@ export default function CheckboxDocsPage() {
 />`,
     },
     {
-      title: "Custom Classes",
+      title: 'Custom Classes',
       description:
-        "You can override styles for the wrapper, container, label wrapper, or label using the respective props.",
+        'You can override styles for the wrapper, container, label wrapper, or label using the respective props.',
       render: (
         <Checkbox
           id="checkbox-5"
@@ -73,7 +67,7 @@ export default function CheckboxDocsPage() {
   labelClass="font-semibold text-blue-600"
 />`,
     },
-  ];
+  ]
 
   return (
     <DocsPageLayout
@@ -81,5 +75,5 @@ export default function CheckboxDocsPage() {
       description="Checkbox component for selecting single options, with support for labels, hints, error messages, and custom styling."
       examples={examples}
     />
-  );
+  )
 }

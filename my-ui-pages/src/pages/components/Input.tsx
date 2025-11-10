@@ -1,5 +1,5 @@
-import { Input } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
+import { Input } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const InputDocsPage = () => {
   return (
@@ -8,8 +8,8 @@ const InputDocsPage = () => {
       description="The Input component provides a styled text field with optional labels, hints, icons, and error messaging. It supports all standard HTML input attributes."
       examples={[
         {
-          title: "Basic Usage",
-          description: "A simple text input field with a label and placeholder.",
+          title: 'Basic Usage',
+          description: 'A simple text input field with a label and placeholder.',
           code: `
 <Input
   label="Username"
@@ -23,9 +23,9 @@ const InputDocsPage = () => {
           ),
         },
         {
-          title: "With Hint and Error",
+          title: 'With Hint and Error',
           description:
-            "You can display hints below the label and show an error message when validation fails.",
+            'You can display hints below the label and show an error message when validation fails.',
           code: `
 <Input
   label="Email address"
@@ -48,9 +48,9 @@ const InputDocsPage = () => {
           ),
         },
         {
-          title: "With Icons",
+          title: 'With Icons',
           description:
-            "You can add icons or custom React nodes to the left or right of the input using `leftGroup` and `rightGroup` props.",
+            'You can add icons or custom React nodes to the left or right of the input using `leftGroup` and `rightGroup` props.',
           code: `
 <Input
   label="Search"
@@ -76,16 +76,14 @@ const InputDocsPage = () => {
                 label="Password"
                 type="password"
                 placeholder="Enter password"
-                rightGroup={
-                  <span className="text-gray-400 cursor-pointer">👁️</span>
-                }
+                rightGroup={<span className="text-gray-400 cursor-pointer">👁️</span>}
               />
             </div>
           ),
         },
       ]}
     />
-  );
-};
+  )
+}
 
-export default InputDocsPage;
+export default InputDocsPage

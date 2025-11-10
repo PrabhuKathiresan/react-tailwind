@@ -1,14 +1,17 @@
 import React, { forwardRef, type InputHTMLAttributes } from 'react'
 import { Label } from '../Label'
 import { type InputCustomProps } from '../common-type'
-import { buildClassName } from '../../utils/build-classname';
+import { buildClassName } from '../../utils/build-classname'
 
 export interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement>, InputCustomProps {
   type?: 'radio'
-  wrapperClass?: string;
+  wrapperClass?: string
 }
 
-export const RadioButton: React.FC<RadioButtonProps> = forwardRef<HTMLInputElement, RadioButtonProps>((props, ref) => {
+export const RadioButton: React.FC<RadioButtonProps> = forwardRef<
+  HTMLInputElement,
+  RadioButtonProps
+>((props, ref) => {
   const {
     type = 'radio',
     name,
@@ -36,12 +39,15 @@ export const RadioButton: React.FC<RadioButtonProps> = forwardRef<HTMLInputEleme
           />
         </div>
         {label && (
-          <Label htmlFor={id} className={buildClassName('cursor-pointer font-normal text-gray-600', labelClass)}>{label}</Label>
+          <Label
+            htmlFor={id}
+            className={buildClassName('cursor-pointer font-normal text-gray-600', labelClass)}
+          >
+            {label}
+          </Label>
         )}
       </div>
-      {error && (
-        <div className="mt-1 text-red-600 text-sm">{error}</div>
-      )}
+      {error && <div className="mt-1 text-red-600 text-sm">{error}</div>}
     </div>
   )
 })

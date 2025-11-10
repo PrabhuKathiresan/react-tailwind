@@ -4,10 +4,10 @@ import XCircleIcon from '../Icons/CircleX.svg'
 
 export type TagVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error'
 export interface TagProps extends HTMLAttributes<HTMLElement> {
-  as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
-  text: string;
-  onClose?: () => void;
-  variant?: TagVariant;
+  as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+  text: string
+  onClose?: () => void
+  variant?: TagVariant
 }
 export type VariantMap = {
   [k in TagVariant]: string
@@ -18,7 +18,7 @@ const variantMap: VariantMap = {
   secondary: 'bg-gray-100 text-gray-600 border border-gray-200',
   success: 'bg-green-100 text-green-600 border border-green-200',
   warning: 'bg-orange-100 text-orange-600 border border-orange-200',
-  error: 'bg-red-100 text-red-600 border border-red-200'
+  error: 'bg-red-100 text-red-600 border border-red-200',
 }
 
 export const Tag: React.FC<TagProps> = (props) => {
@@ -33,17 +33,15 @@ export const Tag: React.FC<TagProps> = (props) => {
   return (
     <Element
       {...elemProps}
-      className={
-        buildClassName(
-          className,
-          'px-1.5 py-0.5 text-sm/6 font-normal',
-          variantMap[variant],
-          'rounded'
-        )
-      }
+      className={buildClassName(
+        className,
+        'px-1.5 py-0.5 text-sm/6 font-normal',
+        variantMap[variant],
+        'rounded',
+      )}
     >
       <span>{text}</span>
-      {onClose && <XCircleIcon className='size-3' onClick={() => onClose()} role="button" />}
+      {onClose && <XCircleIcon className="size-3" onClick={() => onClose()} role="button" />}
     </Element>
   )
 }

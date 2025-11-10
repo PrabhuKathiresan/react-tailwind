@@ -1,20 +1,24 @@
-import { Breadcrumb } from "react-tailwind";
-import { DocsPageLayout } from "../../components/DocsPageLayout";
-import { Link } from "react-router";
+import { Breadcrumb } from 'react-tailwind'
+import { DocsPageLayout } from '../../components/DocsPageLayout'
+import { Link } from 'react-router'
 
 export default function BreadcrumbDocsPage() {
   const examples = [
     {
-      title: "Basic Breadcrumb",
-      description: "A simple breadcrumb with static items.",
+      title: 'Basic Breadcrumb',
+      description: 'A simple breadcrumb with static items.',
       render: (
         <Breadcrumb
           items={[
-            { key: "home", text: "Home", to: "/home" },
-            { key: "library", text: "Library", to: "/library" },
-            { key: "data", text: "Data" },
+            { key: 'home', text: 'Home', to: '/home' },
+            { key: 'library', text: 'Library', to: '/library' },
+            { key: 'data', text: 'Data' },
           ]}
-          render={(item) => <Link className="text-blue-600 hover:underline" to={item.to as string}>{item.text}</Link>}
+          render={(item) => (
+            <Link className="text-blue-600 hover:underline" to={item.to as string}>
+              {item.text}
+            </Link>
+          )}
         />
       ),
       code: `
@@ -26,8 +30,8 @@ export default function BreadcrumbDocsPage() {
   ]}
   render={(item) => <span className="text-blue-600 hover:underline">{item.text}</span>}
 />`,
-    }
-  ];
+    },
+  ]
 
   return (
     <DocsPageLayout
@@ -35,5 +39,5 @@ export default function BreadcrumbDocsPage() {
       description="Breadcrumbs indicate the current page’s location within a hierarchy, helping users navigate easily."
       examples={examples}
     />
-  );
+  )
 }

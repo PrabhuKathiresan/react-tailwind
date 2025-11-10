@@ -1,76 +1,76 @@
-import { type ReactNode } from 'react';
+import { type ReactNode } from 'react'
 
-export type DrawerAlignment = 'center' | 'start' | 'end' | 'top' | 'bottom' | 'top-center';
+export type DrawerAlignment = 'center' | 'start' | 'end' | 'top' | 'bottom' | 'top-center'
 
-export type DrawerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+export type DrawerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
 
 export interface DrawerProps {
   /**
    * Controls if Drawer is open
    */
-  isOpen: boolean;
+  isOpen: boolean
   /**
    * Handler method that invokes on close attempt
    * @returns void
    */
-  onClose?: () => void;
+  onClose?: () => void
   /**
    * Drawer alignment on the page
    * @default "end"
    */
-  align?: DrawerAlignment;
+  align?: DrawerAlignment
   /**
    * Whether to add backdrop, when drawer is open
    * @default "true"
    */
-  backdrop?: boolean;
+  backdrop?: boolean
   /**
    * Drawer title
    */
-  title: ReactNode;
+  title: ReactNode
   /**
    * Controls if the title should be sticky on top
    */
-  titleSticky?: boolean;
+  titleSticky?: boolean
   /**
    * Drawer description section
    */
-  description?: ReactNode;
+  description?: ReactNode
   /**
    * Content of the drawer
    */
-  children?: ReactNode;
+  children?: ReactNode
   /**
    * Drawer size
    * @default "md"
    */
-  size?: DrawerSize;
+  size?: DrawerSize
   /**
    * Dialog Panel class
    */
-  panelClass?: string;
+  panelClass?: string
   /**
    * Drawer content class
    */
-  contentClass?: string;
+  contentClass?: string
   /**
    * Drawer title class
    */
-  titleClass?: string;
+  titleClass?: string
   /**
    * Drawer description class
    */
-  descriptionClass?: string;
+  descriptionClass?: string
   /**
    * Should show back button on Drawer
    */
-  showBackButton?: boolean;
+  showBackButton?: boolean
 }
 
 export type AlignmentMap = {
-  [key in DrawerAlignment]: string;
+  [key in DrawerAlignment]: string
 }
 
 export type SizeMap = {
-  [key in DrawerSize]: string;
+  [key in DrawerSize]: string
 }
