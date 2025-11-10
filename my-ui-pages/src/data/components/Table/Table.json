@@ -1,0 +1,27 @@
+{
+  "name": "Table",
+  "description": "",
+  "props": [
+    {
+      "name": "layout",
+      "type": "enum",
+      "raw": "\"fixed\" | \"auto\"",
+      "enumValues": [
+        "fixed",
+        "auto"
+      ],
+      "required": false,
+      "defaultValue": "auto",
+      "description": ""
+    },
+    {
+      "name": "wrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

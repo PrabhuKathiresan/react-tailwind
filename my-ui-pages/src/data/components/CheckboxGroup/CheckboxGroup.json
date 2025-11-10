@@ -1,0 +1,69 @@
+{
+  "name": "CheckboxGroup",
+  "description": "",
+  "props": [
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label of checkbox group field"
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label class for checkbox group field"
+    },
+    {
+      "name": "labelWrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label wrapper class for checkbox group field"
+    },
+    {
+      "name": "labelHint",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Group field hint"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Group field container"
+    },
+    {
+      "name": "options",
+      "type": "string[] | CheckboxGroupItem[]",
+      "raw": "string[] | CheckboxGroupItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "List of checkbox field option"
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Defines whether to list the checkbox inline"
+    }
+  ]
+}

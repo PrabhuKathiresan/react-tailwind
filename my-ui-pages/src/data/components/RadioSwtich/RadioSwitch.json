@@ -1,0 +1,51 @@
+{
+  "name": "RadioSwitch",
+  "description": "",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "selected",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "items",
+      "type": "RadioSwitchItem[]",
+      "raw": "RadioSwitchItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

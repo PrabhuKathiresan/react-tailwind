@@ -1,0 +1,69 @@
+{
+  "name": "BodyText",
+  "description": "",
+  "props": [
+    {
+      "name": "small",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Add's `text-sm` class to the element"
+    },
+    {
+      "name": "strong",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Add's `font-semibold` class to the element"
+    },
+    {
+      "name": "muted",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Add's `text-gray-500` class to the element"
+    },
+    {
+      "name": "error",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Add's `text-red-500` class to the element"
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Add's `inline-flex items-center gap-2` class to the element"
+    },
+    {
+      "name": "as",
+      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "JSX element to be render in place of `p`"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

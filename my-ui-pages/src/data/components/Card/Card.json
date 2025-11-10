@@ -1,0 +1,60 @@
+{
+  "name": "Card",
+  "description": "",
+  "props": [
+    {
+      "name": "to",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "hoverable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": ""
+    },
+    {
+      "name": "bordered",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": ""
+    },
+    {
+      "name": "noPadding",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": ""
+    },
+    {
+      "name": "as",
+      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "div",
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Toast",
+  "description": "",
+  "props": [
+    {
+      "name": "message",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "type",
+      "type": "enum",
+      "raw": "\"success\" | \"error\" | \"info\" | \"warning\"",
+      "enumValues": [
+        "success",
+        "error",
+        "info",
+        "warning"
+      ],
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

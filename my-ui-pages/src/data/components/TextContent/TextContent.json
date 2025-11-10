@@ -1,0 +1,69 @@
+{
+  "name": "TextContent",
+  "description": "",
+  "props": [
+    {
+      "name": "xsmall",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "small",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "strong",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "muted",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "error",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "as",
+      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

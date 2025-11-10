@@ -1,7 +1,7 @@
 import React, { forwardRef, type HTMLAttributes, type JSX, type JSXElementConstructor } from 'react'
-import buildClassName from '../../utils/build-classname'
+import { buildClassName } from '../../utils/build-classname'
 
-interface TextContentProps extends HTMLAttributes<HTMLSpanElement> {
+export interface TextContentProps extends HTMLAttributes<HTMLSpanElement> {
   xsmall?: boolean;
   small?: boolean;
   strong?: boolean;

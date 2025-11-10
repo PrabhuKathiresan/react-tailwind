@@ -1,0 +1,15 @@
+{
+  "name": "Label",
+  "description": "",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Alert",
+  "description": "",
+  "props": [
+    {
+      "name": "type",
+      "type": "enum",
+      "raw": "AlertType",
+      "enumValues": [
+        "success",
+        "danger",
+        "warning",
+        "info"
+      ],
+      "required": false,
+      "defaultValue": "\"info\"",
+      "description": "Defines alert type"
+    },
+    {
+      "name": "removable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Defines if alert is removable"
+    },
+    {
+      "name": "onRemove",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Handler when closing / dismissing alert\n@returns void"
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Text content to display in alert"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "ReactNode to display in alert"
+    }
+  ]
+}

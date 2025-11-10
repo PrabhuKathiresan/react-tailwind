@@ -1,0 +1,20 @@
+export const routes = [
+  { path: '/', label: 'Home' },
+  { path: '/alert', label: 'Alert'},
+  { path: '/badge', label: 'Badge' },
+  { path: '/banner', label: 'Banner' },
+  { path: '/body-text', label: 'BodyText' },
+  { path: '/breadcrumb', label: 'Breadcrumb' },
+  { path: '/button', label: 'Button' },
+  { path: '/checkbox', label: 'Checkbox' },
+  { path: '/checkbox-group', label: 'CheckboxGroup' },
+  { path: '/detailed-information', label: 'DetailedInformation' },
+  { path: '/drawer', label: 'Drawer' },
+  { path: '/dropdown', label: 'Dropdown' },
+  { path: '/heading-text', label: 'HeadingText' },
+  { path: '/input', label: 'Input' },
+  { path: '/pagination', label: 'Pagination' },
+  { path: '/password-input', label: 'PasswordInput' },
+  // { path: '/input', label: 'Input' },
+  // ... add all 31 components here
+];

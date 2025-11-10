@@ -1,0 +1,57 @@
+{
+  "name": "Tag",
+  "description": "",
+  "props": [
+    {
+      "name": "as",
+      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "TagVariant",
+      "enumValues": [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error"
+      ],
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

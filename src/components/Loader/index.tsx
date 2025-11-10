@@ -1,5 +1,5 @@
 import React from 'react'
-import buildClassName from '../../utils/build-classname'
+import { buildClassName } from '../../utils/build-classname'
 
 import './loader.css'
 

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import buildClassName from '../../utils/build-classname'
+import { buildClassName } from '../../utils/build-classname'
 import { Loader } from '../Loader'
 import { type ButtonProps, type ButtonSize, type ThemedButtonClass } from './type'
 import { TextContent } from '../TextContent'
@@ -34,13 +34,13 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
 const getBtnSizeClasses = (size: ButtonSize, iconOnly: boolean = false) => {
   switch (size) {
     case 'xs':
-      return iconOnly ? 'text-xs p-1 rounded-sm' : 'text-xs px-2 py-1 rounded-sm gap-1'
+      return `text-xs h-6 ${iconOnly ? 'p-1 rounded-sm' : 'px-2 py-1 rounded-sm gap-1'}`
     case 'sm':
-      return iconOnly ? 'text-sm p-1.5 rounded' : 'text-sm px-3 py-1.5 rounded gap-1.5'
+      return `text-sm h-8 ${iconOnly ? 'p-1.5 rounded' : ' px-3 py-1.5 rounded gap-1.5'}`
     case 'md':
-      return iconOnly ? 'text-sm p-2 rounded-md' : 'text-sm px-4 py-2 rounded-md gap-2'
+      return `text-sm h-10 ${iconOnly ? 'p-2 rounded-md' : 'px-4 py-2 rounded-md gap-2'}`
     case 'lg':
-      return iconOnly ? 'text-base p-2.5 rounded-lg' : 'text-base px-5 py-2.5 rounded-lg  gap-2'   
+      return `text-base h-12 ${iconOnly ? 'p-2.5 rounded-lg' : 'px-5 py-2.5 rounded-lg gap-2'}`
   }
 }
 

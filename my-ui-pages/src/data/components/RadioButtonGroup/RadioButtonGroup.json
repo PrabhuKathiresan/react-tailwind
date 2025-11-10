@@ -1,0 +1,69 @@
+{
+  "name": "RadioButtonGroup",
+  "description": "",
+  "props": [
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "labelWrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "labelHint",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "options",
+      "type": "string[] | RadionButtonGroupItem[]",
+      "raw": "string[] | RadionButtonGroupItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "row",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

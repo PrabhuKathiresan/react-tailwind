@@ -1,0 +1,33 @@
+{
+  "name": "EmptyState",
+  "description": "",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "action",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "null",
+      "description": ""
+    }
+  ]
+}

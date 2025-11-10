@@ -1,0 +1,147 @@
+{
+  "name": "Drawer",
+  "description": "",
+  "props": [
+    {
+      "name": "isOpen",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Controls if Drawer is open"
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "() => { }",
+      "description": "Handler method that invokes on close attempt\n@returns void"
+    },
+    {
+      "name": "align",
+      "type": "enum",
+      "raw": "DrawerAlignment",
+      "enumValues": [
+        "center",
+        "start",
+        "end",
+        "top",
+        "bottom",
+        "top-center"
+      ],
+      "required": false,
+      "defaultValue": "end",
+      "description": "Drawer alignment on the page"
+    },
+    {
+      "name": "backdrop",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Whether to add backdrop, when drawer is open"
+    },
+    {
+      "name": "title",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Drawer title"
+    },
+    {
+      "name": "titleSticky",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Controls if the title should be sticky on top"
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "null",
+      "description": "Drawer description section"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "null",
+      "description": "Content of the drawer"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "DrawerSize",
+      "enumValues": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "full"
+      ],
+      "required": false,
+      "defaultValue": "md",
+      "description": "Drawer size"
+    },
+    {
+      "name": "panelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Dialog Panel class"
+    },
+    {
+      "name": "contentClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Drawer content class"
+    },
+    {
+      "name": "titleClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Drawer title class"
+    },
+    {
+      "name": "descriptionClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Drawer description class"
+    },
+    {
+      "name": "showBackButton",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Should show back button on Drawer"
+    }
+  ]
+}

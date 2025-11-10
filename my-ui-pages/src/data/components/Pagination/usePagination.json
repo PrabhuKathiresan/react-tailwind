@@ -1,0 +1,33 @@
+{
+  "name": "usePagination",
+  "description": "",
+  "props": [
+    {
+      "name": "totalPages",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "currentPage",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "siblingCount",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "1",
+      "description": ""
+    }
+  ]
+}

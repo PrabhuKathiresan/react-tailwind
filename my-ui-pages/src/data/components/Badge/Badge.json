@@ -1,0 +1,48 @@
+{
+  "name": "Badge",
+  "description": "",
+  "props": [
+    {
+      "name": "theme",
+      "type": "enum",
+      "raw": "BadgeTheme",
+      "enumValues": [
+        "success",
+        "danger",
+        "warning",
+        "info",
+        "secondary"
+      ],
+      "required": false,
+      "defaultValue": "\"info\"",
+      "description": "Defines theme of the Badge"
+    },
+    {
+      "name": "removable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Defines if badge is removable"
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Defines if corners are rounded"
+    },
+    {
+      "name": "onRemove",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Handler on removing badge"
+    }
+  ]
+}

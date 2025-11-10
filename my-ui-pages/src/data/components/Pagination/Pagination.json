@@ -1,0 +1,42 @@
+{
+  "name": "Pagination",
+  "description": "",
+  "props": [
+    {
+      "name": "page",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Defines current page number"
+    },
+    {
+      "name": "limit",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Defines page limit"
+    },
+    {
+      "name": "total",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Defines totol items in the list to be paginated."
+    },
+    {
+      "name": "ellipsis",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Whether to show ellipsis for large page numbers"
+    }
+  ]
+}

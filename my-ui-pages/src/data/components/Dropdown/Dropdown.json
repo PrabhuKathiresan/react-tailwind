@@ -1,0 +1,60 @@
+{
+  "name": "Dropdown",
+  "description": "",
+  "props": [
+    {
+      "name": "triggerButton",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Dropdown menu trigger button"
+    },
+    {
+      "name": "itemsContainerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Dropdown menu item container class"
+    },
+    {
+      "name": "transition",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Controls animation of dropdown menu"
+    },
+    {
+      "name": "anchor",
+      "type": "false | AnchorTo | Partial<BaseAnchorProps & { to: AnchorTo; }>",
+      "raw": "false | AnchorTo | Partial<BaseAnchorProps & { to: AnchorTo; }>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "bottom start",
+      "description": "Controls placement of the dropdown menu"
+    },
+    {
+      "name": "items",
+      "type": "DropdownItem[]",
+      "raw": "DropdownItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "List of dropdown menu items"
+    },
+    {
+      "name": "renderItem",
+      "type": "(item: DropdownItem, options: { className: string; }) => ReactNode",
+      "raw": "(item: DropdownItem, options: { className: string; }) => ReactNode",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Renderer function that returns react element to render dropdown item\n@param item DropdownItem\n@returns ReactNode"
+    }
+  ]
+}

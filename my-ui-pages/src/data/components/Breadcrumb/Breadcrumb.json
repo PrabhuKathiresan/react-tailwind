@@ -1,0 +1,24 @@
+{
+  "name": "Breadcrumb",
+  "description": "",
+  "props": [
+    {
+      "name": "items",
+      "type": "BreadcrumbItem[]",
+      "raw": "BreadcrumbItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "List of breadcrumb items"
+    },
+    {
+      "name": "render",
+      "type": "(item: BreadcrumbItem) => ReactNode",
+      "raw": "(item: BreadcrumbItem) => ReactNode",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Rendered method for breadcrumbItem,\nThis method is called for all items except the last,\nsince, last item in breadcrumb will be the current page of user\n@param item BreadcrumbItem\n@returns ReactNode"
+    }
+  ]
+}
