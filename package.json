@@ -1,6 +1,5 @@
 {
   "name": "@pk-design/react-tailwind",
-  "private": true,
   "version": "1.0.1",
   "main": "dist/react-tailwind.cjs.js",
   "module": "dist/react-tailwind.es.js",
