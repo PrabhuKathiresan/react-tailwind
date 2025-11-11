@@ -12,4 +12,6 @@ export default defineConfig({
   },
 
   plugins: [tailwindcss(), react()],
+
+  base: '/react-tailwind/',
 })
