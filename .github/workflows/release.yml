@@ -10,6 +10,10 @@ jobs:
     name: Publish @pk-design/react-tailwind
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      issues: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
