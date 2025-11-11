@@ -13,7 +13,12 @@
     [
       "@semantic-release/github",
       {
-        "assets": ["dist/**/*"]
+        "assets": [
+          { "path": "dist/react-tailwind.cjs.js", "label": "CommonJS bundle" },
+          { "path": "dist/react-tailwind.es.js", "label": "ESM bundle" },
+          { "path": "dist/react-tailwind.css", "label": "CSS styles" },
+          { "path": "dist/types/index.d.ts", "label": "TypeScript definitions" }
+        ]
       }
     ],
     [
