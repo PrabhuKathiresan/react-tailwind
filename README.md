@@ -1,11 +1,25 @@
-# React-tailwind
+# @pk-design/react-tailwind
 
-Reusable react components
+A modern, production-ready React + TailwindCSS component library.  
+Fully typed with TypeScript, built for scalability, and easy to integrate.
 
-### Reusable components build using Reactjs
+---
 
-`npm i --save @pk-design/react-tailwind`
+## 🚀 Live Documentation & Demo
 
-### Docs Link
+👉 **[View Full Documentation & Live Demo](https://prabhukathiresan.github.io/react-tailwind/)**
 
-<--- To be added --->
+---
+
+## 📦 Installation
+
+```bash
+# Using npm
+npm install @pk-design/react-tailwind
+
+# Or using pnpm
+pnpm add @pk-design/react-tailwind
+
+# Or using yarn
+yarn add @pk-design/react-tailwind
+```

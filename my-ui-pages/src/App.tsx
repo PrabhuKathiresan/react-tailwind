@@ -21,48 +21,63 @@ import PasswordInputDocsPage from './pages/components/PasswordInput'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <div className="flex h-screen">
-        <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4">
-          <h1 className="text-lg font-semibold mb-4">React Tailwind UI</h1>
-          <nav className="space-y-1">
-            {routes.map((r) => (
-              <NavLink
-                key={r.path}
-                to={r.path}
-                className={({ isActive }) =>
-                  `block rounded-md px-2 py-1 text-sm ${
-                    isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
-                  }`
-                }
-              >
-                {r.label}
-              </NavLink>
-            ))}
-          </nav>
-        </aside>
-        <main className="flex-1 overflow-y-auto p-8">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/alert" element={<AlertDocsPage />} />
-            <Route path="/badge" element={<BadgeDocsPage />} />
-            <Route path="/banner" element={<BannerDocsPage />} />
-            <Route path="/body-text" element={<BodyTextDocsPage />} />
-            <Route path="/breadcrumb" element={<BreadcrumbDocsPage />} />
-            <Route path="/button" element={<ButtonDocsPage />} />
-            <Route path="/checkbox" element={<CheckboxDocsPage />} />
-            <Route path="/checkbox-group" element={<CheckboxGroupDocsPage />} />
-            <Route path="/detailed-information" element={<DetailedInformationDocsPage />} />
-            <Route path="/drawer" element={<DrawerDocsPage />} />
-            <Route path="/dropdown" element={<DropdownDocsPage />} />
-            <Route path="/heading-text" element={<HeadingTextDocsPage />} />
-            <Route path="/input" element={<InputDocsPage />} />
-            <Route path="/pagination" element={<PaginationDocsPage />} />
-            <Route path="/password-input" element={<PasswordInputDocsPage />} />
-            {/* <Route path="/dialog" element={<DialogPage />} /> */}
-            {/* Add other component docs here */}
-          </Routes>
-        </main>
+    <BrowserRouter basename="/react-tailwind/">
+      <div className="h-screen">
+        <div className="flex">
+          <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4">
+            <h1 className="text-lg font-semibold mb-4">React Tailwind UI</h1>
+            <nav className="space-y-1">
+              {routes.map((r) => (
+                <NavLink
+                  key={r.path}
+                  to={r.path}
+                  className={({ isActive }) =>
+                    `block rounded-md px-2 py-1 text-sm ${
+                      isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
+                    }`
+                  }
+                >
+                  {r.label}
+                </NavLink>
+              ))}
+            </nav>
+          </aside>
+          <main className="flex-1 overflow-y-auto p-8">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/alert" element={<AlertDocsPage />} />
+              <Route path="/badge" element={<BadgeDocsPage />} />
+              <Route path="/banner" element={<BannerDocsPage />} />
+              <Route path="/body-text" element={<BodyTextDocsPage />} />
+              <Route path="/breadcrumb" element={<BreadcrumbDocsPage />} />
+              <Route path="/button" element={<ButtonDocsPage />} />
+              <Route path="/checkbox" element={<CheckboxDocsPage />} />
+              <Route path="/checkbox-group" element={<CheckboxGroupDocsPage />} />
+              <Route path="/detailed-information" element={<DetailedInformationDocsPage />} />
+              <Route path="/drawer" element={<DrawerDocsPage />} />
+              <Route path="/dropdown" element={<DropdownDocsPage />} />
+              <Route path="/heading-text" element={<HeadingTextDocsPage />} />
+              <Route path="/input" element={<InputDocsPage />} />
+              <Route path="/pagination" element={<PaginationDocsPage />} />
+              <Route path="/password-input" element={<PasswordInputDocsPage />} />
+              {/* <Route path="/dialog" element={<DialogPage />} /> */}
+              {/* Add other component docs here */}
+            </Routes>
+          </main>
+        </div>
+        <footer className="py-6 border-t border-gray-200 text-center text-sm text-gray-500">
+          <p>
+            Built with ❤️ by{' '}
+            <a
+              href="https://github.com/PrabhuKathiresan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              @PrabhuKathiresan
+            </a>
+          </p>
+        </footer>
       </div>
     </BrowserRouter>
   )
