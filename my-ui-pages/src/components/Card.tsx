@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { buildClassName } from 'react-tailwind'
+import { buildClassName } from '@pk-design/react-tailwind'
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
 

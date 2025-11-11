@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from 'react'
-import { CheckboxGroup, type CheckboxGroupItem } from 'react-tailwind'
+import { CheckboxGroup, type CheckboxGroupItem } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const getOptions = (idx: number): CheckboxGroupItem[] => [

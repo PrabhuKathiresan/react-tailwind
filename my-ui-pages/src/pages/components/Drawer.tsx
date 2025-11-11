@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer, Button } from 'react-tailwind'
+import { Drawer, Button } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 /**

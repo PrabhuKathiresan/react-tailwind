@@ -8,7 +8,7 @@ import {
   TableHeaderCell,
   TableRow,
   Tag,
-} from 'react-tailwind'
+} from '@pk-design/react-tailwind'
 
 type PropItem = {
   name: string

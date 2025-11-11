@@ -1,4 +1,4 @@
-import { Alert } from 'react-tailwind'
+import { Alert } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function AlertDocsPage() {

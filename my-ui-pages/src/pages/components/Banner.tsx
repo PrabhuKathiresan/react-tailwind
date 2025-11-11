@@ -1,4 +1,4 @@
-import { Banner } from 'react-tailwind'
+import { Banner } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function BannerDocsPage() {

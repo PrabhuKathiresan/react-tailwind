@@ -1,4 +1,4 @@
-import { Badge } from 'react-tailwind'
+import { Badge } from '@pk-design/react-tailwind'
 import { XIcon } from 'lucide-react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 

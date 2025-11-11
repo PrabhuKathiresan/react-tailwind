@@ -1,4 +1,4 @@
-import { Button } from 'react-tailwind'
+import { Button } from '@pk-design/react-tailwind'
 import { Loader2, Plus } from 'lucide-react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 

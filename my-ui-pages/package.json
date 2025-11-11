@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
+    "@pk-design/react-tailwind": "file:..",
     "framer-motion": "^12.23.24",
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.552.0",
@@ -20,7 +21,6 @@
     "react-markdown": "^10.1.0",
     "react-router": "^7.9.5",
     "react-syntax-highlighter": "^16.1.0",
-    "react-tailwind": "file:..",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

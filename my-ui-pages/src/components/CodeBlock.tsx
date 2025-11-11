@@ -1,6 +1,6 @@
 import React from 'react'
 import { Copy, Check } from 'lucide-react'
-import { buildClassName } from 'react-tailwind'
+import { buildClassName } from '@pk-design/react-tailwind'
 
 interface CodeBlockProps {
   code: string

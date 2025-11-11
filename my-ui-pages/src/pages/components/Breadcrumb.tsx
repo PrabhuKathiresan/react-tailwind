@@ -1,4 +1,4 @@
-import { Breadcrumb } from 'react-tailwind'
+import { Breadcrumb } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { Link } from 'react-router'
 

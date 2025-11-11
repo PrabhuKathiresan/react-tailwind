@@ -1,4 +1,4 @@
-import { Input } from 'react-tailwind'
+import { Input } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const InputDocsPage = () => {

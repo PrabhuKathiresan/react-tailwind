@@ -1,4 +1,4 @@
-import { Checkbox } from 'react-tailwind'
+import { Checkbox } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function CheckboxDocsPage() {

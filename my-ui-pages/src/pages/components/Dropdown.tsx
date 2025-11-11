@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Dropdown, Button } from 'react-tailwind'
+import { Dropdown, Button } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const DropdownDocPage = () => {

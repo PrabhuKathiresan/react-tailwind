@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PasswordInput, PASSWORD_PLACEHOLDER } from 'react-tailwind'
+import { PasswordInput, PASSWORD_PLACEHOLDER } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export const PasswordInputDocsPage = () => {

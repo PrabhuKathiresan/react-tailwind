@@ -1,4 +1,4 @@
-import { DetailedInformation } from 'react-tailwind'
+import { DetailedInformation } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function DetailedInformationDocsPage() {

@@ -1,4 +1,4 @@
-import { HeadingText } from 'react-tailwind'
+import { HeadingText } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const HeadingTextDocsPage = () => {

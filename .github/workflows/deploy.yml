@@ -34,8 +34,17 @@ jobs:
           node-version: 20.19.5
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --filter ./my-ui-page
+      - name: Install library dependencies
+        working-directory: ./
+        run: pnpm install
+      
+      - name: Build library
+        working-directory: ./
+        run: pnpm run build
+
+      - name: Install demo app dependencies
+        working-directory: ./my-ui-page
+        run: pnpm install
 
       - name: Build demo app
         working-directory: ./my-ui-page

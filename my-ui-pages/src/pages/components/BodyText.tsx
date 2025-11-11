@@ -1,4 +1,4 @@
-import { BodyText } from 'react-tailwind'
+import { BodyText } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function BodyTextDocsPage() {

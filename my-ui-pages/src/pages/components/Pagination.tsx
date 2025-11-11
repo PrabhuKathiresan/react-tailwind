@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Pagination, type PaginationProps } from 'react-tailwind'
+import { Pagination, type PaginationProps } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const PaginationDocsPage = () => {
