@@ -29,15 +29,12 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        working-directory: react-tailwind
         run: pnpm install
 
       - name: Build Library
-        working-directory: react-tailwind
         run: pnpm run build
 
       - name: Semantic Release
-        working-directory: react-tailwind
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
