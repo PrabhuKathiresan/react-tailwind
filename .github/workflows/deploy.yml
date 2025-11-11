@@ -34,24 +34,25 @@ jobs:
           node-version: 20.19.5
           cache: 'pnpm'
 
+      - name: Check folder structure
+        run: ls -R .
+
       - name: Install library dependencies
-        working-directory: ./
         run: pnpm install
-      
+
       - name: Build library
-        working-directory: ./
         run: pnpm run build
 
       - name: Install demo app dependencies
-        working-directory: ./my-ui-page
+        working-directory: my-ui-pages
         run: pnpm install
 
       - name: Build demo app
-        working-directory: ./my-ui-page
+        working-directory: my-ui-pages
         run: pnpm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./my-ui-page/dist
+          publish_dir: ./my-ui-pages/dist
