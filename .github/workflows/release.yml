@@ -38,6 +38,17 @@ jobs:
 
       - name: Build Library
         run: pnpm run build
+      
+      - name: 🧩 Fix malformed commit dates
+        run: |
+          echo "Checking for invalid commit dates..."
+          git log --format='%H %cI' | while read hash date; do
+            if [[ "$date" == "Invalid" || "$date" == "0000-00-00T00:00:00" || -z "$date" ]]; then
+              echo "Fixing invalid date for commit $hash"
+              export GIT_COMMITTER_DATE="$(date -Iseconds)"
+              git filter-branch --env-filter "if [ \$GIT_COMMIT = $hash ]; then export GIT_COMMITTER_DATE=\$GIT_COMMITTER_DATE; fi" -- --all
+            fi
+          done
 
       - name: Semantic Release
         env:
