@@ -34,13 +34,13 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
 const getBtnSizeClasses = (size: ButtonSize, iconOnly: boolean = false) => {
   switch (size) {
     case 'xs':
-      return `text-xs h-6 ${iconOnly ? 'p-1 rounded-sm' : 'px-2 py-1 rounded-sm gap-1'}`
+      return `text-xs ${iconOnly ? 'p-1 rounded-sm' : 'px-2 py-1 rounded-sm gap-1'}`
     case 'sm':
-      return `text-sm h-8 ${iconOnly ? 'p-1.5 rounded' : ' px-3 py-1.5 rounded gap-1.5'}`
+      return `text-sm ${iconOnly ? 'p-1.5 rounded' : ' px-3 py-1.5 rounded gap-1.5'}`
     case 'md':
-      return `text-sm h-10 ${iconOnly ? 'p-2 rounded-md' : 'px-4 py-2 rounded-md gap-2'}`
+      return `text-sm ${iconOnly ? 'p-2 rounded-md' : 'px-4 py-2 rounded-md gap-2'}`
     case 'lg':
-      return `text-base h-12 ${iconOnly ? 'p-2.5 rounded-lg' : 'px-5 py-2.5 rounded-lg gap-2'}`
+      return `text-base ${iconOnly ? 'p-2.5 rounded-lg' : 'px-5 py-2.5 rounded-lg gap-2'}`
   }
 }
 
