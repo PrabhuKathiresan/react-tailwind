@@ -17,11 +17,6 @@
             { "type": "refactor", "section": "🔄 Refactor", "hidden": false },
             { "type": "test", "section": "✅ Tests", "hidden": false }
           ]
-        },
-        "writerOpts": {
-          "transform": {
-            "commit": "((commit) => { if (!commit.committerDate) commit.committerDate = new Date().toISOString(); return commit; })"
-          }
         }
       }
     ],
