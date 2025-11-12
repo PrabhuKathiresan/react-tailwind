@@ -4,6 +4,35 @@
   "plugins": [
     ["@semantic-release/commit-analyzer", { "preset": "conventionalcommits" }],
     [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "feat", "section": "✨ Features" },
+            { "type": "fix", "section": "🐛 Fixes" },
+            { "type": "chore", "section": "🧹 Chores", "hidden": false },
+            { "type": "ci", "section": "⚙️ CI", "hidden": false },
+            { "type": "docs", "section": "📝 Docs", "hidden": false },
+            { "type": "refactor", "section": "🔄 Refactor", "hidden": false },
+            { "type": "test", "section": "✅ Tests", "hidden": false }
+          ]
+        },
+        "writerOpts": {
+          "transform": {
+            "commit": "((commit) => { if (!commit.committerDate) commit.committerDate = new Date().toISOString(); return commit; })"
+          }
+        }
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# 🧾 Changelog\n\nAll notable changes to this project will be documented here."
+      }
+    ],
+    [
       "@semantic-release/npm",
       {
         "npmPublish": true,
