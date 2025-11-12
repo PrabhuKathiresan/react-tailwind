@@ -19,9 +19,7 @@
           ]
         },
         "writerOpts": {
-          "transform": {
-            "commit": "(commit) => { commit.committerDate = commit.committerDate || new Date().toISOString(); return commit; }"
-          }
+          "transform": "((commit) => { commit.committerDate = commit.committerDate && !isNaN(new Date(commit.committerDate)) ? commit.committerDate : new Date().toISOString(); return commit; })"
         }
       }
     ],
