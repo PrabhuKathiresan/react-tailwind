@@ -1,8 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="refresh" content="0; url=/react-tailwind/" />
+  <meta charset="utf-8" />
+  <title>Redirecting...</title>
+  <script>
+    (function () {
+      // 🧩 Your repo base (adjust if you rename the repo)
+      const base = "/react-tailwind";
+
+      // Capture the current full path
+      const { pathname, search, hash } = window.location;
+
+      // Skip redirect if already at base or running locally (for dev)
+      if (
+        pathname === base + "/" ||
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        return;
+      }
+
+      // Strip the base prefix if it exists
+      const pathWithoutBase = pathname.startsWith(base)
+        ? pathname.slice(base.length)
+        : pathname;
+
+      // Build a redirect that preserves path + query + hash
+      const redirectUrl = `${base}/#${pathWithoutBase}${search}${hash}`;
+
+      console.log("Redirecting to:", redirectUrl);
+      window.location.replace(redirectUrl);
+    })();
+  </script>
 </head>
 
 <body>
