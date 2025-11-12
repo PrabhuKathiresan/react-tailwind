@@ -14,4 +14,12 @@ export default defineConfig({
   plugins: [tailwindcss(), react()],
 
   base: '/react-tailwind/',
+
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+      },
+    },
+  },
 })

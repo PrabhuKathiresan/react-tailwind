@@ -20,7 +20,9 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "lint": "prettier --check .",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "predeploy": "cd my-ui-pages && pnpm run build",
+    "deploy": "gh-pages -d my-ui-pages/dist -b gh-pages"
   },
   "peerDependencies": {
     "@headlessui/react": "^2.2.9",
