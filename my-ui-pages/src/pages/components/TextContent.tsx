@@ -28,20 +28,6 @@ function SizeExample() {
   )
 }
 
-/** Rendering as different HTML elements */
-function AsExample() {
-  return (
-    <div className="space-y-2">
-      <TextContent as="p">Rendered as a &lt;p&gt; element</TextContent>
-      <TextContent as="label">Rendered as a &lt;label&gt;</TextContent>
-      <TextContent as="strong">Rendered as &lt;strong&gt;</TextContent>
-      <TextContent as="h4" strong className="text-lg">
-        Rendered as &lt;h4&gt; with strong + custom class
-      </TextContent>
-    </div>
-  )
-}
-
 /** Combining styles */
 function CombinedExample() {
   return (
@@ -86,19 +72,6 @@ export default function TextContentDocsPage() {
 <TextContent xsmall>XSmall text</TextContent>
 <TextContent small>Small text</TextContent>
 <TextContent>Regular</TextContent>
-      `,
-    },
-
-    {
-      title: 'Render as Different Elements',
-      description:
-        'Change the rendered HTML element using the as prop. Useful when semantically correct markup matters.',
-      render: <AsExample />,
-      code: `
-<TextContent as="p">Paragraph text</TextContent>
-<TextContent as="label">Label text</TextContent>
-<TextContent as="strong">Strong element</TextContent>
-<TextContent as="h3" strong>Heading as h3</TextContent>
       `,
     },
 
