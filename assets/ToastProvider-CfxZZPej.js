@@ -1,0 +1,1 @@
+const t="ToastProvider",o="",e=[{name:"placement",type:"enum",raw:"ToastPlacement",enumValues:["top-right","top-left","bottom-right","bottom-left","top-center","bottom-center"],required:!1,defaultValue:"top-center",description:""}],r={name:t,description:"",props:e};export{r as default,o as description,t as name,e as props};

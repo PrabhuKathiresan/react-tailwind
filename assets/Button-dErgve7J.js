@@ -1,0 +1,9 @@
+const e="Button",t="",n=[{name:"theme",type:"enum",raw:"ButtonTheme",enumValues:["primary","secondary","danger"],required:!1,defaultValue:'"primary"',description:"Controls button theme (color palette)."},{name:"variant",type:"enum",raw:"ButtonVariant",enumValues:["default","outlined","plain"],required:!1,defaultValue:'"default"',description:"Controls the visual styling of the button."},{name:"size",type:"enum",raw:"ButtonSize",enumValues:["xs","sm","md","lg"],required:!1,defaultValue:'"md"',description:"Controls padding, font size, spacing."},{name:"loading",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:null,description:`If true, shows a Loader inside the button.
+
+While loading:
+- children are replaced
+- button typically becomes disabled`},{name:"loadingText",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:'""',description:"Optional text to display next to the loader.\n\nOnly shown when `loading=true`."},{name:"rounded",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:"Applies 50% border radius, producing a pill-shaped button."},{name:"iconOnly",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:`Indicates that the button only contains an icon.
+
+Adjusts padding to match icon-only UX.`},{name:"noOutlineOnFocus",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:`Prevents outline styles on keyboard focus.
+
+Useful for icon buttons or custom focus handling.`},{name:"as",type:"ElementType",raw:"ElementType",enumValues:null,required:!1,defaultValue:'"button"',description:'The element or component to render.\n\nSupports:\n- HTML elements (e.g., `"button"`, `"a"`, `"div"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)'}],a={name:e,description:"",props:n};export{a as default,t as description,e as name,n as props};

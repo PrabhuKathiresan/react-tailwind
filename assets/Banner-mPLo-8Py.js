@@ -1,0 +1,1 @@
+const e="Banner",o="",n=[{name:"iconSize",type:"enum",raw:"IconSize",enumValues:["5","6","7","8","9","10"],required:!1,defaultValue:null,description:"Controls the icon size"}],s={name:e,description:"",props:n};export{s as default,o as description,e as name,n as props};

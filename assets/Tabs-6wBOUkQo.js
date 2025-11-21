@@ -1,0 +1,6 @@
+const e="Tabs",n="",a=[{name:"tabs",type:"TabsItem[]",raw:"TabsItem[]",enumValues:null,required:!0,defaultValue:null,description:"Tabs data (label + panel). Order defines visual order."},{name:"variant",type:"enum",raw:'"underline" | "segmented" | "solid"',enumValues:["underline","segmented","solid"],required:!1,defaultValue:"underline",description:`Variant for the tab list's appearance.
+Only supported values: "underline" | "segmented" | "solid"
+
+- "underline" (default): modern underline indicator under active tab
+- "segmented": segmented pill style where selected tab looks like a pill
+- "solid": solid nav tabs (selected tab has solid background)`},{name:"defaultIndex",type:"number",raw:"number",enumValues:null,required:!1,defaultValue:"0",description:"Starting tab index (controlled by TabGroup defaultIndex)"},{name:"listClass",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:"",description:"Extra classes to apply to the TabList wrapper"},{name:"panelClass",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:"",description:"Extra classes to apply to individual TabPanel wrapper"}],l={name:e,description:"",props:a};export{l as default,n as description,e as name,a as props};
