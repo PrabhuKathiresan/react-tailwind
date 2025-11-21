@@ -1,4 +1,5 @@
 import React from 'react'
+import { Highlight, themes } from 'prism-react-renderer'
 import { Copy, Check } from 'lucide-react'
 import { buildClassName } from '@pk-design/react-tailwind'
 
@@ -18,12 +19,7 @@ export function CodeBlock({ code, className }: CodeBlockProps) {
   }
 
   return (
-    <div
-      className={buildClassName(
-        'relative rounded-lg bg-gray-900 text-gray-100 font-mono text-sm',
-        className,
-      )}
-    >
+    <div className={buildClassName('relative rounded-lg', className)}>
       {/* Copy Button */}
       <button
         onClick={handleCopy}
@@ -33,10 +29,22 @@ export function CodeBlock({ code, className }: CodeBlockProps) {
         {copied ? <Check size={16} /> : <Copy size={16} />}
       </button>
 
-      {/* Code content */}
-      <pre className="overflow-x-auto p-4 text-sm leading-relaxed">
-        <code>{code}</code>
-      </pre>
+      <Highlight theme={themes.vsDark} code={code} language="tsx">
+        {({ style, tokens, getLineProps, getTokenProps }) => (
+          <pre
+            className="p-4 rounded-lg overflow-auto text-sm font-mono max-h-[450px]"
+            style={style}
+          >
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line })}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
     </div>
   )
 }

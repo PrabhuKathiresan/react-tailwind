@@ -4,39 +4,7 @@ import { usePagination, DOTS } from './usePagination'
 import { buildClassName } from '../../utils/build-classname'
 import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import ChevronRightIcon from '../Icons/ChevronRight.svg'
-
-export interface TPagination {
-  /**
-   * Defines current page number
-   */
-  page: number
-  /**
-   * Defines page limit
-   */
-  limit: number
-  /**
-   * Defines totol items in the list to be paginated.
-   */
-  total: number
-}
-
-export type PaginationProps = TPagination & {
-  /**
-   * Pagination component classname
-   */
-  className?: string
-  /**
-   * Handler for page change
-   * @param pagination Partial<TPagination>
-   * @returns void
-   */
-  onChange: (pagination: Partial<TPagination>) => void
-  /**
-   * Whether to show ellipsis for large page numbers
-   * @default true
-   */
-  ellipsis?: boolean
-}
+import type { PaginationProps } from './Pagination.types'
 
 export const Pagination: React.FC<PaginationProps> = ({
   page: currentPage,
@@ -61,13 +29,41 @@ export const Pagination: React.FC<PaginationProps> = ({
   if (ellipsis) {
     return (
       <div
+        data-testid="pagination-container"
         className={buildClassName(
           'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6',
           className,
         )}
       >
+        <div className="flex flex-1 justify-between sm:hidden">
+          <Button
+            size="xs"
+            theme="secondary"
+            variant="plain"
+            disabled={isFirstPage}
+            onClick={() => handlePageChange(currentPage - 1)}
+            data-testid="ellipsis-mobile-prev-btn"
+          >
+            <span>Previous</span>
+            <ChevronLeftIcon className="size-4" />
+          </Button>
+          <Button
+            size="xs"
+            theme="secondary"
+            variant="plain"
+            disabled={isLastPage}
+            onClick={() => handlePageChange(currentPage + 1)}
+            data-testid="ellipsis-mobile-next-btn"
+          >
+            <span>Next</span>
+            <ChevronRightIcon className="size-4" />
+          </Button>
+        </div>
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+          <p
+            data-testid="pagination-summary"
+            className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1"
+          >
             Showing
             <span className="font-medium">
               {total === 0 ? 0 : Math.max(currentPage * limit - limit + 1, 1)}
@@ -86,6 +82,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 variant="plain"
                 disabled={isFirstPage}
                 onClick={() => handlePageChange(currentPage - 1)}
+                data-testid="ellipsis-next-btn"
               >
                 Prev
               </Button>
@@ -93,15 +90,18 @@ export const Pagination: React.FC<PaginationProps> = ({
             {range.map((page, idx) => {
               if (page === DOTS) {
                 return (
-                  <li key={page + idx} className="px-2 py-1 text-gray-400">
+                  <li
+                    key={`${page}-${idx}`}
+                    data-testid={`page-${page}`}
+                    className="px-2 py-1 text-gray-400"
+                  >
                     &hellip;
                   </li>
                 )
               }
               return (
-                <li key={page}>
+                <li key={`${page}-${idx}`}>
                   <Button
-                    key={page}
                     size="xs"
                     theme={page === currentPage ? 'primary' : 'secondary'}
                     variant={page === currentPage ? 'default' : 'plain'}
@@ -120,6 +120,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 variant="plain"
                 disabled={isLastPage}
                 onClick={() => handlePageChange(currentPage + 1)}
+                data-testid="ellipsis-prev-btn"
               >
                 Next
               </Button>
@@ -132,27 +133,41 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div
+      data-testid="pagination-container"
       className={buildClassName(
         'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6',
         className,
       )}
     >
       <div className="flex flex-1 justify-between sm:hidden">
-        <a
-          href="#"
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        <Button
+          size="xs"
+          theme="secondary"
+          variant="plain"
+          disabled={isFirstPage}
+          onClick={() => handlePageChange(currentPage - 1)}
+          data-testid="mobile-prev-btn"
         >
-          Previous
-        </a>
-        <a
-          href="#"
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          <span>Previous</span>
+          <ChevronLeftIcon className="size-4" />
+        </Button>
+        <Button
+          size="xs"
+          theme="secondary"
+          variant="plain"
+          disabled={isLastPage}
+          onClick={() => handlePageChange(currentPage + 1)}
+          data-testid="mobile-next-btn"
         >
-          Next
-        </a>
+          <span>Next</span>
+          <ChevronRightIcon className="size-4" />
+        </Button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+        <p
+          data-testid="pagination-summary"
+          className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1"
+        >
           Showing
           <span className="font-medium">
             {total === 0 ? 0 : Math.max(currentPage * limit - limit + 1, 1)}
@@ -170,6 +185,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             variant="plain"
             disabled={isFirstPage}
             onClick={() => handlePageChange(currentPage - 1)}
+            data-testid="next-btn"
           >
             <span className="sr-only">Previous</span>
             <ChevronLeftIcon className="size-4" />
@@ -192,6 +208,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             variant="plain"
             disabled={isLastPage}
             onClick={() => handlePageChange(currentPage + 1)}
+            data-testid="prev-btn"
           >
             <span className="sr-only">Next</span>
             <ChevronRightIcon className="size-4" />

@@ -22,12 +22,14 @@ export const PasswordInputDocsPage = () => {
   onChange={(e) => setPassword(e.target.value)}
 />`,
           render: (
-            <PasswordInput
-              label="Password"
-              placeholder={PASSWORD_PLACEHOLDER}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="max-w-80">
+              <PasswordInput
+                label="Password"
+                placeholder={PASSWORD_PLACEHOLDER}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           ),
         },
         {
@@ -41,11 +43,13 @@ export const PasswordInputDocsPage = () => {
   showErrorMessage
 />`,
           render: (
-            <PasswordInput
-              label="Password"
-              error="Password must contain at least 8 characters"
-              showErrorMessage
-            />
+            <div className="max-w-80">
+              <PasswordInput
+                label="Password"
+                error="Password must contain at least 8 characters"
+                showErrorMessage
+              />
+            </div>
           ),
         },
       ]}

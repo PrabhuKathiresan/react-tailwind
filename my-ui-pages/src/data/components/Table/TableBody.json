@@ -1,0 +1,33 @@
+{
+  "name": "TableBody",
+  "description": "",
+  "props": [
+    {
+      "name": "loading",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Show loading shimmer (overrides children)"
+    },
+    {
+      "name": "colSize",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Number of columns — needed for shimmer loader layout"
+    },
+    {
+      "name": "rowSize",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "5",
+      "description": "Number of shimmer rows to show when loading"
+    }
+  ]
+}

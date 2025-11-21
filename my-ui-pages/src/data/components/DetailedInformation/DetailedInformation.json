@@ -3,15 +3,6 @@
   "description": "",
   "props": [
     {
-      "name": "title",
-      "type": "ReactNode",
-      "raw": "ReactNode",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": "Title for the information section"
-    },
-    {
       "name": "subTitle",
       "type": "ReactNode",
       "raw": "ReactNode",
@@ -35,7 +26,7 @@
       "raw": "boolean",
       "enumValues": null,
       "required": false,
-      "defaultValue": "false",
+      "defaultValue": null,
       "description": "Defines if the layout should be compact"
     },
     {
@@ -53,7 +44,7 @@
       "raw": "boolean",
       "enumValues": null,
       "required": false,
-      "defaultValue": "true",
+      "defaultValue": null,
       "description": "Defines if each item in section should have divider"
     },
     {
@@ -73,24 +64,6 @@
       "required": false,
       "defaultValue": null,
       "description": "Classname for details section"
-    },
-    {
-      "name": "as",
-      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": "JSX element to be rendered as."
-    },
-    {
-      "name": "to",
-      "type": "string",
-      "raw": "string",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": "When rendering as Link, use `to` prop for navigation"
     }
   ]
 }

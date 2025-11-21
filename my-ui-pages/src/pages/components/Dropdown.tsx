@@ -3,54 +3,91 @@ import { Dropdown, Button } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 const DropdownDocPage = () => {
-  const [selected, setSelected] = useState<string | null>(null)
+  const [_selected, setSelected] = useState<string | null>(null)
 
-  const items = [
+  const baseItems = [
     { id: 'profile', label: 'Profile' },
     { id: 'settings', label: 'Settings' },
     { id: 'logout', label: 'Logout' },
   ]
 
-  console.log('Selected', selected)
-
   return (
     <DocsPageLayout
       component="Dropdown"
-      description="The Dropdown component displays a list of actions or options anchored to a trigger button. It supports custom rendering, alignment, and transitions."
+      description="A flexible dropdown menu with support for custom triggers, custom item rendering, dividers, disabled items, styling overrides, and menu placement."
       examples={[
         {
           title: 'Basic Dropdown',
-          description: 'A simple dropdown with default bottom-start placement.',
+          description: 'Uses the simple triggerButton prop.',
           code: `
 <Dropdown
-  triggerButton={<Button variant="outline">Menu</Button>}
+  triggerButton={<Button variant="outlined">Menu</Button>}
   items={[
     { id: "profile", label: "Profile" },
     { id: "settings", label: "Settings" },
     { id: "logout", label: "Logout" },
   ]}
-  renderItem={(item) => (
-    <div className="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded">
-      {item.label}
-    </div>
-  )}
+  onMenuClick={(item) => console.log(item.id)}
 />`,
           render: (
             <Dropdown
               triggerButton={<Button variant="outlined">Menu</Button>}
-              items={items}
-              renderItem={(item, { className }) => (
-                <button key={item.id} className={className} onClick={() => setSelected(item.label)}>
-                  {item.label}
-                </button>
-              )}
+              items={baseItems}
+              onMenuClick={(item) => setSelected(item.id)}
             />
           ),
         },
+
         {
-          title: 'Dropdown with Anchors',
+          title: 'Custom Trigger — renderTriggerButton',
           description:
-            "You can control the dropdown position using the `anchor` prop. It supports placements like 'top end', 'bottom start', 'right', etc.",
+            'Use renderTriggerButton(state) for fully custom triggers that react to menu state.',
+          code: `
+<Dropdown
+  renderTriggerButton={({ open }) => (
+    <div className="flex items-center gap-1 cursor-pointer select-none">
+      <span>Menu</span>
+      <ChevronDownIcon className={
+        \`w-4 h-4 transition-transform \${open ? 'rotate-180' : ''}\`
+      }/>
+    </div>
+  )}
+  items={[
+    { id: "account", label: "Account" },
+    { id: "billing", label: "Billing" },
+  ]}
+/>`,
+          render: (
+            <Dropdown
+              renderTriggerButton={({ open }) => (
+                <div className="flex items-center gap-1 cursor-pointer select-none">
+                  <span>Menu</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              )}
+              items={[
+                { id: 'account', label: 'Account' },
+                { id: 'billing', label: 'Billing' },
+              ]}
+            />
+          ),
+        },
+
+        {
+          title: 'Anchored Dropdown',
+          description: 'Control placement using the anchor prop.',
           code: `
 <Dropdown
   triggerButton={<Button>Top End</Button>}
@@ -59,11 +96,6 @@ const DropdownDocPage = () => {
     { id: "copy", label: "Copy" },
     { id: "paste", label: "Paste" },
   ]}
-  renderItem={(item) => (
-    <div className="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded">
-      {item.label}
-    </div>
-  )}
 />`,
           render: (
             <Dropdown
@@ -73,48 +105,153 @@ const DropdownDocPage = () => {
                 { id: 'copy', label: 'Copy' },
                 { id: 'paste', label: 'Paste' },
               ]}
-              renderItem={(item, { className }) => (
-                <button className={className}>{item.label}</button>
-              )}
             />
           ),
         },
+
         {
-          title: 'Dropdown with Divider & Custom Styling',
-          description:
-            'You can add dividers and custom container classes to style the dropdown menu.',
+          title: 'Custom Item Rendering',
+          description: 'renderItem lets you replace the entire item UI.',
           code: `
 <Dropdown
-  triggerButton={<Button variant="primary">Actions</Button>}
-  itemsContainerClass="bg-white border border-gray-200 rounded-lg shadow-md p-2 w-40"
+  triggerButton={<Button>Custom</Button>}
+  items={[{ id: "bold", label: "Bold" }]}
+  renderItem={(item) => <strong>{item.label}</strong>}
+/>`,
+          render: (
+            <Dropdown
+              triggerButton={<Button>Custom</Button>}
+              items={[
+                { id: 'bold', label: 'Bold' },
+                { id: 'italic', label: 'Italic' },
+              ]}
+              renderItem={(item) => <strong>{item.label}</strong>}
+            />
+          ),
+        },
+
+        {
+          title: 'Dividers & Styling',
+          description: 'Items can include a divider and the container can be styled.',
+          code: `
+<Dropdown
+  triggerButton={<Button>Actions</Button>}
+  itemsContainerClass="border p-2 w-40 rounded-lg shadow"
   items={[
     { id: "edit", label: "Edit" },
     { id: "delete", label: "Delete", divider: true },
-    { id: "archive", label: "Archive" },
+    { id: "archive", label: "Archive" }
   ]}
-  renderItem={(item) => (
-    <>
-      <div className="px-3 py-2 cursor-pointer hover:bg-gray-50 rounded">
-        {item.label}
-      </div>
-      {item.divider && <hr className="my-1 border-gray-200" />}
-    </>
-  )}
 />`,
           render: (
             <Dropdown
               triggerButton={<Button theme="primary">Actions</Button>}
-              itemsContainerClass="bg-white border border-gray-200 rounded-lg shadow-md p-2 w-40"
+              itemsContainerClass="border border-gray-200 rounded-lg shadow-md p-2 w-40"
               items={[
                 { id: 'edit', label: 'Edit' },
                 { id: 'delete', label: 'Delete', divider: true },
                 { id: 'archive', label: 'Archive' },
               ]}
-              renderItem={(item, { className }) => (
-                <button className={className}>{item.label}</button>
-              )}
             />
           ),
+        },
+
+        {
+          title: 'Disabled Items',
+          description: 'Disabled items cannot be clicked.',
+          code: `
+<Dropdown
+  triggerButton={<Button>Disabled Items</Button>}
+  items={[
+    { id: "open", label: "Open" },
+    { id: "save", label: "Save", disabled: true },
+    { id: "export", label: "Export" },
+  ]}
+/>`,
+          render: (
+            <Dropdown
+              triggerButton={<Button>Disabled Items</Button>}
+              items={[
+                { id: 'open', label: 'Open' },
+                { id: 'save', label: 'Save', disabled: true },
+                { id: 'export', label: 'Export' },
+              ]}
+            />
+          ),
+        },
+
+        {
+          title: 'Menu Item Styling',
+          description: 'Use menuItemClass to style all items.',
+          code: `
+<Dropdown
+  triggerButton={<Button>Styled</Button>}
+  menuItemClass="text-blue-600 font-medium"
+  items={[{ id: "view", label: "View" }]}
+/>`,
+          render: (
+            <Dropdown
+              triggerButton={<Button>Styled</Button>}
+              menuItemClass="text-blue-600 font-medium"
+              items={[
+                { id: 'view', label: 'View' },
+                { id: 'download', label: 'Download' },
+              ]}
+            />
+          ),
+        },
+
+        {
+          title: 'Selectable Dropdown (Custom Trigger)',
+          description: 'The trigger updates based on the selected item.',
+          code: `
+const [value, setValue] = useState("Select")
+
+<Dropdown
+  renderTriggerButton={({ open }) => (
+    <div className="flex items-center gap-1">
+      <span>{value}</span>
+      <ChevronDownIcon className={open ? "rotate-180" : ""} />
+    </div>
+  )}
+  items={[
+    { id: "apple", label: "Apple" },
+    { id: "banana", label: "Banana" },
+  ]}
+  onMenuClick={(item) => setValue(item.label)}
+/>`,
+          render: (function SelectTriggerDemo() {
+            const [value, setValue] = useState('Select')
+
+            return (
+              <Dropdown
+                renderTriggerButton={({ open }) => (
+                  <div className="flex items-center gap-1 cursor-pointer select-none">
+                    <span>{value}</span>
+                    <svg
+                      className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                )}
+                items={[
+                  { id: 'apple', label: 'Apple' },
+                  { id: 'banana', label: 'Banana' },
+                  { id: 'orange', label: 'Orange' },
+                ]}
+                onMenuClick={(item) => setValue(item.label as string)}
+              />
+            )
+          })(),
         },
       ]}
     />

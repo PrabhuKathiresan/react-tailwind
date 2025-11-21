@@ -1,0 +1,105 @@
+{
+  "name": "RangeSlider",
+  "description": "",
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Top label displayed above the slider.\nUseful for identifying the field in forms."
+    },
+    {
+      "name": "labelHint",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional hint displayed to the right of the label.\nOften used for contextual help or inline descriptions."
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Custom Tailwind classes applied to the label element."
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Custom Tailwind classes applied to the outer container\nthat wraps the entire slider component."
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "The minimum allowed numeric value of the slider."
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "The maximum allowed numeric value of the slider."
+    },
+    {
+      "name": "valueMin",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "The current selected minimum value (left thumb).\nThis makes the component fully controlled."
+    },
+    {
+      "name": "valueMax",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "The current selected maximum value (right thumb).\nThis makes the component fully controlled."
+    },
+    {
+      "name": "valueSuffix",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Optional string appended to displayed values.\nExample: \"kg\", \"₹\", \"cm\", \"hrs\", \"%\"."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "null",
+      "description": "Error message to display below the slider.\nIf provided, the slider is styled with an error state."
+    },
+    {
+      "name": "showErrorMessage",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Whether the error message should be shown.\nDefaults to true."
+    }
+  ]
+}

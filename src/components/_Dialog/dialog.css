@@ -1,0 +1,92 @@
+/* =========================================
+   CENTER — Scale + Soft Bounce + Fade
+========================================= */
+@keyframes dialog-center {
+  0% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.dialog-anim-center {
+  animation: dialog-center 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   TOP — Slide Down + Fade
+========================================= */
+@keyframes dialog-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dialog-anim-top {
+  animation: dialog-top 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   BOTTOM — Slide Up + Fade
+========================================= */
+@keyframes dialog-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dialog-anim-bottom {
+  animation: dialog-bottom 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   LEFT — Slide Right + Fade
+========================================= */
+@keyframes dialog-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.dialog-anim-left {
+  animation: dialog-left 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   RIGHT — Slide Left + Fade
+========================================= */
+@keyframes dialog-right {
+  0% {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.dialog-anim-right {
+  animation: dialog-right 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,69 @@
+{
+  "name": "Radio",
+  "description": "",
+  "props": [
+    {
+      "name": "wrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Extra class for outer wrapper"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Input container class"
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label class"
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Error message"
+    },
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Input field label"
+    },
+    {
+      "name": "labelWrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Input label wrapper class"
+    },
+    {
+      "name": "showErrorMessage",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controls weather to show error message or not."
+    }
+  ]
+}

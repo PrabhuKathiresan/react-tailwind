@@ -1,5 +1,51 @@
 {
   "name": "Tabs",
   "description": "",
-  "props": []
+  "props": [
+    {
+      "name": "tabs",
+      "type": "TabsItem[]",
+      "raw": "TabsItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Tabs data (label + panel). Order defines visual order."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "\"underline\" | \"segmented\" | \"solid\"",
+      "enumValues": ["underline", "segmented", "solid"],
+      "required": false,
+      "defaultValue": "underline",
+      "description": "Variant for the tab list's appearance.\nOnly supported values: \"underline\" | \"segmented\" | \"solid\"\n\n- \"underline\" (default): modern underline indicator under active tab\n- \"segmented\": segmented pill style where selected tab looks like a pill\n- \"solid\": solid nav tabs (selected tab has solid background)"
+    },
+    {
+      "name": "defaultIndex",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "0",
+      "description": "Starting tab index (controlled by TabGroup defaultIndex)"
+    },
+    {
+      "name": "listClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Extra classes to apply to the TabList wrapper"
+    },
+    {
+      "name": "panelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Extra classes to apply to individual TabPanel wrapper"
+    }
+  ]
 }

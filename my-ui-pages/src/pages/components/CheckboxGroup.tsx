@@ -13,21 +13,11 @@ export default function CheckboxGroupDocsPage() {
     group3: ['opt13', 'opt33'],
   })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (value: any[], e: ChangeEvent<HTMLInputElement>) => {
     setSelected((prev) => {
-      const prevGroup = prev[e.target.name] || []
-      // Create a fresh copy instead of mutating prevGroup
-      let nextGroup: string[]
-      if (e.target.checked) {
-        // Add only if not already present
-        nextGroup = [...new Set([...prevGroup, e.target.value])]
-      } else {
-        // Remove unchecked value
-        nextGroup = prevGroup.filter((v) => v !== e.target.value)
-      }
       return {
         ...prev,
-        [e.target.name]: nextGroup,
+        [e.target.name]: value,
       }
     })
   }

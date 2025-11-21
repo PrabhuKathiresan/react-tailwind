@@ -1,0 +1,33 @@
+{
+  "name": "VirtualizedRow",
+  "description": "",
+  "props": [
+    {
+      "name": "items",
+      "type": "any[]",
+      "raw": "any[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "columns",
+      "type": "DataTableColumn[]",
+      "raw": "DataTableColumn[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "gridTemplate",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

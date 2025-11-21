@@ -1,0 +1,87 @@
+{
+  "name": "RadioGroup",
+  "description": "",
+  "props": [
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional label displayed above the radio button group.\nCan be a string or a custom ReactNode."
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom CSS classes applied to the label element."
+    },
+    {
+      "name": "labelWrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom CSS classes applied to the label wrapper container."
+    },
+    {
+      "name": "labelHint",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional hint content displayed beside the label.\nUseful for showing small guidance text."
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom CSS classes applied to the outer container\nthat wraps the entire radio group."
+    },
+    {
+      "name": "options",
+      "type": "string[] | RadionGroupItem[]",
+      "raw": "string[] | RadionGroupItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "The list of options to render.\n- Strings → converted to { label, value } internally\n- Objects → must follow RadionButtonGroupItem structure"
+    },
+    {
+      "name": "row",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Whether to display radio buttons horizontally in a row.\nDefaults to vertical column layout."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    },
+    {
+      "name": "showErrorMessage",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
+    }
+  ]
+}

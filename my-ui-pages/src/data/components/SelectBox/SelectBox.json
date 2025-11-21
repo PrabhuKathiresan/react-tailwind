@@ -4,21 +4,21 @@
   "props": [
     {
       "name": "options",
-      "type": "SelectOption[] | string[]",
-      "raw": "SelectOption[] | string[]",
+      "type": "(string | BaseOption)[]",
+      "raw": "(string | BaseOption)[]",
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": ""
+      "description": "List of options to display in the dropdown"
     },
     {
       "name": "selected",
-      "type": "Selected | Selected[]",
-      "raw": "Selected | Selected[]",
+      "type": "string | BaseOption | (string | BaseOption)[]",
+      "raw": "string | BaseOption | (string | BaseOption)[]",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Currently selected option(s).\n- For single select: a single T or null\n- For multi-select: T[]"
     },
     {
       "name": "labelKey",
@@ -27,7 +27,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Name of the field inside option objects to use as the label (defaults to \"label\")"
     },
     {
       "name": "valueKey",
@@ -36,7 +36,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Name of the field inside option objects to use as the value (defaults to \"value\")"
     },
     {
       "name": "label",
@@ -45,7 +45,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Text label displayed above the component"
     },
     {
       "name": "labelWrapperClass",
@@ -54,7 +54,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Additional CSS classes for the label wrapper"
     },
     {
       "name": "labelClass",
@@ -63,7 +63,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Additional CSS classes for the label element"
     },
     {
       "name": "labelHint",
@@ -72,16 +72,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
-    },
-    {
-      "name": "disabled",
-      "type": "boolean",
-      "raw": "boolean",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
+      "description": "Optional hint element (string or JSX) displayed beside the label"
     },
     {
       "name": "containerClass",
@@ -90,7 +81,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Additional CSS classes for the outer container"
     },
     {
       "name": "placeholder",
@@ -99,7 +90,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Placeholder text displayed when no value is selected"
     },
     {
       "name": "dropdownContainerClass",
@@ -108,7 +99,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "CSS classes applied to the dropdown options container"
     },
     {
       "name": "multiple",
@@ -117,7 +108,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Enable multiple selection mode"
     },
     {
       "name": "maxSelection",
@@ -126,7 +117,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Maximum number of selections allowed in multi-select mode"
     },
     {
       "name": "immediate",
@@ -135,7 +126,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Whether to commit value selection immediately when clicking options.\nHeadless UI uses \"immediate\" to control Combobox selection behavior."
     },
     {
       "name": "showErrorMessage",
@@ -144,7 +135,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Whether to show an error message below the field"
     },
     {
       "name": "error",
@@ -153,7 +144,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Error message displayed below the component"
     },
     {
       "name": "async",
@@ -162,7 +153,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Enables async search mode:\n- Component will not filter options locally\n- Calls onSearch(query) when user types"
     },
     {
       "name": "onSearch",
@@ -171,7 +162,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Async search callback.\nShould update the `options` prop externally after fetching."
     },
     {
       "name": "searchable",
@@ -180,7 +171,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Whether the user can type inside the input (false = readOnly mode)"
     },
     {
       "name": "required",
@@ -189,7 +180,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Mark input as required (used for accessibility)"
     },
     {
       "name": "allowAdd",
@@ -198,7 +189,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Whether to show an “Add new” option when no results match"
     },
     {
       "name": "addNewText",
@@ -207,16 +198,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Label prefix for the “Add new” action (e.g., \"Create\")"
     },
     {
       "name": "onAdd",
-      "type": "(value: string) => void",
-      "raw": "(value: string) => void",
+      "type": "(value: string) => string | void | BaseOption | Promise<string | void | BaseOption>",
+      "raw": "(value: string) => string | void | BaseOption | Promise<string | void | BaseOption>",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Callback when the user chooses the \"create/add\" option.\n\nIt may:\n - return void (do nothing automatically)\n - return a string or BaseOption → the component will auto-add/select it\n - return a Promise resolving to the above"
     },
     {
       "name": "allowClear",
@@ -225,7 +216,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Show a clear (X) button for single-select mode"
     }
   ]
 }

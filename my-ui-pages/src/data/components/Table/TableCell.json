@@ -1,0 +1,15 @@
+{
+  "name": "TableCell",
+  "description": "",
+  "props": [
+    {
+      "name": "align",
+      "type": "enum",
+      "raw": "\"left\" | \"center\" | \"right\"",
+      "enumValues": ["left", "center", "right"],
+      "required": false,
+      "defaultValue": "left",
+      "description": "Horizontal alignment"
+    }
+  ]
+}

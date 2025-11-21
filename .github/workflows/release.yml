@@ -38,7 +38,7 @@ jobs:
 
       - name: Build Library
         run: pnpm run build
-      
+
       - name: 🧩 Fix malformed commit dates
         run: |
           echo "Checking for invalid commit dates..."

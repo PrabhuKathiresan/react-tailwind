@@ -3,15 +3,6 @@
   "description": "",
   "props": [
     {
-      "name": "type",
-      "type": "enum",
-      "raw": "BannerType",
-      "enumValues": ["info", "error", "success", "warning"],
-      "required": false,
-      "defaultValue": "\"info\"",
-      "description": "Defines banner type"
-    },
-    {
       "name": "iconSize",
       "type": "enum",
       "raw": "IconSize",

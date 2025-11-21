@@ -7,7 +7,7 @@ export function Card({ className, ...props }: CardProps) {
   return (
     <div
       className={buildClassName(
-        'rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900',
+        'rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950',
         className,
       )}
       {...props}
@@ -18,7 +18,7 @@ export function Card({ className, ...props }: CardProps) {
 export function CardContent({ className, ...props }: CardProps) {
   return (
     <div
-      className={buildClassName('p-6 text-sm text-gray-700 dark:text-gray-300', className)}
+      className={buildClassName('p-4 md:p-6 text-sm text-gray-700 dark:text-gray-300', className)}
       {...props}
     />
   )

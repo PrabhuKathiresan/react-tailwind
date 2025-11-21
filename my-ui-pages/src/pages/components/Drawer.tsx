@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer, Button } from '@pk-design/react-tailwind'
+import { Drawer, Button, type DrawerAlignment, type DrawerSize } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 /**
@@ -46,6 +46,9 @@ function ExampleBasicDrawer() {
           <ExampleSizeDrawer size="sm" />
           <ExampleSizeDrawer size="md" />
           <ExampleSizeDrawer size="lg" />
+          <ExampleSizeDrawer size="xl" />
+          <ExampleSizeDrawer size="2xl" />
+          <ExampleSizeDrawer size="full" />
         </div>
       ),
       code: `
@@ -65,7 +68,6 @@ function ExampleBasicDrawer() {
           <ExampleAlignDrawer align="start" label="Start" />
           <ExampleAlignDrawer align="top" label="Top" />
           <ExampleAlignDrawer align="bottom" label="Bottom" />
-          <ExampleAlignDrawer align="top-center" label="Top-center" />
         </div>
       ),
       code: `
@@ -84,6 +86,15 @@ function ExampleBasicDrawer() {
       render: <ExampleBackdropDrawer />,
       code: `
 <Drawer isOpen={open} onClose={() => setOpen(false)} backdrop={true} title="With backdrop" />
+      `.trim(),
+    },
+    {
+      title: 'No backdrop',
+      description:
+        'Toggle backdrop with `backdrop`. When `backdrop` is false, drawer will be render without any background effect',
+      render: <ExampleNoBackdropDrawer />,
+      code: `
+<Drawer isOpen={open} onClose={() => setOpen(false)} backdrop={false} title="No Backdrop Drawer" />
       `.trim(),
     },
     {
@@ -149,7 +160,7 @@ function ExampleBasicDrawer() {
   )
 }
 
-function ExampleSizeDrawer({ size }: { size: string }) {
+function ExampleSizeDrawer({ size }: { size: DrawerSize }) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -159,14 +170,20 @@ function ExampleSizeDrawer({ size }: { size: string }) {
         onClose={() => setOpen(false)}
         size={size as any}
         title={`Size: ${size}`}
+        showBackButton
       >
-        <div className="p-4">Content for size {size}</div>
+        <div className="p-4">
+          Content for size {size}
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
+        </div>
       </Drawer>
     </>
   )
 }
 
-function ExampleAlignDrawer({ align, label }: { align: any; label: string }) {
+function ExampleAlignDrawer({ align, label }: { align: DrawerAlignment; label: string }) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -177,7 +194,12 @@ function ExampleAlignDrawer({ align, label }: { align: any; label: string }) {
         align={align as any}
         title={`${label} drawer`}
       >
-        <div className="p-4">Aligned: {align}</div>
+        <div className="p-4 space-y-2">
+          <p>Aligned: {align}</p>
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
+        </div>
       </Drawer>
     </>
   )
@@ -191,6 +213,31 @@ function ExampleBackdropDrawer() {
       <Drawer isOpen={open} onClose={() => setOpen(false)} backdrop title="Backdrop Drawer">
         <div className="p-4">
           <p>Click outside to trigger onClose (if implemented in Drawer).</p>
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
+        </div>
+      </Drawer>
+    </>
+  )
+}
+
+function ExampleNoBackdropDrawer() {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open with no backdrop</Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        backdrop={false}
+        title="No Backdrop Drawer"
+      >
+        <div className="p-4">
+          <p>Click outside to trigger onClose (if implemented in Drawer).</p>
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
         </div>
       </Drawer>
     </>
@@ -209,7 +256,12 @@ function ExampleStickyBackDrawer() {
         titleSticky
         showBackButton
       >
-        <div className="p-4">This drawer has sticky title and a back button.</div>
+        <div className="p-4">
+          <p>This drawer has sticky title and a back button.</p>
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
+        </div>
       </Drawer>
     </>
   )
@@ -230,6 +282,9 @@ function ExampleCustomClassDrawer() {
       >
         <div>
           <p>Custom styled drawer panel & content</p>
+          <Button theme="secondary" onClick={() => setOpen(false)}>
+            Close Drawer
+          </Button>
         </div>
       </Drawer>
     </>

@@ -9,7 +9,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Render extra-small sized text (`text-xs/5`)."
     },
     {
       "name": "small",
@@ -18,7 +18,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Render small sized text (`text-sm/6`)."
     },
     {
       "name": "strong",
@@ -27,7 +27,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Render bold/semibold text (`font-semibold`)."
     },
     {
       "name": "muted",
@@ -36,7 +36,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Apply muted gray tone (commonly used for secondary text)."
     },
     {
       "name": "error",
@@ -45,25 +45,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
-    },
-    {
-      "name": "as",
-      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
-    },
-    {
-      "name": "title",
-      "type": "string",
-      "raw": "string",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
+      "description": "Apply error color styling (`text-red-500`)."
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "name": "TableRow",
+  "description": "",
+  "props": [
+    {
+      "name": "hoverable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Whether the row highlights on hover"
+    }
+  ]
+}

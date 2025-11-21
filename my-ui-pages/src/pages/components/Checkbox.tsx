@@ -21,6 +21,18 @@ export default function CheckboxDocsPage() {
 />`,
     },
     {
+      title: 'Disabled Checkbox',
+      description: 'Use the `disabled` prop to disable the checkbox.',
+      render: <Checkbox id="checkbox-disabled" label="Disabled Checkbox" disabled />,
+      code: `
+<Checkbox
+  id="checkbox-disabled"
+  type="checkbox"
+  label="Disabled Checkbox"
+  disabled
+/>`,
+    },
+    {
       title: 'Error State',
       description: 'Use the `error` prop to display an error message.',
       render: (

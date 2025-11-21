@@ -55,15 +55,6 @@
       "required": false,
       "defaultValue": null,
       "description": "JSX element to be render in place of `p`"
-    },
-    {
-      "name": "title",
-      "type": "string",
-      "raw": "string",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
     }
   ]
 }

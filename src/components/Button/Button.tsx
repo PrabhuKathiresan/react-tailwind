@@ -1,9 +1,18 @@
-import React, { forwardRef } from 'react'
+import React, { ElementType, forwardRef, useMemo } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { Loader } from '../Loader'
-import { type ButtonProps, type ButtonSize, type ThemedButtonClass } from './type'
 import { TextContent } from '../TextContent'
+import type {
+  ButtonProps,
+  ButtonSize,
+  ThemedButtonClass,
+  PolymorphicRef,
+  ButtonComponent,
+} from './Button.types'
 
+/**
+ * Tailwind CSS classes for theme + variant combinations.
+ */
 const THEMED_BTN_CLASS: ThemedButtonClass = {
   primary: {
     default:
@@ -31,64 +40,116 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
   },
 }
 
-const getBtnSizeClasses = (size: ButtonSize, iconOnly: boolean = false) => {
+/**
+ * Generate size classes.
+ */
+const getBtnSizeClasses = (size: ButtonSize, iconOnly = false) => {
   switch (size) {
     case 'xs':
-      return `text-xs ${iconOnly ? 'p-1 rounded-sm' : 'px-2 py-1 rounded-sm gap-1'}`
+      return iconOnly ? 'p-1 rounded-sm text-xs' : 'px-2 py-1 rounded-sm gap-1 text-xs'
+
     case 'sm':
-      return `text-sm ${iconOnly ? 'p-1.5 rounded' : ' px-3 py-1.5 rounded gap-1.5'}`
+      return iconOnly ? 'p-1.5 rounded text-sm' : 'px-3 py-1.5 rounded gap-1.5 text-sm'
+
     case 'md':
-      return `text-sm ${iconOnly ? 'p-2 rounded-md' : 'px-4 py-2 rounded-md gap-2'}`
+      return iconOnly ? 'p-2 rounded-md text-sm' : 'px-4 py-2 rounded-md gap-2 text-sm'
+
     case 'lg':
-      return `text-base ${iconOnly ? 'p-2.5 rounded-lg' : 'px-5 py-2.5 rounded-lg gap-2'}`
+      return iconOnly ? 'p-2.5 rounded-lg text-base' : 'px-5 py-2.5 rounded-lg gap-2 text-base'
   }
 }
 
-export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
+/**
+ * Base shared tailwind classes.
+ */
+const BASE_BTN_CLASS =
+  'font-medium flex items-center justify-center shrink-0 cursor-pointer ' +
+  'disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-75 ' +
+  'transition duration-200 ease-in-out'
+
+export const Button = forwardRef(
+  <C extends ElementType = 'button'>(
+    { as, type, ...props }: ButtonProps<C>,
+    ref: PolymorphicRef<C>,
+  ) => {
     const {
       className = '',
       children,
       theme = 'primary',
       variant = 'default',
       size = 'md',
-      as: Element = 'button',
       loading = false,
       loadingText = '',
-      type = 'button',
       rounded = false,
       disabled,
       iconOnly = false,
-      ...buttonProps
+      noOutlineOnFocus = false,
+      ...restProps
     } = props
 
-    return (
-      <Element
-        ref={ref}
-        className={buildClassName(
+    const Component = as || 'button'
+
+    // Accessibility guard for icon-only buttons
+    if (iconOnly && !(restProps as Record<string, unknown>)['aria-label']) {
+      console.warn('[ui] <Button iconOnly> requires aria-label for accessibility.')
+    }
+
+    // Disable interaction when loading
+    const resolvedDisabled = disabled || loading
+
+    // Clean invalid props when not rendering a real button
+    const { type: _ignoreType, disabled: _ignoreDisabled, ...cleanRest } = restProps
+
+    const buttonSpecificProps =
+      Component === 'button'
+        ? {
+            type: type ?? 'button',
+            disabled: resolvedDisabled,
+          }
+        : {}
+
+    /**
+     * Memoized className for perf & stability.
+     */
+    const classes = useMemo(
+      () =>
+        buildClassName(
+          BASE_BTN_CLASS,
           THEMED_BTN_CLASS[theme][variant],
           getBtnSizeClasses(size, iconOnly),
-          'focus:outline focus:outline-2 focus:outline-offset-2',
-          'font-medium flex items-center justify-center shrink-0',
-          'cursor-pointer disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-75',
-          'transition duration-200 ease-in-out',
+          !noOutlineOnFocus && 'focus:outline focus:outline-2 focus:outline-offset-2',
           rounded && 'rounded-full',
           variant === 'default' && 'shadow-xs hover:shadow-none disabled:shadow-none',
           className,
-        )}
-        type={type}
-        disabled={disabled || loading}
-        {...buttonProps}
-      >
+        ),
+      [theme, variant, size, iconOnly, rounded, noOutlineOnFocus, className],
+    )
+
+    /**
+     * SPECIAL CASE:
+     * iconOnly + loading → show spinner only
+     */
+    if (loading && iconOnly) {
+      return (
+        <Component ref={ref} className={classes} {...buttonSpecificProps} {...cleanRest}>
+          <Loader data-testid="btn-loader-icon" size="xs" />
+        </Component>
+      )
+    }
+
+    return (
+      <Component ref={ref} className={classes} {...buttonSpecificProps} {...cleanRest}>
         {loading ? (
-          <span className="flex items-center gap-2">
-            <Loader className="text-white" size="xs" />
+          <span className="flex items-center gap-2" aria-live="polite">
+            <Loader data-testid="btn-loader-icon" size="xs" />
             {loadingText && <TextContent>{loadingText}</TextContent>}
           </span>
         ) : (
           children
         )}
-      </Element>
+      </Component>
     )
   },
-)
+) as ButtonComponent
+
+Button.displayName = 'Button'

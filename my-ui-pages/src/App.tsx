@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router'
-import { routes } from './routes'
-import Home from './pages/Home'
+import { Routes, Route, Navigate } from 'react-router'
+import DocsLayout from './layouts/DocsLayout'
+import HomePage from './pages/Home'
+import InstallationPage from './pages/Installation'
 import AlertDocsPage from './pages/components/Alert'
 import BadgeDocsPage from './pages/components/Badge'
 import ButtonDocsPage from './pages/components/Button'
@@ -16,69 +17,59 @@ import HeadingTextDocsPage from './pages/components/HeadingText'
 import InputDocsPage from './pages/components/Input'
 import PaginationDocsPage from './pages/components/Pagination'
 import PasswordInputDocsPage from './pages/components/PasswordInput'
-
-// ... import other pages
+import BasePageLayout from './layouts/BasePageLayout'
+import SelectBoxDocsPage from './pages/components/SelectBox'
+import TextareaDocsPage from './pages/components/Textarea'
+import RadioDocsPage from './pages/components/Radio'
+import RadioGroupDocsPage from './pages/components/RadioGroup'
+import RadioSwitchDocsPage from './pages/components/RadioSwitch'
+import RangeInputDocsPage from './pages/components/RangeInput'
+import RangeSliderDocsPage from './pages/components/RangeSlider'
+import TabsDocsPage from './pages/components/Tabs'
+import ToastDocsPage from './pages/components/Toast'
+import TextContentDocsPage from './pages/components/TextContent'
+import TableDocsPage from './pages/components/Table'
+import DataTableDocsPage from './pages/components/DataTable'
+import VirtualizedDataTableDocsPage from './pages/components/VirtualizedDataTable'
 
 export default function App() {
   return (
-    <BrowserRouter basename="/react-tailwind/">
-      <div className="h-screen">
-        <div className="flex">
-          <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4">
-            <h1 className="text-lg font-semibold mb-4">React Tailwind UI</h1>
-            <nav className="space-y-1">
-              {routes.map((r) => (
-                <NavLink
-                  key={r.path}
-                  to={r.path}
-                  className={({ isActive }) =>
-                    `block rounded-md px-2 py-1 text-sm ${
-                      isActive ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
-                    }`
-                  }
-                >
-                  {r.label}
-                </NavLink>
-              ))}
-            </nav>
-          </aside>
-          <main className="flex-1 overflow-y-auto p-8">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/alert" element={<AlertDocsPage />} />
-              <Route path="/badge" element={<BadgeDocsPage />} />
-              <Route path="/banner" element={<BannerDocsPage />} />
-              <Route path="/body-text" element={<BodyTextDocsPage />} />
-              <Route path="/breadcrumb" element={<BreadcrumbDocsPage />} />
-              <Route path="/button" element={<ButtonDocsPage />} />
-              <Route path="/checkbox" element={<CheckboxDocsPage />} />
-              <Route path="/checkbox-group" element={<CheckboxGroupDocsPage />} />
-              <Route path="/detailed-information" element={<DetailedInformationDocsPage />} />
-              <Route path="/drawer" element={<DrawerDocsPage />} />
-              <Route path="/dropdown" element={<DropdownDocsPage />} />
-              <Route path="/heading-text" element={<HeadingTextDocsPage />} />
-              <Route path="/input" element={<InputDocsPage />} />
-              <Route path="/pagination" element={<PaginationDocsPage />} />
-              <Route path="/password-input" element={<PasswordInputDocsPage />} />
-              {/* <Route path="/dialog" element={<DialogPage />} /> */}
-              {/* Add other component docs here */}
-            </Routes>
-          </main>
-        </div>
-        <footer className="py-6 border-t border-gray-200 text-center text-sm text-gray-500">
-          <p>
-            Built with ❤️ by{' '}
-            <a
-              href="https://github.com/PrabhuKathiresan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              @PrabhuKathiresan
-            </a>
-          </p>
-        </footer>
-      </div>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<BasePageLayout />}>
+        <Route index element={<HomePage />} />
+        <Route element={<DocsLayout />}>
+          <Route path="installation" element={<InstallationPage />} />
+          <Route path="alert" element={<AlertDocsPage />} />
+          <Route path="badge" element={<BadgeDocsPage />} />
+          <Route path="banner" element={<BannerDocsPage />} />
+          <Route path="body-text" element={<BodyTextDocsPage />} />
+          <Route path="breadcrumb" element={<BreadcrumbDocsPage />} />
+          <Route path="button" element={<ButtonDocsPage />} />
+          <Route path="checkbox" element={<CheckboxDocsPage />} />
+          <Route path="checkbox-group" element={<CheckboxGroupDocsPage />} />
+          <Route path="data-table" element={<DataTableDocsPage />} />
+          <Route path="detailed-information" element={<DetailedInformationDocsPage />} />
+          <Route path="drawer" element={<DrawerDocsPage />} />
+          <Route path="dropdown" element={<DropdownDocsPage />} />
+          <Route path="heading-text" element={<HeadingTextDocsPage />} />
+          <Route path="input" element={<InputDocsPage />} />
+          <Route path="pagination" element={<PaginationDocsPage />} />
+          <Route path="password-input" element={<PasswordInputDocsPage />} />
+          <Route path="radio" element={<RadioDocsPage />} />
+          <Route path="radio-group" element={<RadioGroupDocsPage />} />
+          <Route path="radio-switch" element={<RadioSwitchDocsPage />} />
+          <Route path="range-input" element={<RangeInputDocsPage />} />
+          <Route path="range-slider" element={<RangeSliderDocsPage />} />
+          <Route path="select-box" element={<SelectBoxDocsPage />} />
+          <Route path="table" element={<TableDocsPage />} />
+          <Route path="tabs" element={<TabsDocsPage />} />
+          <Route path="textarea" element={<TextareaDocsPage />} />
+          <Route path="text-content" element={<TextContentDocsPage />} />
+          <Route path="toast" element={<ToastDocsPage />} />
+          <Route path="virtualized-data-table" element={<VirtualizedDataTableDocsPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Route>
+    </Routes>
   )
 }

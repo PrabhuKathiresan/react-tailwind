@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 export interface InputCustomProps {
   /**
@@ -30,3 +30,6 @@ export interface InputCustomProps {
    */
   showErrorMessage?: boolean
 }
+
+export type PolymorphicProps<C extends ElementType, Props> = Props &
+  Omit<ComponentPropsWithoutRef<C>, keyof Props | 'as'>

@@ -21,24 +21,6 @@
       "description": ""
     },
     {
-      "name": "disabled",
-      "type": "boolean",
-      "raw": "boolean",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
-    },
-    {
-      "name": "title",
-      "type": "string",
-      "raw": "string",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
-    },
-    {
       "name": "label",
       "type": "ReactNode",
       "raw": "ReactNode",

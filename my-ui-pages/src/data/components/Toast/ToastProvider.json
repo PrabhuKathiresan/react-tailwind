@@ -1,5 +1,22 @@
 {
   "name": "ToastProvider",
   "description": "",
-  "props": []
+  "props": [
+    {
+      "name": "placement",
+      "type": "enum",
+      "raw": "ToastPlacement",
+      "enumValues": [
+        "top-right",
+        "top-left",
+        "bottom-right",
+        "bottom-left",
+        "top-center",
+        "bottom-center"
+      ],
+      "required": false,
+      "defaultValue": "top-center",
+      "description": ""
+    }
+  ]
 }

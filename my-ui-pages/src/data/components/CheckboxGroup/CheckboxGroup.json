@@ -9,7 +9,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Label of checkbox group field"
+      "description": "Label displayed above the group"
     },
     {
       "name": "labelClass",
@@ -18,7 +18,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Label class for checkbox group field"
+      "description": "Label CSS classes"
     },
     {
       "name": "labelWrapperClass",
@@ -27,7 +27,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Label wrapper class for checkbox group field"
+      "description": "Wrapper classes for the label row"
     },
     {
       "name": "labelHint",
@@ -36,7 +36,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Group field hint"
+      "description": "Hint text shown next to the label"
     },
     {
       "name": "containerClass",
@@ -45,16 +45,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Group field container"
+      "description": "Container classes for the group wrapper"
     },
     {
       "name": "options",
-      "type": "string[] | CheckboxGroupItem[]",
-      "raw": "string[] | CheckboxGroupItem[]",
+      "type": "string[] | CheckboxGroupItem<T>[]",
+      "raw": "string[] | CheckboxGroupItem<T>[]",
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "List of checkbox field option"
+      "description": "Options in the group — can be:\n - string[] → converted to {label, value}\n - CheckboxGroupItem<T>[]"
     },
     {
       "name": "inline",
@@ -63,7 +63,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Defines whether to list the checkbox inline"
+      "description": "Whether to arrange checkboxes inline"
     }
   ]
 }

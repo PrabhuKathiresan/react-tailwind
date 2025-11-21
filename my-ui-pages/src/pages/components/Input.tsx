@@ -17,7 +17,7 @@ const InputDocsPage = () => {
 />
           `,
           render: (
-            <div className="w-80">
+            <div className="max-w-80">
               <Input label="Username" placeholder="Enter your username" />
             </div>
           ),
@@ -36,7 +36,7 @@ const InputDocsPage = () => {
 />
           `,
           render: (
-            <div className="w-80 space-y-4">
+            <div className="max-w-80 space-y-4">
               <Input
                 label="Email address"
                 labelHint="We'll never share your email."
@@ -66,7 +66,7 @@ const InputDocsPage = () => {
 />
           `,
           render: (
-            <div className="w-80 space-y-4">
+            <div className="max-w-80 space-y-4">
               <Input
                 label="Search"
                 placeholder="Search..."

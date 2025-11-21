@@ -9,16 +9,7 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": ""
-    },
-    {
-      "name": "type",
-      "type": "enum",
-      "raw": "\"success\" | \"error\" | \"info\" | \"warning\"",
-      "enumValues": ["success", "error", "info", "warning"],
-      "required": true,
-      "defaultValue": null,
-      "description": ""
+      "description": "The message text displayed inside the toast."
     },
     {
       "name": "onClose",
@@ -27,6 +18,15 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
+      "description": "Triggers removal of the toast.\nManaged internally by the ToastProvider."
+    },
+    {
+      "name": "isTop",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
       "description": ""
     }
   ]

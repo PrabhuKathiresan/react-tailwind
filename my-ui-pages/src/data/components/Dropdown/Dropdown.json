@@ -3,22 +3,13 @@
   "description": "",
   "props": [
     {
-      "name": "triggerButton",
-      "type": "ReactNode",
-      "raw": "ReactNode",
-      "enumValues": null,
-      "required": true,
-      "defaultValue": null,
-      "description": "Dropdown menu trigger button"
-    },
-    {
       "name": "itemsContainerClass",
       "type": "string",
       "raw": "string",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Dropdown menu item container class"
+      "description": "Additional classes for the menu container."
     },
     {
       "name": "transition",
@@ -27,16 +18,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "true",
-      "description": "Controls animation of dropdown menu"
+      "description": "Enables menu transition animations. Default: true"
     },
     {
       "name": "anchor",
-      "type": "false | AnchorTo | Partial<BaseAnchorProps & { to: AnchorTo; }>",
-      "raw": "false | AnchorTo | Partial<BaseAnchorProps & { to: AnchorTo; }>",
+      "type": "false | DropdownAnchorTo | Partial<DropdownBaseAnchorProps & { to: DropdownAnchorTo; }>",
+      "raw": "false | DropdownAnchorTo | Partial<DropdownBaseAnchorProps & { to: DropdownAnchorTo; }>",
       "enumValues": null,
       "required": false,
       "defaultValue": "bottom start",
-      "description": "Controls placement of the dropdown menu"
+      "description": "Controls dropdown placement.\nAccepts:\n- `\"bottom start\"`\n- `\"top end\"`\n- `\"right\"`\n- or object configuration for advanced placement."
     },
     {
       "name": "items",
@@ -45,16 +36,52 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "List of dropdown menu items"
+      "description": "List of dropdown menu items."
     },
     {
       "name": "renderItem",
-      "type": "(item: DropdownItem, options: { className: string; }) => ReactNode",
-      "raw": "(item: DropdownItem, options: { className: string; }) => ReactNode",
+      "type": "(item: DropdownItem) => ReactNode",
+      "raw": "(item: DropdownItem) => ReactNode",
       "enumValues": null,
-      "required": true,
+      "required": false,
       "defaultValue": null,
-      "description": "Renderer function that returns react element to render dropdown item\n@param item DropdownItem\n@returns ReactNode"
+      "description": "Renderer for customizing how a menu item is displayed.\nIf omitted, the default item UI is used."
+    },
+    {
+      "name": "menuItemClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom CSS classes applied to each menu item."
+    },
+    {
+      "name": "onMenuClick",
+      "type": "(item: DropdownItem, index: number) => void",
+      "raw": "(item: DropdownItem, index: number) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Called when a menu item is clicked.\nReceives: (item, index)"
+    },
+    {
+      "name": "triggerButton",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "JSX element used as the trigger button.\nMust NOT be provided when using renderTriggerButton."
+    },
+    {
+      "name": "renderTriggerButton",
+      "type": "(props: DropdownTriggerBtnProps) => ReactNode",
+      "raw": "(props: DropdownTriggerBtnProps) => ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Must NOT be provided when using triggerButton.\nCustom trigger renderer.\nReceives trigger UI state (open, focus, hover, etc.)\nMust return a valid element."
     }
   ]
 }

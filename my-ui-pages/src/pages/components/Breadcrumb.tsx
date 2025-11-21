@@ -1,6 +1,6 @@
+import { Link } from 'react-router'
 import { Breadcrumb } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-import { Link } from 'react-router'
 
 export default function BreadcrumbDocsPage() {
   const examples = [

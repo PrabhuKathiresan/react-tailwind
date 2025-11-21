@@ -3,7 +3,7 @@
   "description": "",
   "props": [
     {
-      "name": "title",
+      "name": "htmlFor",
       "type": "string",
       "raw": "string",
       "enumValues": null,

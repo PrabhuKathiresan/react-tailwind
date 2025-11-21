@@ -3,15 +3,6 @@
   "description": "",
   "props": [
     {
-      "name": "title",
-      "type": "string",
-      "raw": "string",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": ""
-    },
-    {
       "name": "as",
       "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
       "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",

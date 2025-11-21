@@ -1,2 +1,2 @@
 export * from './Drawer'
-export * from './type'
+export * from './Drawer.types'

@@ -1,0 +1,105 @@
+{
+  "name": "DataTable",
+  "description": "",
+  "props": [
+    {
+      "name": "items",
+      "type": "any[]",
+      "raw": "any[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Array of data items"
+    },
+    {
+      "name": "columns",
+      "type": "DataTableColumn[]",
+      "raw": "DataTableColumn[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Column definitions"
+    },
+    {
+      "name": "sorting",
+      "type": "Record<string, Sorting>",
+      "raw": "Record<string, Sorting>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "{}",
+      "description": "Sorting state, keyed by column name"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Loading state (shows skeleton rows)"
+    },
+    {
+      "name": "pagination",
+      "type": "TPagination",
+      "raw": "TPagination",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "null",
+      "description": "Pagination config"
+    },
+    {
+      "name": "emptyMessage",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "No data found",
+      "description": "Empty message to show when no results"
+    },
+    {
+      "name": "onSort",
+      "type": "(column: DataTableColumn) => void",
+      "raw": "(column: DataTableColumn) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "External sorting handler"
+    },
+    {
+      "name": "setPagination",
+      "type": "(pagination: Partial<TPagination>) => void",
+      "raw": "(pagination: Partial<TPagination>) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "() => {}",
+      "description": "Pagination setter"
+    },
+    {
+      "name": "layout",
+      "type": "enum",
+      "raw": "\"fixed\" | \"auto\"",
+      "enumValues": ["fixed", "auto"],
+      "required": false,
+      "defaultValue": "auto",
+      "description": "Layout of table cells"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Optional wrapper styles"
+    },
+    {
+      "name": "wrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": ""
+    }
+  ]
+}

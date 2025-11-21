@@ -9,7 +9,7 @@
       "enumValues": ["fixed", "auto"],
       "required": false,
       "defaultValue": "auto",
-      "description": ""
+      "description": "Table layout mode (\"auto\" or \"fixed\"). Default = \"auto\""
     },
     {
       "name": "wrapperClass",
@@ -18,7 +18,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Additional classes applied to the table wrapper"
     }
   ]
 }

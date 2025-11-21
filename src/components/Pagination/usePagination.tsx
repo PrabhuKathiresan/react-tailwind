@@ -1,10 +1,6 @@
-export const DOTS = '...'
+import { UsePaginationProps } from './Pagination.types'
 
-export type UsePaginationProps = {
-  totalPages: number
-  currentPage: number
-  siblingCount?: number
-}
+export const DOTS = '...'
 
 export const usePagination = ({
   totalPages,
