@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.1 (2025-11-24)</small>
+
+* fix: minor type fix and doc update ([bb788a09c78b51664ef9511f817680a7a4c78026](https://github.com/PrabhuKathiresan/react-tailwind/commit/bb788a09c78b51664ef9511f817680a7a4c78026))
+* ci: updated release and unwanted components ([ffd047f20aea91e2bbd3f753cd16c84ad6471c1b](https://github.com/PrabhuKathiresan/react-tailwind/commit/ffd047f20aea91e2bbd3f753cd16c84ad6471c1b))
+
 ## 1.1.0 (2025-11-21)
 
 * feat: major release - updated all components ([2bfdb82dfe1315e316997abc9ade9a4d5450f687](https://github.com/PrabhuKathiresan/react-tailwind/commit/2bfdb82dfe1315e316997abc9ade9a4d5450f687))
