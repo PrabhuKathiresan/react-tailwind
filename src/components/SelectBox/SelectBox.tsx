@@ -295,6 +295,7 @@ export const SelectBox = forwardRef(
                 <Button
                   size="xs"
                   iconOnly
+                  aria-label="Clear selection"
                   theme="secondary"
                   variant="plain"
                   className="group absolute inset-y-0 right-8 h-6 top-2"

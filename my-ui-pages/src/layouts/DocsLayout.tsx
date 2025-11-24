@@ -1,15 +1,11 @@
 import { Outlet, useLocation, useNavigate } from 'react-router'
-import { buildClassName, Button, Drawer, TextContent } from '@pk-design/react-tailwind'
-import { useAppContext } from '../contexts/AppContext'
+import { buildClassName, Button, TextContent } from '@pk-design/react-tailwind'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import NavList, { pageRoutes } from '../components/NavList'
-import { LogoText } from '../components/LogoText'
-import ReactTailwindIcon from '../icons/ReactTailwindIcon'
 
 export default function DocsLayout() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { expanded, setExpanded } = useAppContext()
 
   const currentRouteIdx = pageRoutes.findIndex((r) => r.path === location.pathname)
   const nextIdx = currentRouteIdx + 1 >= pageRoutes.length ? -1 : currentRouteIdx + 1
@@ -29,24 +25,6 @@ export default function DocsLayout() {
       <aside className="w-full max-w-[240px] h-[calc(100dvh-61px)] overflow-y-auto border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-6 sticky top-[60px] hidden md:block">
         <NavList />
       </aside>
-      <Drawer
-        align="start"
-        size="xs"
-        isOpen={expanded}
-        onClose={() => setExpanded(false)}
-        titleClass="pt-3"
-        showBackButton
-        title={
-          <div className="flex items-center gap-1">
-            <ReactTailwindIcon />
-            <LogoText />
-          </div>
-        }
-      >
-        <div className="px-4 py-2">
-          <NavList />
-        </div>
-      </Drawer>
       <section id="scrollable-container" className="w-full grow-0 overflow-x-auto">
         <div className="relative px-2 md:px-4 pt-2 pb-0 md:pb-2">
           <Outlet />

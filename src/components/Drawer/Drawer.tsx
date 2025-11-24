@@ -86,7 +86,14 @@ export const Drawer: React.FC<DrawerProps> = ({
                   )}
                 >
                   {showBackButton && (
-                    <Button iconOnly variant="plain" theme="secondary" size="sm" onClick={onClose}>
+                    <Button
+                      iconOnly
+                      aria-label="Close drawer"
+                      variant="plain"
+                      theme="secondary"
+                      size="sm"
+                      onClick={onClose}
+                    >
                       <ChevronLeftIcon className="size-5" />
                     </Button>
                   )}
