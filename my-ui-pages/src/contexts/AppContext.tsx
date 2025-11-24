@@ -62,8 +62,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     })
   }
 
-  console.log('AppContext rendered with uiMode:', uiMode, expanded)
-
   return (
     <AppContext.Provider
       value={{
