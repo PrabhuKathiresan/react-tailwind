@@ -173,7 +173,7 @@ export const EmptyTableRow: React.FC<EmptyTableRowProps> = ({
   colSpan = 1,
   contentClass,
 }) => (
-  <tr>
+  <tr className="bg-white dark:bg-gray-900">
     <td colSpan={colSpan} className="px-4 py-8">
       <div
         className={buildClassName(
