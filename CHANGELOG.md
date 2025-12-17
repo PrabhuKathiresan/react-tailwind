@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.2 (2025-12-17)</small>
+
+* fix: empty-table UI fix ([d060293585cd4989277d6cbf021f84eb6cd7c99f](https://github.com/PrabhuKathiresan/react-tailwind/commit/d060293585cd4989277d6cbf021f84eb6cd7c99f))
+* ci: removed unncessary logs ([50448b83d35aab6444f5560eac63cc0d0a3edf06](https://github.com/PrabhuKathiresan/react-tailwind/commit/50448b83d35aab6444f5560eac63cc0d0a3edf06))
+
 ## <small>1.1.1 (2025-11-24)</small>
 
 * fix: minor type fix and doc update ([bb788a09c78b51664ef9511f817680a7a4c78026](https://github.com/PrabhuKathiresan/react-tailwind/commit/bb788a09c78b51664ef9511f817680a7a4c78026))
