@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.3 (2025-12-29)</small>
+
+* fix: card component type issues ([4cff4571923b7677e097ffe4348123e42b0222c4](https://github.com/PrabhuKathiresan/react-tailwind/commit/4cff4571923b7677e097ffe4348123e42b0222c4))
+
 ## <small>1.1.2 (2025-12-17)</small>
 
 * fix: empty-table UI fix ([d060293585cd4989277d6cbf021f84eb6cd7c99f](https://github.com/PrabhuKathiresan/react-tailwind/commit/d060293585cd4989277d6cbf021f84eb6cd7c99f))
