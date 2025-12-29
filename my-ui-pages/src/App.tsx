@@ -8,6 +8,7 @@ import ButtonDocsPage from './pages/components/Button'
 import BannerDocsPage from './pages/components/Banner'
 import BodyTextDocsPage from './pages/components/BodyText'
 import BreadcrumbDocsPage from './pages/components/Breadcrumb'
+import CardDocsPage from './pages/components/Card'
 import CheckboxDocsPage from './pages/components/Checkbox'
 import CheckboxGroupDocsPage from './pages/components/CheckboxGroup'
 import DetailedInformationDocsPage from './pages/components/DetailedInformation'
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="body-text" element={<BodyTextDocsPage />} />
           <Route path="breadcrumb" element={<BreadcrumbDocsPage />} />
           <Route path="button" element={<ButtonDocsPage />} />
+          <Route path="card" element={<CardDocsPage />} />
           <Route path="checkbox" element={<CheckboxDocsPage />} />
           <Route path="checkbox-group" element={<CheckboxGroupDocsPage />} />
           <Route path="data-table" element={<DataTableDocsPage />} />

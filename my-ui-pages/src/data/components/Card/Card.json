@@ -1,5 +1,42 @@
 {
   "name": "Card",
   "description": "",
-  "props": []
+  "props": [
+    {
+      "name": "hoverable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Make card hoverable (adds background transitions)"
+    },
+    {
+      "name": "bordered",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Adds border around the card"
+    },
+    {
+      "name": "compact",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Make card compact"
+    },
+    {
+      "name": "as",
+      "type": "ElementType",
+      "raw": "ElementType",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "\"div\"",
+      "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomCard`)"
+    }
+  ]
 }

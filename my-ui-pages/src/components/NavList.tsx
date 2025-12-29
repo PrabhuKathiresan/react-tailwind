@@ -50,6 +50,7 @@ const navSections: NavSection[] = [
       { path: '/badge', label: 'Badge' },
       { path: '/banner', label: 'Banner' },
       { path: '/breadcrumb', label: 'Breadcrumb' },
+      { path: '/card', label: 'Card' },
       { path: '/dropdown', label: 'Dropdown' },
       { path: '/pagination', label: 'Pagination' },
       { path: '/tabs', label: 'Tabs' },

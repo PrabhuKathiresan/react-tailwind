@@ -31,28 +31,28 @@ describe('Card Component', () => {
   it('applies hoverable styles', () => {
     render(<Card hoverable>Hover Card</Card>)
     const el = screen.getByText('Hover Card')
-    expect(el.className).toMatch(/shadow/)
-    expect(el.className).toMatch(/hover:shadow-md/)
+    expect(el.className).toMatch(/transition-background/)
+    expect(el.className).toMatch(/hover:bg-gray-100/)
+    expect(el.className).toMatch(/dark:hover:bg-gray-800/)
   })
 
   it('applies bordered styles', () => {
     render(<Card bordered>Border Card</Card>)
     const el = screen.getByText('Border Card')
     expect(el.className).toMatch(/border-gray-200/)
+    expect(el.className).toMatch(/dark:border-gray-800/)
   })
 
   it('applies padding by default', () => {
     render(<Card>Padding</Card>)
     const el = screen.getByText('Padding')
-    expect(el.className).toMatch(/p-2/)
-    expect(el.className).toMatch(/md:p-4/)
+    expect(el.className).toMatch(/p-6/)
   })
 
-  it('removes padding when noPadding=true', () => {
-    render(<Card noPadding>No Pad</Card>)
+  it('removes padding when compact=true', () => {
+    render(<Card compact>No Pad</Card>)
     const el = screen.getByText('No Pad')
-    expect(el.className).not.toMatch(/p-2/)
-    expect(el.className).not.toMatch(/md:p-4/)
+    expect(el.className).toMatch(/p-2/)
   })
 
   it('merges className correctly', () => {
@@ -95,7 +95,7 @@ describe('Card Component', () => {
 
   it('does not pass card-only props to DOM', () => {
     render(
-      <Card hoverable bordered noPadding data-testid="clean-card">
+      <Card hoverable bordered compact data-testid="clean-card">
         Clean DOM
       </Card>,
     )
@@ -105,6 +105,6 @@ describe('Card Component', () => {
     // Ensure no Card-only boolean props leak to DOM
     expect(el).not.toHaveAttribute('hoverable')
     expect(el).not.toHaveAttribute('bordered')
-    expect(el).not.toHaveAttribute('noPadding')
+    expect(el).not.toHaveAttribute('compact')
   })
 })

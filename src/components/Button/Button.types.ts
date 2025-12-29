@@ -1,4 +1,5 @@
 import type { JSX, ElementType, ComponentPropsWithoutRef } from 'react'
+import type { PolymorphicRef } from '../common-type'
 
 /**
  * Theme variants applied to the Button component.
@@ -39,12 +40,6 @@ export type ThemedButtonClass = {
     [key in ButtonVariant]: string
   }
 }
-
-/**
- * Utility: Extract the correct `ref` type for intrinsic elements
- * or custom React components.
- */
-export type PolymorphicRef<C extends ElementType> = ComponentPropsWithoutRef<C>['ref']
 
 /**
  * Utility: Builds a polymorphic prop type.

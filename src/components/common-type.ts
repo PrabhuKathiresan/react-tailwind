@@ -31,5 +31,11 @@ export interface InputCustomProps {
   showErrorMessage?: boolean
 }
 
+/**
+ * Utility: Extract the correct `ref` type for intrinsic elements
+ * or custom React components.
+ */
+export type PolymorphicRef<C extends ElementType> = ComponentPropsWithoutRef<C>['ref']
+
 export type PolymorphicProps<C extends ElementType, Props> = Props &
   Omit<ComponentPropsWithoutRef<C>, keyof Props | 'as'>

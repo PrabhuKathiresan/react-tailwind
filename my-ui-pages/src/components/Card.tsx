@@ -16,10 +16,5 @@ export function Card({ className, ...props }: CardProps) {
 }
 
 export function CardContent({ className, ...props }: CardProps) {
-  return (
-    <div
-      className={buildClassName('p-4 md:p-6 text-sm text-gray-700 dark:text-gray-300', className)}
-      {...props}
-    />
-  )
+  return <div className={buildClassName('p-4 md:p-6', className)} {...props} />
 }

@@ -2,13 +2,8 @@ import React, { ElementType, forwardRef, useMemo } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { Loader } from '../Loader'
 import { TextContent } from '../TextContent'
-import type {
-  ButtonProps,
-  ButtonSize,
-  ThemedButtonClass,
-  PolymorphicRef,
-  ButtonComponent,
-} from './Button.types'
+import type { ButtonProps, ButtonSize, ThemedButtonClass, ButtonComponent } from './Button.types'
+import type { PolymorphicRef } from '../common-type'
 
 /**
  * Tailwind CSS classes for theme + variant combinations.
