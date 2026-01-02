@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.5 (2026-01-02)</small>
+
+* fix: expose use-is-tablet-or-mobile hook ([15461b500c25dcf926af57b38c9aed37b0380e31](https://github.com/PrabhuKathiresan/react-tailwind/commit/15461b500c25dcf926af57b38c9aed37b0380e31))
+
 ## <small>1.1.4 (2026-01-02)</small>
 
 * fix: disabled input UI fix ([ac6a4ba0ad257ee1471e265892ea3379026a73bc](https://github.com/PrabhuKathiresan/react-tailwind/commit/ac6a4ba0ad257ee1471e265892ea3379026a73bc))
