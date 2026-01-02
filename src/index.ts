@@ -36,6 +36,7 @@ export * from './components/common-type'
 export * from './hooks/use-debounce'
 export * from './hooks/use-is-mobile'
 export * from './hooks/use-is-tablet'
+export * from './hooks/use-is-tablet-or-mobile'
 
 export * from './utils/build-classname'
 export * from './utils/is-array'
