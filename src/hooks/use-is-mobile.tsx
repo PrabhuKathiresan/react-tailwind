@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react'
 
 export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 768)
+    const detect = () => {
+      const width = window.innerWidth
+
+      const isTouch = navigator.maxTouchPoints > 1 || window.matchMedia('(pointer: coarse)').matches
+
+      setIsMobile(width < 600 && isTouch)
     }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+
+    detect()
+    window.addEventListener('resize', detect)
+    return () => window.removeEventListener('resize', detect)
   }, [])
 
   return isMobile

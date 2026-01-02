@@ -71,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           id={id}
           type={type}
           className={buildClassName(
-            buildInputClass(className),
+            buildInputClass(className, { disabled: inputProps.disabled }),
             hasRightGroup ? 'pe-10' : '',
             hasLeftGroup ? 'ps-10' : '',
           )}

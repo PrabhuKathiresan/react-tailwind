@@ -49,10 +49,17 @@ describe('Card Component', () => {
     expect(el.className).toMatch(/p-6/)
   })
 
-  it('removes padding when compact=true', () => {
+  it('applies compact padding when compact=true', () => {
     render(<Card compact>No Pad</Card>)
     const el = screen.getByText('No Pad')
     expect(el.className).toMatch(/p-2/)
+  })
+
+  it('removes padding when zeroPadding=true', () => {
+    render(<Card zeroPadding>No Pad</Card>)
+    const el = screen.getByText('No Pad')
+    expect(el.className).not.toMatch(/p-6/)
+    expect(el.className).not.toMatch(/p-2/)
   })
 
   it('merges className correctly', () => {

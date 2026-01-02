@@ -19,6 +19,12 @@ export type CardBaseProps = {
    * @default false
    */
   compact?: boolean
+
+  /**
+   * Remove default padding from the card
+   * @default false
+   */
+  zeroPadding?: boolean
 }
 
 /**

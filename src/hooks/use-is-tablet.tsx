@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react'
 
 export const useIsTablet = () => {
-  const [isTablet, setIsTablet] = useState(window.innerWidth < 768 && window.innerHeight > 960)
+  const [isTablet, setIsTablet] = useState(false)
 
   useEffect(() => {
-    function handleResize() {
-      setIsTablet(window.innerWidth > 768 && window.innerHeight < 960)
+    const detect = () => {
+      const width = window.innerWidth
+
+      const isTouch = navigator.maxTouchPoints > 1 || window.matchMedia('(pointer: coarse)').matches
+
+      setIsTablet(width >= 600 && width <= 1024 && isTouch)
     }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+
+    detect()
+    window.addEventListener('resize', detect)
+    return () => window.removeEventListener('resize', detect)
   }, [])
 
   return isTablet
