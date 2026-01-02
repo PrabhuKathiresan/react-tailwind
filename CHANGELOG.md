@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.4 (2026-01-02)</small>
+
+* fix: disabled input UI fix ([ac6a4ba0ad257ee1471e265892ea3379026a73bc](https://github.com/PrabhuKathiresan/react-tailwind/commit/ac6a4ba0ad257ee1471e265892ea3379026a73bc))
+
 ## <small>1.1.3 (2025-12-29)</small>
 
 * fix: card component type issues ([4cff4571923b7677e097ffe4348123e42b0222c4](https://github.com/PrabhuKathiresan/react-tailwind/commit/4cff4571923b7677e097ffe4348123e42b0222c4))
