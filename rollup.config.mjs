@@ -52,7 +52,7 @@ export default {
       sourceMap: true,
     }),
   ],
-  external: ['react', 'react-dom', 'tailwind-merge', '@headlessui/react'],
+  external: ['react', 'react-dom', 'tailwind-merge', '@headlessui/react', 'react-window'],
   onwarn(warning, warn) {
     if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && /use client/.test(warning.message)) {
       return
