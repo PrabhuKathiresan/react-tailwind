@@ -1,16 +1,16 @@
-import { type RowComponentProps } from 'react-window'
+import React from 'react'
+import { ListChildComponentProps } from 'react-window'
 import { buildClassName } from '../../utils/build-classname'
 import { get } from '../../utils/get'
 import { VirtualizedRowProps } from './VirtualizedDataTable.types'
 import { DataTableColumn } from '../DataTable'
 
-export const VirtualizedRow = ({
-  index,
-  style,
-  items,
-  columns,
-  gridTemplate,
-}: RowComponentProps<VirtualizedRowProps & { gridTemplate: string }>) => {
+interface RowData extends VirtualizedRowProps {
+  gridTemplate: string
+}
+
+export const VirtualizedRow = ({ index, style, data }: ListChildComponentProps<RowData>) => {
+  const { items, columns, gridTemplate } = data
   const item = items[index]
 
   return (

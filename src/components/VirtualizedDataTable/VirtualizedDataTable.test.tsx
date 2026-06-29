@@ -6,13 +6,13 @@ import { VirtualizedDataTable } from './VirtualizedDataTable'
 // Mock react-window List
 // ---------------------------------------
 jest.mock('react-window', () => ({
-  List: ({ rowCount, rowComponent: Row, rowProps }: any) => (
-    <div data-testid="mock-list">
-      {Array.from({ length: rowCount }).map((_, index) => (
-        <Row key={index} index={index} style={{}} {...rowProps} />
+  FixedSizeList: React.forwardRef(({ itemCount, itemData, children: Row, outerRef }: any, _ref) => (
+    <div data-testid="mock-list" ref={outerRef}>
+      {Array.from({ length: itemCount }).map((_, index) => (
+        <Row key={index} index={index} style={{}} data={itemData} />
       ))}
     </div>
-  ),
+  )),
 }))
 
 // ---------------------------------------
