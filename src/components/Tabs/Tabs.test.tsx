@@ -73,7 +73,7 @@ describe('<Tabs />', () => {
       const selected = tabButtons[0]
 
       // underline variant adds `.after:h-0.5` and blue underline
-      expect(selected.className).toMatch(/after:bg-blue-600/)
+      expect(selected.className).toMatch(/after:bg-\[var\(--ui-primary\)\]/)
     })
 
     test('segmented variant applies segmented selected styles', () => {
@@ -82,8 +82,7 @@ describe('<Tabs />', () => {
       const tabButtons = screen.getAllByRole('tab')
       const selected = tabButtons[0]
 
-      // segmented selected tab gets bg-blue-600 text-white
-      expect(selected.className).toMatch(/bg-blue-600/)
+      expect(selected.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
       expect(selected.className).toMatch(/text-white/)
     })
 
@@ -105,12 +104,12 @@ describe('<Tabs />', () => {
     const [tab1, tab2] = screen.getAllByRole('tab')
 
     // tab1 selected initially
-    expect(tab1.className).toMatch(/bg-blue-600/)
-    expect(tab2.className).not.toMatch(/bg-blue-600/)
+    expect(tab1.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
+    expect(tab2.className).not.toMatch(/bg-\[var\(--ui-primary\)\]/)
 
     await user.click(tab2)
 
-    expect(tab2.className).toMatch(/bg-blue-600/)
-    expect(tab1.className).not.toMatch(/bg-blue-600/)
+    expect(tab2.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
+    expect(tab1.className).not.toMatch(/bg-\[var\(--ui-primary\)\]/)
   })
 })

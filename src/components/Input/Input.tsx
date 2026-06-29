@@ -18,8 +18,8 @@ export function buildInputClass(
       ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-gray-200 dark:outline-gray-700'
       : 'bg-white dark:bg-gray-700 dark:text-white outline-gray-300 dark:outline-gray-600 dark:placeholder-gray-400 placeholder-gray-400',
     isFocusWithin
-      ? 'focus-within:outline-blue-600 dark:focus-within:outline-blue-600 focus-within:outline-2 focus-within:-outline-offset-2'
-      : 'focus:outline-blue-600 dark:focus:outline-blue-600 focus:outline-2 focus:-outline-offset-2',
+      ? 'focus-within:outline-[var(--ui-focus-ring)] focus-within:outline-2 focus-within:-outline-offset-2'
+      : 'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
     className,
   )
 }

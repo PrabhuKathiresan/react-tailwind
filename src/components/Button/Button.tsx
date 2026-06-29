@@ -11,27 +11,27 @@ import type { PolymorphicRef } from '../common-type'
 const THEMED_BTN_CLASS: ThemedButtonClass = {
   primary: {
     default:
-      'text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-blue-600 disabled:bg-blue-400 dark:disabled:bg-blue-500',
+      'text-white bg-[var(--ui-primary)] hover:bg-[var(--ui-primary-hover)] focus:outline-[var(--ui-primary-ring)] disabled:bg-[var(--ui-primary-disabled)]',
     outlined:
-      'text-blue-600 hover:text-white border border-blue-600 hover:bg-blue-600 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 focus:outline-blue-600 disabled:text-blue-400 disabled:border-blue-400',
+      'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus:outline-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)] disabled:border-[var(--ui-primary-disabled)]',
     plain:
-      'text-blue-600 hover:bg-black/5 dark:text-blue-400 dark:hover:bg-gray-700 focus:outline-blue-600 disabled:text-blue-400',
+      'text-[var(--ui-primary-text)] hover:bg-black/5 dark:hover:bg-gray-700 focus:outline-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
   },
   danger: {
     default:
-      'text-white bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-red-600 disabled:bg-red-400 dark:disabled:bg-red-500',
+      'text-white bg-[var(--ui-danger)] hover:bg-[var(--ui-danger-hover)] focus:outline-[var(--ui-danger-ring)] disabled:bg-[var(--ui-danger-disabled)]',
     outlined:
-      'text-red-600 hover:text-white border border-red-600 hover:bg-red-600 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 focus:outline-red-600 disabled:text-red-400 disabled:border-red-400',
+      'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus:outline-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)] disabled:border-[var(--ui-danger-disabled)]',
     plain:
-      'text-red-600 hover:bg-black/5 dark:text-red-400 dark:hover:bg-gray-700 focus:outline-red-600 disabled:text-red-400',
+      'text-[var(--ui-danger-text)] hover:bg-black/5 dark:hover:bg-gray-700 focus:outline-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
   },
   secondary: {
     default:
-      'text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:outline-blue-600 disabled:bg-gray-200 dark:disabled:bg-gray-700',
+      'text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:outline-[var(--ui-focus-ring)] disabled:bg-gray-200 dark:disabled:bg-gray-700',
     outlined:
-      'text-gray-700 hover:text-white border border-gray-500 hover:bg-gray-700 dark:border-gray-500 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-blue-600 disabled:text-gray-400 disabled:border-gray-400',
+      'text-gray-700 hover:text-white border border-gray-500 hover:bg-gray-700 dark:border-gray-500 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-gray-400',
     plain:
-      'text-gray-700 hover:bg-black/5 dark:text-gray-200 dark:hover:bg-gray-700 focus:outline-blue-600 disabled:text-gray-400',
+      'text-gray-700 hover:bg-black/5 dark:text-gray-200 dark:hover:bg-gray-700 focus:outline-[var(--ui-focus-ring)] disabled:text-gray-400',
   },
 }
 

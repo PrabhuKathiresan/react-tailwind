@@ -33,7 +33,7 @@ describe('Toast - icons by type', () => {
     const className =
       typeof icon!.className === 'string' ? icon!.className : (icon!.className as any).baseVal
 
-    expect(className).toMatch(/text-(green|red|blue|yellow)-/)
+    expect(className).toMatch(/text-\[var\(--ui-/)
   })
 })
 
@@ -53,7 +53,7 @@ describe('<Toast />', () => {
 
     const container = screen.getByRole('status')
     expect(container.className).toMatch(/border-t-4/)
-    expect(container.className).toMatch(/border-red-600/)
+    expect(container.className).toMatch(/border-\[var\(--ui-danger\)\]/)
   })
 
   test('applies custom className', () => {

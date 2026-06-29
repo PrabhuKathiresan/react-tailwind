@@ -16,10 +16,13 @@ const AlertTypeIconMap = {
 }
 
 const TypeClassMap = {
-  success: 'bg-green-50 ring-green-600/20 text-green-700',
-  danger: 'bg-red-50 ring-red-600/20 text-red-700',
-  warning: 'bg-orange-50 ring-orange-600/20 text-orange-700',
-  info: 'bg-blue-50 ring-blue-600/20 text-blue-700',
+  success:
+    'bg-[var(--ui-success-light)] ring-[var(--ui-success-ring-subtle)] text-[var(--ui-success-text)]',
+  danger:
+    'bg-[var(--ui-danger-light)]  ring-[var(--ui-danger-ring-subtle)]  text-[var(--ui-danger-text)]',
+  warning:
+    'bg-[var(--ui-warning-light)] ring-[var(--ui-warning-ring-subtle)] text-[var(--ui-warning-text)]',
+  info: 'bg-[var(--ui-info-light)]    ring-[var(--ui-info-ring-subtle)]    text-[var(--ui-info-text)]',
 }
 
 export const Alert: React.FC<AlertProps> = (props) => {
