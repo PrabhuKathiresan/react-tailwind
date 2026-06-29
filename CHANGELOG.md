@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## 1.2.0 (2026-06-29)
+
+* Merge pull request #4 from PrabhuKathiresan/css-tokenization ([ed513588a2a5b2d20984c828c26340ca553422ac](https://github.com/PrabhuKathiresan/react-tailwind/commit/ed513588a2a5b2d20984c828c26340ca553422ac)), closes [#4](https://github.com/PrabhuKathiresan/react-tailwind/issues/4)
+* Merge remote-tracking branch 'origin/main' into css-tokenization ([a909ae4339de9daa09cb949b97dc33dc6709f97a](https://github.com/PrabhuKathiresan/react-tailwind/commit/a909ae4339de9daa09cb949b97dc33dc6709f97a))
+* Merge remote-tracking branch 'origin/main' into css-tokenization ([9b28676b346b8cd142c0d87f5f8e550a775909f4](https://github.com/PrabhuKathiresan/react-tailwind/commit/9b28676b346b8cd142c0d87f5f8e550a775909f4))
+* Merge remote-tracking branch 'origin/main' into css-tokenization ([dc87781cedf33e878569b88f5d0f143178efd728](https://github.com/PrabhuKathiresan/react-tailwind/commit/dc87781cedf33e878569b88f5d0f143178efd728))
+* ci: add PR checks workflow ([c55c1e5acc034b3876b1a34bcf413222034e38ce](https://github.com/PrabhuKathiresan/react-tailwind/commit/c55c1e5acc034b3876b1a34bcf413222034e38ce))
+* feat: introduce CSS variable design tokens for theming ([ffed9142bab046c69a59fe45a09cd339c5a3f7e4](https://github.com/PrabhuKathiresan/react-tailwind/commit/ffed9142bab046c69a59fe45a09cd339c5a3f7e4))
+
 ## <small>1.1.7 (2026-06-29)</small>
 
 * fix: correct react-window API usage in VirtualizedDataTable ([487439c6c4e27c70b938b1734fce865a466de5a1](https://github.com/PrabhuKathiresan/react-tailwind/commit/487439c6c4e27c70b938b1734fce865a466de5a1))
