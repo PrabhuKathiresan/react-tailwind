@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import { RadioProps } from './Radio.types'
@@ -19,7 +19,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     ...rest
   } = props
 
-  const radioId = id ?? name ?? 'checkbox-' + Math.random()
+  const generatedId = useId()
+  const radioId = id ?? name ?? generatedId
 
   return (
     <div className={buildClassName(wrapperClass)}>
@@ -32,7 +33,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
             name={name}
             type="radio"
             disabled={disabled}
-            aria-selected={rest.checked}
+            aria-checked={rest.checked}
             className={buildClassName(
               'peer transition-all col-start-1 row-start-1 appearance-none shrink-0 size-4.5 rounded-full',
               'border focus:ring-2 focus:ring-offset-2',

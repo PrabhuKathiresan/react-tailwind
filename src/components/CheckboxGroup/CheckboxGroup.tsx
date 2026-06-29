@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ChangeEvent } from 'react'
+import { useId, useMemo, type ChangeEvent } from 'react'
 import { Checkbox } from '../Checkbox'
 import { Label } from '../Label'
 import { BodyText } from '../BodyText'
@@ -19,18 +19,15 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
     inline = false,
   } = props
 
-  const [items, setItems] = useState<CheckboxGroupItem<T>[]>([])
-  const groupId = useId() // unique per group
+  const groupId = useId()
 
-  /**
-   * Normalize options (strings → {label, value})
-   */
-  useEffect(() => {
-    const normalized = options.map((opt) =>
-      typeof opt === 'string' ? ({ label: opt, value: opt } as CheckboxGroupItem<T>) : opt,
-    )
-    setItems(normalized)
-  }, [options])
+  const items = useMemo(
+    () =>
+      options.map((opt) =>
+        typeof opt === 'string' ? ({ label: opt, value: opt } as CheckboxGroupItem<T>) : opt,
+      ),
+    [options],
+  )
 
   /**
    * Group-level change handler. Converts raw checkbox change events

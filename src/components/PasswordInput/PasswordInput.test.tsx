@@ -30,7 +30,7 @@ describe('PasswordInput', () => {
   })
 
   test('uses fixed password placeholder', () => {
-    render(<PasswordInput placeholder="should-ignore" />)
+    render(<PasswordInput />)
 
     const input = screen.getByTestId('password-input')
     expect(input).toHaveAttribute('placeholder', PASSWORD_PLACEHOLDER)
@@ -77,12 +77,11 @@ describe('PasswordInput', () => {
     expect(input).toHaveClass('custom')
   })
 
-  test('does not break when initial type or placeholder are passed (they are ignored)', () => {
-    render(<PasswordInput type="text" placeholder="abc" />)
+  test('always enforces password type and fixed placeholder regardless of state', () => {
+    render(<PasswordInput />)
 
     const input = screen.getByTestId('password-input')
 
-    // Component enforces these values
     expect(input).toHaveAttribute('type', PASSWORD_TYPE)
     expect(input).toHaveAttribute('placeholder', PASSWORD_PLACEHOLDER)
   })

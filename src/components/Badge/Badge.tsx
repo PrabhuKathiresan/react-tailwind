@@ -44,7 +44,15 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
         <XIcon
           className="size-5 px-0.5 mr-1 hover:bg-slate-200 dark:hover:bg-white/10 rounded-sm cursor-pointer text-gray-600 dark:text-gray-300"
           role="button"
+          tabIndex={0}
+          aria-label="Remove"
           onClick={() => onRemove()}
+          onKeyDown={(e: React.KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              onRemove()
+            }
+          }}
         />
       ) : null}
     </TextContent>

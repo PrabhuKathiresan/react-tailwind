@@ -20,6 +20,10 @@ export const useDebounce = <T,>(value: T, delay: number): T => {
 export const useDebounceFn = (fn: (...args: any[]) => void, ms: number) => {
   const timeout = useRef<any>(null)
 
+  useEffect(() => {
+    return () => clearTimeout(timeout.current)
+  }, [])
+
   return useCallback(
     (...args: any[]) => {
       clearTimeout(timeout.current)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useMemo } from 'react'
 import { Radio } from '../Radio'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
@@ -20,18 +20,13 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     showErrorMessage,
     onChange,
   } = props
-  const [items, setItems] = useState<RadionGroupItem[]>([])
-
-  useEffect(() => {
-    setItems(() => {
-      return options?.map((option) => {
-        if (typeof option === 'string') {
-          return { label: option, value: option }
-        }
-        return option
-      })
-    })
-  }, [options])
+  const items = useMemo(
+    () =>
+      options?.map((option) =>
+        typeof option === 'string' ? { label: option, value: option } : option,
+      ) ?? [],
+    [options],
+  )
 
   return (
     <div className={buildClassName(containerClass)}>

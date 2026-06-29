@@ -193,20 +193,23 @@ export const SelectBox = forwardRef(
       [onAdd, handleOnChangeInternal],
     )
 
-    const handleSearch = async (searchString: string) => {
-      try {
-        setOptionsLoading(true)
-        await props.onSearch?.(searchString)
-      } catch (err) {
-        console.error('Error loading options:', err)
-      } finally {
-        setOptionsLoading(false)
-      }
-    }
+    const handleSearch = useCallback(
+      async (searchString: string) => {
+        try {
+          setOptionsLoading(true)
+          await props.onSearch?.(searchString)
+        } catch (err) {
+          console.error('Error loading options:', err)
+        } finally {
+          setOptionsLoading(false)
+        }
+      },
+      [props.onSearch],
+    )
 
     useEffect(() => {
       if (async && debouncedQuery) handleSearch(debouncedQuery)
-    }, [debouncedQuery, async])
+    }, [debouncedQuery, async, handleSearch])
 
     return (
       <div

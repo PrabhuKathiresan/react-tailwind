@@ -120,6 +120,11 @@ export const Dialog: React.FC<DialogProps> = ({
     }
   }, [open, onClose, closeOnEscape])
 
+  // Move focus into the panel when the dialog opens
+  useEffect(() => {
+    if (open) panelRef.current?.focus()
+  }, [open])
+
   // Prevent scroll bleed but DO NOT lock scrolling for entire page
   useEffect(() => {
     if (!open) return
@@ -147,8 +152,11 @@ export const Dialog: React.FC<DialogProps> = ({
       {/* Panel */}
       <div
         ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
         className={buildClassName(
-          'relative',
+          'relative outline-none',
           getAnimationClass(position),
           getPanelClass(position, size, panelClass),
         )}

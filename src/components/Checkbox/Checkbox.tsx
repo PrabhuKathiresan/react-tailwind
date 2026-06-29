@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import type { CheckboxProps } from './Checkbox.types'
@@ -19,7 +19,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     ...rest
   } = props
 
-  const checkboxId = id ?? name ?? 'checkbox-' + Math.random()
+  const generatedId = useId()
+  const checkboxId = id ?? name ?? generatedId
 
   return (
     <div className={buildClassName(wrapperClass)}>
