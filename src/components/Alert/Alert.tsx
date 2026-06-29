@@ -51,6 +51,7 @@ export const Alert: React.FC<AlertProps> = (props) => {
       {removable && (
         <Button
           iconOnly
+          aria-label="Dismiss alert"
           size="xs"
           variant="plain"
           theme="secondary"

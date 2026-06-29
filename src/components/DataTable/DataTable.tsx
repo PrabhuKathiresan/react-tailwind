@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   EmptyTableRow,
   Table,
@@ -60,10 +60,15 @@ export const DataTable: React.FC<DataTableProps> = ({
   layout = 'auto',
 }) => {
   const internalSorting = useRef<SortQuery>({})
+  const [sortedItems, setSortedItems] = useState(items)
+
+  useEffect(() => {
+    setSortedItems(items)
+  }, [items])
 
   const doAutoSort = (column: DataTableColumn) => {
     internalSorting.current = updateSortQuery(internalSorting.current, column.name, column.type)
-    autoSortItems(items, column, internalSorting.current[column.name])
+    setSortedItems(autoSortItems(items, column, internalSorting.current[column.name]))
   }
 
   const handleSort = (column: DataTableColumn) => {
@@ -113,10 +118,10 @@ export const DataTable: React.FC<DataTableProps> = ({
 
           {/* Body */}
           <TableBody loading={loading} colSize={columns.length} rowSize={pagination?.limit || 5}>
-            {!loading && items.length === 0 ? (
+            {!loading && sortedItems.length === 0 ? (
               <EmptyTableRow colSpan={columns.length}>{emptyMessage}</EmptyTableRow>
             ) : (
-              items.map((item) => (
+              sortedItems.map((item) => (
                 <TableRow key={item.id} className="group">
                   {columns.map((column) => (
                     <TableCell

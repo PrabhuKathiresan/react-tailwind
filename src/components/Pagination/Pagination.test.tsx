@@ -48,14 +48,14 @@ describe('Pagination Component', () => {
   it('Prev button disabled on first page', () => {
     render(<Pagination {...baseProps} page={1} />)
 
-    const prev = screen.getByTestId('ellipsis-next-btn') // desktop Prev
+    const prev = screen.getByTestId('ellipsis-prev-btn')
     expect(prev).toBeDisabled()
   })
 
   it('Next button disabled on last page', () => {
     render(<Pagination {...baseProps} page={10} />)
 
-    const next = screen.getByTestId('ellipsis-prev-btn') // desktop Next
+    const next = screen.getByTestId('ellipsis-next-btn')
     expect(next).toBeDisabled()
   })
 
@@ -72,10 +72,10 @@ describe('Pagination Component', () => {
   it('desktop prev/next buttons trigger navigation', () => {
     render(<Pagination {...baseProps} page={5} />)
 
-    fireEvent.click(screen.getByTestId('ellipsis-next-btn'))
+    fireEvent.click(screen.getByTestId('ellipsis-prev-btn'))
     expect(baseProps.onChange).toHaveBeenCalledWith({ page: 4 })
 
-    fireEvent.click(screen.getByTestId('ellipsis-prev-btn'))
+    fireEvent.click(screen.getByTestId('ellipsis-next-btn'))
     expect(baseProps.onChange).toHaveBeenCalledWith({ page: 6 })
   })
 

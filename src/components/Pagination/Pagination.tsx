@@ -82,7 +82,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 variant="plain"
                 disabled={isFirstPage}
                 onClick={() => handlePageChange(currentPage - 1)}
-                data-testid="ellipsis-next-btn"
+                data-testid="ellipsis-prev-btn"
               >
                 Prev
               </Button>
@@ -120,7 +120,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 variant="plain"
                 disabled={isLastPage}
                 onClick={() => handlePageChange(currentPage + 1)}
-                data-testid="ellipsis-prev-btn"
+                data-testid="ellipsis-next-btn"
               >
                 Next
               </Button>
@@ -185,7 +185,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             variant="plain"
             disabled={isFirstPage}
             onClick={() => handlePageChange(currentPage - 1)}
-            data-testid="next-btn"
+            data-testid="prev-btn"
           >
             <span className="sr-only">Previous</span>
             <ChevronLeftIcon className="size-4" />
@@ -208,7 +208,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             variant="plain"
             disabled={isLastPage}
             onClick={() => handlePageChange(currentPage + 1)}
-            data-testid="prev-btn"
+            data-testid="next-btn"
           >
             <span className="sr-only">Next</span>
             <ChevronRightIcon className="size-4" />

@@ -95,10 +95,10 @@ describe('DataTable', () => {
     expect(onSort).toHaveBeenCalledWith(columns[0])
   })
 
-  it('auto-sort fallback does not crash', () => {
+  it('auto-sort fallback sorts ascending on first click', () => {
     render(<DataTable items={rows} columns={columns} />)
     fireEvent.click(screen.getByText('ID'))
-    expect(screen.getAllByRole('cell')[0]).toHaveTextContent('3')
+    expect(screen.getAllByRole('cell')[0]).toHaveTextContent('1')
   })
 
   it('applies sticky classes', () => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import { isEmpty } from '../../utils/is-empty'
@@ -28,39 +28,56 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
   // State for UI styling
   const [activeThumbState, setActiveThumbState] = useState<'min' | 'max' | null>(null)
 
+  // Keep prop values in refs so drag handlers always use latest values (no stale closure)
+  const valueMinRef = useRef(valueMin)
+  const valueMaxRef = useRef(valueMax)
+  const onChangeRef = useRef(onChange)
+  valueMinRef.current = valueMin
+  valueMaxRef.current = valueMax
+  onChangeRef.current = onChange
+
   const hasError = !isEmpty(error)
   const percent = (v: number) => ((v - min) / (max - min)) * 100
+
+  // Stable handler references registered on window — these never change identity
+  // so removeEventListener always finds the right listener to remove.
+  const stablePointerMoveRef = useRef((e: PointerEvent) => {
+    if (!trackRef.current || !activeThumbRef.current) return
+    const rect = trackRef.current.getBoundingClientRect()
+    const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width)
+    const rawVal = min + (x / rect.width) * (max - min)
+    if (activeThumbRef.current === 'min') {
+      onChangeRef.current(Math.min(rawVal, valueMaxRef.current - 1), valueMaxRef.current)
+    } else {
+      onChangeRef.current(valueMinRef.current, Math.max(rawVal, valueMinRef.current + 1))
+    }
+  })
+
+  const stablePointerUpRef = useRef(() => {
+    activeThumbRef.current = null
+    setActiveThumbState(null)
+    window.removeEventListener('pointermove', stablePointerMoveRef.current)
+    window.removeEventListener('pointerup', stablePointerUpRef.current)
+  })
+
+  // Remove listeners on unmount in case a drag is in progress
+  useEffect(() => {
+    const move = stablePointerMoveRef.current
+    const up = stablePointerUpRef.current
+    return () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+    }
+  }, [])
 
   // ---------------------------------------------
   // Pointer Move (drag)
   // ---------------------------------------------
-  const pointerMoveHandler = (e: PointerEvent) => {
-    if (!trackRef.current || !activeThumbRef.current) return
-
-    const rect = trackRef.current.getBoundingClientRect()
-    const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width)
-    const rawVal = min + (x / rect.width) * (max - min)
-
-    if (activeThumbRef.current === 'min') {
-      onChange(Math.min(rawVal, valueMax - 1), valueMax)
-    } else {
-      onChange(valueMin, Math.max(rawVal, valueMin + 1))
-    }
-  }
-
-  const pointerUpHandler = () => {
-    activeThumbRef.current = null
-    setActiveThumbState(null)
-    window.removeEventListener('pointermove', pointerMoveHandler)
-    window.removeEventListener('pointerup', pointerUpHandler)
-  }
-
-  const startDrag = (thumb: 'min' | 'max') => (e: React.PointerEvent) => {
+  const startDrag = (thumb: 'min' | 'max') => (_e: React.PointerEvent) => {
     activeThumbRef.current = thumb
     setActiveThumbState(thumb)
-
-    window.addEventListener('pointermove', pointerMoveHandler)
-    window.addEventListener('pointerup', pointerUpHandler)
+    window.addEventListener('pointermove', stablePointerMoveRef.current)
+    window.addEventListener('pointerup', stablePointerUpRef.current)
   }
 
   // ---------------------------------------------

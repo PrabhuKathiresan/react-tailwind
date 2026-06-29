@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { Input, type InputProps } from '../Input'
 import { Button } from '../Button'
 
-export interface PasswordInputProps extends Omit<InputProps, 'rightGroup'> {}
+export interface PasswordInputProps
+  extends Omit<InputProps, 'rightGroup' | 'type' | 'placeholder'> {}
 export const PASSWORD_TYPE = 'password'
 export const PASSWORD_PLACEHOLDER = '••••••••••'
 
 export const PasswordInput: React.FC<PasswordInputProps> = (props) => {
-  const { type, placeholder, ...inputProps } = props
+  const { ...inputProps } = props
   const [showPassword, setShowPassword] = useState(false)
 
   return (

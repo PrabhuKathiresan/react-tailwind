@@ -1,6 +1,7 @@
 import React, {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
   useRef,
@@ -47,43 +48,54 @@ export const ToastProvider: React.FC<{
     }
   }
 
-  const scheduleClose = (toast: IToast) => {
-    if (!toast.autoClose) return
-
-    clearTimer(toast.id)
-
-    const timeout = setTimeout(() => {
-      closeToast(toast.id)
-    }, toast.duration)
-
-    timeoutRefs.current.set(toast.id, timeout)
-  }
-
-  const showToast = useCallback((message: string, options?: ToastOptions) => {
-    const id = ++toastCounter
-
-    const newToast: IToast = {
-      id,
-      message,
-      type: options?.type ?? 'info',
-      duration: options?.duration ?? 3000,
-      autoClose: options?.autoClose ?? true,
-      pauseOnHover: options?.pauseOnHover ?? true,
-    }
-
-    setToasts((prev) => {
-      const updated = [...prev, newToast]
-      if (updated.length > MAX_TOASTS) updated.shift()
-      return updated
-    })
-
-    scheduleClose(newToast)
-  }, [])
-
   const closeToast = useCallback((id: number) => {
     clearTimer(id)
     setToasts((prev) => prev.filter((t) => t.id !== id))
   }, [])
+
+  const scheduleClose = useCallback(
+    (toast: IToast) => {
+      if (!toast.autoClose) return
+
+      clearTimer(toast.id)
+
+      const timeout = setTimeout(() => {
+        closeToast(toast.id)
+      }, toast.duration)
+
+      timeoutRefs.current.set(toast.id, timeout)
+    },
+    [closeToast],
+  )
+
+  useEffect(() => {
+    const refs = timeoutRefs.current
+    return () => refs.forEach((id) => clearTimeout(id))
+  }, [])
+
+  const showToast = useCallback(
+    (message: string, options?: ToastOptions) => {
+      const id = ++toastCounter
+
+      const newToast: IToast = {
+        id,
+        message,
+        type: options?.type ?? 'info',
+        duration: options?.duration ?? 3000,
+        autoClose: options?.autoClose ?? true,
+        pauseOnHover: options?.pauseOnHover ?? true,
+      }
+
+      setToasts((prev) => {
+        const updated = [...prev, newToast]
+        if (updated.length > MAX_TOASTS) updated.shift()
+        return updated
+      })
+
+      scheduleClose(newToast)
+    },
+    [scheduleClose],
+  )
 
   return (
     <ToastContext.Provider value={{ showToast, closeToast }}>
