@@ -16,31 +16,24 @@ import { ToastProps } from './Toast.types'
  * Icons for each toast type
  */
 const iconMap = {
-  success: <CheckCircle className="size-5 text-green-600 dark:text-green-400" />,
-  error: <AlertCircle className="size-5 text-red-600 dark:text-red-400" />,
-  info: <Info className="size-5 text-blue-600 dark:text-blue-400" />,
-  warning: <AlertTriangle className="size-5 text-yellow-600 dark:text-yellow-400" />,
+  success: <CheckCircle className="size-5 text-[var(--ui-success)]" />,
+  error: <AlertCircle className="size-5 text-[var(--ui-danger)]" />,
+  info: <Info className="size-5 text-[var(--ui-info)]" />,
+  warning: <AlertTriangle className="size-5 text-[var(--ui-warning)]" />,
 }
 
-/**
- * Subtle icon + text color adjustments
- */
 const textColorMap = {
-  success: 'text-green-900 dark:text-green-200',
-  error: 'text-red-900 dark:text-red-200',
-  info: 'text-blue-900 dark:text-blue-200',
-  warning: 'text-yellow-900 dark:text-yellow-200',
+  success: 'text-[var(--ui-success-text)]',
+  error: 'text-[var(--ui-danger-text)]',
+  info: 'text-[var(--ui-info-text)]',
+  warning: 'text-[var(--ui-warning-text)]',
 }
 
-/**
- * Pleasant colored *top border only*
- * No background color — soft neutral surface
- */
 const borderStyle = {
-  success: 'border-t-4 border-green-600 dark:border-green-400',
-  error: 'border-t-4 border-red-600 dark:border-red-400',
-  info: 'border-t-4 border-blue-600 dark:border-blue-400',
-  warning: 'border-t-4 border-yellow-600 dark:border-yellow-400',
+  success: 'border-t-4 border-[var(--ui-success)]',
+  error: 'border-t-4 border-[var(--ui-danger)]',
+  info: 'border-t-4 border-[var(--ui-info)]',
+  warning: 'border-t-4 border-[var(--ui-warning)]',
 }
 
 export const Toast: React.FC<ToastProps & { isTop?: boolean }> = ({

@@ -1,3 +1,5 @@
+import './styles/tokens.css'
+
 export * from './components/Alert'
 export * from './components/Badge'
 export * from './components/Banner'

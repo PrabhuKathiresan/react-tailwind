@@ -6,14 +6,14 @@ import { TextContent } from '../TextContent'
 
 const ThemeClassMap = {
   success:
-    'bg-green-50 ring-green-600/20 text-green-700 dark:bg-green-600 dark:text-green-50 dark:ring-green-400/20',
+    'bg-[var(--ui-success-light)] text-[var(--ui-success-text)] ring-[var(--ui-success-ring-subtle)]',
   danger:
-    'bg-red-50 dark:bg-red-600 text-red-700 dark:text-red-50 ring-red-600/20 dark:ring-red-400/20',
+    'bg-[var(--ui-danger-light)] text-[var(--ui-danger-text)] ring-[var(--ui-danger-ring-subtle)]',
   warning:
-    'bg-yellow-50 dark:bg-yellow-600 text-yellow-700 dark:text-yellow-50 ring-yellow-600/20 dark:ring-yellow-400/20',
-  info: 'bg-blue-50 dark:bg-blue-600 text-blue-700 dark:text-blue-50 ring-blue-600/20 dark:ring-blue-400/20',
+    'bg-[var(--ui-warning-light)] text-[var(--ui-warning-text)] ring-[var(--ui-warning-ring-subtle)]',
+  info: 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)]',
   secondary:
-    'bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-50 ring-gray-600/20 dark:ring-gray-400/20',
+    'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 ring-[var(--ui-secondary-ring-subtle)]',
 }
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {

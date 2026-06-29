@@ -41,7 +41,7 @@ describe('Button Component', () => {
       </Button>,
     )
     const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/border-red-600/)
+    expect(btn.className).toMatch(/border-\[var\(--ui-danger\)\]/)
   })
 
   it('applies size classes based on "size" prop', () => {

@@ -38,12 +38,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
               'peer transition-all col-start-1 row-start-1 appearance-none shrink-0 size-4.5 rounded-full',
               'border focus:ring-2 focus:ring-offset-2',
               'checked:border-5 checked:bg-white',
-              'focus:ring-blue-500 checked:focus:ring-blue-600 dark:focus:ring-offset-gray-800',
+              'focus:ring-[var(--ui-focus-ring)] dark:focus:ring-offset-gray-800',
               disabled
                 ? 'border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 pointer-events-none'
                 : buildClassName(
                     'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500',
-                    'checked:border-blue-600 checked:hover:border-blue-600 dark:checked:border-blue-600 dark:checked:hover:border-blue-600',
+                    'checked:border-[var(--ui-primary)] checked:hover:border-[var(--ui-primary)]',
                   ),
               className,
             )}

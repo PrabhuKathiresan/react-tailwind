@@ -43,8 +43,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
             className={buildClassName(
               'peer size-4.5 cursor-pointer transition-all appearance-none rounded',
               'border focus:ring-2 focus:ring-offset-2',
-              'checked:bg-blue-600 checked:border-blue-600',
-              'focus:ring-blue-500 dark:focus:ring-offset-gray-900',
+              'checked:bg-[var(--ui-primary)] checked:border-[var(--ui-primary)]',
+              'focus:ring-[var(--ui-focus-ring)] dark:focus:ring-offset-gray-900',
               disabled
                 ? 'border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 pointer-events-none'
                 : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md',
