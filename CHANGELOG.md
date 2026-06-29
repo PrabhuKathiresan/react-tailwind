@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.7 (2026-06-29)</small>
+
+* fix: correct react-window API usage in VirtualizedDataTable ([487439c6c4e27c70b938b1734fce865a466de5a1](https://github.com/PrabhuKathiresan/react-tailwind/commit/487439c6c4e27c70b938b1734fce865a466de5a1))
+* chore: added package-lock updates ([33b51f557338f96a56f54e47dfd5173dae5033f4](https://github.com/PrabhuKathiresan/react-tailwind/commit/33b51f557338f96a56f54e47dfd5173dae5033f4))
+* chore: move react-window to peerDeps and semantic-release/github to devDeps ([9d6f6649c4d87696164ee71d4a99c3d26c62498a](https://github.com/PrabhuKathiresan/react-tailwind/commit/9d6f6649c4d87696164ee71d4a99c3d26c62498a))
+* Merge pull request #3 from PrabhuKathiresan/fix-dependencies ([dc48d108bbf92f6850b8233d257c7aa8d8181b77](https://github.com/PrabhuKathiresan/react-tailwind/commit/dc48d108bbf92f6850b8233d257c7aa8d8181b77)), closes [#3](https://github.com/PrabhuKathiresan/react-tailwind/issues/3)
+
 ## <small>1.1.6 (2026-06-29)</small>
 
 * Merge pull request #1 from PrabhuKathiresan/fix-major-ui-bugs ([4915a88cfafd69647b055f9b4304ab51664cd64e](https://github.com/PrabhuKathiresan/react-tailwind/commit/4915a88cfafd69647b055f9b4304ab51664cd64e)), closes [#1](https://github.com/PrabhuKathiresan/react-tailwind/issues/1)

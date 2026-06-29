@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef } from 'react'
-import { List } from 'react-window'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import { FixedSizeList as List } from 'react-window'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
 import { VirtualizedRow } from './VirtualizedRow'
@@ -27,16 +27,21 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
   maxHeight = 400,
 }) => {
   const scrollRef = useRef<any>(null)
+  const outerRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement | null>(null)
 
   const gridTemplate = useGridTemplate(columns)
 
-  /** Sync body → header scroll */
-  const handleScrollSync = (scrollOffset: number) => {
-    if (headerRef.current) {
-      headerRef.current.scrollLeft = scrollOffset
+  /** Sync horizontal scroll of the virtualized body → header */
+  useEffect(() => {
+    const el = outerRef.current
+    if (!el) return
+    const handler = () => {
+      if (headerRef.current) headerRef.current.scrollLeft = el.scrollLeft
     }
-  }
+    el.addEventListener('scroll', handler)
+    return () => el.removeEventListener('scroll', handler)
+  }, [])
 
   const handleSort = useCallback(
     (column: DataTableColumn) => {
@@ -164,22 +169,17 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
       >
         {Header}
 
-        <div
-          style={{
-            height: maxHeight,
-            overflowY: 'auto',
-            overflowX: 'auto',
-          }}
+        <List
+          ref={scrollRef}
+          outerRef={outerRef}
+          height={maxHeight}
+          width="100%"
+          itemCount={items.length}
+          itemSize={rowHeight}
+          itemData={{ items, columns, gridTemplate }}
         >
-          <List
-            listRef={scrollRef}
-            rowComponent={VirtualizedRow}
-            rowCount={items.length}
-            rowHeight={rowHeight}
-            rowProps={{ items, columns, gridTemplate }}
-            onScroll={(e) => handleScrollSync(e.currentTarget.scrollLeft)}
-          />
-        </div>
+          {VirtualizedRow}
+        </List>
       </div>
     </div>
   )
