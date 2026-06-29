@@ -30,7 +30,13 @@
     "@headlessui/react": "^2.2.9",
     "react": ">=18",
     "react-dom": ">=18",
+    "react-window": "^1.8.0",
     "tailwind-merge": "^3.3.1"
+  },
+  "peerDependenciesMeta": {
+    "react-window": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^20.0.0",
@@ -68,6 +74,7 @@
     "rollup": "^4.24.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "@semantic-release/github": "~10.3.5",
     "semantic-release": "23.0.0",
     "ts-jest": "^29.4.5",
     "tslib": "^2.8.1",
@@ -106,8 +113,5 @@
       "conventional-changelog-writer": "6.0.1"
     }
   },
-  "dependencies": {
-    "@semantic-release/github": "~10.3.5",
-    "react-window": "^2.2.3"
-  }
+  "dependencies": {}
 }
