@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.1.6 (2026-06-29)</small>
+
+* Merge pull request #1 from PrabhuKathiresan/fix-major-ui-bugs ([4915a88cfafd69647b055f9b4304ab51664cd64e](https://github.com/PrabhuKathiresan/react-tailwind/commit/4915a88cfafd69647b055f9b4304ab51664cd64e)), closes [#1](https://github.com/PrabhuKathiresan/react-tailwind/issues/1)
+* fix: correctness bugs, accessibility and hook cleanup ([e97a53a6d023481688f64aab368a3163ee146922](https://github.com/PrabhuKathiresan/react-tailwind/commit/e97a53a6d023481688f64aab368a3163ee146922))
+
 ## <small>1.1.5 (2026-01-02)</small>
 
 * fix: expose use-is-tablet-or-mobile hook ([15461b500c25dcf926af57b38c9aed37b0380e31](https://github.com/PrabhuKathiresan/react-tailwind/commit/15461b500c25dcf926af57b38c9aed37b0380e31))
