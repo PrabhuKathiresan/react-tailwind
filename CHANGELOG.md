@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## 1.3.0 (2026-07-03)
+
+* Merge pull request #5 from PrabhuKathiresan/tab-improvements ([8a624ade883aad0c0cc4ecc2314872cd6c3bed62](https://github.com/PrabhuKathiresan/react-tailwind/commit/8a624ade883aad0c0cc4ecc2314872cd6c3bed62)), closes [#5](https://github.com/PrabhuKathiresan/react-tailwind/issues/5)
+* feat(Tabs): add controlled mode, orientation, stretch, per-item overrides, and icon support ([0fb653ef5a04def7d8ff0dc63c1b5310a8f53cb5](https://github.com/PrabhuKathiresan/react-tailwind/commit/0fb653ef5a04def7d8ff0dc63c1b5310a8f53cb5))
+
 ## 1.2.0 (2026-06-29)
 
 * Merge pull request #4 from PrabhuKathiresan/css-tokenization ([ed513588a2a5b2d20984c828c26340ca553422ac](https://github.com/PrabhuKathiresan/react-tailwind/commit/ed513588a2a5b2d20984c828c26340ca553422ac)), closes [#4](https://github.com/PrabhuKathiresan/react-tailwind/issues/4)
