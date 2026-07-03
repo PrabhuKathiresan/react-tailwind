@@ -8,53 +8,58 @@ export type TabsItem = {
   label: ReactNode
   /** Content rendered inside the TabPanel for this tab */
   content: ReactNode
-  /** Optional icon (ReactNode) shown before the label */
+  /** Optional icon rendered before the label */
   icon?: ReactNode
-  /** optional id or key; if missing index will be used */
+  /** Unique key for this tab; falls back to index when omitted */
   id?: string | number
+  /** Prevents this tab from being selected */
+  disabled?: boolean
+  /** Extra classes applied to this specific tab button */
+  tabClass?: string
+  /** Override the default panel className for this specific tab */
+  panelClass?: string
 }
 
 /**
  * Tabs component props
  */
 export interface TabsProps {
-  /**
-   * Tabs data (label + panel). Order defines visual order.
-   */
+  /** Tab data array. Order defines visual order. */
   tabs: TabsItem[]
 
   /**
-   * Variant for the tab list's appearance.
-   * Only supported values: "underline" | "segmented" | "solid"
-   *
-   * - "underline" (default): modern underline indicator under active tab
-   * - "segmented": segmented pill style where selected tab looks like a pill
-   * - "solid": solid nav tabs (selected tab has solid background)
+   * Visual style of the tab list.
+   * - "underline" (default): active tab shows a bottom indicator line
+   * - "segmented": active tab renders as a filled pill
+   * - "solid": active tab renders with a solid block background
    */
   variant?: 'underline' | 'segmented' | 'solid'
 
-  /**
-   * Starting tab index (controlled by TabGroup defaultIndex)
-   */
+  /** Initial selected index (uncontrolled) */
   defaultIndex?: number
 
+  /** Controlled selected index — pair with onChange */
+  selectedIndex?: number
+
+  /** Called with the new index whenever the selected tab changes */
+  onChange?: (index: number) => void
+
   /**
-   * Extra classes for the outer group container
+   * Layout direction of the tab list.
+   * - "horizontal" (default): tabs sit in a row above the panel
+   * - "vertical": tabs sit in a column to the left of the panel
    */
+  orientation?: 'horizontal' | 'vertical'
+
+  /** Stretch tabs to fill equal width across the tab list (horizontal only) */
+  stretch?: boolean
+
+  /** Extra classes for the outer TabGroup container */
   className?: string
 
-  /**
-   * Extra classes to apply to the TabList wrapper
-   */
+  /** Extra classes for the TabList wrapper */
   listClass?: string
 
-  /**
-   * Extra classes to apply to individual TabPanel wrapper
-   */
-  panelClass?: string
-
-  /**
-   * Whether tabs should stretch to fill their container equally.
-   * NOTE: you said `fullWidth` isn't supported in your current system, so it's **not** included.
-   */
+  /** Extra classes for the TabPanels wrapper */
+  panelsClass?: string
 }
