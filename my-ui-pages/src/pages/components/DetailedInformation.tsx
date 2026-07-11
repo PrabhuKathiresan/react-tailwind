@@ -5,7 +5,21 @@ export default function DetailedInformationDocsPage() {
   return (
     <DocsPageLayout
       component="DetailedInformation"
-      description="Displays structured label-value pairs with optional title, hoverable state, and divider options."
+      description="A structured key-value display for detail views, profile pages, and summary panels. Each row pairs a label with its value, and the component optionally adds a section title, dividers between rows, and a hover highlight to help users scan dense information at a glance."
+      playground={{
+        render: (props) => (
+          <DetailedInformation
+            {...props}
+            title="User Information"
+            details={[
+              { label: 'Name', value: 'Prabhu Kathiresan' },
+              { label: 'Role', value: 'Developer' },
+              { label: 'Status', value: 'Active' },
+              { label: 'Plan', value: 'Pro' },
+            ]}
+          />
+        ),
+      }}
       examples={[
         {
           title: 'Default',

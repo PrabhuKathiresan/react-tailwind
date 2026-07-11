@@ -57,7 +57,6 @@ export function extractProps(props: any) {
         'name',
         'value',
         'defaultValue',
-        'type', // often inherited
         'onClick',
         'onChange',
         'onBlur',

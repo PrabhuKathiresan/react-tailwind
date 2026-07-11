@@ -3,6 +3,15 @@
   "description": "",
   "props": [
     {
+      "name": "type",
+      "type": "enum",
+      "raw": "AlertType",
+      "enumValues": ["success", "danger", "warning", "info"],
+      "required": false,
+      "defaultValue": "\"info\"",
+      "description": "Defines alert type"
+    },
+    {
       "name": "removable",
       "type": "boolean",
       "raw": "boolean",

@@ -36,7 +36,7 @@ export default function BreadcrumbDocsPage() {
   return (
     <DocsPageLayout
       component="Breadcrumb"
-      description="Breadcrumbs indicate the current page’s location within a hierarchy, helping users navigate easily."
+      description="A navigation trail that shows the user’s current location within a page hierarchy and lets them jump back to any ancestor level. Each item is rendered via a custom render prop, keeping routing library coupling entirely out of the component so it works with any router."
       examples={examples}
     />
   )

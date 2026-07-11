@@ -153,7 +153,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
   return (
     <DocsPageLayout
       component="CheckboxGroup"
-      description="CheckboxGroup allows rendering multiple checkboxes in a group with optional label, hint, and custom styling."
+      description="Renders a labeled set of checkboxes from a data array, managing the group label, hint text, and layout so you do not have to wire up each Checkbox individually. Best suited for multi-select option lists like permission pickers, filter panels, and preference screens."
       examples={examples}
     />
   )

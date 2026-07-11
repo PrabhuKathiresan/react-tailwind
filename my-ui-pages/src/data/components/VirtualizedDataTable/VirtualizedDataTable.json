@@ -9,7 +9,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "48",
-      "description": "Height of each row in pixels (required for virtualization)"
+      "description": "Height of each row in pixels. Required for react-window's fixed-size virtualization."
     },
     {
       "name": "maxHeight",
@@ -18,12 +18,21 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "400",
-      "description": "Max height (px) the table body can take. AutoSizer will size to available space."
+      "description": "Maximum height of the scrollable body in pixels."
+    },
+    {
+      "name": "overscanCount",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "3",
+      "description": "Number of extra rows rendered outside the visible area.\nHigher values reduce blank flicker during fast scrolling at the cost of more DOM nodes.\nMaps directly to react-window's overscanCount."
     },
     {
       "name": "items",
-      "type": "any[]",
-      "raw": "any[]",
+      "type": "T[]",
+      "raw": "T[]",
       "enumValues": null,
       "required": true,
       "defaultValue": null,
@@ -31,8 +40,8 @@
     },
     {
       "name": "columns",
-      "type": "DataTableColumn[]",
-      "raw": "DataTableColumn[]",
+      "type": "DataTableColumn<T>[]",
+      "raw": "DataTableColumn<T>[]",
       "enumValues": null,
       "required": true,
       "defaultValue": null,
@@ -54,16 +63,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "false",
-      "description": "Loading state (shows skeleton rows)"
-    },
-    {
-      "name": "pagination",
-      "type": "TPagination",
-      "raw": "TPagination",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": "Pagination config"
+      "description": "Loading state — shows skeleton rows instead of data"
     },
     {
       "name": "emptyMessage",
@@ -72,34 +72,52 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "No data available",
-      "description": "Empty message to show when no results"
+      "description": "Message or node shown when the items array is empty"
     },
     {
       "name": "onSort",
-      "type": "(column: DataTableColumn) => void",
-      "raw": "(column: DataTableColumn) => void",
+      "type": "(column: DataTableColumn<T>) => void",
+      "raw": "(column: DataTableColumn<T>) => void",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "External sorting handler"
+      "description": "External sorting handler. When omitted, DataTable auto-sorts internally."
     },
     {
-      "name": "setPagination",
-      "type": "(pagination: Partial<TPagination>) => void",
-      "raw": "(pagination: Partial<TPagination>) => void",
+      "name": "onRowClick",
+      "type": "(item: T, index: number) => void",
+      "raw": "(item: T, index: number) => void",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Pagination setter"
+      "description": "Callback fired when a row is clicked.\nRows become visually interactive (pointer cursor) when this is set."
     },
     {
-      "name": "layout",
+      "name": "rowClass",
+      "type": "string | ((item: T, index: number) => string)",
+      "raw": "string | ((item: T, index: number) => string)",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Extra class(es) applied to each `<tr>` in the body.\nPass a function to vary classes per row.\n@example rowClass={(item, i) => item.active ? 'font-semibold' : ''}"
+    },
+    {
+      "name": "density",
       "type": "enum",
-      "raw": "\"fixed\" | \"auto\"",
-      "enumValues": ["fixed", "auto"],
+      "raw": "DataTableDensity",
+      "enumValues": ["compact", "default", "spacious"],
       "required": false,
-      "defaultValue": null,
-      "description": "Layout of table cells"
+      "defaultValue": "default",
+      "description": "Cell padding preset."
+    },
+    {
+      "name": "striped",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Applies an alternating background to odd-indexed rows."
     },
     {
       "name": "containerClass",
@@ -108,7 +126,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "",
-      "description": "Optional wrapper styles"
+      "description": "Optional classes applied to the outer container div"
     },
     {
       "name": "wrapperClass",
@@ -117,7 +135,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "",
-      "description": ""
+      "description": "Optional classes applied to the scroll wrapper div"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import { buildClassName } from '@pk-design/react-tailwind'
 import { Link, useLocation } from 'react-router'
 
-interface NavItem {
+export interface NavItem {
   path: string
   label: string
 }
@@ -11,7 +11,7 @@ interface NavSection {
   items: NavItem[]
 }
 
-const navSections: NavSection[] = [
+export const navSections: NavSection[] = [
   {
     title: 'Getting Started',
     items: [{ path: '/installation', label: 'Installation' }],

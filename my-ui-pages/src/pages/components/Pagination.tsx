@@ -12,7 +12,19 @@ const PaginationDocsPage = () => {
   return (
     <DocsPageLayout
       component="Pagination"
-      description="Pagination allows users to navigate through a large dataset split into multiple pages."
+      description="Navigation controls for stepping through paged data. Renders previous and next buttons alongside a configurable page window that shrinks gracefully on small screens. Emits a page-change event so your data layer stays in sync without any internal state management."
+      playground={{
+        render: (props) => (
+          <Pagination
+            page={props.page ?? 1}
+            limit={props.limit ?? 10}
+            total={props.total ?? 100}
+            ellipsis={props.ellipsis ?? true}
+            onChange={() => {}}
+          />
+        ),
+        initialProps: { page: 1, limit: 10, total: 100, ellipsis: true },
+      }}
       examples={[
         {
           title: 'Default Pagination',

@@ -84,7 +84,7 @@ export default function CheckboxDocsPage() {
   return (
     <DocsPageLayout
       component="Checkbox"
-      description="Checkbox component for selecting single options, with support for labels, hints, error messages, and custom styling."
+      description="A single boolean control for opt-in or multi-select choices. Supports an accessible label, descriptive hint text, inline error messaging, and a fully controlled indeterminate state for parent-child selection trees."
       examples={examples}
     />
   )

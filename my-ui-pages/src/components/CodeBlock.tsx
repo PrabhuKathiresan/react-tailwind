@@ -9,7 +9,18 @@ interface CodeBlockProps {
   className?: string
 }
 
-export function CodeBlock({ code, className }: CodeBlockProps) {
+const languageLabel: Record<string, string> = {
+  tsx: 'TSX',
+  ts: 'TS',
+  jsx: 'JSX',
+  js: 'JS',
+  bash: 'bash',
+  shell: 'shell',
+  css: 'CSS',
+  json: 'JSON',
+}
+
+export function CodeBlock({ code, language = 'tsx', className }: CodeBlockProps) {
   const [copied, setCopied] = React.useState(false)
 
   const handleCopy = async () => {
@@ -18,21 +29,27 @@ export function CodeBlock({ code, className }: CodeBlockProps) {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const label = languageLabel[language] ?? language.toUpperCase()
+
   return (
     <div className={buildClassName('relative rounded-lg', className)}>
-      {/* Copy Button */}
-      <button
-        onClick={handleCopy}
-        className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-white transition"
-        title="Copy to clipboard"
-      >
-        {copied ? <Check size={16} /> : <Copy size={16} />}
-      </button>
+      {/* Language label + copy button */}
+      <div className="absolute top-2 right-2 flex items-center gap-2">
+        <span className="text-[11px] font-mono text-gray-400 select-none">{label}</span>
+        <button
+          onClick={handleCopy}
+          aria-label="Copy code"
+          className="p-1.5 text-gray-400 hover:text-white transition"
+          title="Copy to clipboard"
+        >
+          {copied ? <Check size={16} /> : <Copy size={16} />}
+        </button>
+      </div>
 
-      <Highlight theme={themes.vsDark} code={code} language="tsx">
+      <Highlight theme={themes.vsDark} code={code} language={language}>
         {({ style, tokens, getLineProps, getTokenProps }) => (
           <pre
-            className="p-4 rounded-lg overflow-auto text-sm font-mono max-h-[450px]"
+            className="p-4 pr-20 rounded-lg overflow-auto text-sm font-mono max-h-[450px]"
             style={style}
           >
             {tokens.map((line, i) => (

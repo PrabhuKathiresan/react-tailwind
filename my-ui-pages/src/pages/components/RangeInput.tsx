@@ -187,7 +187,22 @@ const [zoom, setZoom] = useState(1)
   return (
     <DocsPageLayout
       component="RangeInput"
-      description="A customizable range slider built with Tailwind CSS. Supports labels, hints, suffixes, error messages, and full control through React state."
+      description="A styled single-thumb slider for selecting a numeric value within a defined min-max range. Pairs the native input range element with a label, hint text, value suffix for units like px or percent, and inline error messaging for validation scenarios."
+      playground={{
+        render: (props) => (
+          <div className="w-full max-w-md">
+            <RangeInput
+              label="Volume"
+              name="volume"
+              min={0}
+              max={100}
+              showValue={props.showValue}
+              valueSuffix={props.valueSuffix}
+            />
+          </div>
+        ),
+        initialProps: { showValue: true, valueSuffix: '%' },
+      }}
       examples={examples}
     />
   )

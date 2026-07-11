@@ -12,6 +12,15 @@
       "description": "The message text displayed inside the toast."
     },
     {
+      "name": "type",
+      "type": "enum",
+      "raw": "\"success\" | \"error\" | \"info\" | \"warning\"",
+      "enumValues": ["success", "error", "info", "warning"],
+      "required": true,
+      "defaultValue": null,
+      "description": "Visual style of the toast based on its purpose.\n- `success` — positive confirmations\n- `error` — failures or critical issues\n- `info` — general helpful information\n- `warning` — caution or attention required"
+    },
+    {
       "name": "onClose",
       "type": "() => void",
       "raw": "() => void",

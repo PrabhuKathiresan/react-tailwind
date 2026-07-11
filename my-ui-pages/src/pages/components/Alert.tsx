@@ -46,7 +46,18 @@ export default function AlertDocsPage() {
   return (
     <DocsPageLayout
       component="Alert"
-      description="Alerts provide contextual feedback messages for user actions."
+      description="Inline feedback banners that communicate the outcome of an action or the state of the system. Four semantic types — success, info, warning, and danger — each with a matching color and icon. Supports an optional title, custom content, and a dismiss button for transient messages."
+      playground={{
+        render: (props) => (
+          <Alert
+            type={props.type || 'info'}
+            message={props.message || 'This is an alert message.'}
+            removable={props.removable}
+            onRemove={() => {}}
+          />
+        ),
+        initialProps: { type: 'info', message: 'This is an alert message.', removable: false },
+      }}
       examples={examples}
     />
   )

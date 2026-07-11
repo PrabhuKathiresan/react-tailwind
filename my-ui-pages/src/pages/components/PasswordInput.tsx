@@ -8,7 +8,7 @@ export const PasswordInputDocsPage = () => {
   return (
     <DocsPageLayout
       component="PasswordInput"
-      description="The PasswordInput component extends the Input component to include a built-in show/hide password toggle button."
+      description="A secure text field with a built-in toggle that lets users reveal or mask their password without losing focus. Extends Input directly, so it inherits the full label, hint, error messaging, and icon slot API without any additional configuration."
       examples={[
         {
           title: 'Default Password Input',

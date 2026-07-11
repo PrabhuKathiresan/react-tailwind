@@ -90,7 +90,12 @@ export default function TextContentDocsPage() {
   return (
     <DocsPageLayout
       component="TextContent"
-      description="TextContent is a lightweight typography helper component that unifies text styling across your design system. It supports size, emphasis, error, muted text, and rendering as different elements."
+      description="A lightweight typography utility that unifies inline text styling with a single prop-driven API. Cover body copy variants including strong emphasis, muted secondary text, small captions, and error states without writing Tailwind class strings directly or coupling to semantic HTML elements."
+      playground={{
+        render: (props) => (
+          <TextContent {...props}>The quick brown fox jumps over the lazy dog.</TextContent>
+        ),
+      }}
       examples={examples}
     />
   )

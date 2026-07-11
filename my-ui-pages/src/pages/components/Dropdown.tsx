@@ -14,7 +14,7 @@ const DropdownDocPage = () => {
   return (
     <DocsPageLayout
       component="Dropdown"
-      description="A flexible dropdown menu with support for custom triggers, custom item rendering, dividers, disabled items, styling overrides, and menu placement."
+      description="A contextual action menu anchored to any custom trigger element. Supports grouped items, dividers, icon slots, disabled states, and configurable menu placement so it adapts to any layout without clipping."
       examples={[
         {
           title: 'Basic Dropdown',

@@ -35,40 +35,50 @@ export const PropsTable: React.FC<{ propsData?: PropItem[] }> = ({ propsData }) 
         <TableBody colSize={5}>
           {propsData.map((p) => (
             <TableRow key={p.name} hoverable>
-              <TableCell className="align-top font-medium">{p.name}</TableCell>
               <TableCell className="align-top">
-                <div className="text-xs text-slate-700 dark:text-slate-300 mb-1">
-                  <code>{p.raw ?? p.type}</code>
-                </div>
+                <code className="text-xs font-mono bg-gray-100 dark:bg-gray-800 text-[var(--ui-primary)] px-1.5 py-0.5 rounded whitespace-nowrap">
+                  {p.name}
+                </code>
+              </TableCell>
 
+              <TableCell className="align-top">
                 {p.enumValues && p.enumValues.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {p.enumValues.map((v) => (
-                      <Badge theme="secondary" key={v} className="text-xs">
+                      <Badge theme="secondary" key={v} className="text-xs font-mono">
                         {v}
                       </Badge>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
-                    {/* show friendly description for common types */}
-                    {p.type === 'string' && <span>string</span>}
-                    {p.type === 'number' && <span>number</span>}
-                    {p.type === 'boolean' && <span>boolean</span>}
-                    {p.type === 'function' && <span>function</span>}
-                    {/* fallback to raw */}
-                    {!['string', 'number', 'boolean', 'function'].includes(p.type) &&
-                      !p.enumValues && <span>{p.raw}</span>}
-                  </div>
+                  <code className="text-xs text-slate-500 dark:text-slate-400">
+                    {p.raw ?? p.type}
+                  </code>
                 )}
               </TableCell>
 
               <TableCell className="align-top">
-                <code className="text-sm">{p.defaultValue ?? '-'}</code>
+                {p.defaultValue ? (
+                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-300">
+                    {p.defaultValue}
+                  </code>
+                ) : (
+                  <span className="text-xs text-slate-400">—</span>
+                )}
               </TableCell>
-              <TableCell className="align-top">{p.required ? 'Yes' : 'No'}</TableCell>
-              <TableCell className="align-top text-slate-700 dark:text-slate-300">
-                {p.description || '-'}
+
+              <TableCell className="align-top">
+                {p.required ? (
+                  <Badge theme="danger" className="text-xs">
+                    Required
+                  </Badge>
+                ) : (
+                  <span className="text-xs text-slate-400">—</span>
+                )}
+              </TableCell>
+
+              <TableCell className="align-top text-sm text-slate-600 dark:text-slate-300 whitespace-pre-line">
+                {p.description || '—'}
               </TableCell>
             </TableRow>
           ))}

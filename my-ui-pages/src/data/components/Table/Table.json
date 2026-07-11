@@ -19,6 +19,15 @@
       "required": false,
       "defaultValue": null,
       "description": "Additional classes applied to the table wrapper"
+    },
+    {
+      "name": "caption",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Accessible caption rendered as a <caption> element above the header"
     }
   ]
 }

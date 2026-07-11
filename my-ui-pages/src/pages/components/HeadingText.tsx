@@ -5,7 +5,7 @@ const HeadingTextDocsPage = () => {
   return (
     <DocsPageLayout
       component="HeadingText"
-      description="The HeadingText component provides a consistent set of typographic styles for different heading levels, ensuring visual hierarchy and readability throughout your application."
+      description="A set of five typographic scale components, Title through SubTitle4, for building clear visual hierarchy across pages and layouts. Each variant maps to the right font size, weight, and spacing without requiring manual Tailwind class strings."
       examples={[
         {
           title: 'Basic Usage',

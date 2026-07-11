@@ -30,6 +30,15 @@
       "description": "Make card compact"
     },
     {
+      "name": "zeroPadding",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Remove default padding from the card"
+    },
+    {
       "name": "as",
       "type": "ElementType",
       "raw": "ElementType",
