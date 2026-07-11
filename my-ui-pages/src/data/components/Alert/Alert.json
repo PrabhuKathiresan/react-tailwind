@@ -27,7 +27,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Handler when closing / dismissing alert\n@returns void"
+      "description": "Handler when closing / dismissing alert"
+    },
+    {
+      "name": "icon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Override the default type icon. Pass null to suppress the icon entirely."
     },
     {
       "name": "message",

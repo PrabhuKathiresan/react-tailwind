@@ -37,6 +37,24 @@
       "required": false,
       "defaultValue": null,
       "description": "Handler on removing badge"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "BadgeSize",
+      "enumValues": ["sm", "md"],
+      "required": false,
+      "defaultValue": "\"md\"",
+      "description": "Size preset controlling padding"
+    },
+    {
+      "name": "icon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional icon rendered before the label"
     }
   ]
 }
