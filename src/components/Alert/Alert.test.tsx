@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Alert } from './Alert'
 
@@ -56,5 +57,35 @@ describe('Alert Component', () => {
     render(<Alert message="Test" removable onRemove={onRemove} />)
     fireEvent.click(screen.getByTestId('alert-remove-btn'))
     expect(onRemove).toHaveBeenCalledTimes(1)
+  })
+
+  it('forwards ref to the div element', () => {
+    const ref = React.createRef<HTMLDivElement>()
+    render(<Alert ref={ref} message="Test" />)
+    expect(ref.current).not.toBeNull()
+    expect(ref.current?.tagName).toBe('DIV')
+  })
+
+  it('renders custom icon and suppresses default icon', () => {
+    render(<Alert message="Test" icon={<span data-testid="custom-icon">★</span>} />)
+    expect(screen.getByTestId('custom-icon')).toBeInTheDocument()
+    expect(screen.queryByTestId('alert-info-icon')).not.toBeInTheDocument()
+  })
+
+  it('suppresses icon when icon={null}', () => {
+    render(<Alert message="Test" icon={null} />)
+    expect(screen.queryByTestId('alert-info-icon')).not.toBeInTheDocument()
+  })
+
+  it('renders title above the message', () => {
+    render(<Alert message="Description text" title="Alert Title" />)
+    expect(screen.getByText('Alert Title')).toBeInTheDocument()
+    expect(screen.getByText('Description text')).toBeInTheDocument()
+  })
+
+  it('forwards arbitrary HTML attributes to the div', () => {
+    render(<Alert message="Test" data-custom="value" />)
+    const wrapper = screen.getByText('Test').closest('div')
+    expect(wrapper).toHaveAttribute('data-custom', 'value')
   })
 })

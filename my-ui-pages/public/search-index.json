@@ -21,7 +21,14 @@
         "name": "onRemove",
         "type": "() => void",
         "required": false,
-        "description": "Handler when closing / dismissing alert\n@returns void",
+        "description": "Handler when closing / dismissing alert",
+        "defaultValue": null
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Override the default type icon. Pass null to suppress the icon entirely.",
         "defaultValue": null
       },
       {
@@ -37,14 +44,20 @@
       "type",
       "removable",
       "onremove",
+      "icon",
       "message",
       "alerttype",
+      "reactnode",
       "defines",
       "handler",
       "when",
       "closing",
       "dismissing",
-      "returns",
+      "override",
+      "default",
+      "pass",
+      "suppress",
+      "entirely",
       "text",
       "content",
       "display"
@@ -82,6 +95,20 @@
         "required": false,
         "description": "Handler on removing badge",
         "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "BadgeSize",
+        "required": false,
+        "description": "Size preset controlling padding",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional icon rendered before the label",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -90,11 +117,22 @@
       "removable",
       "rounded",
       "onremove",
+      "size",
+      "icon",
       "badgetheme",
+      "badgesize",
+      "reactnode",
       "defines",
       "corners",
       "handler",
-      "removing"
+      "removing",
+      "preset",
+      "controlling",
+      "padding",
+      "optional",
+      "rendered",
+      "before",
+      "label"
     ],
     "url": "/badge"
   },
@@ -115,9 +153,56 @@
         "required": false,
         "description": "Controls the icon size",
         "defaultValue": "\"sm\""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Override the default type icon. Pass null to suppress the icon entirely.",
+        "defaultValue": null
+      },
+      {
+        "name": "removable",
+        "type": "boolean",
+        "required": false,
+        "description": "Makes the banner dismissible with a close button",
+        "defaultValue": null
+      },
+      {
+        "name": "onRemove",
+        "type": "() => void",
+        "required": false,
+        "description": "Called when the dismiss button is clicked",
+        "defaultValue": null
       }
     ],
-    "keywords": ["banner", "type", "iconsize", "bannertype", "defines", "controls", "icon", "size"],
+    "keywords": [
+      "banner",
+      "type",
+      "iconsize",
+      "icon",
+      "removable",
+      "onremove",
+      "bannertype",
+      "reactnode",
+      "defines",
+      "controls",
+      "size",
+      "override",
+      "default",
+      "pass",
+      "suppress",
+      "entirely",
+      "makes",
+      "dismissible",
+      "with",
+      "close",
+      "button",
+      "called",
+      "when",
+      "dismiss",
+      "clicked"
+    ],
     "url": "/banner"
   },
   {

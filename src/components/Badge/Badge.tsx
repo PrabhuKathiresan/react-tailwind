@@ -16,14 +16,21 @@ const ThemeClassMap = {
     'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 ring-[var(--ui-secondary-ring-subtle)]',
 }
 
+const SIZE_CLASS = {
+  sm: 'text-xs py-0.5 px-2',
+  md: 'text-xs py-1 px-3',
+}
+
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
   const {
     theme = 'info',
-    className = '',
+    className,
     children,
     removable = false,
     rounded = false,
-    onRemove = () => {},
+    onRemove,
+    size = 'md',
+    icon,
     ...restProps
   } = props
 
@@ -31,30 +38,34 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
     <TextContent
       ref={ref}
       className={buildClassName(
-        className,
-        'inline-flex items-center pl-3 py-1 text-xs font-medium ring-1 ring-inset',
+        'inline-flex items-center gap-1 font-medium ring-1 ring-inset',
+        SIZE_CLASS[size],
         ThemeClassMap[theme],
         rounded ? 'rounded-full' : 'rounded-md',
+        icon ? 'pl-2' : '',
+        removable ? 'pr-1' : '',
+        className,
       )}
       data-testid={`badge-${theme}`}
       {...restProps}
     >
-      <TextContent className="pr-3 inline-flex items-center">{children}</TextContent>
-      {removable ? (
+      {icon && <span className="shrink-0 inline-flex">{icon}</span>}
+      {children}
+      {removable && (
         <XIcon
-          className="size-5 px-0.5 mr-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-sm cursor-pointer"
+          className="size-4 shrink-0 hover:bg-black/10 dark:hover:bg-white/10 rounded-sm cursor-pointer"
           role="button"
           tabIndex={0}
           aria-label="Remove"
-          onClick={() => onRemove()}
+          onClick={() => onRemove?.()}
           onKeyDown={(e: React.KeyboardEvent) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
-              onRemove()
+              onRemove?.()
             }
           }}
         />
-      ) : null}
+      )}
     </TextContent>
   )
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import BadgeCheckIcon from '../Icons/BadgeCheck.svg'
 import CircleXIcon from '../Icons/CircleX.svg'
@@ -19,37 +19,49 @@ const TypeClassMap = {
   success:
     'bg-[var(--ui-success-light)] ring-[var(--ui-success-ring-subtle)] text-[var(--ui-success-text)]',
   danger:
-    'bg-[var(--ui-danger-light)]  ring-[var(--ui-danger-ring-subtle)]  text-[var(--ui-danger-text)]',
+    'bg-[var(--ui-danger-light)] ring-[var(--ui-danger-ring-subtle)] text-[var(--ui-danger-text)]',
   warning:
     'bg-[var(--ui-warning-light)] ring-[var(--ui-warning-ring-subtle)] text-[var(--ui-warning-text)]',
-  info: 'bg-[var(--ui-info-light)]    ring-[var(--ui-info-ring-subtle)]    text-[var(--ui-info-text)]',
+  info: 'bg-[var(--ui-info-light)] ring-[var(--ui-info-ring-subtle)] text-[var(--ui-info-text)]',
 }
 
-export const Alert: React.FC<AlertProps> = (props) => {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   const {
     type = 'info',
-    className = '',
+    className,
     message,
     children,
     removable = false,
-    onRemove = () => {},
+    onRemove,
+    icon,
+    title,
     ...restProps
   } = props
 
-  const Icon = AlertTypeIconMap[type] || InfoIcon
+  const DefaultIcon = AlertTypeIconMap[type] || InfoIcon
+  const iconNode =
+    icon !== undefined ? (
+      icon
+    ) : (
+      <DefaultIcon className="size-5 shrink-0" data-testid={`alert-${type}-icon`} />
+    )
 
   return (
     <div
+      ref={ref}
       className={buildClassName(
-        className,
         'flex items-center justify-between rounded-md p-3 text-sm ring-1 ring-inset gap-2',
         TypeClassMap[type],
+        className,
       )}
       {...restProps}
     >
-      <span className="inline-flex items-center gap-2">
-        <Icon className="size-5" data-testid={`alert-${type}-icon`} />
-        <span className="pr-2 inline-flex items-center">{message || children}</span>
+      <span className="inline-flex items-start gap-2 min-w-0">
+        {iconNode && <span className="shrink-0 inline-flex mt-0.5">{iconNode}</span>}
+        <span className="inline-flex flex-col gap-0.5 min-w-0">
+          {title && <span className="font-semibold">{title}</span>}
+          <span className="inline-flex items-center">{message ?? children}</span>
+        </span>
       </span>
       {removable && (
         <Button
@@ -58,8 +70,8 @@ export const Alert: React.FC<AlertProps> = (props) => {
           size="xs"
           variant="plain"
           theme="secondary"
-          className="hover:bg-black/10 dark:hover:bg-white/10"
-          onClick={() => onRemove()}
+          className="hover:bg-black/10 dark:hover:bg-white/10 shrink-0"
+          onClick={() => onRemove?.()}
           data-testid="alert-remove-btn"
         >
           <XIcon className="size-4.5" data-testid="alert-remove-icon" />
@@ -67,6 +79,6 @@ export const Alert: React.FC<AlertProps> = (props) => {
       )}
     </div>
   )
-}
+})
 
 Alert.displayName = 'Alert'

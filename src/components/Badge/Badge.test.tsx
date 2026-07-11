@@ -64,4 +64,27 @@ describe('Badge Component', () => {
     expect(ref.current).not.toBeNull()
     expect(ref.current?.tagName).toBe('SPAN')
   })
+
+  it('applies sm size padding', () => {
+    render(<Badge size="sm">Test</Badge>)
+    const badge = screen.getByTestId('badge-info')
+    expect(badge).toHaveClass('py-0.5')
+  })
+
+  it('applies md size padding by default', () => {
+    render(<Badge>Test</Badge>)
+    const badge = screen.getByTestId('badge-info')
+    expect(badge).toHaveClass('py-1')
+  })
+
+  it('renders icon before label', () => {
+    render(<Badge icon={<span data-testid="badge-icon">★</span>}>Test</Badge>)
+    expect(screen.getByTestId('badge-icon')).toBeInTheDocument()
+  })
+
+  it('forwards arbitrary HTML attributes to the span', () => {
+    render(<Badge data-custom="value">Test</Badge>)
+    const badge = screen.getByTestId('badge-info')
+    expect(badge).toHaveAttribute('data-custom', 'value')
+  })
 })
