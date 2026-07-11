@@ -15,6 +15,9 @@ export interface TableProps {
 
   /** Table content (Head + Body + Foot) */
   children: ReactNode
+
+  /** Accessible caption rendered as a <caption> element above the header */
+  caption?: ReactNode
 }
 
 /**
@@ -38,8 +41,8 @@ export interface TableBodyProps {
   /** Show loading shimmer (overrides children) */
   loading?: boolean
 
-  /** Number of columns — needed for shimmer loader layout */
-  colSize: number
+  /** Number of columns — needed for shimmer loader layout. Defaults to 1 when not provided. */
+  colSize?: number
 
   /** Number of shimmer rows to show when loading */
   rowSize?: number
@@ -86,7 +89,7 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
 /**
  * <TableRow /> — regular row
  */
-export interface TableRowProps extends ThHTMLAttributes<HTMLTableRowElement> {
+export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   /** Whether the row highlights on hover */
   hoverable?: boolean
 }

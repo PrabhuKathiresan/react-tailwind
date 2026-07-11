@@ -4,26 +4,36 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFoot,
   TableHead,
   TableHeaderCell,
   TableRow,
 } from '../Table'
 import { buildClassName } from '../../utils/build-classname'
-import type { DataTableProps, DataTableColumn, Sorting, SortQuery } from './DataTable.types'
+import type {
+  DataTableProps,
+  DataTableColumn,
+  DataTableDensity,
+  Sorting,
+  SortQuery,
+} from './DataTable.types'
 import { TextContent } from '../TextContent'
 import { Pagination } from '../Pagination'
 import { get } from '../../utils/get'
 import { updateSortQuery } from './DataTable.utils'
 import { getSortIcon } from './DataTable.icons'
 
-/**
- * Smart auto-sort helper (optional usage)
- */
-const autoSortItems = (items: any[], column: DataTableColumn, sort: Sorting) => {
+const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
+  compact: 'px-2 py-1.5',
+  default: '',
+  spacious: 'px-4 py-4',
+}
+
+const autoSortItems = <T,>(items: T[], column: DataTableColumn<T>, sort: Sorting): T[] => {
   const path = column.name
   return [...items].sort((a, b) => {
-    const valueA = get(a, path)
-    const valueB = get(b, path)
+    const valueA = get(a as Record<string, any>, path)
+    const valueB = get(b as Record<string, any>, path)
 
     if (column.type === 'number') {
       const nA = Number(valueA)
@@ -37,7 +47,6 @@ const autoSortItems = (items: any[], column: DataTableColumn, sort: Sorting) => 
       return sort === 'asc' || sort === '1' ? dA - dB : dB - dA
     }
 
-    // String fallback
     const sA = String(valueA).toLowerCase()
     const sB = String(valueB).toLowerCase()
     if (sA < sB) return sort === 'asc' || sort === '1' ? -1 : 1
@@ -46,19 +55,27 @@ const autoSortItems = (items: any[], column: DataTableColumn, sort: Sorting) => 
   })
 }
 
-export const DataTable: React.FC<DataTableProps> = ({
+export function DataTable<T extends Record<string, any> = Record<string, any>>({
   items,
   columns,
   sorting = {},
   onSort,
   loading,
-  pagination = null,
+  pagination,
   setPagination = () => {},
   emptyMessage = 'No data found',
   containerClass = '',
   wrapperClass = '',
+  tableClass = '',
+  headClass = '',
+  footerRow,
+  rowKey = 'id',
+  onRowClick,
+  rowClass,
+  density = 'default',
+  striped = false,
   layout = 'auto',
-}) => {
+}: DataTableProps<T>) {
   const internalSorting = useRef<SortQuery>({})
   const [sortedItems, setSortedItems] = useState(items)
 
@@ -66,15 +83,34 @@ export const DataTable: React.FC<DataTableProps> = ({
     setSortedItems(items)
   }, [items])
 
-  const doAutoSort = (column: DataTableColumn) => {
+  const doAutoSort = (column: DataTableColumn<T>) => {
     internalSorting.current = updateSortQuery(internalSorting.current, column.name, column.type)
     setSortedItems(autoSortItems(items, column, internalSorting.current[column.name]))
   }
 
-  const handleSort = (column: DataTableColumn) => {
+  const handleSort = (column: DataTableColumn<T>) => {
     if (!column.sortable) return
     onSort ? onSort(column) : doAutoSort(column)
   }
+
+  const getKey = (item: T, idx: number): string | number => {
+    if (typeof rowKey === 'function') return rowKey(item)
+    return (item as any)[rowKey] ?? idx
+  }
+
+  const getRowClass = (item: T, idx: number): string => {
+    if (!rowClass) return ''
+    if (typeof rowClass === 'function') return rowClass(item, idx)
+    return rowClass
+  }
+
+  const getCellClass = (column: DataTableColumn<T>, item: T): string => {
+    if (!column.cellClass) return ''
+    if (typeof column.cellClass === 'function') return column.cellClass(item)
+    return column.cellClass
+  }
+
+  const densityCellClass = DENSITY_CELL_CLASS[density]
 
   return (
     <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
@@ -85,9 +121,11 @@ export const DataTable: React.FC<DataTableProps> = ({
           pagination && 'rounded-b-none border-b-0',
         )}
       >
-        <Table className="relative w-full max-w-full h-fit" layout={layout}>
-          {/* Header */}
-          <TableHead>
+        <Table
+          className={buildClassName('relative w-full max-w-full h-fit', tableClass)}
+          layout={layout}
+        >
+          <TableHead className={headClass}>
             {columns.map((column) => (
               <TableHeaderCell
                 key={column.name}
@@ -95,10 +133,12 @@ export const DataTable: React.FC<DataTableProps> = ({
                 style={{ width: column.width || 'auto' }}
                 className={buildClassName(
                   'bg-gray-50 dark:bg-gray-800',
+                  densityCellClass,
                   column.sticky === 'left' &&
                     'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
                   column.sticky === 'right' &&
                     'sticky right-0 z-10 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                  column.headerClass,
                 )}
               >
                 <TextContent
@@ -116,22 +156,33 @@ export const DataTable: React.FC<DataTableProps> = ({
             ))}
           </TableHead>
 
-          {/* Body */}
           <TableBody loading={loading} colSize={columns.length} rowSize={pagination?.limit || 5}>
             {!loading && sortedItems.length === 0 ? (
               <EmptyTableRow colSpan={columns.length}>{emptyMessage}</EmptyTableRow>
             ) : (
-              sortedItems.map((item) => (
-                <TableRow key={item.id} className="group">
+              sortedItems.map((item, idx) => (
+                <TableRow
+                  key={getKey(item, idx)}
+                  className={buildClassName(
+                    'group',
+                    onRowClick && 'cursor-pointer',
+                    striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                    getRowClass(item, idx),
+                  )}
+                  onClick={onRowClick ? () => onRowClick(item, idx) : undefined}
+                >
                   {columns.map((column) => (
                     <TableCell
                       key={column.name}
                       align={column.align}
                       className={buildClassName(
+                        densityCellClass,
+                        striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
                         column.sticky === 'left' &&
                           'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
                         column.sticky === 'right' &&
                           'sticky right-0 z-10 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                        getCellClass(column, item),
                       )}
                     >
                       {column.render
@@ -143,10 +194,11 @@ export const DataTable: React.FC<DataTableProps> = ({
               ))
             )}
           </TableBody>
+
+          {footerRow && <TableFoot>{footerRow}</TableFoot>}
         </Table>
       </div>
 
-      {/* Pagination */}
       {pagination && (
         <Pagination
           {...pagination}

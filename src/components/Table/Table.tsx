@@ -1,5 +1,4 @@
 import React from 'react'
-import { BodyText } from '../BodyText'
 import { buildClassName } from '../../utils/build-classname'
 import type {
   EmptyTableRowProps,
@@ -46,19 +45,27 @@ const TableRowLoader: React.FC<TableRowLoaderProps> = ({ colSize, rowSize }) => 
 /* ----------------------------------------------
  * Table
  * ---------------------------------------------- */
-export const Table: React.FC<TableProps> = ({ children, layout = 'auto', className = '' }) => {
-  return (
-    <table
-      className={buildClassName(
-        'border-collapse w-full divide-y divide-gray-200 dark:divide-gray-700',
-        TABLE_LAYOUT[layout],
-        className,
-      )}
-    >
-      {children}
-    </table>
-  )
-}
+export const Table: React.FC<TableProps> = ({
+  children,
+  layout = 'auto',
+  className = '',
+  caption,
+}) => (
+  <table
+    className={buildClassName(
+      'border-collapse w-full divide-y divide-gray-200 dark:divide-gray-700',
+      TABLE_LAYOUT[layout],
+      className,
+    )}
+  >
+    {caption && (
+      <caption className="mb-2 text-sm text-left text-gray-500 dark:text-gray-400">
+        {caption}
+      </caption>
+    )}
+    {children}
+  </table>
+)
 
 /* ----------------------------------------------
  * Head
@@ -80,7 +87,7 @@ export const TableHead: React.FC<TableHeadProps> = ({ children, className = '' }
 export const TableBody: React.FC<TableBodyProps> = ({
   children,
   loading,
-  colSize,
+  colSize = 1,
   rowSize = 5,
   className,
 }) => (
@@ -159,9 +166,7 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
       className,
     )}
   >
-    <BodyText as="span" className="leading-none">
-      {children}
-    </BodyText>
+    {children}
   </th>
 )
 

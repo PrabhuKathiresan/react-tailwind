@@ -3,36 +3,48 @@ import { FixedSizeList as List } from 'react-window'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
 import { VirtualizedRow } from './VirtualizedRow'
-import { type DataTableColumn, getSortIcon } from '../DataTable'
-import { VirtualizedDataTableProps } from './VirtualizedDataTable.types'
+import { type DataTableColumn, type DataTableDensity, getSortIcon } from '../DataTable'
+import type { VirtualizedDataTableProps } from './VirtualizedDataTable.types'
 
-/* -------------------------------------------------------
- * Convert column definitions into CSS grid template
- * ------------------------------------------------------- */
-const useGridTemplate = (columns: DataTableColumn[]) =>
-  useMemo(() => columns.map((col) => (col.width ? `${col.width}px` : '1fr')).join(' '), [columns])
+const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
+  compact: 'px-2 py-1.5',
+  default: 'px-3 py-3',
+  spacious: 'px-4 py-4',
+}
 
-export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
+const columnWidth = (col: DataTableColumn): string => {
+  if (!col.width) return '1fr'
+  if (typeof col.width === 'number') return `${col.width}px`
+  return col.width
+}
+
+export function VirtualizedDataTable<T extends Record<string, any> = Record<string, any>>({
   items,
   columns,
   sorting = {},
   onSort,
   loading = false,
   emptyMessage = 'No data available',
-
   containerClass = '',
   wrapperClass = '',
-
+  onRowClick,
+  rowClass,
+  density = 'default',
+  striped = false,
   rowHeight = 48,
   maxHeight = 400,
-}) => {
+  overscanCount = 3,
+}: VirtualizedDataTableProps<T>) {
   const scrollRef = useRef<any>(null)
   const outerRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement | null>(null)
 
-  const gridTemplate = useGridTemplate(columns)
+  const gridTemplate = useMemo(() => columns.map((col) => columnWidth(col)).join(' '), [columns])
 
-  /** Sync horizontal scroll of the virtualized body → header */
+  const densityCellClass = DENSITY_CELL_CLASS[density]
+
+  const skeletonRows = Math.max(1, Math.floor(maxHeight / rowHeight))
+
   useEffect(() => {
     const el = outerRef.current
     if (!el) return
@@ -45,36 +57,38 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
 
   const handleSort = useCallback(
     (column: DataTableColumn) => {
-      if (column.sortable) onSort?.(column)
+      if (column.sortable) onSort?.(column as DataTableColumn<T>)
     },
     [onSort],
   )
 
+  const itemData = useMemo(
+    () => ({ items, columns, gridTemplate, onRowClick, rowClass, density, striped }),
+    [items, columns, gridTemplate, onRowClick, rowClass, density, striped],
+  )
+
   /* -------------------------------------------------------
-   * RENDER: Header row (real DOM for accessibility)
+   * Header
    * ------------------------------------------------------- */
   const Header = (
     <div ref={headerRef} className="overflow-hidden w-full">
       <div
         className="grid bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700"
-        style={{
-          gridTemplateColumns: gridTemplate,
-          minWidth: 'fit-content',
-        }}
+        style={{ gridTemplateColumns: gridTemplate, minWidth: 'fit-content' }}
       >
         {columns.map((col) => (
           <div
             key={col.name}
             role="columnheader"
             className={buildClassName(
-              'px-3 py-3 font-semibold text-sm whitespace-nowrap flex items-center',
+              'font-semibold text-sm whitespace-nowrap flex items-center',
+              densityCellClass,
               'border-r last:border-r-0 border-gray-200 dark:border-gray-700',
-
               col.sticky === 'left' &&
                 'sticky left-0 z-20 bg-gray-50 dark:bg-gray-800 shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
-
               col.sticky === 'right' &&
                 'sticky right-0 z-20 bg-gray-50 dark:bg-gray-800 shadow-[-2px_0_4px_rgba(0,0,0,0.05)]',
+              col.headerClass,
             )}
           >
             <TextContent
@@ -93,33 +107,29 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
     </div>
   )
 
+  const wrapperCls = buildClassName(
+    'rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden',
+    wrapperClass,
+  )
+
   /* -------------------------------------------------------
-   * LOADING STATE (non-virtualized placeholder)
+   * Loading state
    * ------------------------------------------------------- */
   if (loading) {
     return (
       <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
-        <div
-          className={buildClassName(
-            'rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden',
-            wrapperClass,
-          )}
-        >
+        <div className={wrapperCls}>
           {Header}
-
           <div style={{ height: maxHeight }} className="flex flex-col">
-            {[...Array(6)].map((_, idx) => (
+            {Array.from({ length: skeletonRows }).map((_, idx) => (
               <div
                 key={idx}
                 data-testid="skeleton-row"
                 className="grid animate-pulse bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
-                style={{
-                  gridTemplateColumns: gridTemplate,
-                  height: rowHeight,
-                }}
+                style={{ gridTemplateColumns: gridTemplate, height: rowHeight }}
               >
                 {columns.map((col) => (
-                  <div key={col.name} className="px-3 py-3">
+                  <div key={col.name} className={densityCellClass}>
                     <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 rounded" />
                   </div>
                 ))}
@@ -132,19 +142,13 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
   }
 
   /* -------------------------------------------------------
-   * EMPTY STATE (non-virtualized → single row)
+   * Empty state
    * ------------------------------------------------------- */
-  if (!loading && items.length === 0) {
+  if (items.length === 0) {
     return (
       <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
-        <div
-          className={buildClassName(
-            'rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden',
-            wrapperClass,
-          )}
-        >
+        <div className={wrapperCls}>
           {Header}
-
           <div
             className="flex items-center justify-center text-gray-500 dark:text-gray-300"
             style={{ height: maxHeight }}
@@ -157,18 +161,12 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
   }
 
   /* -------------------------------------------------------
-   * MAIN (virtualized body)
+   * Virtualized body
    * ------------------------------------------------------- */
   return (
     <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
-      <div
-        className={buildClassName(
-          'rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden',
-          wrapperClass,
-        )}
-      >
+      <div className={wrapperCls}>
         {Header}
-
         <List
           ref={scrollRef}
           outerRef={outerRef}
@@ -176,7 +174,8 @@ export const VirtualizedDataTable: React.FC<VirtualizedDataTableProps> = ({
           width="100%"
           itemCount={items.length}
           itemSize={rowHeight}
-          itemData={{ items, columns, gridTemplate }}
+          itemData={itemData}
+          overscanCount={overscanCount}
         >
           {VirtualizedRow}
         </List>
