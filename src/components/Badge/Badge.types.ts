@@ -1,13 +1,15 @@
-export type BadgeTheme = 'success' | 'danger' | 'warning' | 'info' | 'secondary'
+import type { HTMLAttributes, ReactNode } from 'react'
 
-export interface BadgeProps {
+export type BadgeTheme = 'success' | 'danger' | 'warning' | 'info' | 'secondary'
+export type BadgeSize = 'sm' | 'md'
+
+export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
   /**
    * Defines theme of the Badge
    * @default "info"
    */
   theme?: BadgeTheme
-  className?: string
-  children: any
+  children: ReactNode
   /**
    * Defines if badge is removable
    */
@@ -20,4 +22,13 @@ export interface BadgeProps {
    * Handler on removing badge
    */
   onRemove?: () => void
+  /**
+   * Size preset controlling padding
+   * @default "md"
+   */
+  size?: BadgeSize
+  /**
+   * Optional icon rendered before the label
+   */
+  icon?: ReactNode
 }

@@ -1,23 +1,29 @@
-import type { ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 
 export type AlertType = 'success' | 'danger' | 'warning' | 'info'
 
-export interface BaseAlertProps {
+export interface BaseAlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   /**
    * Defines alert type
    * @default "info"
    */
   type?: AlertType
-  className?: string
   /**
    * Defines if alert is removable
    */
   removable?: boolean
   /**
    * Handler when closing / dismissing alert
-   * @returns void
    */
   onRemove?: () => void
+  /**
+   * Override the default type icon. Pass null to suppress the icon entirely.
+   */
+  icon?: ReactNode
+  /**
+   * Optional bold title rendered above the message
+   */
+  title?: ReactNode
 }
 
 /**
