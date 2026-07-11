@@ -1,2 +1,0 @@
-const e="Alert",n="",l=[{name:"removable",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:null,description:"Defines if alert is removable"},{name:"onRemove",type:"() => void",raw:"() => void",enumValues:null,required:!1,defaultValue:null,description:`Handler when closing / dismissing alert
-@returns void`},{name:"message",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:null,description:"Text content to display in alert"}],a={name:e,description:"",props:l};export{a as default,n as description,e as name,l as props};

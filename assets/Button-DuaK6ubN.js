@@ -6,4 +6,5 @@ While loading:
 
 Adjusts padding to match icon-only UX.`},{name:"noOutlineOnFocus",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:`Prevents outline styles on keyboard focus.
 
-Useful for icon buttons or custom focus handling.`},{name:"as",type:"ElementType",raw:"ElementType",enumValues:null,required:!1,defaultValue:'"button"',description:'The element or component to render.\n\nSupports:\n- HTML elements (e.g., `"button"`, `"a"`, `"div"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)'}],a={name:e,description:"",props:n};export{a as default,t as description,e as name,n as props};
+Useful for icon buttons or custom focus handling.`},{name:"type",type:"enum",raw:'"button" | "submit" | "reset"',enumValues:["button","submit","reset"],required:!1,defaultValue:null,description:`The HTML button type.
+Only valid when rendering as <button>.`},{name:"as",type:"ElementType",raw:"ElementType",enumValues:null,required:!1,defaultValue:'"button"',description:'The element or component to render.\n\nSupports:\n- HTML elements (e.g., `"button"`, `"a"`, `"div"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)'}],a={name:e,description:"",props:n};export{a as default,t as description,e as name,n as props};

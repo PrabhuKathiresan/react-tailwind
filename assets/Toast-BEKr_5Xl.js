@@ -1,2 +1,0 @@
-const e="Toast",a="",t=[{name:"message",type:"string",raw:"string",enumValues:null,required:!0,defaultValue:null,description:"The message text displayed inside the toast."},{name:"onClose",type:"() => void",raw:"() => void",enumValues:null,required:!0,defaultValue:null,description:`Triggers removal of the toast.
-Managed internally by the ToastProvider.`},{name:"isTop",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"true",description:""}],n={name:e,description:"",props:t};export{n as default,a as description,e as name,t as props};
