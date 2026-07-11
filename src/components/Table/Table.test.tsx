@@ -37,6 +37,24 @@ describe('<Table />', () => {
 
     expect(container.querySelector('table')).toHaveClass('custom-table')
   })
+
+  test('renders caption when provided', () => {
+    render(
+      <Table caption="User records">
+        <tbody></tbody>
+      </Table>,
+    )
+    expect(screen.getByText('User records').tagName).toBe('CAPTION')
+  })
+
+  test('does not render caption element when caption is not provided', () => {
+    const { container } = render(
+      <Table>
+        <tbody></tbody>
+      </Table>,
+    )
+    expect(container.querySelector('caption')).toBeNull()
+  })
 })
 
 describe('<TableHead />', () => {
@@ -47,21 +65,18 @@ describe('<TableHead />', () => {
           <TableHeaderCell>Col1</TableHeaderCell>
           <TableHeaderCell>Col2</TableHeaderCell>
         </TableHead>
-        <TableBody colSize={2}>
+        <TableBody>
           <></>
         </TableBody>
       </Table>,
     )
 
-    // getAll resolves duplicate role
     const [thead] = screen.getAllByRole('rowgroup')
     expect(thead.tagName).toBe('THEAD')
 
-    // header row
     const row = screen.getByRole('row')
     expect(row.tagName).toBe('TR')
 
-    // header cells
     const cells = screen.getAllByRole('columnheader')
     expect(cells).toHaveLength(2)
     expect(cells[0]).toHaveTextContent('Col1')
@@ -83,10 +98,7 @@ describe('<TableBody />', () => {
     expect(rows).toHaveLength(4)
 
     rows.forEach((row) => {
-      // shimmer row should have pulse class
       expect(row).toHaveClass('animate-pulse')
-
-      // shimmer block should exist inside the cell
       expect(row.querySelector('.shimmer')).toBeTruthy()
     })
   })
@@ -103,6 +115,32 @@ describe('<TableBody />', () => {
     )
 
     expect(screen.getByText('A')).toBeInTheDocument()
+  })
+
+  test('colSize is optional — renders without it when not loading', () => {
+    render(
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>B</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>,
+    )
+    expect(screen.getByText('B')).toBeInTheDocument()
+  })
+
+  test('colSize defaults to 1 shimmer column when loading and colSize is omitted', () => {
+    const { container } = render(
+      <Table>
+        <TableBody loading rowSize={2}>
+          <></>
+        </TableBody>
+      </Table>,
+    )
+
+    const shimmerCells = container.querySelectorAll('tbody td')
+    expect(shimmerCells).toHaveLength(2) // 2 rows × 1 column
   })
 })
 
@@ -134,6 +172,22 @@ describe('<TableRow />', () => {
     )
 
     expect(container.querySelector('tr')).toHaveClass('group')
+  })
+
+  test('forwards native HTML attributes such as onClick', () => {
+    const onClick = jest.fn()
+    render(
+      <Table>
+        <tbody>
+          <TableRow onClick={onClick}>
+            <TableCell>Click me</TableCell>
+          </TableRow>
+        </tbody>
+      </Table>,
+    )
+
+    screen.getByText('Click me').closest('tr')!.click()
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -208,6 +262,21 @@ describe('<TableHeaderCell />', () => {
 
     const header = screen.getByRole('columnheader')
     expect(header).toHaveClass('text-center')
+  })
+
+  test('renders children directly without an extra wrapper element', () => {
+    render(
+      <Table>
+        <TableHead>
+          <TableHeaderCell>Label</TableHeaderCell>
+        </TableHead>
+        <tbody />
+      </Table>,
+    )
+
+    const th = screen.getByRole('columnheader')
+    expect(th.children).toHaveLength(0)
+    expect(th.textContent).toBe('Label')
   })
 })
 
