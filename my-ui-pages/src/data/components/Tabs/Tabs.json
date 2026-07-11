@@ -9,7 +9,7 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "Tabs data (label + panel). Order defines visual order."
+      "description": "Tab data array. Order defines visual order."
     },
     {
       "name": "variant",
@@ -18,7 +18,7 @@
       "enumValues": ["underline", "segmented", "solid"],
       "required": false,
       "defaultValue": "underline",
-      "description": "Variant for the tab list's appearance.\nOnly supported values: \"underline\" | \"segmented\" | \"solid\"\n\n- \"underline\" (default): modern underline indicator under active tab\n- \"segmented\": segmented pill style where selected tab looks like a pill\n- \"solid\": solid nav tabs (selected tab has solid background)"
+      "description": "Visual style of the tab list.\n- \"underline\" (default): active tab shows a bottom indicator line\n- \"segmented\": active tab renders as a filled pill\n- \"solid\": active tab renders with a solid block background"
     },
     {
       "name": "defaultIndex",
@@ -27,7 +27,34 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "0",
-      "description": "Starting tab index (controlled by TabGroup defaultIndex)"
+      "description": "Initial selected index (uncontrolled)"
+    },
+    {
+      "name": "selectedIndex",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled selected index — pair with onChange"
+    },
+    {
+      "name": "orientation",
+      "type": "enum",
+      "raw": "\"horizontal\" | \"vertical\"",
+      "enumValues": ["horizontal", "vertical"],
+      "required": false,
+      "defaultValue": "horizontal",
+      "description": "Layout direction of the tab list.\n- \"horizontal\" (default): tabs sit in a row above the panel\n- \"vertical\": tabs sit in a column to the left of the panel"
+    },
+    {
+      "name": "stretch",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Stretch tabs to fill equal width across the tab list (horizontal only)"
     },
     {
       "name": "listClass",
@@ -36,16 +63,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "",
-      "description": "Extra classes to apply to the TabList wrapper"
+      "description": "Extra classes for the TabList wrapper"
     },
     {
-      "name": "panelClass",
+      "name": "panelsClass",
       "type": "string",
       "raw": "string",
       "enumValues": null,
       "required": false,
       "defaultValue": "",
-      "description": "Extra classes to apply to individual TabPanel wrapper"
+      "description": "Extra classes for the TabPanels wrapper"
     }
   ]
 }

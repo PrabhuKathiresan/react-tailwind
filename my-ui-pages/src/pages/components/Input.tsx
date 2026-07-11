@@ -5,7 +5,7 @@ const InputDocsPage = () => {
   return (
     <DocsPageLayout
       component="Input"
-      description="The Input component provides a styled text field with optional labels, hints, icons, and error messaging. It supports all standard HTML input attributes."
+      description="A fully-featured text field that pairs a styled input with label, hint text, leading and trailing icon slots, and inline error messaging. Accepts all standard HTML input attributes and works identically in controlled and uncontrolled forms."
       examples={[
         {
           title: 'Basic Usage',

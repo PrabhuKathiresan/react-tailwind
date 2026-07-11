@@ -134,7 +134,30 @@ const [max, setMax] = useState(40)
   return (
     <DocsPageLayout
       component="RangeSlider"
-      description="A dual-thumb range slider with smooth animations, track-click behavior, and full keyboard/mouse support."
+      description="A dual-thumb slider for defining a minimum and maximum value simultaneously, useful for price filters, date range pickers, and any bounded selection. Built with pointer events for smooth drag behavior, track-click snapping to set either thumb, and full keyboard support for accessibility."
+      playground={{
+        render: (props) => (
+          <div className="w-full max-w-md">
+            <RangeSlider
+              min={props.min ?? 0}
+              max={props.max ?? 100}
+              valueMin={props.valueMin ?? 20}
+              valueMax={props.valueMax ?? 80}
+              label={props.label || 'Price range'}
+              valueSuffix={props.valueSuffix || ''}
+              onChange={() => {}}
+            />
+          </div>
+        ),
+        initialProps: {
+          min: 0,
+          max: 100,
+          valueMin: 20,
+          valueMax: 80,
+          label: 'Price range',
+          valueSuffix: '$',
+        },
+      }}
       examples={examples}
     />
   )

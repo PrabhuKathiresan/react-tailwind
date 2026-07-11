@@ -16,9 +16,9 @@
       "type": "number",
       "raw": "number",
       "enumValues": null,
-      "required": true,
-      "defaultValue": null,
-      "description": "Number of columns — needed for shimmer loader layout"
+      "required": false,
+      "defaultValue": "1",
+      "description": "Number of columns — needed for shimmer loader layout. Defaults to 1 when not provided."
     },
     {
       "name": "rowSize",

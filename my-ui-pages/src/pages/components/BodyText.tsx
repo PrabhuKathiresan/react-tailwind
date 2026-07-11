@@ -113,7 +113,15 @@ export default function BodyTextDocsPage() {
   return (
     <DocsPageLayout
       component="BodyText"
-      description="BodyText provides a consistent and flexible way to render text content, supporting typography variants and semantic elements."
+      description="A semantic paragraph wrapper that standardizes body copy styling across the design system. Use it to render descriptive content, explanations, or any flowing text block, ensuring consistent font size, line height, and color without writing Tailwind classes by hand."
+      playground={{
+        render: (props) => (
+          <BodyText {...props}>
+            The quick brown fox jumps over the lazy dog. A short sentence to demonstrate typography
+            variants and styles.
+          </BodyText>
+        ),
+      }}
       examples={examples}
     />
   )

@@ -3,12 +3,21 @@
   "description": "",
   "props": [
     {
+      "name": "type",
+      "type": "enum",
+      "raw": "BannerType",
+      "enumValues": ["info", "error", "success", "warning"],
+      "required": false,
+      "defaultValue": "\"info\"",
+      "description": "Defines banner type"
+    },
+    {
       "name": "iconSize",
       "type": "enum",
       "raw": "IconSize",
-      "enumValues": ["5", "6", "7", "8", "9", "10"],
+      "enumValues": ["xs", "sm", "md", "lg", "xl"],
       "required": false,
-      "defaultValue": null,
+      "defaultValue": "\"sm\"",
       "description": "Controls the icon size"
     }
   ]

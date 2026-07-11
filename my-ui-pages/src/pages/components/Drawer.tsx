@@ -133,7 +133,7 @@ function ExampleBasicDrawer() {
   return (
     <DocsPageLayout
       component="Drawer"
-      description="Drawer presents a panel over the page. It's controlled with isOpen/onClose and supports size, alignment, backdrop, sticky title and back button."
+      description="A slide-in overlay panel that keeps the user in context without navigating away from the current page. Controlled via isOpen and onClose props, with configurable slide direction, panel width, backdrop click-to-close, a sticky header, and an optional back-navigation button for multi-step flows."
       examples={examples}
     />
   )
@@ -150,7 +150,7 @@ function ExampleBasicDrawer() {
       <Button onClick={() => setOpen(true)}>Open Drawer</Button>
       <Drawer isOpen={open} onClose={() => setOpen(false)} title="Basic Drawer">
         <div className="p-4">
-          <p className="text-sm text-gray-700">Drawer content goes here.</p>
+          <p className="text-sm">Drawer content goes here.</p>
           <div className="mt-4">
             <Button onClick={() => setOpen(false)}>Close</Button>
           </div>
@@ -257,10 +257,35 @@ function ExampleStickyBackDrawer() {
         showBackButton
       >
         <div className="p-4">
-          <p>This drawer has sticky title and a back button.</p>
-          <Button theme="secondary" onClick={() => setOpen(false)}>
-            Close Drawer
-          </Button>
+          <div className="space-y-4">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse
+              lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras
+              elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non,
+              mi.
+            </p>
+            <img
+              src="/react-tailwind/images/sample-image-1.jpg"
+              alt="Placeholder"
+              className="w-full h-auto"
+            />
+            <p>
+              Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam
+              nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in,
+              pretium a, enim. Pellentesque congue.
+            </p>
+            <img
+              src="/react-tailwind/images/sample-image-2.jpg"
+              alt="Placeholder"
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="mt-4">
+            <p>This drawer has sticky title and a back button.</p>
+            <Button theme="secondary" onClick={() => setOpen(false)}>
+              Close Drawer
+            </Button>
+          </div>
         </div>
       </Drawer>
     </>

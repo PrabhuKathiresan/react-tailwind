@@ -150,7 +150,7 @@ const [selected, setSelected] = useState("Apple")
   return (
     <DocsPageLayout
       component="RadioGroup"
-      description="A flexible radio button group component supporting vertical and horizontal layouts, labels, hints, controlled values, and both string-based and object-based options."
+      description="A controlled list of mutually exclusive radio options rendered from a data array. Handles the group label, hint, error state, and vertical or horizontal layout automatically, so you only need to provide the options and a value-change handler."
       examples={examples}
     />
   )

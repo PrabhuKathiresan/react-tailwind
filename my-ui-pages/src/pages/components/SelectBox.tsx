@@ -339,7 +339,7 @@ const selectRef = useRef(null)
   return (
     <DocsPageLayout
       component="SelectBox"
-      description="A flexible and powerful selection component supporting single, multiple, async search, badges, creatable inputs, and more."
+      description="A powerful replacement for the native select element, built on react-select. Handles single selection, multi-select with removable badge chips, async option loading with search, and a creatable mode for adding new options on the fly. Works in controlled and uncontrolled forms with full keyboard and screen-reader support."
       examples={examples}
     />
   )

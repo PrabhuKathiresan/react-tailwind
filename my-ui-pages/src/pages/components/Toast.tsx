@@ -317,7 +317,7 @@ showToast("This will not auto-close.", { autoClose: false })`,
   return (
     <DocsPageLayout
       component="Toast"
-      description="Toasts are transient notifications displayed in a chosen screen corner. Trigger them via the useToast() hook."
+      description="Non-blocking notification popups that appear in a configurable screen corner and disappear automatically after a timeout. Triggered imperatively via the useToast() hook from anywhere in the component tree, with no JSX placement needed beyond the single ToastProvider wrapper at the app root."
       examples={examples}
       bestPractices={<ToastBestPractices />}
     />

@@ -3,6 +3,15 @@
   "description": "",
   "props": [
     {
+      "name": "type",
+      "type": "\"radio\"",
+      "raw": "\"radio\"",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Force type to checkbox only"
+    },
+    {
       "name": "wrapperClass",
       "type": "string",
       "raw": "string",

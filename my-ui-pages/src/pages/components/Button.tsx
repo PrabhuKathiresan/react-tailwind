@@ -130,7 +130,11 @@ export default function ButtonDocsPage() {
   return (
     <DocsPageLayout
       component="Button"
-      description="Buttons trigger user actions such as submitting forms, saving data, or navigation. They support multiple themes, variants, and sizes, with options for icons, loading states, and rounded styles."
+      description="The primary trigger for user actions such as form submissions, confirmations, and navigation. Choose from four semantic color themes, three visual variants (solid, outline, ghost), three sizes, optional leading or trailing icons, full-width layout, and an animated loading state that prevents double submission."
+      playground={{
+        render: (props) => <Button {...props}>Click me</Button>,
+        initialProps: { theme: 'primary', variant: 'default', size: 'md' },
+      }}
       examples={examples}
     />
   )

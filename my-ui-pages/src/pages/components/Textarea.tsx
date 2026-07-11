@@ -94,7 +94,7 @@ const [value, setValue] = useState("")
   return (
     <DocsPageLayout
       component="Textarea"
-      description="A versatile textarea component supporting labels, icons, validation messages, and theming."
+      description="A multi-line text field that shares the same label, hint, icon, and error messaging API as Input. Use it for longer free-text entries like comments, notes, addresses, or descriptions where a single-line input would be too restrictive."
       examples={examples}
     />
   )

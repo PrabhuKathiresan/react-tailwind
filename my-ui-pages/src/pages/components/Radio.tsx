@@ -123,7 +123,7 @@ const [selected, setSelected] = useState("apple")
   return (
     <DocsPageLayout
       component="Radio"
-      description="A customizable radio button component with accessible styling and full support for labels, errors, and controlled inputs."
+      description="A single radio option with accessible label, hint, and error message slots. Use it directly when you need full control over each option's rendering, or reach for RadioGroup when you want to build a mutually exclusive list from a data array with less wiring."
       examples={examples}
     />
   )

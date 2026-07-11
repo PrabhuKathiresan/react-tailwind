@@ -135,7 +135,17 @@ export default function CardDocsPage() {
   return (
     <DocsPageLayout
       component="Card"
-      description="Use these responsive card components to show data entries and information to your users in multiple forms and contexts such as for your blog, application, user profiles, and more."
+      description="A flexible surface container for grouping related content with a consistent bordered and padded wrapper. Comes with optional header and footer slots, making it a natural fit for product listings, profile summaries, dashboard metrics, and any elevated content block."
+      playground={{
+        render: (props) => (
+          <Card {...props} className="w-80">
+            <HeadingText.SubTitle2>React Tailwind</HeadingText.SubTitle2>
+            <BodyText className="mt-2">
+              A modern component library built for speed, consistency, and scalability.
+            </BodyText>
+          </Card>
+        ),
+      }}
       examples={examples}
     />
   )

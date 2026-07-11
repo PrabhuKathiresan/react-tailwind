@@ -18,8 +18,6 @@ export default function DocsLayout() {
     const route = pageRoutes[idx]
     return navigate(route.path)
   }
-  const isInstallationPage = location.pathname.includes('installation')
-
   return (
     <div className="flex">
       <aside className="w-full max-w-[240px] h-[calc(100dvh-61px)] overflow-y-auto border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-6 sticky top-[60px] hidden md:block">
@@ -28,12 +26,7 @@ export default function DocsLayout() {
       <section id="scrollable-container" className="w-full grow-0 overflow-x-auto">
         <div className="relative px-2 md:px-4 pt-2 pb-0 md:pb-2">
           <Outlet />
-          <div
-            className={buildClassName(
-              'flex items-center justify-between px-2 md:px-4 lg:px-8 py-2',
-              !isInstallationPage && 'lg:pr-72',
-            )}
-          >
+          <div className="flex items-center justify-between px-2 md:px-4 lg:px-8 py-2">
             <Button
               variant="plain"
               theme="secondary"

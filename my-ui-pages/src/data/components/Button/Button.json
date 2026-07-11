@@ -75,6 +75,15 @@
       "description": "Prevents outline styles on keyboard focus.\n\nUseful for icon buttons or custom focus handling."
     },
     {
+      "name": "type",
+      "type": "enum",
+      "raw": "\"button\" | \"submit\" | \"reset\"",
+      "enumValues": ["button", "submit", "reset"],
+      "required": false,
+      "defaultValue": null,
+      "description": "The HTML button type.\nOnly valid when rendering as <button>."
+    },
+    {
       "name": "as",
       "type": "ElementType",
       "raw": "ElementType",

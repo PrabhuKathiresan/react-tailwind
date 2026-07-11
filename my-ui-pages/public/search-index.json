@@ -2,9 +2,53 @@
   {
     "name": "Alert",
     "description": "Alert component",
-    "props": [],
-    "category": "components",
-    "keywords": ["alert"],
+    "props": [
+      {
+        "name": "type",
+        "type": "AlertType",
+        "required": false,
+        "description": "Defines alert type",
+        "defaultValue": "\"info\""
+      },
+      {
+        "name": "removable",
+        "type": "boolean",
+        "required": false,
+        "description": "Defines if alert is removable",
+        "defaultValue": null
+      },
+      {
+        "name": "onRemove",
+        "type": "() => void",
+        "required": false,
+        "description": "Handler when closing / dismissing alert\n@returns void",
+        "defaultValue": null
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "required": false,
+        "description": "Text content to display in alert",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "alert",
+      "type",
+      "removable",
+      "onremove",
+      "message",
+      "alerttype",
+      "defines",
+      "handler",
+      "when",
+      "closing",
+      "dismissing",
+      "returns",
+      "text",
+      "content",
+      "display"
+    ],
     "url": "/alert"
   },
   {
@@ -15,54 +59,42 @@
         "name": "theme",
         "type": "BadgeTheme",
         "required": false,
-        "description": "Defines theme of the Badge"
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "children",
-        "type": "any",
-        "required": true,
-        "description": ""
+        "description": "Defines theme of the Badge",
+        "defaultValue": "\"info\""
       },
       {
         "name": "removable",
         "type": "boolean",
         "required": false,
-        "description": "Defines if badge is removable"
+        "description": "Defines if badge is removable",
+        "defaultValue": null
       },
       {
         "name": "rounded",
         "type": "boolean",
         "required": false,
-        "description": "Defines if corners are rounded"
+        "description": "Defines if corners are rounded",
+        "defaultValue": null
       },
       {
         "name": "onRemove",
-        "type": "(() => void)",
+        "type": "() => void",
         "required": false,
-        "description": "Handler on removing badge"
+        "description": "Handler on removing badge",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "badge",
       "theme",
-      "classname",
-      "children",
       "removable",
       "rounded",
       "onremove",
       "badgetheme",
-      "string",
-      "any",
-      "boolean",
-      "boolean",
-      "void"
+      "defines",
+      "corners",
+      "handler",
+      "removing"
     ],
     "url": "/badge"
   },
@@ -74,23 +106,18 @@
         "name": "type",
         "type": "BannerType",
         "required": false,
-        "description": "Defines banner type"
-      },
-      {
-        "name": "children",
-        "type": "any",
-        "required": true,
-        "description": ""
+        "description": "Defines banner type",
+        "defaultValue": "\"info\""
       },
       {
         "name": "iconSize",
         "type": "IconSize",
         "required": false,
-        "description": "Controls the icon size"
+        "description": "Controls the icon size",
+        "defaultValue": "\"sm\""
       }
     ],
-    "category": "components",
-    "keywords": ["banner", "type", "children", "iconsize", "bannertype", "any", "iconsize"],
+    "keywords": ["banner", "type", "iconsize", "bannertype", "defines", "controls", "icon", "size"],
     "url": "/banner"
   },
   {
@@ -101,40 +128,45 @@
         "name": "small",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-sm` class to the element"
+        "description": "Add's `text-sm` class to the element",
+        "defaultValue": null
       },
       {
         "name": "strong",
         "type": "boolean",
         "required": false,
-        "description": "Add's `font-semibold` class to the element"
+        "description": "Add's `font-semibold` class to the element",
+        "defaultValue": null
       },
       {
         "name": "muted",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-gray-500` class to the element"
+        "description": "Add's `text-gray-500` class to the element",
+        "defaultValue": null
       },
       {
         "name": "error",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-red-500` class to the element"
+        "description": "Add's `text-red-500` class to the element",
+        "defaultValue": null
       },
       {
         "name": "inline",
         "type": "boolean",
         "required": false,
-        "description": "Add's `inline-flex items-center gap-2` class to the element"
+        "description": "Add's `inline-flex items-center gap-2` class to the element",
+        "defaultValue": null
       },
       {
         "name": "as",
-        "type": "keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any>",
+        "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
         "required": false,
-        "description": "JSX element to be render in place of `p`"
+        "description": "JSX element to be render in place of `p`",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "bodytext",
       "small",
@@ -143,18 +175,22 @@
       "error",
       "inline",
       "as",
-      "boolean",
-      "boolean",
-      "boolean",
-      "boolean",
-      "boolean",
       "keyof",
-      "jsx",
       "intrinsicelements",
       "jsxelementconstructor",
-      "any"
+      "text",
+      "class",
+      "element",
+      "font",
+      "semibold",
+      "gray",
+      "flex",
+      "items",
+      "center",
+      "render",
+      "place"
     ],
-    "url": "/bodytext"
+    "url": "/body-text"
   },
   {
     "name": "Breadcrumb",
@@ -164,41 +200,263 @@
         "name": "items",
         "type": "BreadcrumbItem[]",
         "required": true,
-        "description": "List of breadcrumb items"
+        "description": "List of breadcrumb items",
+        "defaultValue": null
       },
       {
         "name": "render",
-        "type": "(item: BreadcrumbItem) => React.ReactNode",
+        "type": "(item: BreadcrumbItem) => ReactNode",
         "required": true,
-        "description": "Rendered method for breadcrumbItem,\nThis method is called for all items except the last,\nsince, last item in breadcrumb will be the current page of user"
+        "description": "Rendered method for breadcrumbItem,\nThis method is called for all items except the last,\nsince, last item in breadcrumb will be the current page of user\n@param item BreadcrumbItem\n@returns ReactNode",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "breadcrumb",
       "items",
       "render",
       "breadcrumbitem",
       "item",
-      "breadcrumbitem",
-      "reactnode"
+      "reactnode",
+      "list",
+      "rendered",
+      "method",
+      "this",
+      "called",
+      "except",
+      "last",
+      "since",
+      "will",
+      "current",
+      "page",
+      "user",
+      "param",
+      "returns"
     ],
     "url": "/breadcrumb"
   },
   {
     "name": "Button",
     "description": "Button component",
-    "props": [],
-    "category": "components",
-    "keywords": ["button"],
+    "props": [
+      {
+        "name": "theme",
+        "type": "ButtonTheme",
+        "required": false,
+        "description": "Controls button theme (color palette).",
+        "defaultValue": "\"primary\""
+      },
+      {
+        "name": "variant",
+        "type": "ButtonVariant",
+        "required": false,
+        "description": "Controls the visual styling of the button.",
+        "defaultValue": "\"default\""
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize",
+        "required": false,
+        "description": "Controls padding, font size, spacing.",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, shows a Loader inside the button.\n\nWhile loading:\n- children are replaced\n- button typically becomes disabled",
+        "defaultValue": null
+      },
+      {
+        "name": "loadingText",
+        "type": "string",
+        "required": false,
+        "description": "Optional text to display next to the loader.\n\nOnly shown when `loading=true`.",
+        "defaultValue": "\"\""
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "required": false,
+        "description": "Applies 50% border radius, producing a pill-shaped button.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Indicates that the button only contains an icon.\n\nAdjusts padding to match icon-only UX.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "noOutlineOnFocus",
+        "type": "boolean",
+        "required": false,
+        "description": "Prevents outline styles on keyboard focus.\n\nUseful for icon buttons or custom focus handling.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "type",
+        "type": "\"button\" | \"submit\" | \"reset\"",
+        "required": false,
+        "description": "The HTML button type.\nOnly valid when rendering as <button>.",
+        "defaultValue": null
+      },
+      {
+        "name": "as",
+        "type": "ElementType",
+        "required": false,
+        "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"button\"`, `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)",
+        "defaultValue": "\"button\""
+      }
+    ],
+    "keywords": [
+      "button",
+      "theme",
+      "variant",
+      "size",
+      "loading",
+      "loadingtext",
+      "rounded",
+      "icononly",
+      "nooutlineonfocus",
+      "type",
+      "as",
+      "buttontheme",
+      "buttonvariant",
+      "buttonsize",
+      "submit",
+      "reset",
+      "elementtype",
+      "controls",
+      "color",
+      "palette",
+      "visual",
+      "styling",
+      "padding",
+      "font",
+      "spacing",
+      "shows",
+      "loader",
+      "inside",
+      "while",
+      "children",
+      "replaced",
+      "typically",
+      "becomes",
+      "disabled",
+      "optional",
+      "text",
+      "display",
+      "next",
+      "only",
+      "shown",
+      "when",
+      "applies",
+      "border",
+      "radius",
+      "producing",
+      "pill",
+      "shaped",
+      "indicates",
+      "that",
+      "contains",
+      "icon",
+      "adjusts",
+      "match",
+      "prevents",
+      "outline",
+      "styles",
+      "keyboard",
+      "focus",
+      "useful",
+      "buttons",
+      "custom",
+      "handling",
+      "html",
+      "valid",
+      "rendering",
+      "element",
+      "component",
+      "render",
+      "supports",
+      "elements",
+      "components",
+      "link",
+      "nextlink",
+      "mycustombutton"
+    ],
     "url": "/button"
   },
   {
     "name": "Card",
     "description": "Card component",
-    "props": [],
-    "category": "components",
-    "keywords": ["card"],
+    "props": [
+      {
+        "name": "hoverable",
+        "type": "boolean",
+        "required": false,
+        "description": "Make card hoverable (adds background transitions)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "required": false,
+        "description": "Adds border around the card",
+        "defaultValue": "true"
+      },
+      {
+        "name": "compact",
+        "type": "boolean",
+        "required": false,
+        "description": "Make card compact",
+        "defaultValue": "false"
+      },
+      {
+        "name": "zeroPadding",
+        "type": "boolean",
+        "required": false,
+        "description": "Remove default padding from the card",
+        "defaultValue": "false"
+      },
+      {
+        "name": "as",
+        "type": "ElementType",
+        "required": false,
+        "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomCard`)",
+        "defaultValue": "\"div\""
+      }
+    ],
+    "keywords": [
+      "card",
+      "hoverable",
+      "bordered",
+      "compact",
+      "zeropadding",
+      "as",
+      "elementtype",
+      "make",
+      "adds",
+      "background",
+      "transitions",
+      "border",
+      "around",
+      "remove",
+      "default",
+      "padding",
+      "from",
+      "element",
+      "component",
+      "render",
+      "supports",
+      "html",
+      "elements",
+      "components",
+      "link",
+      "nextlink",
+      "mycustomcard"
+    ],
     "url": "/card"
   },
   {
@@ -209,34 +467,59 @@
         "name": "type",
         "type": "\"checkbox\"",
         "required": false,
-        "description": "Force type to checkbox only"
+        "description": "Force type to checkbox only",
+        "defaultValue": null
       },
       {
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": "Extra class for outer wrapper"
+        "description": "Extra class for outer wrapper",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Input container class"
+        "description": "Input container class",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Label class"
+        "description": "Label class",
+        "defaultValue": null
       },
       {
         "name": "error",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Error message"
+        "description": "Error message",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "checkbox",
       "type",
@@ -244,11 +527,23 @@
       "containerclass",
       "labelclass",
       "error",
-      "checkbox",
-      "string",
-      "string",
-      "string",
-      "reactnode"
+      "label",
+      "labelwrapperclass",
+      "showerrormessage",
+      "reactnode",
+      "force",
+      "only",
+      "extra",
+      "class",
+      "outer",
+      "wrapper",
+      "input",
+      "container",
+      "message",
+      "field",
+      "controls",
+      "weather",
+      "show"
     ],
     "url": "/checkbox"
   },
@@ -257,98 +552,83 @@
     "description": "CheckboxGroup component",
     "props": [
       {
-        "name": "name",
-        "type": "string",
-        "required": false,
-        "description": "Group name applied to all checkboxes in the group"
-      },
-      {
-        "name": "value",
-        "type": "T[]",
-        "required": false,
-        "description": "Currently selected values"
-      },
-      {
         "name": "label",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Label displayed above the group"
+        "description": "Label displayed above the group",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Label CSS classes"
+        "description": "Label CSS classes",
+        "defaultValue": null
       },
       {
         "name": "labelWrapperClass",
         "type": "string",
         "required": false,
-        "description": "Wrapper classes for the label row"
+        "description": "Wrapper classes for the label row",
+        "defaultValue": null
       },
       {
         "name": "labelHint",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Hint text shown next to the label"
+        "description": "Hint text shown next to the label",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Container classes for the group wrapper"
-      },
-      {
-        "name": "onChange",
-        "type": "((values: T[], e: React.ChangeEvent<HTMLInputElement>) => void)",
-        "required": false,
-        "description": "Callback fired whenever selection updates."
+        "description": "Container classes for the group wrapper",
+        "defaultValue": null
       },
       {
         "name": "options",
         "type": "string[] | CheckboxGroupItem<T>[]",
         "required": true,
-        "description": "Options in the group — can be:\n - string[] → converted to {label, value}\n - CheckboxGroupItem<T>[]"
+        "description": "Options in the group — can be:\n - string[] → converted to {label, value}\n - CheckboxGroupItem<T>[]",
+        "defaultValue": null
       },
       {
         "name": "inline",
         "type": "boolean",
         "required": false,
-        "description": "Whether to arrange checkboxes inline"
+        "description": "Whether to arrange checkboxes inline",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "checkboxgroup",
-      "name",
-      "value",
       "label",
       "labelclass",
       "labelwrapperclass",
       "labelhint",
       "containerclass",
-      "onchange",
       "options",
       "inline",
-      "string",
-      "t",
       "reactnode",
-      "string",
-      "string",
-      "reactnode",
-      "string",
-      "values",
-      "t",
-      "e",
-      "changeevent",
-      "htmlinputelement",
-      "void",
-      "string",
       "checkboxgroupitem",
-      "t",
-      "boolean"
+      "displayed",
+      "above",
+      "group",
+      "classes",
+      "wrapper",
+      "hint",
+      "text",
+      "shown",
+      "next",
+      "container",
+      "converted",
+      "value",
+      "whether",
+      "arrange",
+      "checkboxes"
     ],
-    "url": "/checkboxgroup"
+    "url": "/checkbox-group"
   },
   {
     "name": "DataTable",
@@ -356,73 +636,138 @@
     "props": [
       {
         "name": "items",
-        "type": "any[]",
+        "type": "T[]",
         "required": true,
-        "description": "Array of data items"
+        "description": "Array of data items",
+        "defaultValue": null
       },
       {
         "name": "columns",
-        "type": "DataTableColumn[]",
+        "type": "DataTableColumn<T>[]",
         "required": true,
-        "description": "Column definitions"
+        "description": "Column definitions",
+        "defaultValue": null
       },
       {
         "name": "sorting",
         "type": "Record<string, Sorting>",
         "required": false,
         "description": "Sorting state, keyed by column name",
-        "defaultValue": "{"
+        "defaultValue": "{}"
       },
       {
         "name": "loading",
         "type": "boolean",
         "required": false,
-        "description": "Loading state (shows skeleton rows)"
+        "description": "Loading state — shows skeleton rows instead of data",
+        "defaultValue": null
       },
       {
         "name": "pagination",
         "type": "TPagination",
         "required": false,
-        "description": "Pagination config"
+        "description": "Pagination config",
+        "defaultValue": null
       },
       {
         "name": "emptyMessage",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Empty message to show when no results"
+        "description": "Message or node shown when the items array is empty",
+        "defaultValue": "No data found"
       },
       {
         "name": "onSort",
-        "type": "((column: DataTableColumn) => void)",
+        "type": "(column: DataTableColumn<T>) => void",
         "required": false,
-        "description": "External sorting handler"
+        "description": "External sorting handler. When omitted, DataTable auto-sorts internally.",
+        "defaultValue": null
       },
       {
         "name": "setPagination",
-        "type": "((pagination: Partial<TPagination>) => void)",
+        "type": "(pagination: Partial<TPagination>) => void",
         "required": false,
-        "description": "Pagination setter"
+        "description": "Pagination setter",
+        "defaultValue": "() => {}"
       },
       {
         "name": "layout",
         "type": "\"fixed\" | \"auto\"",
         "required": false,
-        "description": "Layout of table cells"
+        "description": "Table layout algorithm",
+        "defaultValue": "auto"
+      },
+      {
+        "name": "rowKey",
+        "type": "string | ((item: T) => string | number)",
+        "required": false,
+        "description": "Determines the stable React key for each row.\nPass a field name string or a function returning a unique value.",
+        "defaultValue": "id"
+      },
+      {
+        "name": "onRowClick",
+        "type": "(item: T, index: number) => void",
+        "required": false,
+        "description": "Callback fired when a row is clicked.\nRows become visually interactive (pointer cursor) when this is set.",
+        "defaultValue": null
+      },
+      {
+        "name": "rowClass",
+        "type": "string | ((item: T, index: number) => string)",
+        "required": false,
+        "description": "Extra class(es) applied to each `<tr>` in the body.\nPass a function to vary classes per row.\n@example rowClass={(item, i) => item.active ? 'font-semibold' : ''}",
+        "defaultValue": null
+      },
+      {
+        "name": "density",
+        "type": "DataTableDensity",
+        "required": false,
+        "description": "Cell padding preset.",
+        "defaultValue": "default"
+      },
+      {
+        "name": "striped",
+        "type": "boolean",
+        "required": false,
+        "description": "Applies an alternating background to odd-indexed rows.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "footerRow",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Node(s) rendered inside `<tfoot><tr>` as a summary or totals row.\nShould be a set of `<td>` elements matching the column count.",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Optional wrapper styles"
+        "description": "Optional classes applied to the outer container div",
+        "defaultValue": ""
       },
       {
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Optional classes applied to the scroll wrapper div",
+        "defaultValue": ""
+      },
+      {
+        "name": "tableClass",
+        "type": "string",
+        "required": false,
+        "description": "Optional classes applied directly to the `<table>` element",
+        "defaultValue": ""
+      },
+      {
+        "name": "headClass",
+        "type": "string",
+        "required": false,
+        "description": "Optional classes applied to the `<thead>` element",
+        "defaultValue": ""
       }
     ],
-    "category": "components",
     "keywords": [
       "datatable",
       "items",
@@ -434,94 +779,168 @@
       "onsort",
       "setpagination",
       "layout",
+      "rowkey",
+      "onrowclick",
+      "rowclass",
+      "density",
+      "striped",
+      "footerrow",
       "containerclass",
       "wrapperclass",
-      "any",
+      "tableclass",
+      "headclass",
       "datatablecolumn",
       "record",
-      "string",
-      "sorting",
-      "boolean",
       "tpagination",
       "reactnode",
       "column",
-      "datatablecolumn",
-      "void",
-      "pagination",
       "partial",
-      "tpagination",
-      "void",
       "fixed",
       "auto",
-      "string",
-      "string"
+      "item",
+      "index",
+      "datatabledensity",
+      "array",
+      "data",
+      "definitions",
+      "state",
+      "keyed",
+      "name",
+      "shows",
+      "skeleton",
+      "rows",
+      "instead",
+      "config",
+      "message",
+      "shown",
+      "when",
+      "empty",
+      "external",
+      "handler",
+      "omitted",
+      "sorts",
+      "internally",
+      "setter",
+      "table",
+      "algorithm",
+      "determines",
+      "stable",
+      "each",
+      "pass",
+      "field",
+      "function",
+      "returning",
+      "unique",
+      "value",
+      "callback",
+      "fired",
+      "clicked",
+      "become",
+      "visually",
+      "interactive",
+      "pointer",
+      "cursor",
+      "this",
+      "extra",
+      "class",
+      "applied",
+      "body",
+      "vary",
+      "classes",
+      "example",
+      "active",
+      "font",
+      "semibold",
+      "cell",
+      "padding",
+      "preset",
+      "applies",
+      "alternating",
+      "background",
+      "indexed",
+      "rendered",
+      "inside",
+      "tfoot",
+      "summary",
+      "totals",
+      "should",
+      "elements",
+      "matching",
+      "count",
+      "optional",
+      "outer",
+      "container",
+      "scroll",
+      "wrapper",
+      "directly",
+      "element",
+      "thead"
     ],
-    "url": "/datatable"
+    "url": "/data-table"
+  },
+  {
+    "name": "getSortIcon",
+    "description": "getSortIcon component",
+    "props": [],
+    "keywords": ["getsorticon"],
+    "url": "/get-sort-icon"
   },
   {
     "name": "DetailedInformation",
     "description": "DetailedInformation component",
     "props": [
       {
-        "name": "className",
-        "type": "string",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "title",
-        "type": "React.ReactNode",
-        "required": false,
-        "description": "Title for the information section"
-      },
-      {
         "name": "subTitle",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Subtitle for the information section"
+        "description": "Subtitle for the information section",
+        "defaultValue": null
       },
       {
         "name": "details",
         "type": "Detail[]",
         "required": true,
-        "description": "List of details / information to be displayed"
+        "description": "List of details / information to be displayed",
+        "defaultValue": null
       },
       {
         "name": "compact",
         "type": "boolean",
         "required": false,
-        "description": "Defines if the layout should be compact"
+        "description": "Defines if the layout should be compact",
+        "defaultValue": null
       },
       {
         "name": "bordered",
         "type": "boolean",
         "required": false,
-        "description": "Defines if the section should have borders"
+        "description": "Defines if the section should have borders",
+        "defaultValue": null
       },
       {
         "name": "divider",
         "type": "boolean",
         "required": false,
-        "description": "Defines if each item in section should have divider"
+        "description": "Defines if each item in section should have divider",
+        "defaultValue": null
       },
       {
         "name": "titleClass",
         "type": "string",
         "required": false,
-        "description": "Classname for title element"
+        "description": "Classname for title element",
+        "defaultValue": null
       },
       {
         "name": "detailsClass",
         "type": "string",
         "required": false,
-        "description": "Classname for details section"
+        "description": "Classname for details section",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "detailedinformation",
-      "classname",
-      "title",
       "subtitle",
       "details",
       "compact",
@@ -529,24 +948,38 @@
       "divider",
       "titleclass",
       "detailsclass",
-      "string",
-      "reactnode",
       "reactnode",
       "detail",
-      "boolean",
-      "boolean",
-      "boolean",
-      "string",
-      "string"
+      "information",
+      "section",
+      "list",
+      "displayed",
+      "defines",
+      "layout",
+      "should",
+      "have",
+      "borders",
+      "each",
+      "item",
+      "classname",
+      "title",
+      "element"
     ],
-    "url": "/detailedinformation"
+    "url": "/detailed-information"
   },
   {
     "name": "Dot",
     "description": "Dot component",
-    "props": [],
-    "category": "components",
-    "keywords": ["dot"],
+    "props": [
+      {
+        "name": "as",
+        "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+        "required": false,
+        "description": "",
+        "defaultValue": "span"
+      }
+    ],
+    "keywords": ["dot", "as", "keyof", "intrinsicelements", "jsxelementconstructor"],
     "url": "/dot"
   },
   {
@@ -557,166 +990,318 @@
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": "Controls if Drawer is open"
+        "description": "Controls if Drawer is open",
+        "defaultValue": null
       },
       {
         "name": "onClose",
-        "type": "(() => void)",
+        "type": "() => void",
         "required": false,
-        "description": "Handler method that invokes on close attempt",
-        "defaultValue": "()"
+        "description": "Handler method that invokes on close attempt\n@returns void",
+        "defaultValue": "() => {}"
       },
       {
         "name": "align",
         "type": "DrawerAlignment",
         "required": false,
-        "description": "Drawer alignment on the page"
+        "description": "Drawer alignment on the page",
+        "defaultValue": "end"
       },
       {
         "name": "backdrop",
         "type": "boolean",
         "required": false,
-        "description": "Whether to add backdrop, when drawer is open"
-      },
-      {
-        "name": "title",
-        "type": "React.ReactNode",
-        "required": true,
-        "description": "Drawer title"
+        "description": "Whether to add backdrop, when drawer is open",
+        "defaultValue": "true"
       },
       {
         "name": "titleSticky",
         "type": "boolean",
         "required": false,
-        "description": "Controls if the title should be sticky on top"
+        "description": "Controls if the title should be sticky on top",
+        "defaultValue": "false"
       },
       {
         "name": "description",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Drawer description section"
-      },
-      {
-        "name": "children",
-        "type": "React.ReactNode",
-        "required": false,
-        "description": "Content of the drawer"
+        "description": "Drawer description section",
+        "defaultValue": null
       },
       {
         "name": "size",
         "type": "DrawerSize",
         "required": false,
-        "description": "Drawer size"
+        "description": "Drawer size",
+        "defaultValue": "md"
       },
       {
         "name": "panelClass",
         "type": "string",
         "required": false,
-        "description": "Dialog Panel class"
+        "description": "Dialog Panel class",
+        "defaultValue": ""
       },
       {
         "name": "contentClass",
         "type": "string",
         "required": false,
-        "description": "Drawer content class"
+        "description": "Drawer content class",
+        "defaultValue": ""
       },
       {
         "name": "titleClass",
         "type": "string",
         "required": false,
-        "description": "Drawer title class"
+        "description": "Drawer title class",
+        "defaultValue": ""
       },
       {
         "name": "descriptionClass",
         "type": "string",
         "required": false,
-        "description": "Drawer description class"
+        "description": "Drawer description class",
+        "defaultValue": ""
       },
       {
         "name": "showBackButton",
         "type": "boolean",
         "required": false,
-        "description": "Should show back button on Drawer"
+        "description": "Should show back button on Drawer",
+        "defaultValue": "false"
       }
     ],
-    "category": "components",
     "keywords": [
       "drawer",
       "isopen",
       "onclose",
       "align",
       "backdrop",
-      "title",
       "titlesticky",
       "description",
-      "children",
       "size",
       "panelclass",
       "contentclass",
       "titleclass",
       "descriptionclass",
       "showbackbutton",
-      "boolean",
-      "void",
       "draweralignment",
-      "boolean",
-      "reactnode",
-      "boolean",
-      "reactnode",
       "reactnode",
       "drawersize",
-      "string",
-      "string",
-      "string",
-      "string",
-      "boolean"
+      "controls",
+      "open",
+      "handler",
+      "method",
+      "that",
+      "invokes",
+      "close",
+      "attempt",
+      "returns",
+      "alignment",
+      "page",
+      "whether",
+      "when",
+      "title",
+      "should",
+      "sticky",
+      "section",
+      "dialog",
+      "panel",
+      "class",
+      "content",
+      "show",
+      "back",
+      "button"
     ],
     "url": "/drawer"
   },
   {
     "name": "Dropdown",
     "description": "Dropdown component",
-    "props": [],
-    "category": "components",
-    "keywords": ["dropdown"],
+    "props": [
+      {
+        "name": "itemsContainerClass",
+        "type": "string",
+        "required": false,
+        "description": "Additional classes for the menu container.",
+        "defaultValue": null
+      },
+      {
+        "name": "transition",
+        "type": "boolean",
+        "required": false,
+        "description": "Enables menu transition animations. Default: true",
+        "defaultValue": "true"
+      },
+      {
+        "name": "anchor",
+        "type": "false | DropdownAnchorTo | Partial<DropdownBaseAnchorProps & { to: DropdownAnchorTo; }>",
+        "required": false,
+        "description": "Controls dropdown placement.\nAccepts:\n- `\"bottom start\"`\n- `\"top end\"`\n- `\"right\"`\n- or object configuration for advanced placement.",
+        "defaultValue": "bottom start"
+      },
+      {
+        "name": "items",
+        "type": "DropdownItem[]",
+        "required": true,
+        "description": "List of dropdown menu items.",
+        "defaultValue": null
+      },
+      {
+        "name": "renderItem",
+        "type": "(item: DropdownItem) => ReactNode",
+        "required": false,
+        "description": "Renderer for customizing how a menu item is displayed.\nIf omitted, the default item UI is used.",
+        "defaultValue": null
+      },
+      {
+        "name": "menuItemClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom CSS classes applied to each menu item.",
+        "defaultValue": null
+      },
+      {
+        "name": "onMenuClick",
+        "type": "(item: DropdownItem, index: number) => void",
+        "required": false,
+        "description": "Called when a menu item is clicked.\nReceives: (item, index)",
+        "defaultValue": null
+      },
+      {
+        "name": "triggerButton",
+        "type": "ReactNode",
+        "required": false,
+        "description": "JSX element used as the trigger button.\nMust NOT be provided when using renderTriggerButton.",
+        "defaultValue": null
+      },
+      {
+        "name": "renderTriggerButton",
+        "type": "(props: DropdownTriggerBtnProps) => ReactNode",
+        "required": false,
+        "description": "Must NOT be provided when using triggerButton.\nCustom trigger renderer.\nReceives trigger UI state (open, focus, hover, etc.)\nMust return a valid element.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "dropdown",
+      "itemscontainerclass",
+      "transition",
+      "anchor",
+      "items",
+      "renderitem",
+      "menuitemclass",
+      "onmenuclick",
+      "triggerbutton",
+      "rendertriggerbutton",
+      "dropdownanchorto",
+      "partial",
+      "dropdownbaseanchorprops",
+      "dropdownitem",
+      "item",
+      "reactnode",
+      "index",
+      "props",
+      "dropdowntriggerbtnprops",
+      "additional",
+      "classes",
+      "menu",
+      "container",
+      "enables",
+      "animations",
+      "default",
+      "controls",
+      "placement",
+      "accepts",
+      "bottom",
+      "start",
+      "right",
+      "configuration",
+      "advanced",
+      "list",
+      "renderer",
+      "customizing",
+      "displayed",
+      "omitted",
+      "used",
+      "custom",
+      "applied",
+      "each",
+      "called",
+      "when",
+      "clicked",
+      "receives",
+      "element",
+      "trigger",
+      "button",
+      "must",
+      "provided",
+      "using",
+      "state",
+      "open",
+      "focus",
+      "hover",
+      "return",
+      "valid"
+    ],
     "url": "/dropdown"
   },
   {
     "name": "EmptyState",
     "description": "EmptyState component",
-    "props": [],
-    "category": "components",
-    "keywords": ["emptystate"],
-    "url": "/emptystate"
-  },
-  {
-    "name": "HeadingText",
-    "description": "HeadingText component",
     "props": [
       {
-        "name": "children",
-        "type": "React.ReactNode",
-        "required": true,
-        "description": ""
-      },
-      {
-        "name": "className",
+        "name": "description",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "description": "",
+        "defaultValue": "null"
       }
     ],
-    "category": "components",
-    "keywords": ["headingtext", "children", "classname", "reactnode", "string"],
-    "url": "/headingtext"
+    "keywords": ["emptystate", "description", "action", "reactnode"],
+    "url": "/empty-state"
   },
   {
-    "name": "Icons",
-    "description": "Icons component",
+    "name": "SubTitle",
+    "description": "SubTitle component",
     "props": [],
-    "category": "components",
-    "keywords": ["icons"],
-    "url": "/icons"
+    "keywords": ["subtitle"],
+    "url": "/sub-title"
+  },
+  {
+    "name": "SubTitle2",
+    "description": "SubTitle2 component",
+    "props": [],
+    "keywords": ["subtitle2"],
+    "url": "/sub-title2"
+  },
+  {
+    "name": "SubTitle3",
+    "description": "SubTitle3 component",
+    "props": [],
+    "keywords": ["subtitle3"],
+    "url": "/sub-title3"
+  },
+  {
+    "name": "SubTitle4",
+    "description": "SubTitle4 component",
+    "props": [],
+    "keywords": ["subtitle4"],
+    "url": "/sub-title4"
+  },
+  {
+    "name": "Title",
+    "description": "Title component",
+    "props": [],
+    "keywords": ["title"],
+    "url": "/title"
   },
   {
     "name": "Input",
@@ -724,52 +1309,296 @@
     "props": [
       {
         "name": "rightGroup",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Space for right icon"
+        "description": "Space for right icon",
+        "defaultValue": null
       },
       {
         "name": "leftGroup",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Space for left icon"
+        "description": "Space for left icon",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelHint",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Any label hint for the input field",
+        "defaultValue": null
+      },
+      {
+        "name": "labelClass",
+        "type": "string",
+        "required": false,
+        "description": "Label classes",
+        "defaultValue": null
+      },
+      {
+        "name": "containerClass",
+        "type": "string",
+        "required": false,
+        "description": "Input field container class",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "error",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field error",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
       }
     ],
-    "category": "components",
-    "keywords": ["input", "rightgroup", "leftgroup", "reactnode", "reactnode"],
+    "keywords": [
+      "input",
+      "rightgroup",
+      "leftgroup",
+      "label",
+      "labelhint",
+      "labelclass",
+      "containerclass",
+      "labelwrapperclass",
+      "error",
+      "showerrormessage",
+      "reactnode",
+      "space",
+      "right",
+      "icon",
+      "left",
+      "field",
+      "hint",
+      "classes",
+      "container",
+      "class",
+      "wrapper",
+      "controls",
+      "weather",
+      "show",
+      "message"
+    ],
     "url": "/input"
   },
   {
     "name": "Label",
     "description": "Label component",
-    "props": [],
-    "category": "components",
-    "keywords": ["label"],
+    "props": [
+      {
+        "name": "htmlFor",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      }
+    ],
+    "keywords": ["label", "htmlfor"],
     "url": "/label"
   },
   {
     "name": "Loader",
     "description": "Loader component",
-    "props": [],
-    "category": "components",
-    "keywords": ["loader"],
+    "props": [
+      {
+        "name": "size",
+        "type": "LoaderSize",
+        "required": false,
+        "description": "",
+        "defaultValue": "md"
+      }
+    ],
+    "keywords": ["loader", "size", "loadersize"],
     "url": "/loader"
   },
   {
     "name": "Pagination",
     "description": "Pagination component",
-    "props": [],
-    "category": "components",
-    "keywords": ["pagination"],
+    "props": [
+      {
+        "name": "page",
+        "type": "number",
+        "required": true,
+        "description": "Defines current page number",
+        "defaultValue": null
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": true,
+        "description": "Defines page limit",
+        "defaultValue": null
+      },
+      {
+        "name": "total",
+        "type": "number",
+        "required": true,
+        "description": "Defines totol items in the list to be paginated.",
+        "defaultValue": null
+      },
+      {
+        "name": "ellipsis",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to show ellipsis for large page numbers",
+        "defaultValue": "true"
+      }
+    ],
+    "keywords": [
+      "pagination",
+      "page",
+      "limit",
+      "total",
+      "ellipsis",
+      "defines",
+      "current",
+      "totol",
+      "items",
+      "list",
+      "paginated",
+      "whether",
+      "show",
+      "large",
+      "numbers"
+    ],
     "url": "/pagination"
+  },
+  {
+    "name": "usePagination",
+    "description": "usePagination component",
+    "props": [
+      {
+        "name": "totalPages",
+        "type": "number",
+        "required": true,
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "currentPage",
+        "type": "number",
+        "required": true,
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "siblingCount",
+        "type": "number",
+        "required": false,
+        "description": "",
+        "defaultValue": "1"
+      }
+    ],
+    "keywords": ["usepagination", "totalpages", "currentpage", "siblingcount"],
+    "url": "/use-pagination"
   },
   {
     "name": "PasswordInput",
     "description": "PasswordInput component",
-    "props": [],
-    "category": "components",
-    "keywords": ["passwordinput"],
-    "url": "/passwordinput"
+    "props": [
+      {
+        "name": "leftGroup",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Space for left icon",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelHint",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Any label hint for the input field",
+        "defaultValue": null
+      },
+      {
+        "name": "labelClass",
+        "type": "string",
+        "required": false,
+        "description": "Label classes",
+        "defaultValue": null
+      },
+      {
+        "name": "containerClass",
+        "type": "string",
+        "required": false,
+        "description": "Input field container class",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "error",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field error",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "passwordinput",
+      "leftgroup",
+      "label",
+      "labelhint",
+      "labelclass",
+      "containerclass",
+      "labelwrapperclass",
+      "error",
+      "showerrormessage",
+      "reactnode",
+      "space",
+      "left",
+      "icon",
+      "input",
+      "field",
+      "hint",
+      "classes",
+      "container",
+      "class",
+      "wrapper",
+      "controls",
+      "weather",
+      "show",
+      "message"
+    ],
+    "url": "/password-input"
   },
   {
     "name": "Radio",
@@ -779,34 +1608,59 @@
         "name": "type",
         "type": "\"radio\"",
         "required": false,
-        "description": "Force type to checkbox only"
+        "description": "Force type to checkbox only",
+        "defaultValue": null
       },
       {
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": "Extra class for outer wrapper"
+        "description": "Extra class for outer wrapper",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Input container class"
+        "description": "Input container class",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Label class"
+        "description": "Label class",
+        "defaultValue": null
       },
       {
         "name": "error",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Error message"
+        "description": "Error message",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "radio",
       "type",
@@ -814,11 +1668,24 @@
       "containerclass",
       "labelclass",
       "error",
-      "radio",
-      "string",
-      "string",
-      "string",
-      "reactnode"
+      "label",
+      "labelwrapperclass",
+      "showerrormessage",
+      "reactnode",
+      "force",
+      "checkbox",
+      "only",
+      "extra",
+      "class",
+      "outer",
+      "wrapper",
+      "input",
+      "container",
+      "message",
+      "field",
+      "controls",
+      "weather",
+      "show"
     ],
     "url": "/radio"
   },
@@ -827,120 +1694,213 @@
     "description": "RadioGroup component",
     "props": [
       {
-        "name": "name",
-        "type": "string",
-        "required": true,
-        "description": "The name attribute shared by all radio buttons in the group.\nEnsures only one option can be selected at a time."
-      },
-      {
         "name": "label",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Optional label displayed above the radio button group.\nCan be a string or a custom ReactNode."
+        "description": "Optional label displayed above the radio button group.\nCan be a string or a custom ReactNode.",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Custom CSS classes applied to the label element."
+        "description": "Custom CSS classes applied to the label element.",
+        "defaultValue": null
       },
       {
         "name": "labelWrapperClass",
         "type": "string",
         "required": false,
-        "description": "Custom CSS classes applied to the label wrapper container."
+        "description": "Custom CSS classes applied to the label wrapper container.",
+        "defaultValue": null
       },
       {
         "name": "labelHint",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Optional hint content displayed beside the label.\nUseful for showing small guidance text."
+        "description": "Optional hint content displayed beside the label.\nUseful for showing small guidance text.",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Custom CSS classes applied to the outer container\nthat wraps the entire radio group."
-      },
-      {
-        "name": "value",
-        "type": "any",
-        "required": false,
-        "description": "The currently selected value.\nWhen provided, the component becomes controlled."
+        "description": "Custom CSS classes applied to the outer container\nthat wraps the entire radio group.",
+        "defaultValue": null
       },
       {
         "name": "options",
         "type": "string[] | RadionGroupItem[]",
         "required": true,
-        "description": "The list of options to render.\n- Strings → converted to { label, value } internally\n- Objects → must follow RadionButtonGroupItem structure"
+        "description": "The list of options to render.\n- Strings → converted to { label, value } internally\n- Objects → must follow RadionButtonGroupItem structure",
+        "defaultValue": null
       },
       {
         "name": "row",
         "type": "boolean",
         "required": false,
-        "description": "Whether to display radio buttons horizontally in a row.\nDefaults to vertical column layout."
-      },
-      {
-        "name": "onChange",
-        "type": "((e: React.ChangeEvent<HTMLInputElement>) => void)",
-        "required": false,
-        "description": "Change handler called when the selected radio button changes.\nReceives the native ChangeEvent from the input element."
+        "description": "Whether to display radio buttons horizontally in a row.\nDefaults to vertical column layout.",
+        "defaultValue": null
       },
       {
         "name": "error",
-        "type": "string | null",
+        "type": "string",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
       },
       {
         "name": "showErrorMessage",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "radiogroup",
-      "name",
       "label",
       "labelclass",
       "labelwrapperclass",
       "labelhint",
       "containerclass",
-      "value",
       "options",
       "row",
-      "onchange",
       "error",
       "showerrormessage",
-      "string",
       "reactnode",
-      "string",
-      "string",
-      "reactnode",
-      "string",
-      "any",
-      "string",
       "radiongroupitem",
-      "boolean",
-      "e",
-      "changeevent",
-      "htmlinputelement",
-      "void",
-      "string",
-      "null",
-      "boolean"
+      "optional",
+      "displayed",
+      "above",
+      "radio",
+      "button",
+      "group",
+      "custom",
+      "classes",
+      "applied",
+      "element",
+      "wrapper",
+      "container",
+      "hint",
+      "content",
+      "beside",
+      "useful",
+      "showing",
+      "small",
+      "guidance",
+      "text",
+      "outer",
+      "that",
+      "wraps",
+      "entire",
+      "list",
+      "render",
+      "strings",
+      "converted",
+      "value",
+      "internally",
+      "objects",
+      "must",
+      "follow",
+      "radionbuttongroupitem",
+      "structure",
+      "whether",
+      "display",
+      "buttons",
+      "horizontally",
+      "defaults",
+      "vertical",
+      "column",
+      "layout"
     ],
-    "url": "/radiogroup"
+    "url": "/radio-group"
   },
   {
     "name": "RadioSwitch",
-    "description": "RadioSwitch component",
-    "props": [],
-    "category": "components",
-    "keywords": ["radioswitch"],
-    "url": "/radioswitch"
+    "description": "GPU-accelerated Radio Switch with perfect highlight alignment.\nSupports wrapping, icons, descriptions, and dark mode.",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": "Accessible label for the group.\nUsed internally for aria-label.",
+        "defaultValue": null
+      },
+      {
+        "name": "selected",
+        "type": "string",
+        "required": true,
+        "description": "The currently selected value.\nMakes this a controlled component.",
+        "defaultValue": null
+      },
+      {
+        "name": "items",
+        "type": "RadioSwitchItem[]",
+        "required": true,
+        "description": "List of switch options.\nCan be:\n- an array of strings\n- an array of objects with label/value/description",
+        "defaultValue": null
+      },
+      {
+        "name": "switchClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "wrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "contentClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "descriptionClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "radioswitch",
+      "label",
+      "selected",
+      "items",
+      "switchclass",
+      "wrapperclass",
+      "contentclass",
+      "descriptionclass",
+      "radioswitchitem",
+      "accessible",
+      "group",
+      "used",
+      "internally",
+      "aria",
+      "currently",
+      "value",
+      "makes",
+      "this",
+      "controlled",
+      "component",
+      "list",
+      "switch",
+      "options",
+      "array",
+      "strings",
+      "objects",
+      "with",
+      "description"
+    ],
+    "url": "/radio-switch"
   },
   {
     "name": "RangeInput",
@@ -950,40 +1910,73 @@
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": "Extra class for outer wrapper"
+        "description": "Extra class for outer wrapper",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Input container class"
+        "description": "Input container class",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Label class"
+        "description": "Label class",
+        "defaultValue": null
       },
       {
         "name": "error",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Error message"
+        "description": "Error message",
+        "defaultValue": null
       },
       {
         "name": "showValue",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
       },
       {
         "name": "valueSuffix",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelHint",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Any label hint for the input field",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "rangeinput",
       "wrapperclass",
@@ -992,14 +1985,25 @@
       "error",
       "showvalue",
       "valuesuffix",
-      "string",
-      "string",
-      "string",
+      "label",
+      "labelhint",
+      "labelwrapperclass",
+      "showerrormessage",
       "reactnode",
-      "boolean",
-      "string"
+      "extra",
+      "class",
+      "outer",
+      "wrapper",
+      "input",
+      "container",
+      "message",
+      "field",
+      "hint",
+      "controls",
+      "weather",
+      "show"
     ],
-    "url": "/rangeinput"
+    "url": "/range-input"
   },
   {
     "name": "RangeSlider",
@@ -1009,75 +2013,68 @@
         "name": "label",
         "type": "string",
         "required": false,
-        "description": "Top label displayed above the slider.\nUseful for identifying the field in forms."
+        "description": "Top label displayed above the slider.\nUseful for identifying the field in forms.",
+        "defaultValue": null
       },
       {
         "name": "labelHint",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Optional hint displayed to the right of the label.\nOften used for contextual help or inline descriptions."
+        "description": "Optional hint displayed to the right of the label.\nOften used for contextual help or inline descriptions.",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
         "description": "Custom Tailwind classes applied to the label element.",
-        "defaultValue": "''"
+        "defaultValue": ""
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
         "description": "Custom Tailwind classes applied to the outer container\nthat wraps the entire slider component.",
-        "defaultValue": "''"
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false,
-        "description": "Custom Tailwind classes applied to the slider thumbs.",
-        "defaultValue": "''"
+        "defaultValue": ""
       },
       {
         "name": "min",
         "type": "number",
         "required": true,
-        "description": "The minimum allowed numeric value of the slider."
+        "description": "The minimum allowed numeric value of the slider.",
+        "defaultValue": null
       },
       {
         "name": "max",
         "type": "number",
         "required": true,
-        "description": "The maximum allowed numeric value of the slider."
+        "description": "The maximum allowed numeric value of the slider.",
+        "defaultValue": null
       },
       {
         "name": "valueMin",
         "type": "number",
         "required": true,
-        "description": "The current selected minimum value (left thumb).\nThis makes the component fully controlled."
+        "description": "The current selected minimum value (left thumb).\nThis makes the component fully controlled.",
+        "defaultValue": null
       },
       {
         "name": "valueMax",
         "type": "number",
         "required": true,
-        "description": "The current selected maximum value (right thumb).\nThis makes the component fully controlled."
-      },
-      {
-        "name": "onChange",
-        "type": "(min: number, max: number) => void",
-        "required": true,
-        "description": "Callback triggered whenever either thumb moves.\nReceives the updated min and max values."
+        "description": "The current selected maximum value (right thumb).\nThis makes the component fully controlled.",
+        "defaultValue": null
       },
       {
         "name": "valueSuffix",
         "type": "string",
         "required": false,
         "description": "Optional string appended to displayed values.\nExample: \"kg\", \"₹\", \"cm\", \"hrs\", \"%\".",
-        "defaultValue": "''"
+        "defaultValue": ""
       },
       {
         "name": "error",
-        "type": "string | null",
+        "type": "string",
         "required": false,
         "description": "Error message to display below the slider.\nIf provided, the slider is styled with an error state.",
         "defaultValue": "null"
@@ -1090,42 +2087,76 @@
         "defaultValue": "true"
       }
     ],
-    "category": "components",
     "keywords": [
       "rangeslider",
       "label",
       "labelhint",
       "labelclass",
       "containerclass",
-      "classname",
       "min",
       "max",
       "valuemin",
       "valuemax",
-      "onchange",
       "valuesuffix",
       "error",
       "showerrormessage",
-      "string",
       "reactnode",
-      "string",
-      "string",
-      "string",
-      "number",
-      "number",
-      "number",
-      "number",
-      "min",
-      "number",
-      "max",
-      "number",
-      "void",
-      "string",
-      "string",
-      "null",
-      "boolean"
+      "displayed",
+      "above",
+      "slider",
+      "useful",
+      "identifying",
+      "field",
+      "forms",
+      "optional",
+      "hint",
+      "right",
+      "often",
+      "used",
+      "contextual",
+      "help",
+      "inline",
+      "descriptions",
+      "custom",
+      "tailwind",
+      "classes",
+      "applied",
+      "element",
+      "outer",
+      "container",
+      "that",
+      "wraps",
+      "entire",
+      "component",
+      "minimum",
+      "allowed",
+      "numeric",
+      "value",
+      "maximum",
+      "current",
+      "selected",
+      "left",
+      "thumb",
+      "this",
+      "makes",
+      "fully",
+      "controlled",
+      "appended",
+      "values",
+      "example",
+      "message",
+      "display",
+      "below",
+      "provided",
+      "styled",
+      "with",
+      "state",
+      "whether",
+      "should",
+      "shown",
+      "defaults"
     ],
-    "url": "/rangeslider"
+    "url": "/range-slider"
   },
   {
     "name": "SelectBox",
@@ -1133,188 +2164,183 @@
     "props": [
       {
         "name": "options",
-        "type": "T[]",
+        "type": "(string | BaseOption)[]",
         "required": true,
-        "description": "List of options to display in the dropdown"
+        "description": "List of options to display in the dropdown",
+        "defaultValue": null
       },
       {
         "name": "selected",
-        "type": "T | T[] | null",
+        "type": "string | BaseOption | (string | BaseOption)[]",
         "required": false,
-        "description": "Currently selected option(s).\n- For single select: a single T or null\n- For multi-select: T[]"
+        "description": "Currently selected option(s).\n- For single select: a single T or null\n- For multi-select: T[]",
+        "defaultValue": null
       },
       {
         "name": "labelKey",
         "type": "string",
         "required": false,
-        "description": "Name of the field inside option objects to use as the label (defaults to \"label\")"
+        "description": "Name of the field inside option objects to use as the label (defaults to \"label\")",
+        "defaultValue": null
       },
       {
         "name": "valueKey",
         "type": "string",
         "required": false,
-        "description": "Name of the field inside option objects to use as the value (defaults to \"value\")"
-      },
-      {
-        "name": "id",
-        "type": "string",
-        "required": false,
-        "description": "Input ID attribute; defaults to the name field"
-      },
-      {
-        "name": "name",
-        "type": "string",
-        "required": false,
-        "description": "Input name attribute"
+        "description": "Name of the field inside option objects to use as the value (defaults to \"value\")",
+        "defaultValue": null
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": "Text label displayed above the component"
+        "description": "Text label displayed above the component",
+        "defaultValue": null
       },
       {
         "name": "labelWrapperClass",
         "type": "string",
         "required": false,
-        "description": "Additional CSS classes for the label wrapper"
+        "description": "Additional CSS classes for the label wrapper",
+        "defaultValue": null
       },
       {
         "name": "labelClass",
         "type": "string",
         "required": false,
-        "description": "Additional CSS classes for the label element"
+        "description": "Additional CSS classes for the label element",
+        "defaultValue": null
       },
       {
         "name": "labelHint",
         "type": "string",
         "required": false,
-        "description": "Optional hint element (string or JSX) displayed beside the label"
-      },
-      {
-        "name": "onChange",
-        "type": "((value: T | T[] | null) => void)",
-        "required": false,
-        "description": "Callback fired when selection changes.\n- Single select → value is T or null\n- Multi-select → value is T[]"
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "description": "Whether the entire SelectBox is disabled"
+        "description": "Optional hint element (string or JSX) displayed beside the label",
+        "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Additional CSS classes for the outer container"
+        "description": "Additional CSS classes for the outer container",
+        "defaultValue": null
       },
       {
         "name": "placeholder",
         "type": "string",
         "required": false,
-        "description": "Placeholder text displayed when no value is selected"
+        "description": "Placeholder text displayed when no value is selected",
+        "defaultValue": null
       },
       {
         "name": "dropdownContainerClass",
         "type": "string",
         "required": false,
-        "description": "CSS classes applied to the dropdown options container"
+        "description": "CSS classes applied to the dropdown options container",
+        "defaultValue": null
       },
       {
         "name": "multiple",
         "type": "boolean",
         "required": false,
-        "description": "Enable multiple selection mode"
+        "description": "Enable multiple selection mode",
+        "defaultValue": null
       },
       {
         "name": "maxSelection",
         "type": "number",
         "required": false,
-        "description": "Maximum number of selections allowed in multi-select mode"
+        "description": "Maximum number of selections allowed in multi-select mode",
+        "defaultValue": null
       },
       {
         "name": "immediate",
         "type": "boolean",
         "required": false,
-        "description": "Whether to commit value selection immediately when clicking options.\nHeadless UI uses \"immediate\" to control Combobox selection behavior."
+        "description": "Whether to commit value selection immediately when clicking options.\nHeadless UI uses \"immediate\" to control Combobox selection behavior.",
+        "defaultValue": null
       },
       {
         "name": "showErrorMessage",
         "type": "boolean",
         "required": false,
-        "description": "Whether to show an error message below the field"
+        "description": "Whether to show an error message below the field",
+        "defaultValue": null
       },
       {
         "name": "error",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": "Error message displayed below the component"
+        "description": "Error message displayed below the component",
+        "defaultValue": null
       },
       {
         "name": "async",
         "type": "boolean",
         "required": false,
-        "description": "Enables async search mode:\n- Component will not filter options locally\n- Calls onSearch(query) when user types"
+        "description": "Enables async search mode:\n- Component will not filter options locally\n- Calls onSearch(query) when user types",
+        "defaultValue": null
       },
       {
         "name": "onSearch",
-        "type": "((query: string) => Promise<void>)",
+        "type": "(query: string) => Promise<void>",
         "required": false,
-        "description": "Async search callback.\nShould update the `options` prop externally after fetching."
+        "description": "Async search callback.\nShould update the `options` prop externally after fetching.",
+        "defaultValue": null
       },
       {
         "name": "searchable",
         "type": "boolean",
         "required": false,
-        "description": "Whether the user can type inside the input (false = readOnly mode)"
+        "description": "Whether the user can type inside the input (false = readOnly mode)",
+        "defaultValue": null
       },
       {
         "name": "required",
         "type": "boolean",
         "required": false,
-        "description": "Mark input as required (used for accessibility)"
+        "description": "Mark input as required (used for accessibility)",
+        "defaultValue": null
       },
       {
         "name": "allowAdd",
         "type": "boolean",
         "required": false,
-        "description": "Whether to show an “Add new” option when no results match"
+        "description": "Whether to show an “Add new” option when no results match",
+        "defaultValue": null
       },
       {
         "name": "addNewText",
         "type": "string",
         "required": false,
-        "description": "Label prefix for the “Add new” action (e.g., \"Create\")"
+        "description": "Label prefix for the “Add new” action (e.g., \"Create\")",
+        "defaultValue": null
       },
       {
         "name": "onAdd",
-        "type": "((value: string) => string | void | T | Promise<string | void | T>)",
+        "type": "(value: string) => string | void | BaseOption | Promise<string | void | BaseOption>",
         "required": false,
-        "description": "Callback when the user chooses the \"create/add\" option.\n\nIt may:\n - return void (do nothing automatically)\n - return a string or BaseOption → the component will auto-add/select it\n - return a Promise resolving to the above"
+        "description": "Callback when the user chooses the \"create/add\" option.\n\nIt may:\n - return void (do nothing automatically)\n - return a string or BaseOption → the component will auto-add/select it\n - return a Promise resolving to the above",
+        "defaultValue": null
       },
       {
         "name": "allowClear",
         "type": "boolean",
         "required": false,
-        "description": "Show a clear (X) button for single-select mode"
+        "description": "Show a clear (X) button for single-select mode",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "selectbox",
       "options",
       "selected",
       "labelkey",
       "valuekey",
-      "id",
-      "name",
       "label",
       "labelwrapperclass",
       "labelclass",
       "labelhint",
-      "onchange",
-      "disabled",
       "containerclass",
       "placeholder",
       "dropdowncontainerclass",
@@ -1331,53 +2357,125 @@
       "addnewtext",
       "onadd",
       "allowclear",
-      "t",
-      "t",
-      "t",
-      "null",
-      "string",
-      "string",
-      "string",
-      "string",
-      "string",
-      "string",
-      "string",
-      "string",
-      "value",
-      "t",
-      "t",
-      "null",
-      "void",
-      "boolean",
-      "string",
-      "string",
-      "string",
-      "boolean",
-      "number",
-      "boolean",
-      "boolean",
+      "baseoption",
       "reactnode",
-      "boolean",
       "query",
-      "string",
       "promise",
-      "void",
-      "boolean",
-      "boolean",
-      "boolean",
-      "string",
       "value",
-      "string",
-      "string",
-      "void",
-      "t",
-      "promise",
-      "string",
-      "void",
-      "t",
-      "boolean"
+      "list",
+      "display",
+      "dropdown",
+      "currently",
+      "option",
+      "single",
+      "select",
+      "multi",
+      "name",
+      "field",
+      "inside",
+      "objects",
+      "defaults",
+      "text",
+      "displayed",
+      "above",
+      "component",
+      "additional",
+      "classes",
+      "wrapper",
+      "element",
+      "optional",
+      "hint",
+      "beside",
+      "outer",
+      "container",
+      "when",
+      "applied",
+      "enable",
+      "selection",
+      "mode",
+      "maximum",
+      "selections",
+      "allowed",
+      "whether",
+      "commit",
+      "immediately",
+      "clicking",
+      "headless",
+      "uses",
+      "control",
+      "combobox",
+      "behavior",
+      "show",
+      "message",
+      "below",
+      "enables",
+      "search",
+      "will",
+      "filter",
+      "locally",
+      "calls",
+      "user",
+      "types",
+      "callback",
+      "should",
+      "update",
+      "prop",
+      "externally",
+      "after",
+      "fetching",
+      "type",
+      "input",
+      "readonly",
+      "mark",
+      "used",
+      "accessibility",
+      "results",
+      "match",
+      "prefix",
+      "action",
+      "create",
+      "chooses",
+      "return",
+      "nothing",
+      "automatically",
+      "auto",
+      "resolving",
+      "clear",
+      "button"
     ],
-    "url": "/selectbox"
+    "url": "/select-box"
+  },
+  {
+    "name": "EmptyTableRow",
+    "description": "EmptyTableRow component",
+    "props": [
+      {
+        "name": "colSpan",
+        "type": "number",
+        "required": false,
+        "description": "Column span for empty row",
+        "defaultValue": "1"
+      },
+      {
+        "name": "contentClass",
+        "type": "string",
+        "required": false,
+        "description": "Optional custom styling",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "emptytablerow",
+      "colspan",
+      "contentclass",
+      "column",
+      "span",
+      "empty",
+      "optional",
+      "custom",
+      "styling"
+    ],
+    "url": "/empty-table-row"
   },
   {
     "name": "Table",
@@ -1388,42 +2486,149 @@
         "type": "\"fixed\" | \"auto\"",
         "required": false,
         "description": "Table layout mode (\"auto\" or \"fixed\"). Default = \"auto\"",
-        "defaultValue": "'auto'"
+        "defaultValue": "auto"
       },
       {
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": "Additional classes applied to the table wrapper"
+        "description": "Additional classes applied to the table wrapper",
+        "defaultValue": null
       },
       {
-        "name": "className",
-        "type": "string",
+        "name": "caption",
+        "type": "ReactNode",
         "required": false,
-        "description": "Additional classes applied to the <table> element",
-        "defaultValue": "''"
-      },
-      {
-        "name": "children",
-        "type": "React.ReactNode",
-        "required": true,
-        "description": "Table content (Head + Body + Foot)"
+        "description": "Accessible caption rendered as a <caption> element above the header",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "table",
       "layout",
       "wrapperclass",
-      "classname",
-      "children",
+      "caption",
       "fixed",
       "auto",
-      "string",
-      "string",
-      "reactnode"
+      "reactnode",
+      "mode",
+      "default",
+      "additional",
+      "classes",
+      "applied",
+      "wrapper",
+      "accessible",
+      "rendered",
+      "element",
+      "above",
+      "header"
     ],
     "url": "/table"
+  },
+  {
+    "name": "TableBody",
+    "description": "TableBody component",
+    "props": [
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "description": "Show loading shimmer (overrides children)",
+        "defaultValue": null
+      },
+      {
+        "name": "colSize",
+        "type": "number",
+        "required": false,
+        "description": "Number of columns — needed for shimmer loader layout. Defaults to 1 when not provided.",
+        "defaultValue": "1"
+      },
+      {
+        "name": "rowSize",
+        "type": "number",
+        "required": false,
+        "description": "Number of shimmer rows to show when loading",
+        "defaultValue": "5"
+      }
+    ],
+    "keywords": [
+      "tablebody",
+      "loading",
+      "colsize",
+      "rowsize",
+      "show",
+      "shimmer",
+      "overrides",
+      "children",
+      "columns",
+      "needed",
+      "loader",
+      "layout",
+      "defaults",
+      "when",
+      "provided",
+      "rows"
+    ],
+    "url": "/table-body"
+  },
+  {
+    "name": "TableCell",
+    "description": "TableCell component",
+    "props": [
+      {
+        "name": "align",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "description": "Horizontal alignment",
+        "defaultValue": "left"
+      }
+    ],
+    "keywords": ["tablecell", "align", "left", "center", "right", "horizontal", "alignment"],
+    "url": "/table-cell"
+  },
+  {
+    "name": "TableFoot",
+    "description": "TableFoot component",
+    "props": [],
+    "keywords": ["tablefoot"],
+    "url": "/table-foot"
+  },
+  {
+    "name": "TableHead",
+    "description": "TableHead component",
+    "props": [],
+    "keywords": ["tablehead"],
+    "url": "/table-head"
+  },
+  {
+    "name": "TableHeaderCell",
+    "description": "TableHeaderCell component",
+    "props": [
+      {
+        "name": "align",
+        "type": "\"left\" | \"center\" | \"right\"",
+        "required": false,
+        "description": "Horizontal alignment",
+        "defaultValue": "left"
+      }
+    ],
+    "keywords": ["tableheadercell", "align", "left", "center", "right", "horizontal", "alignment"],
+    "url": "/table-header-cell"
+  },
+  {
+    "name": "TableRow",
+    "description": "TableRow component",
+    "props": [
+      {
+        "name": "hoverable",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the row highlights on hover",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": ["tablerow", "hoverable", "whether", "highlights", "hover"],
+    "url": "/table-row"
   },
   {
     "name": "Tabs",
@@ -1433,61 +2638,116 @@
         "name": "tabs",
         "type": "TabsItem[]",
         "required": true,
-        "description": "Tabs data (label + panel). Order defines visual order."
+        "description": "Tab data array. Order defines visual order.",
+        "defaultValue": null
       },
       {
         "name": "variant",
         "type": "\"underline\" | \"segmented\" | \"solid\"",
         "required": false,
-        "description": "Variant for the tab list's appearance.\nOnly supported values: \"underline\" | \"segmented\" | \"solid\"\n\n- \"underline\" (default): modern underline indicator under active tab\n- \"segmented\": segmented pill style where selected tab looks like a pill\n- \"solid\": solid nav tabs (selected tab has solid background)",
-        "defaultValue": "'underline'"
+        "description": "Visual style of the tab list.\n- \"underline\" (default): active tab shows a bottom indicator line\n- \"segmented\": active tab renders as a filled pill\n- \"solid\": active tab renders with a solid block background",
+        "defaultValue": "underline"
       },
       {
         "name": "defaultIndex",
         "type": "number",
         "required": false,
-        "description": "Starting tab index (controlled by TabGroup defaultIndex)",
+        "description": "Initial selected index (uncontrolled)",
         "defaultValue": "0"
       },
       {
-        "name": "className",
-        "type": "string",
+        "name": "selectedIndex",
+        "type": "number",
         "required": false,
-        "description": "Extra classes for the outer group container",
-        "defaultValue": "''"
+        "description": "Controlled selected index — pair with onChange",
+        "defaultValue": null
+      },
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\"",
+        "required": false,
+        "description": "Layout direction of the tab list.\n- \"horizontal\" (default): tabs sit in a row above the panel\n- \"vertical\": tabs sit in a column to the left of the panel",
+        "defaultValue": "horizontal"
+      },
+      {
+        "name": "stretch",
+        "type": "boolean",
+        "required": false,
+        "description": "Stretch tabs to fill equal width across the tab list (horizontal only)",
+        "defaultValue": "false"
       },
       {
         "name": "listClass",
         "type": "string",
         "required": false,
-        "description": "Extra classes to apply to the TabList wrapper",
-        "defaultValue": "''"
+        "description": "Extra classes for the TabList wrapper",
+        "defaultValue": ""
       },
       {
-        "name": "panelClass",
+        "name": "panelsClass",
         "type": "string",
         "required": false,
-        "description": "Extra classes to apply to individual TabPanel wrapper",
-        "defaultValue": "''"
+        "description": "Extra classes for the TabPanels wrapper",
+        "defaultValue": ""
       }
     ],
-    "category": "components",
     "keywords": [
-      "tabs",
       "tabs",
       "variant",
       "defaultindex",
-      "classname",
+      "selectedindex",
+      "orientation",
+      "stretch",
       "listclass",
-      "panelclass",
+      "panelsclass",
       "tabsitem",
       "underline",
       "segmented",
       "solid",
-      "number",
-      "string",
-      "string",
-      "string"
+      "horizontal",
+      "vertical",
+      "data",
+      "array",
+      "order",
+      "defines",
+      "visual",
+      "style",
+      "list",
+      "default",
+      "active",
+      "shows",
+      "bottom",
+      "indicator",
+      "line",
+      "renders",
+      "filled",
+      "pill",
+      "with",
+      "block",
+      "background",
+      "initial",
+      "selected",
+      "index",
+      "uncontrolled",
+      "controlled",
+      "pair",
+      "onchange",
+      "layout",
+      "direction",
+      "above",
+      "panel",
+      "column",
+      "left",
+      "fill",
+      "equal",
+      "width",
+      "across",
+      "only",
+      "extra",
+      "classes",
+      "tablist",
+      "wrapper",
+      "tabpanels"
     ],
     "url": "/tabs"
   },
@@ -1499,34 +2759,38 @@
         "name": "xsmall",
         "type": "boolean",
         "required": false,
-        "description": "Render extra-small sized text (`text-xs/5`)."
+        "description": "Render extra-small sized text (`text-xs/5`).",
+        "defaultValue": null
       },
       {
         "name": "small",
         "type": "boolean",
         "required": false,
-        "description": "Render small sized text (`text-sm/6`)."
+        "description": "Render small sized text (`text-sm/6`).",
+        "defaultValue": null
       },
       {
         "name": "strong",
         "type": "boolean",
         "required": false,
-        "description": "Render bold/semibold text (`font-semibold`)."
+        "description": "Render bold/semibold text (`font-semibold`).",
+        "defaultValue": null
       },
       {
         "name": "muted",
         "type": "boolean",
         "required": false,
-        "description": "Apply muted gray tone (commonly used for secondary text)."
+        "description": "Apply muted gray tone (commonly used for secondary text).",
+        "defaultValue": null
       },
       {
         "name": "error",
         "type": "boolean",
         "required": false,
-        "description": "Apply error color styling (`text-red-500`)."
+        "description": "Apply error color styling (`text-red-500`).",
+        "defaultValue": null
       }
     ],
-    "category": "components",
     "keywords": [
       "textcontent",
       "xsmall",
@@ -1534,13 +2798,23 @@
       "strong",
       "muted",
       "error",
-      "boolean",
-      "boolean",
-      "boolean",
-      "boolean",
-      "boolean"
+      "render",
+      "extra",
+      "sized",
+      "text",
+      "bold",
+      "semibold",
+      "font",
+      "apply",
+      "gray",
+      "tone",
+      "commonly",
+      "used",
+      "secondary",
+      "color",
+      "styling"
     ],
-    "url": "/textcontent"
+    "url": "/text-content"
   },
   {
     "name": "Textarea",
@@ -1548,19 +2822,92 @@
     "props": [
       {
         "name": "rightGroup",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
       },
       {
         "name": "leftGroup",
-        "type": "React.ReactNode",
+        "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "",
+        "defaultValue": null
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field label",
+        "defaultValue": null
+      },
+      {
+        "name": "labelHint",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Any label hint for the input field",
+        "defaultValue": null
+      },
+      {
+        "name": "labelClass",
+        "type": "string",
+        "required": false,
+        "description": "Label classes",
+        "defaultValue": null
+      },
+      {
+        "name": "containerClass",
+        "type": "string",
+        "required": false,
+        "description": "Input field container class",
+        "defaultValue": null
+      },
+      {
+        "name": "labelWrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Input label wrapper class",
+        "defaultValue": null
+      },
+      {
+        "name": "error",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Input field error",
+        "defaultValue": null
+      },
+      {
+        "name": "showErrorMessage",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls weather to show error message or not.",
+        "defaultValue": null
       }
     ],
-    "category": "components",
-    "keywords": ["textarea", "rightgroup", "leftgroup", "reactnode", "reactnode"],
+    "keywords": [
+      "textarea",
+      "rightgroup",
+      "leftgroup",
+      "label",
+      "labelhint",
+      "labelclass",
+      "containerclass",
+      "labelwrapperclass",
+      "error",
+      "showerrormessage",
+      "reactnode",
+      "input",
+      "field",
+      "hint",
+      "classes",
+      "container",
+      "class",
+      "wrapper",
+      "controls",
+      "weather",
+      "show",
+      "message"
+    ],
     "url": "/textarea"
   },
   {
@@ -1568,54 +2915,84 @@
     "description": "Toast component",
     "props": [
       {
-        "name": "id",
-        "type": "number",
-        "required": true,
-        "description": "Unique identifier of the toast instance.\nGenerated internally by ToastProvider."
-      },
-      {
         "name": "message",
         "type": "string",
         "required": true,
-        "description": "The message text displayed inside the toast."
+        "description": "The message text displayed inside the toast.",
+        "defaultValue": null
       },
       {
         "name": "type",
         "type": "\"success\" | \"error\" | \"info\" | \"warning\"",
         "required": true,
-        "description": "Visual style of the toast based on its purpose.\n- `success` — positive confirmations\n- `error` — failures or critical issues\n- `info` — general helpful information\n- `warning` — caution or attention required"
+        "description": "Visual style of the toast based on its purpose.\n- `success` — positive confirmations\n- `error` — failures or critical issues\n- `info` — general helpful information\n- `warning` — caution or attention required",
+        "defaultValue": null
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": "Triggers removal of the toast.\nManaged internally by the ToastProvider."
+        "description": "Triggers removal of the toast.\nManaged internally by the ToastProvider.",
+        "defaultValue": null
       },
       {
-        "name": "className",
-        "type": "string",
+        "name": "isTop",
+        "type": "boolean",
         "required": false,
-        "description": "Optional additional class names to customize the toast container."
+        "description": "",
+        "defaultValue": "true"
       }
     ],
-    "category": "components",
     "keywords": [
       "toast",
-      "id",
       "message",
       "type",
       "onclose",
-      "classname",
-      "number",
-      "string",
+      "istop",
       "success",
       "error",
       "info",
       "warning",
-      "void",
-      "string"
+      "text",
+      "displayed",
+      "inside",
+      "visual",
+      "style",
+      "based",
+      "purpose",
+      "positive",
+      "confirmations",
+      "failures",
+      "critical",
+      "issues",
+      "general",
+      "helpful",
+      "information",
+      "caution",
+      "attention",
+      "required",
+      "triggers",
+      "removal",
+      "managed",
+      "internally",
+      "toastprovider"
     ],
     "url": "/toast"
+  },
+  {
+    "name": "ToastProvider",
+    "description": "ToastProvider component",
+    "props": [
+      {
+        "name": "placement",
+        "type": "ToastPlacement",
+        "required": false,
+        "description": "",
+        "defaultValue": "top-center"
+      }
+    ],
+    "keywords": ["toastprovider", "placement", "toastplacement"],
+    "url": "/toast-provider"
   },
   {
     "name": "VirtualizedDataTable",
@@ -1625,25 +3002,316 @@
         "name": "rowHeight",
         "type": "number",
         "required": false,
-        "description": "Height of each row in pixels (required for virtualization)"
+        "description": "Height of each row in pixels. Required for react-window's fixed-size virtualization.",
+        "defaultValue": "48"
       },
       {
         "name": "maxHeight",
         "type": "number",
         "required": false,
-        "description": "Max height (px) the table body can take. AutoSizer will size to available space."
+        "description": "Maximum height of the scrollable body in pixels.",
+        "defaultValue": "400"
+      },
+      {
+        "name": "overscanCount",
+        "type": "number",
+        "required": false,
+        "description": "Number of extra rows rendered outside the visible area.\nHigher values reduce blank flicker during fast scrolling at the cost of more DOM nodes.\nMaps directly to react-window's overscanCount.",
+        "defaultValue": "3"
+      },
+      {
+        "name": "items",
+        "type": "T[]",
+        "required": true,
+        "description": "Array of data items",
+        "defaultValue": null
+      },
+      {
+        "name": "columns",
+        "type": "DataTableColumn<T>[]",
+        "required": true,
+        "description": "Column definitions",
+        "defaultValue": null
+      },
+      {
+        "name": "sorting",
+        "type": "Record<string, Sorting>",
+        "required": false,
+        "description": "Sorting state, keyed by column name",
+        "defaultValue": "{}"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "description": "Loading state — shows skeleton rows instead of data",
+        "defaultValue": "false"
+      },
+      {
+        "name": "emptyMessage",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Message or node shown when the items array is empty",
+        "defaultValue": "No data available"
+      },
+      {
+        "name": "onSort",
+        "type": "(column: DataTableColumn<T>) => void",
+        "required": false,
+        "description": "External sorting handler. When omitted, DataTable auto-sorts internally.",
+        "defaultValue": null
+      },
+      {
+        "name": "onRowClick",
+        "type": "(item: T, index: number) => void",
+        "required": false,
+        "description": "Callback fired when a row is clicked.\nRows become visually interactive (pointer cursor) when this is set.",
+        "defaultValue": null
+      },
+      {
+        "name": "rowClass",
+        "type": "string | ((item: T, index: number) => string)",
+        "required": false,
+        "description": "Extra class(es) applied to each `<tr>` in the body.\nPass a function to vary classes per row.\n@example rowClass={(item, i) => item.active ? 'font-semibold' : ''}",
+        "defaultValue": null
+      },
+      {
+        "name": "density",
+        "type": "DataTableDensity",
+        "required": false,
+        "description": "Cell padding preset.",
+        "defaultValue": "default"
+      },
+      {
+        "name": "striped",
+        "type": "boolean",
+        "required": false,
+        "description": "Applies an alternating background to odd-indexed rows.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "containerClass",
+        "type": "string",
+        "required": false,
+        "description": "Optional classes applied to the outer container div",
+        "defaultValue": ""
+      },
+      {
+        "name": "wrapperClass",
+        "type": "string",
+        "required": false,
+        "description": "Optional classes applied to the scroll wrapper div",
+        "defaultValue": ""
       }
     ],
-    "category": "components",
-    "keywords": ["virtualizeddatatable", "rowheight", "maxheight", "number", "number"],
-    "url": "/virtualizeddatatable"
+    "keywords": [
+      "virtualizeddatatable",
+      "rowheight",
+      "maxheight",
+      "overscancount",
+      "items",
+      "columns",
+      "sorting",
+      "loading",
+      "emptymessage",
+      "onsort",
+      "onrowclick",
+      "rowclass",
+      "density",
+      "striped",
+      "containerclass",
+      "wrapperclass",
+      "datatablecolumn",
+      "record",
+      "reactnode",
+      "column",
+      "item",
+      "index",
+      "datatabledensity",
+      "height",
+      "each",
+      "pixels",
+      "required",
+      "window",
+      "fixed",
+      "size",
+      "virtualization",
+      "maximum",
+      "scrollable",
+      "body",
+      "extra",
+      "rows",
+      "rendered",
+      "outside",
+      "visible",
+      "area",
+      "higher",
+      "values",
+      "reduce",
+      "blank",
+      "flicker",
+      "during",
+      "fast",
+      "scrolling",
+      "cost",
+      "more",
+      "nodes",
+      "maps",
+      "directly",
+      "array",
+      "data",
+      "definitions",
+      "state",
+      "keyed",
+      "name",
+      "shows",
+      "skeleton",
+      "instead",
+      "message",
+      "shown",
+      "when",
+      "empty",
+      "external",
+      "handler",
+      "omitted",
+      "datatable",
+      "auto",
+      "sorts",
+      "internally",
+      "callback",
+      "fired",
+      "clicked",
+      "become",
+      "visually",
+      "interactive",
+      "pointer",
+      "cursor",
+      "this",
+      "class",
+      "applied",
+      "pass",
+      "function",
+      "vary",
+      "classes",
+      "example",
+      "active",
+      "font",
+      "semibold",
+      "cell",
+      "padding",
+      "preset",
+      "applies",
+      "alternating",
+      "background",
+      "indexed",
+      "optional",
+      "outer",
+      "container",
+      "scroll",
+      "wrapper"
+    ],
+    "url": "/virtualized-data-table"
   },
   {
-    "name": "_Dialog",
-    "description": "_Dialog component",
+    "name": "VirtualizedRow",
+    "description": "VirtualizedRow component",
     "props": [],
-    "category": "components",
-    "keywords": ["_dialog"],
-    "url": "/_dialog"
+    "keywords": ["virtualizedrow"],
+    "url": "/virtualized-row"
+  },
+  {
+    "name": "Dialog",
+    "description": "Dialog component",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true,
+        "description": "Controls the visibility of the dialog.",
+        "defaultValue": null
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": false,
+        "description": "Called when clicking overlay or pressing the ESC key.",
+        "defaultValue": null
+      },
+      {
+        "name": "position",
+        "type": "DialogPosition",
+        "required": false,
+        "description": "Dialog position on the screen.",
+        "defaultValue": "center"
+      },
+      {
+        "name": "size",
+        "type": "DialogSize",
+        "required": false,
+        "description": "Controls dialog width for center/top/bottom modes.",
+        "defaultValue": "md"
+      },
+      {
+        "name": "overlayClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom classes for overlay.",
+        "defaultValue": null
+      },
+      {
+        "name": "panelClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom classes for the panel.",
+        "defaultValue": null
+      },
+      {
+        "name": "backdrop",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls if Dialog should have a backdrop",
+        "defaultValue": "true"
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls if Dialog should close on ESC key press",
+        "defaultValue": "true"
+      }
+    ],
+    "keywords": [
+      "dialog",
+      "open",
+      "onclose",
+      "position",
+      "size",
+      "overlayclass",
+      "panelclass",
+      "backdrop",
+      "closeonescape",
+      "dialogposition",
+      "dialogsize",
+      "controls",
+      "visibility",
+      "called",
+      "when",
+      "clicking",
+      "overlay",
+      "pressing",
+      "screen",
+      "width",
+      "center",
+      "bottom",
+      "modes",
+      "custom",
+      "classes",
+      "panel",
+      "should",
+      "have",
+      "close",
+      "press"
+    ],
+    "url": "/dialog"
   }
 ]

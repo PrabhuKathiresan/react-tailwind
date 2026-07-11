@@ -177,7 +177,26 @@ const [selected, setSelected] = useState("medium")
   return (
     <DocsPageLayout
       component="RadioSwitch"
-      description="A segmented-control style switch built with HeadlessUI and Tailwind CSS. Supports sliding highlight animation, descriptions, custom styles, and full keyboard accessibility."
+      description="A segmented pill-style control for selecting one option from a small, visible set. Renders a smooth sliding highlight animation as the selection changes. Supports both plain string items and rich objects with labels and per-option descriptions, making it suitable for billing toggles, view switchers, and theme selectors."
+      playground={{
+        controls: {
+          items: 'array',
+          selected: { linkedSelect: 'items' },
+        },
+        render: (props, setValue) => (
+          <RadioSwitch
+            label={props.label || 'Choose an option'}
+            selected={props.selected ?? props.items?.[0] ?? 'Option A'}
+            items={props.items ?? ['Option A', 'Option B', 'Option C']}
+            onChange={(v) => setValue('selected', v)}
+          />
+        ),
+        initialProps: {
+          items: ['Option A', 'Option B', 'Option C'],
+          selected: 'Option A',
+          label: 'Choose an option',
+        },
+      }}
       examples={examples}
     />
   )

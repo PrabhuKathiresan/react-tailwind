@@ -103,7 +103,11 @@ export default function BadgeDocsPage() {
   return (
     <DocsPageLayout
       component="Badge"
-      description="Badges are used to display short status labels, categories, or dynamic information. They support different themes, optional rounded corners, and removable behavior with callbacks."
+      description="Compact labels for surfacing status, categories, counts, or metadata inline with other content. Supports a full palette of semantic color themes, pill or squared shape, and an optional remove callback, making it equally useful as a read-only status tag or an interactive filter chip."
+      playground={{
+        render: (props) => <Badge {...props}>Badge label</Badge>,
+        initialProps: { theme: 'info' },
+      }}
       examples={examples}
     />
   )

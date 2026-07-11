@@ -24,24 +24,24 @@ export default function BannerDocsPage() {
     {
       title: 'Custom Icon Sizes',
       description:
-        'Use the `iconSize` prop to control the size of the banner’s leading icon. Available sizes range from 5 to 10.',
+        'Use the `iconSize` prop to control the size of the banner\’s leading icon. Available sizes: xs, sm (default), md, lg, xl.',
       render: (
         <div className="space-y-3">
-          <Banner type="info" iconSize={5}>
-            Small icon (5)
+          <Banner type="info" iconSize="sm">
+            Small icon (sm)
           </Banner>
-          <Banner type="info" iconSize={7}>
-            Medium icon (7)
+          <Banner type="info" iconSize="md">
+            Medium icon (md)
           </Banner>
-          <Banner type="info" iconSize={9}>
-            Large icon (9)
+          <Banner type="info" iconSize="lg">
+            Large icon (lg)
           </Banner>
         </div>
       ),
       code: `
-<Banner type="info" iconSize={5}>Small icon (5)</Banner>
-<Banner type="info" iconSize={7}>Medium icon (7)</Banner>
-<Banner type="info" iconSize={9}>Large icon (9)</Banner>`,
+<Banner type="info" iconSize="sm">Small icon (sm)</Banner>
+<Banner type="info" iconSize="md">Medium icon (md)</Banner>
+<Banner type="info" iconSize="lg">Large icon (lg)</Banner>`,
     },
     {
       title: 'Custom Content',
@@ -65,7 +65,17 @@ export default function BannerDocsPage() {
   return (
     <DocsPageLayout
       component="Banner"
-      description="Banners are used to display high-visibility messages across the application, providing status updates or alerts to users."
+      description="A full-width notification strip designed to sit at the top of a page or section. Ideal for system-wide announcements, upgrade prompts, or persistent warnings that need to stay visible while users continue working. Supports icon size control, semantic types, and a dismiss action."
+      playground={{
+        render: (props) => (
+          <Banner type="info" {...props}>
+            Your trial period ends in 7 days.{' '}
+            <a href="#" className="underline font-medium">
+              Upgrade now.
+            </a>
+          </Banner>
+        ),
+      }}
       examples={examples}
     />
   )
