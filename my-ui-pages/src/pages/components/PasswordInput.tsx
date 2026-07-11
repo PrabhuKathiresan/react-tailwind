@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PasswordInput, PASSWORD_PLACEHOLDER } from '@pk-design/react-tailwind'
+import { PasswordInput } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export const PasswordInputDocsPage = () => {
@@ -17,7 +17,6 @@ export const PasswordInputDocsPage = () => {
           code: `
 <PasswordInput
   label="Password"
-  placeholder="${PASSWORD_PLACEHOLDER}"
   value={password}
   onChange={(e) => setPassword(e.target.value)}
 />`,
@@ -25,7 +24,6 @@ export const PasswordInputDocsPage = () => {
             <div className="max-w-80">
               <PasswordInput
                 label="Password"
-                placeholder={PASSWORD_PLACEHOLDER}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

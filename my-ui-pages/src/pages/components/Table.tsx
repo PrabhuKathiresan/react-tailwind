@@ -65,14 +65,14 @@ function CaptionExample() {
           <TableCell>Alice Johnson</TableCell>
           <TableCell>Engineering</TableCell>
           <TableCell align="right">
-            <Badge variant="success">Active</Badge>
+            <Badge theme="success">Active</Badge>
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell>Bob Smith</TableCell>
           <TableCell>Design</TableCell>
           <TableCell align="right">
-            <Badge variant="secondary">Inactive</Badge>
+            <Badge theme="secondary">Inactive</Badge>
           </TableCell>
         </TableRow>
       </TableBody>

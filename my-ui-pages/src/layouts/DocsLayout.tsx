@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router'
-import { buildClassName, Button, TextContent } from '@pk-design/react-tailwind'
+import { Button, TextContent } from '@pk-design/react-tailwind'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import NavList, { pageRoutes } from '../components/NavList'
 
