@@ -163,7 +163,7 @@ function StringControl({
 }
 
 function NumberControl({
-  meta,
+  meta: _meta,
   value,
   onChange,
 }: {

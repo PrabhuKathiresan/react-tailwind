@@ -29,15 +29,15 @@ describe('Banner Component', () => {
   })
 
   it('applies correct icon size class', () => {
-    render(<Banner iconSize={8}>Text</Banner>)
-    const icon = screen.getByTestId('banner-info-icon') // default type = info
+    render(<Banner iconSize="lg">Text</Banner>)
+    const icon = screen.getByTestId('banner-info-icon')
     expect(icon).toHaveClass('size-8')
   })
 
   it('applies default size class when no iconSize is provided', () => {
     render(<Banner>Text</Banner>)
     const icon = screen.getByTestId('banner-info-icon')
-    expect(icon).toHaveClass('size-5') // default is 5
+    expect(icon).toHaveClass('size-5') // default is "sm"
   })
 
   it('forwards ref correctly', () => {

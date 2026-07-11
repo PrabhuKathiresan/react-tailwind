@@ -594,7 +594,7 @@ const handleSort = (column: DataTableColumn) => {
                   name: 'status',
                   label: 'Status',
                   render: (item) => (
-                    <Badge variant={item.status === 'Active' ? 'success' : 'secondary'}>
+                    <Badge theme={item.status === 'Active' ? 'success' : 'secondary'}>
                       {item.status}
                     </Badge>
                   ),
