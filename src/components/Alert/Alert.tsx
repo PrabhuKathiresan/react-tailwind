@@ -58,7 +58,7 @@ export const Alert: React.FC<AlertProps> = (props) => {
           size="xs"
           variant="plain"
           theme="secondary"
-          className="hover:bg-black/5 text-gray-600 dark:hover:bg-black/5 dark:text-gray-600"
+          className="hover:bg-black/10 dark:hover:bg-white/10"
           onClick={() => onRemove()}
           data-testid="alert-remove-btn"
         >

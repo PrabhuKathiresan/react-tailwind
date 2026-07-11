@@ -1,5 +1,5 @@
 export type BannerType = 'info' | 'error' | 'success' | 'warning'
-export type IconSize = 5 | 6 | 7 | 8 | 9 | 10
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface BannerProps {
   /**
@@ -10,6 +10,7 @@ export interface BannerProps {
   children: any
   /**
    * Controls the icon size
+   * @default "sm"
    */
   iconSize?: IconSize
 }

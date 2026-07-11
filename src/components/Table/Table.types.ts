@@ -48,7 +48,7 @@ export interface TableBodyProps {
   rowSize?: number
 
   /** Actual table rows */
-  children: ReactNode
+  children?: ReactNode
 }
 
 /**

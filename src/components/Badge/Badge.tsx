@@ -42,7 +42,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
       <TextContent className="pr-3 inline-flex items-center">{children}</TextContent>
       {removable ? (
         <XIcon
-          className="size-5 px-0.5 mr-1 hover:bg-slate-200 dark:hover:bg-white/10 rounded-sm cursor-pointer text-gray-600 dark:text-gray-300"
+          className="size-5 px-0.5 mr-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-sm cursor-pointer"
           role="button"
           tabIndex={0}
           aria-label="Remove"
