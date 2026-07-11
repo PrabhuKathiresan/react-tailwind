@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.4.1 (2026-07-11)</small>
+
+* fix(Banner,Table): update IconSize to string enum, make TableBody children optional ([e72e45b07648f22320ffe7f6c6e8f072938250da](https://github.com/PrabhuKathiresan/react-tailwind/commit/e72e45b07648f22320ffe7f6c6e8f072938250da))
+* Merge pull request #7 from PrabhuKathiresan/update-docs ([e8f092d5940ab8013edbe4451ed0caf1cf414c30](https://github.com/PrabhuKathiresan/react-tailwind/commit/e8f092d5940ab8013edbe4451ed0caf1cf414c30)), closes [#7](https://github.com/PrabhuKathiresan/react-tailwind/issues/7)
+* Merge pull request #8 from PrabhuKathiresan/fix-deployment-issue ([78cb76e4f3e5c17dc8058851552b6fa3ed5c1dc4](https://github.com/PrabhuKathiresan/react-tailwind/commit/78cb76e4f3e5c17dc8058851552b6fa3ed5c1dc4)), closes [#8](https://github.com/PrabhuKathiresan/react-tailwind/issues/8)
+* fix(docs): resolve TS build errors in docs site ([c5a5e11146dd981d0bbbec7eea749feaf11ec31e](https://github.com/PrabhuKathiresan/react-tailwind/commit/c5a5e11146dd981d0bbbec7eea749feaf11ec31e))
+* chore: add CLAUDE.md and .claudeignore ([f19c3700dbd319b1bb7a007fdb9cd2bcfed94e7d](https://github.com/PrabhuKathiresan/react-tailwind/commit/f19c3700dbd319b1bb7a007fdb9cd2bcfed94e7d))
+* docs: update component pages and prop tables ([ffa84018dd939b7d41fb0acf98d2c914b7881cf9](https://github.com/PrabhuKathiresan/react-tailwind/commit/ffa84018dd939b7d41fb0acf98d2c914b7881cf9))
+
 ## 1.4.0 (2026-07-11)
 
 * feat(Table,VirtualizedDataTable): improve customizability and extensibility ([382661b3c77a2fa62c06be8269b59376f0c75ca4](https://github.com/PrabhuKathiresan/react-tailwind/commit/382661b3c77a2fa62c06be8269b59376f0c75ca4))
