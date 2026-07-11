@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented here.
 
+## 1.4.0 (2026-07-11)
+
+* feat(Table,VirtualizedDataTable): improve customizability and extensibility ([382661b3c77a2fa62c06be8269b59376f0c75ca4](https://github.com/PrabhuKathiresan/react-tailwind/commit/382661b3c77a2fa62c06be8269b59376f0c75ca4))
+* Merge pull request #6 from PrabhuKathiresan/table-improvements ([a72cd22cf8e872b4a0e8176babd4f43f3b995990](https://github.com/PrabhuKathiresan/react-tailwind/commit/a72cd22cf8e872b4a0e8176babd4f43f3b995990)), closes [#6](https://github.com/PrabhuKathiresan/react-tailwind/issues/6)
+* feat(DataTable): improve customizability and extensibility ([1d0a50741626d81a7c61b9919f020f605befd614](https://github.com/PrabhuKathiresan/react-tailwind/commit/1d0a50741626d81a7c61b9919f020f605befd614))
+
 ## 1.3.0 (2026-07-03)
 
 * Merge pull request #5 from PrabhuKathiresan/tab-improvements ([8a624ade883aad0c0cc4ecc2314872cd6c3bed62](https://github.com/PrabhuKathiresan/react-tailwind/commit/8a624ade883aad0c0cc4ecc2314872cd6c3bed62)), closes [#5](https://github.com/PrabhuKathiresan/react-tailwind/issues/5)
