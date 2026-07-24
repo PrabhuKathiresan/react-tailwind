@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.4.2 (2026-07-24)</small>
+
+* fix: bodytext and text content support dark mode ([1109644168765aded6535353c57b223baa9ca5de](https://github.com/PrabhuKathiresan/react-tailwind/commit/1109644168765aded6535353c57b223baa9ca5de))
+* docs(Alert,Badge,Banner): update examples and prop tables ([1b0f9f8f75fcfd004471d5896533a78a87b7d5ff](https://github.com/PrabhuKathiresan/react-tailwind/commit/1b0f9f8f75fcfd004471d5896533a78a87b7d5ff))
+* feat(Alert,Badge,Banner): add icon, title, size, and dismissible support ([29fa8d887615dfb505989fc2fd6253ad78c5b03f](https://github.com/PrabhuKathiresan/react-tailwind/commit/29fa8d887615dfb505989fc2fd6253ad78c5b03f))
+* feat(Alert,Badge,Banner): improve reusability, extendability and reliability ([981744a8ea5d4aa0eb2e277fbbbd5ae5e550b75c](https://github.com/PrabhuKathiresan/react-tailwind/commit/981744a8ea5d4aa0eb2e277fbbbd5ae5e550b75c))
+* Merge pull request #9 from PrabhuKathiresan/alert-badge-banner-improvement ([b5d51afc12be3bc00959b9a8d774545b03599972](https://github.com/PrabhuKathiresan/react-tailwind/commit/b5d51afc12be3bc00959b9a8d774545b03599972)), closes [#9](https://github.com/PrabhuKathiresan/react-tailwind/issues/9)
+* chore: set rootDir and update moduleResolution in tsconfig ([c0f8ed5d32dc031f77f1d1689a550132d8e9c9e7](https://github.com/PrabhuKathiresan/react-tailwind/commit/c0f8ed5d32dc031f77f1d1689a550132d8e9c9e7))
+
 ## <small>1.4.1 (2026-07-11)</small>
 
 * fix(Banner,Table): update IconSize to string enum, make TableBody children optional ([e72e45b07648f22320ffe7f6c6e8f072938250da](https://github.com/PrabhuKathiresan/react-tailwind/commit/e72e45b07648f22320ffe7f6c6e8f072938250da))
