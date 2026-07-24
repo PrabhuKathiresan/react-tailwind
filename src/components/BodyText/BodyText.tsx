@@ -16,10 +16,11 @@ export const BodyText = forwardRef<HTMLParagraphElement, BodyTextProps>((props, 
   return React.createElement(as, {
     ref: ref,
     className: buildClassName(
+      'text-gray-900 dark:text-gray-100',
       small && 'text-sm/6',
       strong && 'font-semibold',
-      muted && 'text-gray-500',
-      error && 'text-red-500',
+      muted && 'text-gray-500 dark:text-gray-400',
+      error && 'text-red-500 dark:text-red-400',
       inline && 'inline-flex items-center gap-2',
       className,
     ),
