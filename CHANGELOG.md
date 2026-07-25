@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.4.4 (2026-07-25)</small>
+
+* fix: selectbox async issue and minor UX improvements ([ff0dc95108cc2739470c6e40fe36a6ccb7eb8773](https://github.com/PrabhuKathiresan/react-tailwind/commit/ff0dc95108cc2739470c6e40fe36a6ccb7eb8773))
+
 ## <small>1.4.3 (2026-07-24)</small>
 
 * fix: headingtext dark mode support ([00d82f7b5be8c4813028027719b587b8deec94c9](https://github.com/PrabhuKathiresan/react-tailwind/commit/00d82f7b5be8c4813028027719b587b8deec94c9))
