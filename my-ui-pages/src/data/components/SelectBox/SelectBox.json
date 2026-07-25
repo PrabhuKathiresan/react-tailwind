@@ -102,6 +102,15 @@
       "description": "CSS classes applied to the dropdown options container"
     },
     {
+      "name": "modalDropdown",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Whether the open dropdown traps focus and makes the rest of the page\ninert (Headless UI's default Combobox behavior). Disabled by default so\nelements rendered inside the control itself — like the `allowClear`\nbutton — and the rest of the page stay interactive while the dropdown\nis open, matching common combobox libraries (e.g. react-select). Set to\n`true` to restore Headless UI's modal focus-trapping behavior."
+    },
+    {
       "name": "multiple",
       "type": "boolean",
       "raw": "boolean",

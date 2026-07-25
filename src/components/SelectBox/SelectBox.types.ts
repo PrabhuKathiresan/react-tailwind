@@ -68,6 +68,18 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   /** CSS classes applied to the dropdown options container */
   dropdownContainerClass?: string
 
+  /**
+   * Whether the open dropdown traps focus and makes the rest of the page
+   * inert (Headless UI's default Combobox behavior). Disabled by default so
+   * elements rendered inside the control itself — like the `allowClear`
+   * button — and the rest of the page stay interactive while the dropdown
+   * is open, matching common combobox libraries (e.g. react-select). Set to
+   * `true` to restore Headless UI's modal focus-trapping behavior.
+   *
+   * @default false
+   */
+  modalDropdown?: boolean
+
   /** Enable multiple selection mode */
   multiple?: boolean
 

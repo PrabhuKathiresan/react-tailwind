@@ -21,14 +21,15 @@ const loaderSizeMap: LoaderSizeMap = {
   lg: 'size-10',
 }
 
-export const Loader: React.FC<LoaderProps> = ({
-  className = 'text-blue-600 dark:text-white',
-  size = 'md',
-  ...props
-}) => {
+export const Loader: React.FC<LoaderProps> = ({ className = '', size = 'md', ...props }) => {
   return (
     <svg
-      className={buildClassName(loaderSizeMap[size], className, 'spinner')}
+      className={buildClassName(
+        'text-blue-600 dark:text-white',
+        loaderSizeMap[size],
+        className,
+        'spinner',
+      )}
       viewBox="0 0 50 50"
       {...props}
     >

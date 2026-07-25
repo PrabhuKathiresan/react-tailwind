@@ -104,6 +104,34 @@ describe('SelectBox', () => {
     expect(handleChange).toHaveBeenCalledWith(null)
   })
 
+  // Headless UI's Combobox is modal by default: while open, it makes
+  // everything besides its own input/button/options elements `inert` (via
+  // the native `inert` IDL property), which silently swallows clicks on our
+  // own clear button. `modalDropdown` (default false) opts SelectBox out of
+  // that. Note: jsdom doesn't implement `inert` reflection, so this test
+  // can't observe the attribute directly — it only covers the functional,
+  // wiring-level behavior; the underlying fix was verified by reading
+  // Headless UI's source (`useInertOthers`) and its default `modal` prop.
+  test('keeps the clear button interactive while the dropdown is open', async () => {
+    const handleChange = jest.fn()
+
+    render(<SelectBox allowClear selected={options[0]} options={options} onChange={handleChange} />)
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    await waitFor(() => {
+      expect(screen.getByTestId('combobox-options')).toBeInTheDocument()
+    })
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-clear-button'))
+    })
+
+    expect(handleChange).toHaveBeenCalledWith(null)
+  })
+
   test('shows error message', () => {
     render(<SelectBox error="Required field" options={options} />)
 
@@ -291,5 +319,39 @@ describe('SelectBox', () => {
     })
 
     jest.useRealTimers()
+  })
+
+  test('async mode: does not loop when the caller passes a non-memoized onSearch', async () => {
+    const searchSpy = jest.fn()
+
+    const Wrapper = () => {
+      const [asyncOptions, setAsyncOptions] = React.useState<string[]>([])
+      // Intentionally NOT wrapped in useCallback — mirrors real-world usage
+      // where the caller re-creates onSearch on every render.
+      const onSearch = async (q: string) => {
+        searchSpy(q)
+        await new Promise((res) => setTimeout(res, 50)) // simulate latency
+        setAsyncOptions([q])
+      }
+      return <SelectBox async options={asyncOptions} onSearch={onSearch} />
+    }
+
+    render(<Wrapper />)
+
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('combobox-input'), {
+        target: { value: 'x' },
+      })
+    })
+
+    await waitFor(() => {
+      expect(screen.getByTestId('options-loading')).toBeInTheDocument()
+    })
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('options-loading')).not.toBeInTheDocument()
+    })
+
+    expect(searchSpy).toHaveBeenCalledTimes(1)
   })
 })

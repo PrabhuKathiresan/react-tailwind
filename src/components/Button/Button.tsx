@@ -35,6 +35,24 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
   },
 }
 
+const LOADER_TEXT_CLASS: ThemedButtonClass = {
+  primary: {
+    default: 'text-white',
+    outlined: 'text-[var(--ui-primary-text)]',
+    plain: 'text-[var(--ui-primary-text)]',
+  },
+  danger: {
+    default: 'text-white',
+    outlined: 'text-[var(--ui-danger-text)]',
+    plain: 'text-[var(--ui-danger-text)]',
+  },
+  secondary: {
+    default: 'text-gray-700 dark:text-white',
+    outlined: 'text-gray-700 dark:text-gray-200',
+    plain: 'text-gray-700 dark:text-gray-200',
+  },
+}
+
 /**
  * Generate size classes.
  */
@@ -136,8 +154,16 @@ export const Button = forwardRef(
       <Component ref={ref} className={classes} {...buttonSpecificProps} {...cleanRest}>
         {loading ? (
           <span className="flex items-center gap-2" aria-live="polite">
-            <Loader data-testid="btn-loader-icon" size="xs" />
-            {loadingText && <TextContent>{loadingText}</TextContent>}
+            <Loader
+              data-testid="btn-loader-icon"
+              size="xs"
+              className={buildClassName(LOADER_TEXT_CLASS[theme][variant])}
+            />
+            {loadingText && (
+              <TextContent className={buildClassName(LOADER_TEXT_CLASS[theme][variant])}>
+                {loadingText}
+              </TextContent>
+            )}
           </span>
         ) : (
           children

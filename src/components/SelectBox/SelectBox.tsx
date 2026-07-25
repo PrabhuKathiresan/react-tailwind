@@ -32,6 +32,7 @@ import XIcon from '../Icons/X.svg'
 import CirclePlusIcon from '../Icons/CirclePlus.svg'
 import type { BaseOption, SelectBoxProps } from './SelectBox.types'
 import { buildInputClass } from '../Input'
+import { BodyText } from '../BodyText'
 
 const constructInputClass = (disabled: boolean) => buildInputClass('', { disabled })
 
@@ -68,6 +69,7 @@ export const SelectBox = forwardRef(
       addNewText = 'Create',
       onAdd = () => {},
       allowClear = false,
+      modalDropdown = false,
     } = props
 
     const hasError = Boolean(error)
@@ -193,19 +195,24 @@ export const SelectBox = forwardRef(
       [onAdd, handleOnChangeInternal],
     )
 
-    const handleSearch = useCallback(
-      async (searchString: string) => {
-        try {
-          setOptionsLoading(true)
-          await props.onSearch?.(searchString)
-        } catch (err) {
-          console.error('Error loading options:', err)
-        } finally {
-          setOptionsLoading(false)
-        }
-      },
-      [props.onSearch],
-    )
+    // Kept in a ref so `handleSearch` stays referentially stable even when the
+    // caller passes a non-memoized `onSearch` — otherwise the effect below would
+    // re-fire (and re-search) on every render instead of only on query changes.
+    const onSearchRef = useRef(props.onSearch)
+    useEffect(() => {
+      onSearchRef.current = props.onSearch
+    }, [props.onSearch])
+
+    const handleSearch = useCallback(async (searchString: string) => {
+      try {
+        setOptionsLoading(true)
+        await onSearchRef.current?.(searchString)
+      } catch (err) {
+        console.error('Error loading options:', err)
+      } finally {
+        setOptionsLoading(false)
+      }
+    }, [])
 
     useEffect(() => {
       if (async && debouncedQuery) handleSearch(debouncedQuery)
@@ -307,7 +314,7 @@ export const SelectBox = forwardRef(
                   data-testid="combobox-clear-button"
                   noOutlineOnFocus
                 >
-                  <XIcon className="size-4 stroke-gray-500" />
+                  <XIcon className="size-4 stroke-gray-500 dark:stroke-gray-300" />
                 </Button>
               )}
 
@@ -323,6 +330,7 @@ export const SelectBox = forwardRef(
           <ComboboxOptions
             anchor={{ to: 'bottom', gap: 5 }}
             as="div"
+            modal={modalDropdown}
             className={buildClassName(
               'w-[var(--input-width)] rounded-lg border border-gray-200 dark:border-white/5 bg-white dark:bg-gray-800 p-1 [--anchor-gap:var(--spacing-1)]',
               '[--anchor-max-height:20rem]',
@@ -333,16 +341,16 @@ export const SelectBox = forwardRef(
             data-testid="combobox-options"
           >
             {optionsLoading ? (
-              <div
+              <BodyText
                 data-testid="options-loading"
                 className="flex items-center justify-center py-2 px-3 select-none"
               >
                 <Loader size="sm" />
-              </div>
+              </BodyText>
             ) : shouldShowTypeToSearch ? (
-              <div className="flex items-center justify-between py-2 px-3 select-none">
+              <BodyText className="flex items-center justify-between py-2 px-3 select-none">
                 Type to search...
-              </div>
+              </BodyText>
             ) : (
               <div>
                 {filteredOptions.map((option) => (
