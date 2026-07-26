@@ -45,8 +45,10 @@ export const navSections: NavSection[] = [
   {
     title: 'UI Components',
     items: [
+      { path: '/accordion', label: 'Accordion' },
       { path: '/alert', label: 'Alert' },
       { path: '/button', label: 'Button' },
+      { path: '/button-group', label: 'ButtonGroup' },
       { path: '/badge', label: 'Badge' },
       { path: '/banner', label: 'Banner' },
       { path: '/breadcrumb', label: 'Breadcrumb' },

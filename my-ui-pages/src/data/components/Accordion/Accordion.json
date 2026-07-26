@@ -1,0 +1,87 @@
+{
+  "name": "Accordion",
+  "description": "",
+  "props": [
+    {
+      "name": "items",
+      "type": "AccordionItem[]",
+      "raw": "AccordionItem[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Item data array. Order defines visual order."
+    },
+    {
+      "name": "type",
+      "type": "enum",
+      "raw": "AccordionType",
+      "enumValues": ["single", "multiple"],
+      "required": false,
+      "defaultValue": "single",
+      "description": "Whether one or multiple items can be open at the same time."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "AccordionVariant",
+      "enumValues": ["bordered", "separated", "plain"],
+      "required": false,
+      "defaultValue": "bordered",
+      "description": "Visual style of the accordion."
+    },
+    {
+      "name": "collapsible",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "When `type=\"single\"`, whether clicking the currently open item's header\ncloses it. Has no effect when `type=\"multiple\"`."
+    },
+    {
+      "name": "defaultOpenIds",
+      "type": "(string | number)[]",
+      "raw": "(string | number)[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Initially open item id(s) (uncontrolled)"
+    },
+    {
+      "name": "openIds",
+      "type": "(string | number)[]",
+      "raw": "(string | number)[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled open item id(s) — pair with onChange"
+    },
+    {
+      "name": "expandIcon",
+      "type": "ReactNode | ((isOpen: boolean) => ReactNode)",
+      "raw": "ReactNode | ((isOpen: boolean) => ReactNode)",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "undefined (renders the built-in chevron)",
+      "description": "Custom trailing indicator icon rendered in place of the default chevron.\n\n- Pass a `ReactNode` to swap the icon while keeping the default\n  rotate-180°-on-open behavior.\n- Pass a function of the item's open state for full control (e.g.\n  swapping between plus/minus icons instead of rotating)."
+    },
+    {
+      "name": "titleClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Extra classes applied to every item's header button"
+    },
+    {
+      "name": "panelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Extra classes applied to every item's panel content"
+    }
+  ]
+}

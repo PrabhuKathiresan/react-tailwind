@@ -2,9 +2,11 @@ import { Routes, Route, Navigate } from 'react-router'
 import DocsLayout from './layouts/DocsLayout'
 import HomePage from './pages/Home'
 import InstallationPage from './pages/Installation'
+import AccordionDocsPage from './pages/components/Accordion'
 import AlertDocsPage from './pages/components/Alert'
 import BadgeDocsPage from './pages/components/Badge'
 import ButtonDocsPage from './pages/components/Button'
+import ButtonGroupDocsPage from './pages/components/ButtonGroup'
 import BannerDocsPage from './pages/components/Banner'
 import BodyTextDocsPage from './pages/components/BodyText'
 import BreadcrumbDocsPage from './pages/components/Breadcrumb'
@@ -40,12 +42,14 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route element={<DocsLayout />}>
           <Route path="installation" element={<InstallationPage />} />
+          <Route path="accordion" element={<AccordionDocsPage />} />
           <Route path="alert" element={<AlertDocsPage />} />
           <Route path="badge" element={<BadgeDocsPage />} />
           <Route path="banner" element={<BannerDocsPage />} />
           <Route path="body-text" element={<BodyTextDocsPage />} />
           <Route path="breadcrumb" element={<BreadcrumbDocsPage />} />
           <Route path="button" element={<ButtonDocsPage />} />
+          <Route path="button-group" element={<ButtonGroupDocsPage />} />
           <Route path="card" element={<CardDocsPage />} />
           <Route path="checkbox" element={<CheckboxDocsPage />} />
           <Route path="checkbox-group" element={<CheckboxGroupDocsPage />} />
