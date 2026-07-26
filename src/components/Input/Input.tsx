@@ -54,7 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           <Label className={labelClass} htmlFor={id}>
             {label}
           </Label>
-          {labelHint}
+          <TextContent xsmall>{labelHint}</TextContent>
         </div>
       )}
       <div className="relative">
