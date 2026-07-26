@@ -84,32 +84,6 @@ export default function SelectBoxDocsPage() {
 />`,
     },
 
-    {
-      title: 'Single Select with Object Options',
-      description: 'Uses BaseOption objects with value/label keys.',
-      render: (
-        <SelectBox
-          options={objectOptions}
-          placeholder="Pick a sport"
-          selected={sport}
-          onChange={setSport}
-          label="Favourite Sport"
-        />
-      ),
-      code: `
-<SelectBox
-  options={[
-    { value: "cricket", label: "Cricket" },
-    { value: "football", label: "Football" },
-    { value: "tennis", label: "Tennis" },
-  ]}
-  placeholder="Pick a sport"
-  selected={sport}
-  onChange={setSport}
-  label="Favourite Sport"
-/>`,
-    },
-
     /* -------------------------------------------------------------------- */
     {
       title: 'Multiple Select',
@@ -246,6 +220,22 @@ const handleAsyncSearch = async (q) => {
   onChange={setSelected}
   selected={selected}
   label="Select a Fruit"
+/>`,
+    },
+
+    /* -------------------------------------------------------------------- */
+    {
+      title: 'Empty State',
+      description:
+        'When `options` is empty, the dropdown shows a message instead of staying blank. Customize it with `noOptionsText`.',
+      render: (
+        <SelectBox options={[]} placeholder="Nothing to pick from" noOptionsText="No fruits yet" />
+      ),
+      code: `
+<SelectBox
+  options={[]}
+  placeholder="Nothing to pick from"
+  noOptionsText="No fruits yet"
 />`,
     },
 

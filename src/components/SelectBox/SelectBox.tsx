@@ -70,6 +70,7 @@ export const SelectBox = forwardRef(
       onAdd = () => {},
       allowClear = false,
       modalDropdown = false,
+      noOptionsText = 'No options available',
     } = props
 
     const hasError = Boolean(error)
@@ -368,12 +369,18 @@ export const SelectBox = forwardRef(
                   </ComboboxOption>
                 ))}
 
-                {filteredOptions.length === 0 && query && !optionsLoading && (
+                {filteredOptions.length === 0 && (
                   <div
                     data-testid="no-result-found"
                     className="flex items-center gap-2 py-1.5 px-3 select-none text-gray-500 dark:text-gray-400"
                   >
-                    No results found for <span className="font-semibold">{query}</span>
+                    {query ? (
+                      <>
+                        No results found for <span className="font-semibold">{query}</span>
+                      </>
+                    ) : (
+                      noOptionsText
+                    )}
                   </div>
                 )}
 

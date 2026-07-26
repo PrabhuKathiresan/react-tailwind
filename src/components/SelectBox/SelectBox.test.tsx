@@ -38,6 +38,26 @@ describe('SelectBox', () => {
     expect(screen.getByTestId('combobox-options')).toBeInTheDocument()
   })
 
+  test('shows an empty message when there are no options and nothing has been typed', async () => {
+    render(<SelectBox options={[]} />)
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    expect(screen.getByTestId('no-result-found')).toHaveTextContent('No options available')
+  })
+
+  test('shows a custom noOptionsText when provided', async () => {
+    render(<SelectBox options={[]} noOptionsText="Nothing here yet" />)
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    expect(screen.getByTestId('no-result-found')).toHaveTextContent('Nothing here yet')
+  })
+
   test('filters options (non-async)', async () => {
     render(<SelectBox options={options} />)
 

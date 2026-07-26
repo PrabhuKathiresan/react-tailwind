@@ -124,6 +124,14 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   addNewText?: string
 
   /**
+   * Message shown in the dropdown when `options` is empty and the user
+   * hasn't typed a search query yet.
+   *
+   * @default "No options available"
+   */
+  noOptionsText?: string
+
+  /**
    * Callback when the user chooses the "create/add" option.
    *
    * It may:

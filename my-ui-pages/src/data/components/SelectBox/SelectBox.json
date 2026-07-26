@@ -210,6 +210,15 @@
       "description": "Label prefix for the “Add new” action (e.g., \"Create\")"
     },
     {
+      "name": "noOptionsText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "\"No options available\"",
+      "description": "Message shown in the dropdown when `options` is empty and the user\nhasn't typed a search query yet."
+    },
+    {
       "name": "onAdd",
       "type": "(value: string) => string | void | BaseOption | Promise<string | void | BaseOption>",
       "raw": "(value: string) => string | void | BaseOption | Promise<string | void | BaseOption>",
