@@ -229,7 +229,7 @@ export const SelectBox = forwardRef(
             <Label className={labelClass} htmlFor={id} aria-required={required}>
               {label}
             </Label>
-            {labelHint}
+            <TextContent xsmall>{labelHint}</TextContent>
           </div>
         )}
 
