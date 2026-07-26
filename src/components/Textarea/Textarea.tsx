@@ -34,7 +34,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
           <Label className={labelClass} htmlFor={id}>
             {label}
           </Label>
-          {labelHint}
+          <TextContent xsmall>{labelHint}</TextContent>
         </div>
       )}
       <div className="relative">
