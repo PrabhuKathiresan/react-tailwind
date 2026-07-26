@@ -100,10 +100,23 @@ export const RadioSwitch: React.FC<RadioSwitchProps> = ({
               contentClass,
             )}
           >
-            <BodyText className="font-semibold">{getLabel(item)}</BodyText>
+            <BodyText
+              className={buildClassName(
+                'font-semibold',
+                selected === getValue(item) && 'text-white',
+              )}
+            >
+              {getLabel(item)}
+            </BodyText>
 
             {getDescription(item) && (
-              <BodyText className={buildClassName('text-xs opacity-80', descriptionClass)}>
+              <BodyText
+                className={buildClassName(
+                  'text-xs opacity-80',
+                  descriptionClass,
+                  selected === getValue(item) && 'text-white',
+                )}
+              >
                 {getDescription(item)}
               </BodyText>
             )}

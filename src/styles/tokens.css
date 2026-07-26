@@ -59,6 +59,11 @@
   /* Global focus ring */
   --ui-focus-ring: #2563eb;
 
+  /* Neutral text (used by BodyText, TextContent, HeadingText) */
+  --ui-text: #111827; /* gray-900 */
+  --ui-text-muted: #6b7280; /* gray-500 */
+  --ui-text-danger: #ef4444; /* red-500 */
+
   /* Border radius scale */
   --ui-radius-sm: 0.25rem;
   --ui-radius: 0.375rem;
@@ -106,4 +111,8 @@
   --ui-secondary-ring-subtle: rgba(156, 163, 175, 0.2);
 
   --ui-focus-ring: #3b82f6;
+
+  --ui-text: #f3f4f6; /* gray-100 */
+  --ui-text-muted: #9ca3af; /* gray-400 */
+  --ui-text-danger: #f87171; /* red-400 */
 }

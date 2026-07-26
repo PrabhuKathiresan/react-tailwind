@@ -35,13 +35,13 @@ describe('BodyText Component', () => {
   it('applies "muted" class when muted=true', () => {
     render(<BodyText muted>Text</BodyText>)
     const el = screen.getByText('Text')
-    expect(el).toHaveClass('text-gray-500')
+    expect(el).toHaveClass('text-[var(--ui-text-muted)]')
   })
 
   it('applies "error" class when error=true', () => {
     render(<BodyText error>Text</BodyText>)
     const el = screen.getByText('Text')
-    expect(el).toHaveClass('text-red-500')
+    expect(el).toHaveClass('text-[var(--ui-text-danger)]')
   })
 
   it('applies "inline" class when inline=true', () => {

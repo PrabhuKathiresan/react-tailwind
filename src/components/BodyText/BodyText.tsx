@@ -11,16 +11,24 @@ export const BodyText = forwardRef<HTMLParagraphElement, BodyTextProps>((props, 
     error = false,
     inline = false,
     className,
+    invert,
     ...rest
   } = props
+  const textColorClass = error
+    ? 'text-[var(--ui-text-danger)]'
+    : muted
+      ? invert
+        ? 'text-gray-300 dark:text-gray-600'
+        : 'text-[var(--ui-text-muted)]'
+      : invert
+        ? 'text-white dark:text-black'
+        : 'text-[var(--ui-text)]'
   return React.createElement(as, {
     ref: ref,
     className: buildClassName(
-      'text-gray-900 dark:text-gray-100',
+      textColorClass,
       small && 'text-sm/6',
       strong && 'font-semibold',
-      muted && 'text-gray-500 dark:text-gray-400',
-      error && 'text-red-500 dark:text-red-400',
       inline && 'inline-flex items-center gap-2',
       className,
     ),

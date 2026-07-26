@@ -25,4 +25,6 @@ export interface BodyTextProps extends HTMLAttributes<HTMLParagraphElement> {
    * JSX element to be render in place of `p`
    */
   as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+
+  invert?: boolean
 }

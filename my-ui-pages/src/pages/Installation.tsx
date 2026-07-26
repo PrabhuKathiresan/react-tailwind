@@ -84,6 +84,104 @@ export default function InstallationPage() {
         />
       </section>
 
+      {/* Theming */}
+      <section className="space-y-4">
+        <HeadingText.SubTitle2>Theming</HeadingText.SubTitle2>
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          Components are shipped as plain Tailwind utility class strings — your app's own Tailwind
+          build compiles them (that's what the <code>@source</code> line in Setup is for). That
+          means there's no separate "theme prop" or build step to swap colors; you customize
+          everything from your own global CSS.
+        </BodyText>
+
+        <BodyText strong className="text-gray-800 dark:text-gray-100">
+          Semantic colors (primary, danger, success, warning)
+        </BodyText>
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          These are driven by CSS custom properties defined in{' '}
+          <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">
+            tokens.css
+          </code>
+          . Override any of them in your own stylesheet to rebrand the library — no rebuild
+          required:
+        </BodyText>
+        <CodeBlock
+          code={`:root {
+  --ui-primary: #7c3aed;
+  --ui-primary-hover: #6d28d9;
+  --ui-primary-ring: #7c3aed;
+  --ui-primary-light: #f5f3ff;
+  --ui-primary-text: #5b21b6;
+  --ui-primary-disabled: #c4b5fd;
+}`}
+          language="css"
+        />
+
+        <BodyText strong className="text-gray-800 dark:text-gray-100">
+          Text color (BodyText, TextContent, HeadingText)
+        </BodyText>
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          Rather than pairing a light and a dark class on every element (
+          <code>text-gray-900 dark:text-gray-100</code>), these three components read a single token
+          — <code>--ui-text</code>, <code>--ui-text-muted</code>, or (for <code>BodyText</code>/
+          <code>TextContent</code>'s <code>error</code> state) <code>--ui-text-danger</code> — that
+          already switches value under <code>.dark</code>, one class for both modes:
+        </BodyText>
+        <CodeBlock
+          code={`:root {
+  --ui-text: #111827;
+  --ui-text-muted: #6b7280;
+  --ui-text-danger: #ef4444;
+}
+.dark {
+  --ui-text: #f3f4f6;
+  --ui-text-muted: #9ca3af;
+  --ui-text-danger: #f87171;
+}`}
+          language="css"
+        />
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          This only covers text color on those three components. <code>Label</code> keeps its own
+          (intentionally dimmer) shade, and everything else — borders, backgrounds, icon strokes —
+          still uses the raw Tailwind <code>gray</code> scale below.
+        </BodyText>
+
+        <BodyText strong className="text-gray-800 dark:text-gray-100">
+          Neutral palette (gray)
+        </BodyText>
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          Text, borders, and surfaces use Tailwind's built-in{' '}
+          <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">gray</code>{' '}
+          scale directly (e.g. <code>text-gray-900</code>, <code>border-gray-300</code>) rather than
+          a custom token. Since your own Tailwind build compiles those classes, you can swap the
+          whole library (and any other <code>gray-*</code> usage in your app) to a different neutral
+          — like <code>slate</code> — by remapping the theme color once, with Tailwind v4's{' '}
+          <code>@theme</code>:
+        </BodyText>
+        <CodeBlock
+          code={`@theme {
+  --color-gray-50: var(--color-slate-50);
+  --color-gray-100: var(--color-slate-100);
+  --color-gray-200: var(--color-slate-200);
+  --color-gray-300: var(--color-slate-300);
+  --color-gray-400: var(--color-slate-400);
+  --color-gray-500: var(--color-slate-500);
+  --color-gray-600: var(--color-slate-600);
+  --color-gray-700: var(--color-slate-700);
+  --color-gray-800: var(--color-slate-800);
+  --color-gray-900: var(--color-slate-900);
+  --color-gray-950: var(--color-slate-950);
+}`}
+          language="css"
+        />
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          This is app-wide — it repaints every <code>gray-*</code> class in your project, not just
+          this library. If you need the library's borders/backgrounds/icons to differ from your
+          app's own grays, that isn't currently supported for those; it would need dedicated CSS
+          tokens the way text color already has above.
+        </BodyText>
+      </section>
+
       {/* Dependency Insights */}
       <section className="space-y-4">
         <HeadingText.SubTitle2>Dependency Insights</HeadingText.SubTitle2>

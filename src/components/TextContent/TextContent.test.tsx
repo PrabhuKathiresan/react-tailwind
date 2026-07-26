@@ -44,14 +44,14 @@ describe('<TextContent />', () => {
 
   test('applies muted class', () => {
     render(<TextContent muted>Muted</TextContent>)
-    expect(screen.getByText('Muted')).toHaveClass('text-gray-500')
+    expect(screen.getByText('Muted')).toHaveClass('text-[var(--ui-text-muted)]')
   })
 
   test('applies error class', () => {
     render(<TextContent error>Error Msg</TextContent>)
     const el = screen.getByText('Error Msg')
 
-    expect(el.className).toMatch(/text-red-500/)
+    expect(el.className).toMatch(/text-\[var\(--ui-text-danger\)\]/)
   })
 
   test('forwards native span HTML attributes', () => {
