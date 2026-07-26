@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## 1.5.0 (2026-07-26)
+
+* feat: added accordion and button group ([4f5be20cb054a529fc0ad761a6fa7b8804c82be2](https://github.com/PrabhuKathiresan/react-tailwind/commit/4f5be20cb054a529fc0ad761a6fa7b8804c82be2))
+* fix: input labelHint sizing issue fixed ([618bb7014192d91d262e54c9e45617181e2f6e49](https://github.com/PrabhuKathiresan/react-tailwind/commit/618bb7014192d91d262e54c9e45617181e2f6e49))
+* fix: selectbox empty state fix ([6a18ab14b5bbcf2ea0048e6a1dde582b0755a2cd](https://github.com/PrabhuKathiresan/react-tailwind/commit/6a18ab14b5bbcf2ea0048e6a1dde582b0755a2cd))
+* fix: selectbox labelHint sizing issue fixed ([6b20f94eae534f63ac9f4558382762eec0758e1d](https://github.com/PrabhuKathiresan/react-tailwind/commit/6b20f94eae534f63ac9f4558382762eec0758e1d))
+* fix: text colour tokenisation ([e866c9f5f25d62a60d4323a3ae5925cf28f2e47c](https://github.com/PrabhuKathiresan/react-tailwind/commit/e866c9f5f25d62a60d4323a3ae5925cf28f2e47c))
+* fix: textarea labelHint sizing issue fixed ([f2cebc2b8328051b5c3b11e650ffc77002f9c0d3](https://github.com/PrabhuKathiresan/react-tailwind/commit/f2cebc2b8328051b5c3b11e650ffc77002f9c0d3))
+
 ## <small>1.4.4 (2026-07-25)</small>
 
 * fix: selectbox async issue and minor UX improvements ([ff0dc95108cc2739470c6e40fe36a6ccb7eb8773](https://github.com/PrabhuKathiresan/react-tailwind/commit/ff0dc95108cc2739470c6e40fe36a6ccb7eb8773))
