@@ -394,6 +394,13 @@
         "required": false,
         "description": "JSX element to be render in place of `p`",
         "defaultValue": null
+      },
+      {
+        "name": "invert",
+        "type": "boolean",
+        "required": false,
+        "description": "",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -404,6 +411,7 @@
       "error",
       "inline",
       "as",
+      "invert",
       "keyof",
       "intrinsicelements",
       "jsxelementconstructor",
@@ -1105,6 +1113,41 @@
         "required": false,
         "description": "Optional classes applied to the `<thead>` element",
         "defaultValue": ""
+      },
+      {
+        "name": "selectable",
+        "type": "boolean",
+        "required": false,
+        "description": "Renders a leading checkbox column so rows can be selected.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "selectedRowKeys",
+        "type": "(string | number)[]",
+        "required": false,
+        "description": "Controlled selected row keys — pair with `onSelectionChange`.",
+        "defaultValue": null
+      },
+      {
+        "name": "defaultSelectedRowKeys",
+        "type": "(string | number)[]",
+        "required": false,
+        "description": "Initially selected row keys (uncontrolled).",
+        "defaultValue": null
+      },
+      {
+        "name": "onSelectionChange",
+        "type": "(selectedRowKeys: (string | number)[], selectedItems: T[]) => void",
+        "required": false,
+        "description": "Called with the new selected row keys and their matching items whenever selection changes.",
+        "defaultValue": null
+      },
+      {
+        "name": "isRowSelectable",
+        "type": "(item: T) => boolean",
+        "required": false,
+        "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\".",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -1128,6 +1171,11 @@
       "wrapperclass",
       "tableclass",
       "headclass",
+      "selectable",
+      "selectedrowkeys",
+      "defaultselectedrowkeys",
+      "onselectionchange",
+      "isrowselectable",
       "datatablecolumn",
       "record",
       "tpagination",
@@ -1139,6 +1187,7 @@
       "item",
       "index",
       "datatabledensity",
+      "selecteditems",
       "array",
       "data",
       "definitions",
@@ -1213,7 +1262,30 @@
       "wrapper",
       "directly",
       "element",
-      "thead"
+      "thead",
+      "renders",
+      "leading",
+      "checkbox",
+      "selected",
+      "controlled",
+      "keys",
+      "pair",
+      "with",
+      "initially",
+      "uncontrolled",
+      "called",
+      "their",
+      "whenever",
+      "selection",
+      "changes",
+      "marks",
+      "specific",
+      "ineligible",
+      "disabled",
+      "they",
+      "excluded",
+      "from",
+      "select"
     ],
     "url": "/data-table"
   },
@@ -3443,6 +3515,13 @@
         "defaultValue": null
       },
       {
+        "name": "rowKey",
+        "type": "string | ((item: T) => string | number)",
+        "required": false,
+        "description": "Determines the stable React key for each row.\nPass a field name string or a function returning a unique value.",
+        "defaultValue": "id"
+      },
+      {
         "name": "onRowClick",
         "type": "(item: T, index: number) => void",
         "required": false,
@@ -3483,6 +3562,41 @@
         "required": false,
         "description": "Optional classes applied to the scroll wrapper div",
         "defaultValue": ""
+      },
+      {
+        "name": "selectable",
+        "type": "boolean",
+        "required": false,
+        "description": "Renders a leading checkbox column so rows can be selected.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "selectedRowKeys",
+        "type": "(string | number)[]",
+        "required": false,
+        "description": "Controlled selected row keys — pair with `onSelectionChange`.",
+        "defaultValue": null
+      },
+      {
+        "name": "defaultSelectedRowKeys",
+        "type": "(string | number)[]",
+        "required": false,
+        "description": "Initially selected row keys (uncontrolled).",
+        "defaultValue": null
+      },
+      {
+        "name": "onSelectionChange",
+        "type": "(selectedRowKeys: (string | number)[], selectedItems: T[]) => void",
+        "required": false,
+        "description": "Called with the new selected row keys and their matching items whenever selection changes.",
+        "defaultValue": null
+      },
+      {
+        "name": "isRowSelectable",
+        "type": "(item: T) => boolean",
+        "required": false,
+        "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\".",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -3496,12 +3610,18 @@
       "loading",
       "emptymessage",
       "onsort",
+      "rowkey",
       "onrowclick",
       "rowclass",
       "density",
       "striped",
       "containerclass",
       "wrapperclass",
+      "selectable",
+      "selectedrowkeys",
+      "defaultselectedrowkeys",
+      "onselectionchange",
+      "isrowselectable",
       "datatablecolumn",
       "record",
       "reactnode",
@@ -3509,6 +3629,7 @@
       "item",
       "index",
       "datatabledensity",
+      "selecteditems",
       "height",
       "each",
       "pixels",
@@ -3559,6 +3680,14 @@
       "auto",
       "sorts",
       "internally",
+      "determines",
+      "stable",
+      "pass",
+      "field",
+      "function",
+      "returning",
+      "unique",
+      "value",
       "callback",
       "fired",
       "clicked",
@@ -3570,8 +3699,6 @@
       "this",
       "class",
       "applied",
-      "pass",
-      "function",
       "vary",
       "classes",
       "example",
@@ -3589,7 +3716,31 @@
       "outer",
       "container",
       "scroll",
-      "wrapper"
+      "wrapper",
+      "renders",
+      "leading",
+      "checkbox",
+      "selected",
+      "controlled",
+      "keys",
+      "pair",
+      "with",
+      "initially",
+      "uncontrolled",
+      "called",
+      "their",
+      "matching",
+      "whenever",
+      "selection",
+      "changes",
+      "marks",
+      "specific",
+      "ineligible",
+      "disabled",
+      "they",
+      "excluded",
+      "from",
+      "select"
     ],
     "url": "/virtualized-data-table"
   },
