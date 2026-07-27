@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.5.1 (2026-07-27)</small>
+
+* fix: added row selection support for DataTables ([7a034f2e46cf6c5d2b9cd146255b37c7d5f723fc](https://github.com/PrabhuKathiresan/react-tailwind/commit/7a034f2e46cf6c5d2b9cd146255b37c7d5f723fc))
+
 ## 1.5.0 (2026-07-26)
 
 * feat: added accordion and button group ([4f5be20cb054a529fc0ad761a6fa7b8804c82be2](https://github.com/PrabhuKathiresan/react-tailwind/commit/4f5be20cb054a529fc0ad761a6fa7b8804c82be2))
