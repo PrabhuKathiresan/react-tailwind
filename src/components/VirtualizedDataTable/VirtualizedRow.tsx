@@ -54,7 +54,7 @@ export const VirtualizedRow = ({
     <div
       role="row"
       className={buildClassName(
-        'grid border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 group',
+        'grid border-b border-[var(--ui-border)] bg-white dark:bg-gray-900 group',
         onRowClick && 'cursor-pointer',
         isStriped && 'bg-gray-50 dark:bg-gray-800/40',
         resolvedRowClass,
@@ -71,7 +71,7 @@ export const VirtualizedRow = ({
         <div
           role="cell"
           className={buildClassName(
-            'flex items-center whitespace-nowrap border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+            'flex items-center whitespace-nowrap border-r last:border-r-0 border-[var(--ui-border)]',
             densityCellClass,
             isStriped && 'bg-gray-50 dark:bg-gray-800/40',
           )}
@@ -93,7 +93,7 @@ export const VirtualizedRow = ({
             key={col.name}
             role="cell"
             className={buildClassName(
-              'whitespace-nowrap border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+              'whitespace-nowrap border-r last:border-r-0 border-[var(--ui-border)]',
               densityCellClass,
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-right',

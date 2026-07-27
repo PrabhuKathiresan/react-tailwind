@@ -142,20 +142,44 @@ export default function InstallationPage() {
         />
         <BodyText className="text-gray-600 dark:text-gray-300">
           This only covers text color on those three components. <code>Label</code> keeps its own
-          (intentionally dimmer) shade, and everything else — borders, backgrounds, icon strokes —
-          still uses the raw Tailwind <code>gray</code> scale below.
+          (intentionally dimmer) shade, and everything else — backgrounds, icon strokes — still uses
+          the raw Tailwind <code>gray</code> scale below.
         </BodyText>
+
+        <BodyText strong className="text-gray-800 dark:text-gray-100">
+          Border color (containers &amp; dividers)
+        </BodyText>
+        <BodyText className="text-gray-600 dark:text-gray-300">
+          Structural borders — card outlines, table/row dividers, dropdown panels — read{' '}
+          <code>--ui-border</code> (default) or <code>--ui-border-muted</code> (subtler dividers,
+          e.g. <code>DetailedInformation</code>). Interactive form-control borders (
+          <code>Input</code>, <code>Checkbox</code>, <code>Radio</code>, <code>Button</code>, etc.)
+          are not tokenized — their border color changes on hover/focus as part of the control's own
+          design, not this generic role.
+        </BodyText>
+        <CodeBlock
+          code={`:root {
+  --ui-border: #e5e7eb;
+  --ui-border-muted: #f3f4f6;
+}
+.dark {
+  --ui-border: #374151;
+  --ui-border-muted: #374151;
+}`}
+          language="css"
+        />
 
         <BodyText strong className="text-gray-800 dark:text-gray-100">
           Neutral palette (gray)
         </BodyText>
         <BodyText className="text-gray-600 dark:text-gray-300">
-          Text, borders, and surfaces use Tailwind's built-in{' '}
+          Everything not covered by a dedicated token above — backgrounds, icon strokes, and
+          form-control borders — uses Tailwind's built-in{' '}
           <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">gray</code>{' '}
-          scale directly (e.g. <code>text-gray-900</code>, <code>border-gray-300</code>) rather than
-          a custom token. Since your own Tailwind build compiles those classes, you can swap the
-          whole library (and any other <code>gray-*</code> usage in your app) to a different neutral
-          — like <code>slate</code> — by remapping the theme color once, with Tailwind v4's{' '}
+          scale directly (e.g. <code>bg-gray-50</code>, <code>border-gray-300</code>) rather than a
+          custom token. Since your own Tailwind build compiles those classes, you can swap the whole
+          library (and any other <code>gray-*</code> usage in your app) to a different neutral —
+          like <code>slate</code> — by remapping the theme color once, with Tailwind v4's{' '}
           <code>@theme</code>:
         </BodyText>
         <CodeBlock
@@ -176,9 +200,9 @@ export default function InstallationPage() {
         />
         <BodyText className="text-gray-600 dark:text-gray-300">
           This is app-wide — it repaints every <code>gray-*</code> class in your project, not just
-          this library. If you need the library's borders/backgrounds/icons to differ from your
-          app's own grays, that isn't currently supported for those; it would need dedicated CSS
-          tokens the way text color already has above.
+          this library. If you need the library's backgrounds/icons/form-control borders to differ
+          from your app's own grays, that isn't currently supported for those; it would need
+          dedicated CSS tokens the way text and structural border color already have above.
         </BodyText>
       </section>
 

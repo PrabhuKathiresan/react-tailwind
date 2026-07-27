@@ -25,7 +25,7 @@ export const Card = forwardRef(
       BASE_CARD_CLASS,
       zeroPadding ? '' : compact ? 'p-2' : 'p-6',
       hoverable && 'transition-background duration-200 hover:bg-gray-100 dark:hover:bg-gray-800',
-      bordered && 'border border-gray-200 dark:border-gray-800',
+      bordered && 'border border-[var(--ui-border)]',
       className,
     )
 

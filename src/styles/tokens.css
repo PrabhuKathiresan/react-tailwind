@@ -64,6 +64,10 @@
   --ui-text-muted: #6b7280; /* gray-500 */
   --ui-text-danger: #ef4444; /* red-500 */
 
+  /* Neutral structural borders (containers, dividers — not interactive form controls) */
+  --ui-border: #e5e7eb; /* gray-200 */
+  --ui-border-muted: #f3f4f6; /* gray-100 */
+
   /* Border radius scale */
   --ui-radius-sm: 0.25rem;
   --ui-radius: 0.375rem;
@@ -115,4 +119,7 @@
   --ui-text: #f3f4f6; /* gray-100 */
   --ui-text-muted: #9ca3af; /* gray-400 */
   --ui-text-danger: #f87171; /* red-400 */
+
+  --ui-border: #374151; /* gray-700 */
+  --ui-border-muted: #374151; /* gray-700 */
 }

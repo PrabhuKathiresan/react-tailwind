@@ -39,8 +39,7 @@ describe('Card Component', () => {
   it('applies bordered styles', () => {
     render(<Card bordered>Border Card</Card>)
     const el = screen.getByText('Border Card')
-    expect(el.className).toMatch(/border-gray-200/)
-    expect(el.className).toMatch(/dark:border-gray-800/)
+    expect(el.className).toMatch(/border-\[var\(--ui-border\)\]/)
   })
 
   it('applies padding by default', () => {

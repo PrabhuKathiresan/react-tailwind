@@ -34,8 +34,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         anchor={anchor}
         className={buildClassName(
           'w-52 origin-top-right rounded-xl shadow-sm p-1 text-sm transition duration-100 ease-out',
-          'border border-gray-100 bg-white text-gray-800',
-          'dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200',
+          'border border-[var(--ui-border-muted)] bg-white text-gray-800',
+          'dark:bg-gray-800 dark:text-gray-200',
           'focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0',
           '[--anchor-gap:--spacing(1)]',
           itemsContainerClass,

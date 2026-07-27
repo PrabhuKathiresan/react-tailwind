@@ -14,6 +14,7 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
       divider = true,
       titleClass,
       detailsClass,
+      bordered = false,
       ...divProps
     } = props
 
@@ -21,7 +22,12 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
     const filteredDetails = details.filter((detail) => !detail.hidden)
     return (
       <div
-        className={buildClassName('p-2 md:p-4', compact ? 'md:p-2' : '', className)}
+        className={buildClassName(
+          'p-2 md:p-4',
+          compact ? 'md:p-2' : '',
+          bordered ? 'border border-[var(--ui-border)]' : '',
+          className,
+        )}
         ref={ref}
         {...divProps}
       >
@@ -42,14 +48,12 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
         {filteredDetails.length ? (
           <div
             className={buildClassName(
-              'border-gray-100 dark:border-gray-700',
+              'border-[var(--ui-border-muted)]',
               hasTitles && 'border-t',
               detailsClass,
             )}
           >
-            <dl
-              className={buildClassName(divider && 'divide-y divide-gray-100 dark:divide-gray-700')}
-            >
+            <dl className={buildClassName(divider && 'divide-y divide-[var(--ui-border-muted)]')}>
               {filteredDetails.map((detail) => (
                 <div
                   key={detail.label}

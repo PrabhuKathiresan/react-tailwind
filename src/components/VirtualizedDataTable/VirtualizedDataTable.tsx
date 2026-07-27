@@ -133,14 +133,14 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
   const Header = (
     <div ref={headerRef} className="overflow-hidden w-full">
       <div
-        className="grid bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700"
+        className="grid bg-gray-50 dark:bg-gray-800 border-b border-[var(--ui-border)]"
         style={{ gridTemplateColumns: gridTemplate, minWidth: 'fit-content' }}
       >
         {selectable && (
           <div
             role="columnheader"
             className={buildClassName(
-              'flex items-center border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+              'flex items-center border-r last:border-r-0 border-[var(--ui-border)]',
               densityCellClass,
             )}
           >
@@ -161,7 +161,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
             className={buildClassName(
               'font-semibold text-sm whitespace-nowrap flex items-center',
               densityCellClass,
-              'border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+              'border-r last:border-r-0 border-[var(--ui-border)]',
               col.sticky === 'left' &&
                 'sticky left-0 z-20 bg-gray-50 dark:bg-gray-800 shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
               col.sticky === 'right' &&
@@ -186,7 +186,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
   )
 
   const wrapperCls = buildClassName(
-    'rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden',
+    'rounded-lg border border-[var(--ui-border)] overflow-hidden',
     wrapperClass,
   )
 
@@ -203,7 +203,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
               <div
                 key={idx}
                 data-testid="skeleton-row"
-                className="grid animate-pulse bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
+                className="grid animate-pulse bg-white dark:bg-gray-900 border-b border-[var(--ui-border-muted)]"
                 style={{ gridTemplateColumns: gridTemplate, height: rowHeight }}
               >
                 {selectable && <div className={densityCellClass} />}
