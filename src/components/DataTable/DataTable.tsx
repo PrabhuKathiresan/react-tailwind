@@ -19,8 +19,9 @@ import type {
 } from './DataTable.types'
 import { TextContent } from '../TextContent'
 import { Pagination } from '../Pagination'
+import { Checkbox } from '../Checkbox'
 import { get } from '../../utils/get'
-import { updateSortQuery } from './DataTable.utils'
+import { updateSortQuery, useRowSelection } from './DataTable.utils'
 import { getSortIcon } from './DataTable.icons'
 
 const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
@@ -75,6 +76,11 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   density = 'default',
   striped = false,
   layout = 'auto',
+  selectable = false,
+  selectedRowKeys,
+  defaultSelectedRowKeys,
+  onSelectionChange,
+  isRowSelectable,
 }: DataTableProps<T>) {
   const internalSorting = useRef<SortQuery>({})
   const [sortedItems, setSortedItems] = useState(items)
@@ -110,7 +116,17 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
     return column.cellClass
   }
 
+  const { isSelected, toggleRow, toggleAll, allSelected, someSelected } = useRowSelection({
+    items: sortedItems,
+    getKey,
+    selectedRowKeys,
+    defaultSelectedRowKeys,
+    onSelectionChange,
+    isRowSelectable,
+  })
+
   const densityCellClass = DENSITY_CELL_CLASS[density]
+  const colSize = columns.length + (selectable ? 1 : 0)
 
   return (
     <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
@@ -126,6 +142,20 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
           layout={layout}
         >
           <TableHead className={headClass}>
+            {selectable && (
+              <TableHeaderCell
+                className={buildClassName('bg-gray-50 dark:bg-gray-800 w-px', densityCellClass)}
+              >
+                <Checkbox
+                  aria-label="Select all rows"
+                  checked={allSelected}
+                  ref={(el) => {
+                    if (el) el.indeterminate = someSelected
+                  }}
+                  onChange={toggleAll}
+                />
+              </TableHeaderCell>
+            )}
             {columns.map((column) => (
               <TableHeaderCell
                 key={column.name}
@@ -156,42 +186,64 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
             ))}
           </TableHead>
 
-          <TableBody loading={loading} colSize={columns.length} rowSize={pagination?.limit || 5}>
+          <TableBody loading={loading} colSize={colSize} rowSize={pagination?.limit || 5}>
             {!loading && sortedItems.length === 0 ? (
-              <EmptyTableRow colSpan={columns.length}>{emptyMessage}</EmptyTableRow>
+              <EmptyTableRow colSpan={colSize}>{emptyMessage}</EmptyTableRow>
             ) : (
-              sortedItems.map((item, idx) => (
-                <TableRow
-                  key={getKey(item, idx)}
-                  className={buildClassName(
-                    'group',
-                    onRowClick && 'cursor-pointer',
-                    striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
-                    getRowClass(item, idx),
-                  )}
-                  onClick={onRowClick ? () => onRowClick(item, idx) : undefined}
-                >
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.name}
-                      align={column.align}
-                      className={buildClassName(
-                        densityCellClass,
-                        striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
-                        column.sticky === 'left' &&
-                          'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
-                        column.sticky === 'right' &&
-                          'sticky right-0 z-10 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
-                        getCellClass(column, item),
-                      )}
-                    >
-                      {column.render
-                        ? column.render(item)
-                        : ((get(item, column.name) as any) ?? 'Not set')}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              sortedItems.map((item, idx) => {
+                const key = getKey(item, idx)
+                const rowSelectable = !isRowSelectable || isRowSelectable(item)
+
+                return (
+                  <TableRow
+                    key={key}
+                    className={buildClassName(
+                      'group',
+                      onRowClick && 'cursor-pointer',
+                      striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                      getRowClass(item, idx),
+                    )}
+                    onClick={onRowClick ? () => onRowClick(item, idx) : undefined}
+                  >
+                    {selectable && (
+                      <TableCell
+                        className={buildClassName(
+                          densityCellClass,
+                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                        )}
+                      >
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <Checkbox
+                            aria-label="Select row"
+                            checked={isSelected(key)}
+                            disabled={!rowSelectable}
+                            onChange={() => toggleRow(key)}
+                          />
+                        </span>
+                      </TableCell>
+                    )}
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.name}
+                        align={column.align}
+                        className={buildClassName(
+                          densityCellClass,
+                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                          column.sticky === 'left' &&
+                            'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
+                          column.sticky === 'right' &&
+                            'sticky right-0 z-10 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                          getCellClass(column, item),
+                        )}
+                      >
+                        {column.render
+                          ? column.render(item)
+                          : ((get(item, column.name) as any) ?? 'Not set')}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )
+              })
             )}
           </TableBody>
 

@@ -344,6 +344,40 @@ function FooterRowExample() {
 }
 
 /* --------------------------------------------------
+ * Example: Selectable Rows
+ * -------------------------------------------------- */
+function SelectableExample() {
+  const items = [
+    { id: 1, name: 'Prabhu', role: 'Admin' },
+    { id: 2, name: 'Arun', role: 'User' },
+    { id: 3, name: 'Kumar', role: 'Manager' },
+  ]
+
+  const columns: DataTableColumn[] = [
+    { name: 'id', label: 'ID', width: 60 },
+    { name: 'name', label: 'Name' },
+    { name: 'role', label: 'Role' },
+  ]
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
+
+  return (
+    <div className="space-y-3 w-full">
+      <DataTable
+        items={items}
+        columns={columns}
+        selectable
+        selectedRowKeys={selectedRowKeys}
+        onSelectionChange={setSelectedRowKeys}
+      />
+      <TextContent small muted>
+        Selected: {selectedRowKeys.length ? selectedRowKeys.join(', ') : 'none'}
+      </TextContent>
+    </div>
+  )
+}
+
+/* --------------------------------------------------
  * Example: Empty State
  * -------------------------------------------------- */
 function EmptyExample() {
@@ -550,6 +584,21 @@ const handleSort = (column: DataTableColumn) => {
       <td className="px-3 py-2 text-sm font-semibold text-right last:pr-4">\${total}</td>
     </>
   }
+/>`,
+    },
+    {
+      title: 'Selectable Rows',
+      description:
+        'Set selectable to render a checkbox column with select-all support. Pair selectedRowKeys with onSelectionChange for controlled selection, or omit selectedRowKeys to let DataTable manage it internally. Use isRowSelectable to exclude specific rows.',
+      render: <SelectableExample />,
+      code: `const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
+
+<DataTable
+  items={items}
+  columns={columns}
+  selectable
+  selectedRowKeys={selectedRowKeys}
+  onSelectionChange={setSelectedRowKeys}
 />`,
     },
     {

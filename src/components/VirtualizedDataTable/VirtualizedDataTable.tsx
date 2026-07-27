@@ -2,9 +2,17 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
+import { Checkbox } from '../Checkbox'
 import { VirtualizedRow } from './VirtualizedRow'
-import { type DataTableColumn, type DataTableDensity, getSortIcon } from '../DataTable'
+import {
+  type DataTableColumn,
+  type DataTableDensity,
+  getSortIcon,
+  useRowSelection,
+} from '../DataTable'
 import type { VirtualizedDataTableProps } from './VirtualizedDataTable.types'
+
+const SELECTION_COLUMN_WIDTH = '44px'
 
 const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
   compact: 'px-2 py-1.5',
@@ -34,12 +42,38 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
   rowHeight = 48,
   maxHeight = 400,
   overscanCount = 3,
+  rowKey = 'id',
+  selectable = false,
+  selectedRowKeys,
+  defaultSelectedRowKeys,
+  onSelectionChange,
+  isRowSelectable,
 }: VirtualizedDataTableProps<T>) {
   const scrollRef = useRef<any>(null)
   const outerRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement | null>(null)
 
-  const gridTemplate = useMemo(() => columns.map((col) => columnWidth(col)).join(' '), [columns])
+  const getKey = useCallback(
+    (item: T, idx: number): string | number => {
+      if (typeof rowKey === 'function') return rowKey(item)
+      return (item as any)[rowKey] ?? idx
+    },
+    [rowKey],
+  )
+
+  const { isSelected, toggleRow, toggleAll, allSelected, someSelected } = useRowSelection({
+    items,
+    getKey,
+    selectedRowKeys,
+    defaultSelectedRowKeys,
+    onSelectionChange,
+    isRowSelectable,
+  })
+
+  const gridTemplate = useMemo(() => {
+    const widths = columns.map((col) => columnWidth(col))
+    return selectable ? [SELECTION_COLUMN_WIDTH, ...widths].join(' ') : widths.join(' ')
+  }, [columns, selectable])
 
   const densityCellClass = DENSITY_CELL_CLASS[density]
 
@@ -63,8 +97,34 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
   )
 
   const itemData = useMemo(
-    () => ({ items, columns, gridTemplate, onRowClick, rowClass, density, striped }),
-    [items, columns, gridTemplate, onRowClick, rowClass, density, striped],
+    () => ({
+      items,
+      columns,
+      gridTemplate,
+      onRowClick,
+      rowClass,
+      density,
+      striped,
+      selectable,
+      getKey,
+      isSelected,
+      toggleRow,
+      isRowSelectable,
+    }),
+    [
+      items,
+      columns,
+      gridTemplate,
+      onRowClick,
+      rowClass,
+      density,
+      striped,
+      selectable,
+      getKey,
+      isSelected,
+      toggleRow,
+      isRowSelectable,
+    ],
   )
 
   /* -------------------------------------------------------
@@ -76,6 +136,24 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
         className="grid bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700"
         style={{ gridTemplateColumns: gridTemplate, minWidth: 'fit-content' }}
       >
+        {selectable && (
+          <div
+            role="columnheader"
+            className={buildClassName(
+              'flex items-center border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+              densityCellClass,
+            )}
+          >
+            <Checkbox
+              aria-label="Select all rows"
+              checked={allSelected}
+              ref={(el) => {
+                if (el) el.indeterminate = someSelected
+              }}
+              onChange={toggleAll}
+            />
+          </div>
+        )}
         {columns.map((col) => (
           <div
             key={col.name}
@@ -128,6 +206,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
                 className="grid animate-pulse bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
                 style={{ gridTemplateColumns: gridTemplate, height: rowHeight }}
               >
+                {selectable && <div className={densityCellClass} />}
                 {columns.map((col) => (
                   <div key={col.name} className={densityCellClass}>
                     <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 rounded" />

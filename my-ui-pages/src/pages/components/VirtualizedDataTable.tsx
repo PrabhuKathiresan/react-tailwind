@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import {
   VirtualizedDataTable,
+  TextContent,
   type DataTableColumn,
   type SortQuery,
   updateSortQuery,
@@ -242,6 +243,36 @@ function LoadingExample() {
 }
 
 /* --------------------------------------------------
+ * Example: Selectable Rows
+ * -------------------------------------------------- */
+function SelectableExample() {
+  const columns: DataTableColumn[] = [
+    { name: 'id', label: 'ID', width: 80 },
+    { name: 'name', label: 'Name' },
+    { name: 'email', label: 'Email' },
+  ]
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
+
+  return (
+    <div className="space-y-2 w-full">
+      <VirtualizedDataTable
+        items={LARGE_ITEMS}
+        columns={columns}
+        rowHeight={48}
+        maxHeight={300}
+        selectable
+        selectedRowKeys={selectedRowKeys}
+        onSelectionChange={setSelectedRowKeys}
+      />
+      <TextContent small muted>
+        Selected: {selectedRowKeys.length}
+      </TextContent>
+    </div>
+  )
+}
+
+/* --------------------------------------------------
  * Example: Empty State
  * -------------------------------------------------- */
 function EmptyExample() {
@@ -397,6 +428,23 @@ const handleSort = (column: DataTableColumn) => {
   loading={loading}
   rowHeight={48}
   maxHeight={300}
+/>`,
+    },
+    {
+      title: 'Selectable Rows',
+      description:
+        'Set selectable to render a checkbox column with select-all support, virtualized just like the rest of the rows. Pair selectedRowKeys with onSelectionChange for controlled selection.',
+      render: <SelectableExample />,
+      code: `const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
+
+<VirtualizedDataTable
+  items={items}
+  columns={columns}
+  rowHeight={48}
+  maxHeight={300}
+  selectable
+  selectedRowKeys={selectedRowKeys}
+  onSelectionChange={setSelectedRowKeys}
 />`,
     },
     {

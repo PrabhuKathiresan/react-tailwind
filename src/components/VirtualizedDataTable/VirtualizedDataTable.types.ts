@@ -2,11 +2,11 @@ import type { DataTableColumn, DataTableDensity, DataTableProps } from '../DataT
 
 /**
  * Props shared with DataTable but not applicable to virtualized tables are omitted:
- * pagination, setPagination, layout, footerRow, rowKey, tableClass, headClass.
+ * pagination, setPagination, layout, footerRow, tableClass, headClass.
  */
 type VirtualizedBase<T = any> = Omit<
   DataTableProps<T>,
-  'pagination' | 'setPagination' | 'layout' | 'footerRow' | 'rowKey' | 'tableClass' | 'headClass'
+  'pagination' | 'setPagination' | 'layout' | 'footerRow' | 'tableClass' | 'headClass'
 >
 
 /**
@@ -46,4 +46,9 @@ export type VirtualizedRowProps = {
   rowClass?: string | ((item: any, index: number) => string)
   density?: DataTableDensity
   striped?: boolean
+  selectable?: boolean
+  getKey?: (item: any, index: number) => string | number
+  isSelected?: (key: string | number) => boolean
+  toggleRow?: (key: string | number) => void
+  isRowSelectable?: (item: any) => boolean
 }

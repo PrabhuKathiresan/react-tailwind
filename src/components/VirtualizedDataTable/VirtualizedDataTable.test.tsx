@@ -247,4 +247,57 @@ describe('VirtualizedDataTable', () => {
     expect(rows[1].className).toMatch(/bg-gray-50/)
     expect(rows[0].className).not.toMatch(/bg-gray-50/)
   })
+
+  // ── selectable rows ──────────────────────────────────────────────────
+
+  test('does not render checkboxes when selectable is unset', () => {
+    setup()
+    expect(screen.queryAllByRole('checkbox')).toHaveLength(0)
+  })
+
+  test('renders a checkbox per row plus a select-all checkbox in the header', () => {
+    setup({ selectable: true })
+    expect(screen.getAllByRole('checkbox')).toHaveLength(items.length + 1)
+  })
+
+  test('calls onSelectionChange with keys and items when a row checkbox is toggled', () => {
+    const onSelectionChange = jest.fn()
+    setup({ selectable: true, onSelectionChange })
+    const checkboxes = screen.getAllByRole('checkbox')
+    fireEvent.click(checkboxes[1]) // first row
+    expect(onSelectionChange).toHaveBeenCalledWith([1], [items[0]])
+  })
+
+  test('selects and deselects all rows via the header checkbox', () => {
+    const onSelectionChange = jest.fn()
+    setup({ selectable: true, onSelectionChange })
+    const [selectAll] = screen.getAllByRole('checkbox')
+    fireEvent.click(selectAll)
+    expect(onSelectionChange).toHaveBeenLastCalledWith([1, 2], items)
+
+    fireEvent.click(selectAll)
+    expect(onSelectionChange).toHaveBeenLastCalledWith([], [])
+  })
+
+  test('respects controlled selectedRowKeys', () => {
+    setup({ selectable: true, selectedRowKeys: [2] })
+    const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[]
+    expect(checkboxes[0].checked).toBe(false) // not all selected
+    expect(checkboxes[2].checked).toBe(true) // second row (id 2)
+  })
+
+  test('disables the checkbox for rows excluded by isRowSelectable', () => {
+    setup({ selectable: true, isRowSelectable: (item: any) => item.id !== 1 })
+    const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[]
+    expect(checkboxes[1].disabled).toBe(true)
+    expect(checkboxes[2].disabled).toBe(false)
+  })
+
+  test('does not trigger onRowClick when the row checkbox is clicked', () => {
+    const onRowClick = jest.fn()
+    setup({ selectable: true, onRowClick })
+    const checkboxes = screen.getAllByRole('checkbox')
+    fireEvent.click(checkboxes[1])
+    expect(onRowClick).not.toHaveBeenCalled()
+  })
 })

@@ -358,4 +358,69 @@ describe('DataTable', () => {
     render(<DataTable items={rows} columns={columns} headClass="bg-blue-50" />)
     expect(document.querySelector('thead')!.className).toMatch(/bg-blue-50/)
   })
+
+  // ── selectable rows ──────────────────────────────────────────────────
+
+  it('does not render checkbox column when selectable is unset', () => {
+    render(<DataTable items={rows} columns={columns} />)
+    expect(screen.queryAllByRole('checkbox')).toHaveLength(0)
+  })
+
+  it('renders a checkbox per row plus a select-all checkbox in the header', () => {
+    render(<DataTable items={rows} columns={columns} selectable />)
+    expect(screen.getAllByRole('checkbox')).toHaveLength(rows.length + 1)
+  })
+
+  it('calls onSelectionChange with keys and items when a row checkbox is toggled', () => {
+    const onSelectionChange = jest.fn()
+    render(
+      <DataTable items={rows} columns={columns} selectable onSelectionChange={onSelectionChange} />,
+    )
+    const checkboxes = screen.getAllByRole('checkbox')
+    fireEvent.click(checkboxes[1]) // first data row (Charlie, id 3)
+    expect(onSelectionChange).toHaveBeenCalledWith([3], [rows[0]])
+  })
+
+  it('selects and deselects all rows via the header checkbox', () => {
+    const onSelectionChange = jest.fn()
+    render(
+      <DataTable items={rows} columns={columns} selectable onSelectionChange={onSelectionChange} />,
+    )
+    const [selectAll] = screen.getAllByRole('checkbox')
+    fireEvent.click(selectAll)
+    expect(onSelectionChange).toHaveBeenLastCalledWith([3, 1, 2], rows)
+
+    fireEvent.click(selectAll)
+    expect(onSelectionChange).toHaveBeenLastCalledWith([], [])
+  })
+
+  it('respects controlled selectedRowKeys', () => {
+    render(<DataTable items={rows} columns={columns} selectable selectedRowKeys={[1]} />)
+    const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[]
+    // header, Charlie(3), Alice(1), Bob(2)
+    expect(checkboxes[0].checked).toBe(false) // not all selected -> select-all unchecked
+    expect(checkboxes[2].checked).toBe(true) // Alice
+  })
+
+  it('disables the checkbox for rows excluded by isRowSelectable', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        selectable
+        isRowSelectable={(item) => item.id !== 3}
+      />,
+    )
+    const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[]
+    expect(checkboxes[1].disabled).toBe(true) // Charlie (id 3)
+    expect(checkboxes[2].disabled).toBe(false) // Alice
+  })
+
+  it('does not trigger onRowClick when the row checkbox is clicked', () => {
+    const onRowClick = jest.fn()
+    render(<DataTable items={rows} columns={columns} selectable onRowClick={onRowClick} />)
+    const checkboxes = screen.getAllByRole('checkbox')
+    fireEvent.click(checkboxes[1])
+    expect(onRowClick).not.toHaveBeenCalled()
+  })
 })

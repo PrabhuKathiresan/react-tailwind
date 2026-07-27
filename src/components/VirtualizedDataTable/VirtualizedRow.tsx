@@ -3,6 +3,7 @@ import { ListChildComponentProps } from 'react-window'
 import { buildClassName } from '../../utils/build-classname'
 import { get } from '../../utils/get'
 import type { DataTableColumn, DataTableDensity } from '../DataTable'
+import { Checkbox } from '../Checkbox'
 import type { VirtualizedRowProps } from './VirtualizedDataTable.types'
 
 const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
@@ -16,9 +17,24 @@ export const VirtualizedRow = ({
   style,
   data,
 }: ListChildComponentProps<VirtualizedRowProps>) => {
-  const { items, columns, gridTemplate, onRowClick, rowClass, density = 'default', striped } = data
+  const {
+    items,
+    columns,
+    gridTemplate,
+    onRowClick,
+    rowClass,
+    density = 'default',
+    striped,
+    selectable,
+    getKey,
+    isSelected,
+    toggleRow,
+    isRowSelectable,
+  } = data
   const item = items[index]
   const isStriped = striped && index % 2 === 1
+  const key = getKey?.(item, index) ?? index
+  const rowSelectable = !isRowSelectable || isRowSelectable(item)
 
   const resolvedRowClass = !rowClass
     ? ''
@@ -51,6 +67,24 @@ export const VirtualizedRow = ({
       }}
       onClick={onRowClick ? () => onRowClick(item, index) : undefined}
     >
+      {selectable && (
+        <div
+          role="cell"
+          className={buildClassName(
+            'flex items-center whitespace-nowrap border-r last:border-r-0 border-gray-200 dark:border-gray-700',
+            densityCellClass,
+            isStriped && 'bg-gray-50 dark:bg-gray-800/40',
+          )}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Checkbox
+            aria-label="Select row"
+            checked={isSelected?.(key) ?? false}
+            disabled={!rowSelectable}
+            onChange={() => toggleRow?.(key)}
+          />
+        </div>
+      )}
       {columns.map((col: DataTableColumn) => {
         const content = col.render ? col.render(item) : (get(item, col.name) ?? 'Not set')
 

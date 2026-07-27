@@ -146,4 +146,25 @@ export interface DataTableProps<T = any> {
 
   /** Optional classes applied to the `<thead>` element */
   headClass?: string
+
+  /**
+   * Renders a leading checkbox column so rows can be selected.
+   * @default false
+   */
+  selectable?: boolean
+
+  /** Controlled selected row keys — pair with `onSelectionChange`. */
+  selectedRowKeys?: Array<string | number>
+
+  /** Initially selected row keys (uncontrolled). */
+  defaultSelectedRowKeys?: Array<string | number>
+
+  /** Called with the new selected row keys and their matching items whenever selection changes. */
+  onSelectionChange?: (selectedRowKeys: Array<string | number>, selectedItems: T[]) => void
+
+  /**
+   * Marks specific rows as ineligible for selection — their checkbox is
+   * disabled and they're excluded from "select all".
+   */
+  isRowSelectable?: (item: T) => boolean
 }

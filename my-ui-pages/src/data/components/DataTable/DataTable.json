@@ -172,6 +172,51 @@
       "required": false,
       "defaultValue": "",
       "description": "Optional classes applied to the `<thead>` element"
+    },
+    {
+      "name": "selectable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Renders a leading checkbox column so rows can be selected."
+    },
+    {
+      "name": "selectedRowKeys",
+      "type": "(string | number)[]",
+      "raw": "(string | number)[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled selected row keys — pair with `onSelectionChange`."
+    },
+    {
+      "name": "defaultSelectedRowKeys",
+      "type": "(string | number)[]",
+      "raw": "(string | number)[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Initially selected row keys (uncontrolled)."
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(selectedRowKeys: (string | number)[], selectedItems: T[]) => void",
+      "raw": "(selectedRowKeys: (string | number)[], selectedItems: T[]) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Called with the new selected row keys and their matching items whenever selection changes."
+    },
+    {
+      "name": "isRowSelectable",
+      "type": "(item: T) => boolean",
+      "raw": "(item: T) => boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\"."
     }
   ]
 }

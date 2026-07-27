@@ -55,6 +55,15 @@
       "required": false,
       "defaultValue": null,
       "description": "JSX element to be render in place of `p`"
+    },
+    {
+      "name": "invert",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
     }
   ]
 }
