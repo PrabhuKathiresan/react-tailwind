@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.5.2 (2026-07-27)</small>
+
+* fix: added css token for border color ([4b9985e5b3ea85198529cbc612a0e4e908a2701e](https://github.com/PrabhuKathiresan/react-tailwind/commit/4b9985e5b3ea85198529cbc612a0e4e908a2701e))
+
 ## <small>1.5.1 (2026-07-27)</small>
 
 * fix: added row selection support for DataTables ([7a034f2e46cf6c5d2b9cd146255b37c7d5f723fc](https://github.com/PrabhuKathiresan/react-tailwind/commit/7a034f2e46cf6c5d2b9cd146255b37c7d5f723fc))
