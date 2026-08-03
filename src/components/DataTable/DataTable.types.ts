@@ -167,4 +167,6 @@ export interface DataTableProps<T = any> {
    * disabled and they're excluded from "select all".
    */
   isRowSelectable?: (item: T) => boolean
+
+  paginationContainerClass?: string
 }

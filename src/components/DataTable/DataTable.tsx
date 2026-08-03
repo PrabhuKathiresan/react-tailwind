@@ -81,6 +81,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   defaultSelectedRowKeys,
   onSelectionChange,
   isRowSelectable,
+  paginationContainerClass,
 }: DataTableProps<T>) {
   const internalSorting = useRef<SortQuery>({})
   const [sortedItems, setSortedItems] = useState(items)
@@ -254,7 +255,10 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
       {pagination && (
         <Pagination
           {...pagination}
-          className="rounded-b-lg border border-t-0 border-[var(--ui-border)]"
+          className={buildClassName(
+            'rounded-b-lg border-t border-[var(--ui-border)]',
+            paginationContainerClass,
+          )}
           onChange={setPagination}
         />
       )}
