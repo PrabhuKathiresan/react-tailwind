@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.5.3 (2026-08-03)</small>
+
+* fix: dataTable pagination className support ([baf612353cafaefeed23d7a36991ccc09a06cff9](https://github.com/PrabhuKathiresan/react-tailwind/commit/baf612353cafaefeed23d7a36991ccc09a06cff9))
+
 ## <small>1.5.2 (2026-07-27)</small>
 
 * fix: added css token for border color ([4b9985e5b3ea85198529cbc612a0e4e908a2701e](https://github.com/PrabhuKathiresan/react-tailwind/commit/4b9985e5b3ea85198529cbc612a0e4e908a2701e))
