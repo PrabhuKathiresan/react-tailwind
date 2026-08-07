@@ -59,7 +59,19 @@ export const Drawer: React.FC<DrawerProps> = ({
     >
       {backdrop && <DialogBackdrop className="fixed inset-0 bg-black/20 transition-opacity" />}
 
-      <div className="fixed inset-0 w-screen h-screen">
+      {/* `h-[100svh]`, not `h-screen` (100vh) -- on a real mobile browser
+          (iOS Safari especially), `vh` is pinned to the LARGEST possible
+          viewport (chrome fully collapsed), so this positioning wrapper
+          ends up taller than what's actually visible whenever the browser's
+          own address bar is showing. A bottom-aligned Drawer then renders
+          its panel flush against the bottom of that too-tall box, cropping
+          the bottom of the panel behind the browser chrome. `100svh` sizes
+          for the worst case (chrome fully visible) instead, so the wrapper
+          never exceeds the real visible viewport. (`dvh` would track the
+          chrome dynamically, but has long-standing real-device bugs doing
+          that correctly inside a `position: fixed` element like this one --
+          `svh` is the safe, static floor.) */}
+      <div className="fixed inset-0 w-screen h-[100svh]">
         <div className={buildClassName('flex', alignmentMap[align])}>
           <DialogPanel
             transition
