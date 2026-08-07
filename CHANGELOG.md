@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.5.4 (2026-08-07)</small>
+
+* fix(Drawer): fix screen height ([5887cf4299b68b074af39cbb2b6bf720e1f97de1](https://github.com/PrabhuKathiresan/react-tailwind/commit/5887cf4299b68b074af39cbb2b6bf720e1f97de1))
+* fix(Textarea): disabled dark mode background color ([c0ae0225c85ca76dc2dbfe3a92b113cb6885eeb5](https://github.com/PrabhuKathiresan/react-tailwind/commit/c0ae0225c85ca76dc2dbfe3a92b113cb6885eeb5))
+
 ## <small>1.5.3 (2026-08-03)</small>
 
 * fix: dataTable pagination className support ([baf612353cafaefeed23d7a36991ccc09a06cff9](https://github.com/PrabhuKathiresan/react-tailwind/commit/baf612353cafaefeed23d7a36991ccc09a06cff9))
