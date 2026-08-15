@@ -52,6 +52,25 @@ export interface ButtonGroupProps {
   size?: ButtonSize
 
   /**
+   * Currently selected value (or array of values for multi-select) in toggle mode.
+   * Compares against each child's `value`, `id`, or button label.
+   */
+  value?: string | number | (string | number)[]
+
+  /**
+   * Callback fired when a button in toggle selection mode is clicked.
+   * Receives the selected button value.
+   */
+  onChange?: (value: any) => void
+
+  /**
+   * Disables all child buttons in the group.
+   *
+   * @default false
+   */
+  disabled?: boolean
+
+  /**
    * Rounds the group's outer corners into a full pill shape instead of the
    * size-matched corner radius.
    *

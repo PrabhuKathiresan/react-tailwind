@@ -1,19 +1,8 @@
 import React, { Children, cloneElement, isValidElement, useMemo } from 'react'
 import { buildClassName } from '../../utils/build-classname'
-import type { ButtonSize } from '../Button/Button.types'
+import type { ButtonSize, ButtonTheme } from '../Button/Button.types'
 import type { ButtonGroupOrientation, ButtonGroupProps } from './ButtonGroup.types'
 
-/**
- * Corner-rounding classes for the group's first/last button, keyed by
- * orientation + size, matching Button's own size -> radius mapping
- * (xs: rounded-sm, sm: rounded, md: rounded-md, lg: rounded-lg).
- *
- * These must stay fully static string literals (no template-literal
- * interpolation) — Tailwind's JIT scanner only picks up class names that
- * appear verbatim in source, and the docs site scans the library's
- * *compiled* output, where interpolated fragments never appear as a
- * complete class name.
- */
 const EDGE_ROUNDING: Record<
   ButtonGroupOrientation,
   Record<ButtonSize, { first: string; last: string }>
@@ -37,11 +26,6 @@ const PILL_EDGE_ROUNDING: Record<ButtonGroupOrientation, { first: string; last: 
   vertical: { first: 'rounded-t-full rounded-b-none', last: 'rounded-b-full rounded-t-none' },
 }
 
-/**
- * Resolves the corner-rounding classes for a single button at `index`
- * out of `count` inside the group, so only the group's outer edges stay
- * rounded and interior seams go square.
- */
 const getEdgeRoundingClass = ({
   index,
   count,
@@ -70,6 +54,9 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   theme = 'secondary',
   variant = 'default',
   size = 'md',
+  value,
+  onChange,
+  disabled: groupDisabled = false,
   rounded = false,
   fullWidth = false,
   label,
@@ -78,27 +65,62 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   const isVertical = orientation === 'vertical'
   const items = useMemo(() => Children.toArray(children).filter(isValidElement), [children])
   const count = items.length
+  const isToggleMode = value !== undefined
 
   return (
     <div
       role="group"
       aria-label={label}
       className={buildClassName(
-        'inline-flex',
+        'inline-flex items-stretch',
         isVertical ? 'flex-col' : 'flex-row',
         fullWidth && 'flex w-full',
         className,
       )}
     >
       {items.map((child, index) => {
-        const childSize = (child.props as { size?: ButtonSize }).size ?? size
+        const childProps = child.props as Record<string, any>
+        const childSize = (childProps.size as ButtonSize) ?? size
+        const childDisabled = childProps.disabled ?? groupDisabled
+
+        // Resolve item value for toggle mode
+        const itemVal =
+          childProps.value ??
+          childProps.id ??
+          (typeof childProps.children === 'string' || typeof childProps.children === 'number'
+            ? childProps.children
+            : index)
+
+        const isSelected = isToggleMode
+          ? Array.isArray(value)
+            ? value.includes(itemVal)
+            : value === itemVal
+          : false
+
+        const resolvedTheme: ButtonTheme = isToggleMode
+          ? isSelected
+            ? (childProps.theme ?? 'primary')
+            : (childProps.theme ?? 'secondary')
+          : (childProps.theme ?? theme)
+
+        const resolvedVariant = childProps.variant ?? variant
+
+        const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+          childProps.onClick?.(e)
+          if (isToggleMode && !childDisabled) {
+            onChange?.(itemVal)
+          }
+        }
 
         return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
-          theme: (child.props as { theme?: unknown }).theme ?? theme,
-          variant: (child.props as { variant?: unknown }).variant ?? variant,
+          theme: resolvedTheme,
+          variant: resolvedVariant,
           size: childSize,
+          disabled: childDisabled,
+          ...(isToggleMode ? { 'aria-pressed': isSelected } : {}),
+          onClick: handleClick,
           className: buildClassName(
-            (child.props as { className?: string }).className,
+            childProps.className,
             getEdgeRoundingClass({
               index,
               count,
@@ -108,7 +130,17 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
             }),
             count > 1 && [
               'relative shadow-none hover:z-10 focus:z-10 focus-visible:z-10',
+              isSelected && 'z-10',
               index > 0 && (isVertical ? '-mt-px' : '-ml-px'),
+              index > 0 &&
+                resolvedVariant === 'default' &&
+                (isVertical
+                  ? resolvedTheme === 'primary' || resolvedTheme === 'danger'
+                    ? 'border-t border-white/25 dark:border-white/20'
+                    : 'border-t border-gray-300/70 dark:border-gray-700/70'
+                  : resolvedTheme === 'primary' || resolvedTheme === 'danger'
+                    ? 'border-l border-white/25 dark:border-white/20'
+                    : 'border-l border-gray-300/70 dark:border-gray-700/70'),
             ],
             fullWidth && 'flex-1',
           ),
