@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { buildClassName } from '@pk-design/react-tailwind'
 import { Link, useLocation } from 'react-router'
 
@@ -81,6 +82,17 @@ export const pageRoutes = navSections.reduce((routes, section) => {
 
 export default function NavList() {
   const location = useLocation()
+  const activeRef = useRef<HTMLAnchorElement | null>(null)
+
+  useEffect(() => {
+    if (activeRef.current) {
+      activeRef.current.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+        behavior: 'auto',
+      })
+    }
+  }, [location.pathname])
 
   return (
     <nav className="space-y-6">
@@ -95,6 +107,7 @@ export default function NavList() {
               return (
                 <li key={item.path}>
                   <Link
+                    ref={active ? activeRef : undefined}
                     to={item.path}
                     className={buildClassName(
                       'block rounded-md px-3 py-2 text-sm transition-colors',
