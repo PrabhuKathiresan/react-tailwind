@@ -64,6 +64,69 @@
       "required": false,
       "defaultValue": null,
       "description": "Whether to arrange checkboxes inline"
+    },
+    {
+      "name": "columns",
+      "type": "enum",
+      "raw": "1 | 2 | 3 | 4",
+      "enumValues": ["1", "2", "3", "4"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Multi-column grid layout (1, 2, 3, or 4 columns).\nTakes precedence over `inline`."
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "CheckboxSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Size scale passed to all checkboxes in the group.\nDefaults to `\"md\"`."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "CheckboxVariant",
+      "enumValues": ["default", "card"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Visual variant passed to all checkboxes in the group.\n- `default` — standard inline checkboxes\n- `card` — enclosed interactive card containers\nDefaults to `\"default\"`."
+    },
+    {
+      "name": "showSelectAll",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Automatically renders a \"Select All\" parent checkbox header with indeterminate state!\nDefaults to `false`."
+    },
+    {
+      "name": "selectAllLabel",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label for the \"Select All\" checkbox.\nDefaults to `\"Select All\"`."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Group-level error message."
+    },
+    {
+      "name": "helperText",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Group-level helper text."
     }
   ]
 }
