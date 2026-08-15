@@ -40,6 +40,7 @@ export const navSections: NavSection[] = [
       { path: '/radio-switch', label: 'RadioSwitch' },
       { path: '/range-input', label: 'RangeInput' },
       { path: '/range-slider', label: 'RangeSlider' },
+      { path: '/quantity-stepper', label: 'QuantityStepper' },
     ],
   },
   {
@@ -55,6 +56,10 @@ export const navSections: NavSection[] = [
       { path: '/card', label: 'Card' },
       { path: '/dropdown', label: 'Dropdown' },
       { path: '/pagination', label: 'Pagination' },
+      { path: '/segmented-control', label: 'SegmentedControl' },
+      { path: '/skeleton', label: 'Skeleton' },
+      { path: '/status-pill', label: 'StatusPill' },
+      { path: '/sticky-action-bar', label: 'StickyActionBar' },
       { path: '/tabs', label: 'Tabs' },
       { path: '/toast', label: 'Toast' },
     ],
