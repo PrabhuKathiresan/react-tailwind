@@ -1,48 +1,144 @@
 import React from 'react'
 import { Drawer, Button, type DrawerAlignment, type DrawerSize } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-
-/**
- * Drawer docs page — examples show controlled usage of Drawer.
- * Each example's `render` contains a small local component that manages isOpen.
- */
+import { Filter, Check, ShieldAlert } from 'lucide-react'
 
 export default function DrawerDocsPage() {
   const examples = [
     {
-      title: 'Basic usage',
-      description: 'A simple controlled Drawer with title, content and close handler.',
-      render: (
-        <div>
-          {/* local state inside render example */}
-          <ExampleBasicDrawer />
-        </div>
-      ),
+      title: 'Mobile Bottom Sheet (align="bottom")',
+      description:
+        'Aligning the drawer to "bottom" turns it into a touch-friendly mobile bottom sheet with a top drag handle indicator bar.',
+      render: <ExampleBottomSheetDrawer />,
       code: `
-function ExampleBasicDrawer() {
+function ExampleBottomSheetDrawer() {
   const [open, setOpen] = React.useState(false);
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Button leftIcon={<Filter className="size-4" />} onClick={() => setOpen(true)}>
+        Open Mobile Bottom Sheet
+      </Button>
+
       <Drawer
         isOpen={open}
         onClose={() => setOpen(false)}
-        title="Basic Drawer"
+        align="bottom"
+        size="sm"
+        title="Filter Results"
+        description="Select criteria to narrow down search results"
+        footer={
+          <div className="grid grid-cols-2 gap-2 w-full">
+            <Button fullWidth variant="outlined" onClick={() => setOpen(false)}>
+              Reset
+            </Button>
+            <Button fullWidth theme="primary" leftIcon={<Check className="size-4" />} onClick={() => setOpen(false)}>
+              Apply Filters
+            </Button>
+          </div>
+        }
       >
-        <div className="p-4">
-          <p>This is content inside the drawer.</p>
+        <div className="space-y-3 py-1 text-sm dark:text-gray-200">
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" defaultChecked />
+            In Stock Items Only
+          </label>
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" defaultChecked />
+            Free Express Shipping
+          </label>
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" />
+            Discounted Products
+          </label>
         </div>
       </Drawer>
     </>
   );
-}
-      `.trim(),
+}`,
+    },
+    {
+      title: 'Prevent Close on Outside Click (closeOnOutsideClick={false})',
+      description:
+        'Set `closeOnOutsideClick={false}` to prevent accidental drawer closure when users click the backdrop or outside the drawer.',
+      render: <ExamplePreventOutsideClickDrawer />,
+      code: `
+function ExamplePreventOutsideClickDrawer() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <Button leftIcon={<ShieldAlert className="size-4" />} theme="warning" onClick={() => setOpen(true)}>
+        Open (Protected Outside Click)
+      </Button>
+
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        closeOnOutsideClick={false}
+        title="Unsaved Form Changes"
+        description="Clicking outside or on the backdrop will not close this drawer."
+        footer={
+          <div className="flex justify-end gap-2 w-full">
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Discard
+            </Button>
+            <Button theme="primary" onClick={() => setOpen(false)}>
+              Save Draft
+            </Button>
+          </div>
+        }
+      >
+        <p className="text-sm dark:text-gray-200">
+          Try clicking outside on the background backdrop. Notice that the drawer stays open until you explicitly click the Close (✕), Discard, or Save buttons.
+        </p>
+      </Drawer>
+    </>
+  );
+}`,
+    },
+    {
+      title: 'Drawer with Sticky Footer',
+      description:
+        'Use the `footer` prop to render a dedicated action row at the bottom of the drawer panel.',
+      render: <ExampleFooterDrawer />,
+      code: `
+<Drawer
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  align="end"
+  title="Edit Profile"
+  footer={
+    <div className="flex justify-end gap-2">
+      <Button variant="outlined" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button theme="primary" onClick={() => setOpen(false)}>Save Changes</Button>
+    </div>
+  }
+>
+  <ProfileForm />
+</Drawer>`,
+    },
+    {
+      title: 'Alignments',
+      description: 'Control slide direction with `align` (start, end, top, bottom, center).',
+      render: (
+        <div className="flex flex-wrap gap-3">
+          <ExampleAlignDrawer align="center" label="Center" />
+          <ExampleAlignDrawer align="end" label="End (Right)" />
+          <ExampleAlignDrawer align="start" label="Start (Left)" />
+          <ExampleAlignDrawer align="top" label="Top" />
+          <ExampleAlignDrawer align="bottom" label="Bottom Sheet" />
+        </div>
+      ),
+      code: `
+<Drawer isOpen={open} align="start" title="Left Slide-Over" />
+<Drawer isOpen={open} align="end" title="Right Slide-Over" />
+<Drawer isOpen={open} align="bottom" title="Bottom Sheet" />`,
     },
     {
       title: 'Sizes',
-      description: 'Drawer supports multiple sizes. Try different `size` props.',
+      description: 'Drawer supports multiple width sizes (xs, sm, md, lg, xl, 2xl, full).',
       render: (
         <div className="flex flex-wrap gap-3">
+          <ExampleSizeDrawer size="xs" />
           <ExampleSizeDrawer size="sm" />
           <ExampleSizeDrawer size="md" />
           <ExampleSizeDrawer size="lg" />
@@ -52,88 +148,20 @@ function ExampleBasicDrawer() {
         </div>
       ),
       code: `
-<Drawer isOpen={open} onClose={...} size="sm" title="Small" />
-<Drawer isOpen={open} onClose={...} size="md" title="Medium" />
-<Drawer isOpen={open} onClose={...} size="lg" title="Large" />
-      `.trim(),
-    },
-    {
-      title: 'Alignments',
-      description:
-        'Control where the drawer appears with `align` (top, bottom, start, end, center).',
-      render: (
-        <div className="flex flex-wrap gap-3">
-          <ExampleAlignDrawer align="center" label="Center" />
-          <ExampleAlignDrawer align="end" label="End" />
-          <ExampleAlignDrawer align="start" label="Start" />
-          <ExampleAlignDrawer align="top" label="Top" />
-          <ExampleAlignDrawer align="bottom" label="Bottom" />
-        </div>
-      ),
-      code: `
-<Drawer isOpen={open} align="center" title="Center drawer" />
-<Drawer isOpen={open} align="end" title="End drawer" />
-<Drawer isOpen={open} align="start" title="Start drawer" />
-<Drawer isOpen={open} align="top" title="Top drawer" />
-<Drawer isOpen={open} align="bottom" title="Bottom drawer" />
-<Drawer isOpen={open} align="top-center" title="Top-center drawer" />
-      `.trim(),
-    },
-    {
-      title: 'Backdrop & Click outside',
-      description:
-        'Toggle backdrop with `backdrop`. When `backdrop` is true, clicking outside should close the drawer if you wire `onClose`.',
-      render: <ExampleBackdropDrawer />,
-      code: `
-<Drawer isOpen={open} onClose={() => setOpen(false)} backdrop={true} title="With backdrop" />
-      `.trim(),
-    },
-    {
-      title: 'No backdrop',
-      description:
-        'Toggle backdrop with `backdrop`. When `backdrop` is false, drawer will be render without any background effect',
-      render: <ExampleNoBackdropDrawer />,
-      code: `
-<Drawer isOpen={open} onClose={() => setOpen(false)} backdrop={false} title="No Backdrop Drawer" />
-      `.trim(),
-    },
-    {
-      title: 'Sticky title & Back button',
-      description:
-        'Use `titleSticky` to keep the title visible. `showBackButton` shows a back control — combine with a handler.',
-      render: <ExampleStickyBackDrawer />,
-      code: `
-<Drawer
-  isOpen={open}
-  onClose={() => setOpen(false)}
-  title="Drawer with back"
-  titleSticky
-  showBackButton
-/>
-      `.trim(),
-    },
-    {
-      title: 'Custom classes (panel/content/title)',
-      description:
-        'Customize drawer internals using `panelClass`, `contentClass`, and `titleClass` to fit your design system.',
-      render: <ExampleCustomClassDrawer />,
-      code: `
-<Drawer
-  isOpen={open}
-  onClose={() => setOpen(false)}
-  title="Styled Drawer"
-  panelClass="rounded-lg shadow-2xl"
-  contentClass="p-6"
-  titleClass="text-lg font-semibold"
-/>
-      `.trim(),
+<Drawer isOpen={open} size="xs" title="XS Drawer" />
+<Drawer isOpen={open} size="sm" title="Small Drawer" />
+<Drawer isOpen={open} size="md" title="Medium Drawer" />
+<Drawer isOpen={open} size="lg" title="Large Drawer" />
+<Drawer isOpen={open} size="xl" title="XL Drawer" />
+<Drawer isOpen={open} size="2xl" title="2XL Drawer" />
+<Drawer isOpen={open} size="full" title="Full Width Drawer" />`,
     },
   ]
 
   return (
     <DocsPageLayout
       component="Drawer"
-      description="A slide-in overlay panel that keeps the user in context without navigating away from the current page. Controlled via isOpen and onClose props, with configurable slide direction, panel width, backdrop click-to-close, a sticky header, and an optional back-navigation button for multi-step flows."
+      description="A slide-in overlay panel or mobile bottom sheet that keeps users in context. Supports 5 alignments (start, end, top, bottom, center), 7 width sizes (xs, sm, md, lg, xl, 2xl, full), closeOnOutsideClick protection, mobile drag handle indicators, sticky headers, top-right close buttons, and custom action footers."
       examples={examples}
     />
   )
@@ -143,16 +171,118 @@ function ExampleBasicDrawer() {
    Example helper components
    ------------------------- */
 
-function ExampleBasicDrawer() {
+function ExampleBottomSheetDrawer() {
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
-      <Drawer isOpen={open} onClose={() => setOpen(false)} title="Basic Drawer">
-        <div className="p-4">
-          <p className="text-sm">Drawer content goes here.</p>
-          <div className="mt-4">
-            <Button onClick={() => setOpen(false)}>Close</Button>
+      <Button leftIcon={<Filter className="size-4" />} onClick={() => setOpen(true)}>
+        Open Mobile Bottom Sheet
+      </Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        align="bottom"
+        size="sm"
+        title="Filter Results"
+        description="Select criteria to narrow down search results"
+        footer={
+          <div className="grid grid-cols-2 gap-2 w-full">
+            <Button fullWidth variant="outlined" onClick={() => setOpen(false)}>
+              Reset
+            </Button>
+            <Button
+              fullWidth
+              theme="primary"
+              leftIcon={<Check className="size-4" />}
+              onClick={() => setOpen(false)}
+            >
+              Apply Filters
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-3 py-1 text-sm dark:text-gray-200">
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" defaultChecked />
+            In Stock Items Only
+          </label>
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" defaultChecked />
+            Free Express Shipping
+          </label>
+          <label className="flex items-center gap-2 font-medium cursor-pointer">
+            <input type="checkbox" className="rounded text-blue-600" />
+            Discounted Products
+          </label>
+        </div>
+      </Drawer>
+    </>
+  )
+}
+
+function ExamplePreventOutsideClickDrawer() {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <Button
+        leftIcon={<ShieldAlert className="size-4" />}
+        theme="warning"
+        onClick={() => setOpen(true)}
+      >
+        Open (Protected Outside Click)
+      </Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        closeOnOutsideClick={false}
+        title="Unsaved Form Changes"
+        description="Clicking outside or on the backdrop will not close this drawer."
+        footer={
+          <div className="flex justify-end gap-2 w-full">
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Discard
+            </Button>
+            <Button theme="primary" onClick={() => setOpen(false)}>
+              Save Draft
+            </Button>
+          </div>
+        }
+      >
+        <p className="text-sm dark:text-gray-200">
+          Try clicking outside on the background backdrop. Notice that the drawer stays open until
+          you explicitly click the Close (✕), Discard, or Save buttons.
+        </p>
+      </Drawer>
+    </>
+  )
+}
+
+function ExampleFooterDrawer() {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer with Footer</Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        align="end"
+        title="Edit Settings"
+        description="Update your notification and privacy preferences"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button theme="primary" onClick={() => setOpen(false)}>
+              Save Changes
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-3 text-sm dark:text-gray-200">
+          <p>Modify settings inside this drawer content area.</p>
+          <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-xs text-gray-600 dark:text-gray-300">
+            Changes will be applied immediately after saving.
           </div>
         </div>
       </Drawer>
@@ -168,12 +298,14 @@ function ExampleSizeDrawer({ size }: { size: DrawerSize }) {
       <Drawer
         isOpen={open}
         onClose={() => setOpen(false)}
-        size={size as any}
+        size={size}
         title={`Size: ${size}`}
         showBackButton
       >
-        <div className="p-4">
-          Content for size {size}
+        <div className="space-y-4">
+          <p className="text-sm dark:text-gray-200">
+            Drawer content formatted for width size: <strong>{size}</strong>
+          </p>
           <Button theme="secondary" onClick={() => setOpen(false)}>
             Close Drawer
           </Button>
@@ -188,125 +320,11 @@ function ExampleAlignDrawer({ align, label }: { align: DrawerAlignment; label: s
   return (
     <>
       <Button onClick={() => setOpen(true)}>{label}</Button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        align={align as any}
-        title={`${label} drawer`}
-      >
-        <div className="p-4 space-y-2">
-          <p>Aligned: {align}</p>
-          <Button theme="secondary" onClick={() => setOpen(false)}>
-            Close Drawer
-          </Button>
-        </div>
-      </Drawer>
-    </>
-  )
-}
-
-function ExampleBackdropDrawer() {
-  const [open, setOpen] = React.useState(false)
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open with backdrop</Button>
-      <Drawer isOpen={open} onClose={() => setOpen(false)} backdrop title="Backdrop Drawer">
-        <div className="p-4">
-          <p>Click outside to trigger onClose (if implemented in Drawer).</p>
-          <Button theme="secondary" onClick={() => setOpen(false)}>
-            Close Drawer
-          </Button>
-        </div>
-      </Drawer>
-    </>
-  )
-}
-
-function ExampleNoBackdropDrawer() {
-  const [open, setOpen] = React.useState(false)
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open with no backdrop</Button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        backdrop={false}
-        title="No Backdrop Drawer"
-      >
-        <div className="p-4">
-          <p>Click outside to trigger onClose (if implemented in Drawer).</p>
-          <Button theme="secondary" onClick={() => setOpen(false)}>
-            Close Drawer
-          </Button>
-        </div>
-      </Drawer>
-    </>
-  )
-}
-
-function ExampleStickyBackDrawer() {
-  const [open, setOpen] = React.useState(false)
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open sticky</Button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        title="Drawer with Back"
-        titleSticky
-        showBackButton
-      >
-        <div className="p-4">
-          <div className="space-y-4">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse
-              lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras
-              elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non,
-              mi.
-            </p>
-            <img
-              src="/react-tailwind/images/sample-image-1.jpg"
-              alt="Placeholder"
-              className="w-full h-auto"
-            />
-            <p>
-              Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam
-              nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in,
-              pretium a, enim. Pellentesque congue.
-            </p>
-            <img
-              src="/react-tailwind/images/sample-image-2.jpg"
-              alt="Placeholder"
-              className="w-full h-auto"
-            />
-          </div>
-          <div className="mt-4">
-            <p>This drawer has sticky title and a back button.</p>
-            <Button theme="secondary" onClick={() => setOpen(false)}>
-              Close Drawer
-            </Button>
-          </div>
-        </div>
-      </Drawer>
-    </>
-  )
-}
-
-function ExampleCustomClassDrawer() {
-  const [open, setOpen] = React.useState(false)
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open styled</Button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        title="Styled Drawer"
-        panelClass="rounded-2xl overflow-hidden shadow-xl"
-        contentClass="p-6 bg-gray-50"
-        titleClass="text-lg font-semibold text-slate-900"
-      >
-        <div>
-          <p>Custom styled drawer panel & content</p>
+      <Drawer isOpen={open} onClose={() => setOpen(false)} align={align} title={`${label} Drawer`}>
+        <div className="space-y-4">
+          <p className="text-sm dark:text-gray-200">
+            Drawer aligned to: <strong>{align}</strong>
+          </p>
           <Button theme="secondary" onClick={() => setOpen(false)}>
             Close Drawer
           </Button>
