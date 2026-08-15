@@ -190,6 +190,15 @@
       "required": false,
       "defaultValue": null,
       "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\"."
+    },
+    {
+      "name": "paginationContainerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": ""
     }
   ]
 }
