@@ -354,78 +354,176 @@
     "description": "BodyText component",
     "props": [
       {
+        "name": "size",
+        "type": "BodyTextSize",
+        "required": false,
+        "description": "Font size variant (`xs`, `sm`, `md`, `lg`, `xl`).",
+        "defaultValue": null
+      },
+      {
+        "name": "weight",
+        "type": "BodyTextWeight",
+        "required": false,
+        "description": "Font weight variant (`light`, `normal`, `medium`, `semibold`, `bold`).",
+        "defaultValue": null
+      },
+      {
         "name": "small",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-sm` class to the element",
+        "description": "Shortcut prop adding `text-sm` class (retained for backward compatibility).",
         "defaultValue": null
       },
       {
         "name": "strong",
         "type": "boolean",
         "required": false,
-        "description": "Add's `font-semibold` class to the element",
+        "description": "Shortcut prop adding `font-semibold` class (retained for backward compatibility).",
         "defaultValue": null
       },
       {
         "name": "muted",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-gray-500` class to the element",
+        "description": "Muted secondary text color.",
         "defaultValue": null
       },
       {
         "name": "error",
         "type": "boolean",
         "required": false,
-        "description": "Add's `text-red-500` class to the element",
+        "description": "Error red text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "success",
+        "type": "boolean",
+        "required": false,
+        "description": "Success green text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "warning",
+        "type": "boolean",
+        "required": false,
+        "description": "Warning amber text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "info",
+        "type": "boolean",
+        "required": false,
+        "description": "Info blue text color.",
         "defaultValue": null
       },
       {
         "name": "inline",
         "type": "boolean",
         "required": false,
-        "description": "Add's `inline-flex items-center gap-2` class to the element",
-        "defaultValue": null
-      },
-      {
-        "name": "as",
-        "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
-        "required": false,
-        "description": "JSX element to be render in place of `p`",
+        "description": "Renders `inline-flex items-center gap-2`.",
         "defaultValue": null
       },
       {
         "name": "invert",
         "type": "boolean",
         "required": false,
-        "description": "",
+        "description": "Inverted text color for dark backgrounds.",
+        "defaultValue": null
+      },
+      {
+        "name": "align",
+        "type": "BodyTextAlign",
+        "required": false,
+        "description": "Text alignment (`left`, `center`, `right`, `justify`).",
+        "defaultValue": null
+      },
+      {
+        "name": "truncate",
+        "type": "boolean",
+        "required": false,
+        "description": "Truncate single line with ellipsis.",
+        "defaultValue": null
+      },
+      {
+        "name": "clamp",
+        "type": "1 | 2 | 3 | 4",
+        "required": false,
+        "description": "Multi-line line clamp count (`1`, `2`, `3`, `4`).",
+        "defaultValue": null
+      },
+      {
+        "name": "as",
+        "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+        "required": false,
+        "description": "JSX element to render in place of `p` (e.g. `div`, `span`, `article`).",
         "defaultValue": null
       }
     ],
     "keywords": [
       "bodytext",
+      "size",
+      "weight",
       "small",
       "strong",
       "muted",
       "error",
+      "success",
+      "warning",
+      "info",
       "inline",
-      "as",
       "invert",
+      "align",
+      "truncate",
+      "clamp",
+      "as",
+      "bodytextsize",
+      "bodytextweight",
+      "bodytextalign",
       "keyof",
       "intrinsicelements",
       "jsxelementconstructor",
+      "font",
+      "variant",
+      "light",
+      "normal",
+      "medium",
+      "semibold",
+      "bold",
+      "shortcut",
+      "prop",
+      "adding",
       "text",
       "class",
-      "element",
-      "font",
-      "semibold",
-      "gray",
+      "retained",
+      "backward",
+      "compatibility",
+      "secondary",
+      "color",
+      "green",
+      "amber",
+      "blue",
+      "renders",
       "flex",
       "items",
       "center",
+      "inverted",
+      "dark",
+      "backgrounds",
+      "alignment",
+      "left",
+      "right",
+      "justify",
+      "single",
+      "line",
+      "with",
+      "ellipsis",
+      "multi",
+      "count",
+      "element",
       "render",
-      "place"
+      "place",
+      "span",
+      "article"
     ],
     "url": "/body-text"
   },
@@ -443,8 +541,50 @@
       {
         "name": "render",
         "type": "(item: BreadcrumbItem) => ReactNode",
-        "required": true,
-        "description": "Rendered method for breadcrumbItem,\nThis method is called for all items except the last,\nsince, last item in breadcrumb will be the current page of user\n@param item BreadcrumbItem\n@returns ReactNode",
+        "required": false,
+        "description": "Custom render method for breadcrumb items.\nIf omitted, defaults to standard <a href={item.to}>{item.text}</a>",
+        "defaultValue": null
+      },
+      {
+        "name": "separator",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Separator icon or variant ('slash' | 'chevron' | 'dot' | ReactNode). Default is 'slash'",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Size variant ('sm' | 'md' | 'lg'). Default is 'md'",
+        "defaultValue": null
+      },
+      {
+        "name": "maxItems",
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of items to display before collapsing middle items into a '...' dropdown menu",
+        "defaultValue": null
+      },
+      {
+        "name": "itemClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom class name applied to non-active ancestor links",
+        "defaultValue": null
+      },
+      {
+        "name": "activeItemClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom class name applied to the active current page item",
+        "defaultValue": null
+      },
+      {
+        "name": "separatorClass",
+        "type": "string",
+        "required": false,
+        "description": "Custom class name applied to separator elements",
         "defaultValue": null
       }
     ],
@@ -452,23 +592,45 @@
       "breadcrumb",
       "items",
       "render",
+      "separator",
+      "size",
+      "maxitems",
+      "itemclass",
+      "activeitemclass",
+      "separatorclass",
       "breadcrumbitem",
       "item",
       "reactnode",
       "list",
-      "rendered",
+      "custom",
       "method",
-      "this",
-      "called",
-      "except",
-      "last",
-      "since",
-      "will",
+      "omitted",
+      "defaults",
+      "standard",
+      "href",
+      "text",
+      "icon",
+      "variant",
+      "slash",
+      "chevron",
+      "default",
+      "maximum",
+      "display",
+      "before",
+      "collapsing",
+      "middle",
+      "into",
+      "dropdown",
+      "menu",
+      "class",
+      "name",
+      "applied",
+      "active",
+      "ancestor",
+      "links",
       "current",
       "page",
-      "user",
-      "param",
-      "returns"
+      "elements"
     ],
     "url": "/breadcrumb"
   },
@@ -498,17 +660,38 @@
         "defaultValue": "\"md\""
       },
       {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Icon displayed on the left side of button text.",
+        "defaultValue": null
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Icon displayed on the right side of button text.",
+        "defaultValue": null
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Stretches button to share 100% of container width.",
+        "defaultValue": "false"
+      },
+      {
         "name": "loading",
         "type": "boolean",
         "required": false,
-        "description": "If true, shows a Loader inside the button.\n\nWhile loading:\n- children are replaced\n- button typically becomes disabled",
+        "description": "If true, shows a Loader inside the button.",
         "defaultValue": null
       },
       {
         "name": "loadingText",
         "type": "string",
         "required": false,
-        "description": "Optional text to display next to the loader.\n\nOnly shown when `loading=true`.",
+        "description": "Optional text to display next to the loader.",
         "defaultValue": "\"\""
       },
       {
@@ -522,28 +705,28 @@
         "name": "iconOnly",
         "type": "boolean",
         "required": false,
-        "description": "Indicates that the button only contains an icon.\n\nAdjusts padding to match icon-only UX.",
+        "description": "Indicates that the button only contains an icon.",
         "defaultValue": "false"
       },
       {
         "name": "noOutlineOnFocus",
         "type": "boolean",
         "required": false,
-        "description": "Prevents outline styles on keyboard focus.\n\nUseful for icon buttons or custom focus handling.",
+        "description": "Prevents outline styles on keyboard focus.",
         "defaultValue": "false"
       },
       {
         "name": "type",
         "type": "\"button\" | \"submit\" | \"reset\"",
         "required": false,
-        "description": "The HTML button type.\nOnly valid when rendering as <button>.",
+        "description": "The HTML button type. Only valid when rendering as <button>.",
         "defaultValue": null
       },
       {
         "name": "as",
         "type": "ElementType",
         "required": false,
-        "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"button\"`, `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)",
+        "description": "The element or component to render.",
         "defaultValue": "\"button\""
       }
     ],
@@ -552,6 +735,9 @@
       "theme",
       "variant",
       "size",
+      "lefticon",
+      "righticon",
+      "fullwidth",
       "loading",
       "loadingtext",
       "rounded",
@@ -562,6 +748,7 @@
       "buttontheme",
       "buttonvariant",
       "buttonsize",
+      "reactnode",
       "submit",
       "reset",
       "elementtype",
@@ -573,22 +760,22 @@
       "padding",
       "font",
       "spacing",
+      "icon",
+      "displayed",
+      "left",
+      "side",
+      "text",
+      "right",
+      "stretches",
+      "share",
+      "container",
+      "width",
       "shows",
       "loader",
       "inside",
-      "while",
-      "children",
-      "replaced",
-      "typically",
-      "becomes",
-      "disabled",
       "optional",
-      "text",
       "display",
       "next",
-      "only",
-      "shown",
-      "when",
       "applies",
       "border",
       "radius",
@@ -597,31 +784,20 @@
       "shaped",
       "indicates",
       "that",
+      "only",
       "contains",
-      "icon",
-      "adjusts",
-      "match",
       "prevents",
       "outline",
       "styles",
       "keyboard",
       "focus",
-      "useful",
-      "buttons",
-      "custom",
-      "handling",
       "html",
       "valid",
+      "when",
       "rendering",
       "element",
       "component",
-      "render",
-      "supports",
-      "elements",
-      "components",
-      "link",
-      "nextlink",
-      "mycustombutton"
+      "render"
     ],
     "url": "/button"
   },
@@ -740,18 +916,46 @@
     "description": "Card component",
     "props": [
       {
+        "name": "variant",
+        "type": "CardVariant",
+        "required": false,
+        "description": "Surface visual variant ('outlined' | 'elevated' | 'filled' | 'ghost')",
+        "defaultValue": "'outlined'"
+      },
+      {
+        "name": "radius",
+        "type": "CardRadius",
+        "required": false,
+        "description": "Border radius variant ('none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')",
+        "defaultValue": "'xl'"
+      },
+      {
         "name": "hoverable",
         "type": "boolean",
         "required": false,
-        "description": "Make card hoverable (adds background transitions)",
+        "description": "Make card hoverable (adds subtle background transitions)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "clickable",
+        "type": "boolean",
+        "required": false,
+        "description": "Make card clickable (adds hover elevation lift & pointer cursor)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "required": false,
+        "description": "Highlights card with a primary brand ring & border",
         "defaultValue": "false"
       },
       {
         "name": "bordered",
         "type": "boolean",
         "required": false,
-        "description": "Adds border around the card",
-        "defaultValue": "true"
+        "description": "Adds border around the card. Default is true (when variant='outlined')",
+        "defaultValue": "false"
       },
       {
         "name": "compact",
@@ -771,40 +975,132 @@
         "name": "as",
         "type": "ElementType",
         "required": false,
-        "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomCard`)",
-        "defaultValue": "\"div\""
+        "description": "The element or component to render.",
+        "defaultValue": "h3"
       }
     ],
     "keywords": [
       "card",
+      "variant",
+      "radius",
       "hoverable",
+      "clickable",
+      "selected",
       "bordered",
       "compact",
       "zeropadding",
       "as",
+      "cardvariant",
+      "cardradius",
       "elementtype",
+      "surface",
+      "visual",
+      "outlined",
+      "elevated",
+      "filled",
+      "ghost",
+      "border",
+      "none",
       "make",
       "adds",
+      "subtle",
       "background",
       "transitions",
-      "border",
+      "hover",
+      "elevation",
+      "lift",
+      "pointer",
+      "cursor",
+      "highlights",
+      "with",
+      "primary",
+      "brand",
+      "ring",
       "around",
-      "remove",
       "default",
+      "when",
+      "remove",
       "padding",
       "from",
       "element",
       "component",
-      "render",
-      "supports",
-      "html",
-      "elements",
-      "components",
-      "link",
-      "nextlink",
-      "mycustomcard"
+      "render"
     ],
     "url": "/card"
+  },
+  {
+    "name": "CardContent",
+    "description": "CardContent component",
+    "props": [],
+    "keywords": ["cardcontent"],
+    "url": "/card-content"
+  },
+  {
+    "name": "CardDescription",
+    "description": "CardDescription component",
+    "props": [],
+    "keywords": ["carddescription"],
+    "url": "/card-description"
+  },
+  {
+    "name": "CardFooter",
+    "description": "CardFooter component",
+    "props": [
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "required": false,
+        "description": "",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": ["cardfooter", "bordered"],
+    "url": "/card-footer"
+  },
+  {
+    "name": "CardHeader",
+    "description": "CardHeader component",
+    "props": [
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "required": false,
+        "description": "",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": ["cardheader", "bordered"],
+    "url": "/card-header"
+  },
+  {
+    "name": "CardMedia",
+    "description": "CardMedia component",
+    "props": [
+      {
+        "name": "aspectRatio",
+        "type": "\"auto\" | \"square\" | \"video\" | \"wide\"",
+        "required": false,
+        "description": "",
+        "defaultValue": "video"
+      }
+    ],
+    "keywords": ["cardmedia", "aspectratio", "auto", "square", "video", "wide"],
+    "url": "/card-media"
+  },
+  {
+    "name": "CardTitle",
+    "description": "CardTitle component",
+    "props": [
+      {
+        "name": "as",
+        "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"span\"",
+        "required": false,
+        "description": "",
+        "defaultValue": "h3"
+      }
+    ],
+    "keywords": ["cardtitle", "as", "span"],
+    "url": "/card-title"
   },
   {
     "name": "Checkbox",
@@ -1148,6 +1444,13 @@
         "required": false,
         "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\".",
         "defaultValue": null
+      },
+      {
+        "name": "paginationContainerClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -1176,6 +1479,7 @@
       "defaultselectedrowkeys",
       "onselectionchange",
       "isrowselectable",
+      "paginationcontainerclass",
       "datatablecolumn",
       "record",
       "tpagination",
@@ -1308,10 +1612,38 @@
         "defaultValue": null
       },
       {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Action element rendered at the top-right of the header area",
+        "defaultValue": null
+      },
+      {
         "name": "details",
         "type": "Detail[]",
         "required": true,
         "description": "List of details / information to be displayed",
+        "defaultValue": null
+      },
+      {
+        "name": "columns",
+        "type": "1 | 2 | 3 | 4",
+        "required": false,
+        "description": "Number of grid columns for details layout (1, 2, 3, or 4). Default is 1",
+        "defaultValue": null
+      },
+      {
+        "name": "layout",
+        "type": "\"horizontal\" | \"vertical\"",
+        "required": false,
+        "description": "Direction of label vs value. 'horizontal' (side-by-side) or 'vertical' (stacked). Default is 'horizontal'",
+        "defaultValue": null
+      },
+      {
+        "name": "variant",
+        "type": "\"bordered\" | \"flat\" | \"card\"",
+        "required": false,
+        "description": "Visual presentation variant. Default is 'flat'",
         "defaultValue": null
       },
       {
@@ -1336,6 +1668,13 @@
         "defaultValue": null
       },
       {
+        "name": "emptyValue",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Default fallback when value is missing or empty. Default is '- -'",
+        "defaultValue": null
+      },
+      {
         "name": "titleClass",
         "type": "string",
         "required": false,
@@ -1348,33 +1687,67 @@
         "required": false,
         "description": "Classname for details section",
         "defaultValue": null
+      },
+      {
+        "name": "labelClass",
+        "type": "string",
+        "required": false,
+        "description": "Classname for label elements",
+        "defaultValue": null
       }
     ],
     "keywords": [
       "detailedinformation",
       "subtitle",
+      "action",
       "details",
+      "columns",
+      "layout",
+      "variant",
       "compact",
       "bordered",
       "divider",
+      "emptyvalue",
       "titleclass",
       "detailsclass",
+      "labelclass",
       "reactnode",
       "detail",
+      "horizontal",
+      "vertical",
+      "flat",
+      "card",
       "information",
       "section",
+      "element",
+      "rendered",
+      "right",
+      "header",
+      "area",
       "list",
       "displayed",
+      "grid",
+      "default",
+      "direction",
+      "label",
+      "value",
+      "side",
+      "stacked",
+      "visual",
+      "presentation",
       "defines",
-      "layout",
       "should",
       "have",
       "borders",
       "each",
       "item",
+      "fallback",
+      "when",
+      "missing",
+      "empty",
       "classname",
       "title",
-      "element"
+      "elements"
     ],
     "url": "/detailed-information"
   },
@@ -1408,21 +1781,28 @@
         "name": "onClose",
         "type": "() => void",
         "required": false,
-        "description": "Handler method that invokes on close attempt\n@returns void",
+        "description": "Handler method that invokes on close attempt",
         "defaultValue": "() => {}"
+      },
+      {
+        "name": "closeOnOutsideClick",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls whether clicking outside / backdrop closes the drawer.\nSet to false to prevent accidental dismissal.",
+        "defaultValue": "true"
       },
       {
         "name": "align",
         "type": "DrawerAlignment",
         "required": false,
-        "description": "Drawer alignment on the page",
+        "description": "Drawer alignment on the page ('start' | 'end' | 'top' | 'bottom' | 'center')",
         "defaultValue": "end"
       },
       {
         "name": "backdrop",
         "type": "boolean",
         "required": false,
-        "description": "Whether to add backdrop, when drawer is open",
+        "description": "Whether to add backdrop overlay",
         "defaultValue": "true"
       },
       {
@@ -1436,15 +1816,50 @@
         "name": "description",
         "type": "ReactNode",
         "required": false,
-        "description": "Drawer description section",
+        "description": "Drawer description text",
         "defaultValue": null
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional drawer footer action bar (e.g. action buttons)",
+        "defaultValue": null
+      },
+      {
+        "name": "footerSticky",
+        "type": "boolean",
+        "required": false,
+        "description": "Keeps the footer sticky at the bottom of the drawer",
+        "defaultValue": "false"
       },
       {
         "name": "size",
         "type": "DrawerSize",
         "required": false,
-        "description": "Drawer size",
+        "description": "Drawer size ('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full')",
         "defaultValue": "md"
+      },
+      {
+        "name": "showCloseButton",
+        "type": "boolean",
+        "required": false,
+        "description": "Shows top-right ✕ close button",
+        "defaultValue": "true"
+      },
+      {
+        "name": "showBackButton",
+        "type": "boolean",
+        "required": false,
+        "description": "Shows left ← back button in header",
+        "defaultValue": "false"
+      },
+      {
+        "name": "dragHandle",
+        "type": "boolean",
+        "required": false,
+        "description": "Displays top drag handle pill (especially for mobile bottom sheets)\nDefaults to true when align=\"bottom\"",
+        "defaultValue": null
       },
       {
         "name": "panelClass",
@@ -1473,29 +1888,27 @@
         "required": false,
         "description": "Drawer description class",
         "defaultValue": ""
-      },
-      {
-        "name": "showBackButton",
-        "type": "boolean",
-        "required": false,
-        "description": "Should show back button on Drawer",
-        "defaultValue": "false"
       }
     ],
     "keywords": [
       "drawer",
       "isopen",
       "onclose",
+      "closeonoutsideclick",
       "align",
       "backdrop",
       "titlesticky",
       "description",
+      "footer",
+      "footersticky",
       "size",
+      "showclosebutton",
+      "showbackbutton",
+      "draghandle",
       "panelclass",
       "contentclass",
       "titleclass",
       "descriptionclass",
-      "showbackbutton",
       "draweralignment",
       "reactnode",
       "drawersize",
@@ -1507,22 +1920,47 @@
       "invokes",
       "close",
       "attempt",
-      "returns",
+      "whether",
+      "clicking",
+      "outside",
+      "closes",
+      "prevent",
+      "accidental",
+      "dismissal",
       "alignment",
       "page",
-      "whether",
-      "when",
+      "start",
+      "bottom",
+      "center",
+      "overlay",
       "title",
       "should",
       "sticky",
-      "section",
+      "text",
+      "optional",
+      "action",
+      "buttons",
+      "keeps",
+      "full",
+      "shows",
+      "right",
+      "button",
+      "left",
+      "back",
+      "header",
+      "displays",
+      "drag",
+      "handle",
+      "pill",
+      "especially",
+      "mobile",
+      "sheets",
+      "defaults",
+      "when",
       "dialog",
       "panel",
       "class",
-      "content",
-      "show",
-      "back",
-      "button"
+      "content"
     ],
     "url": "/drawer"
   },
@@ -1530,6 +1968,13 @@
     "name": "Dropdown",
     "description": "Dropdown component",
     "props": [
+      {
+        "name": "width",
+        "type": "string",
+        "required": false,
+        "description": "Width size variant or custom width ('auto' | 'sm' | 'md' | 'lg' | 'xl' | string). Default is 'md' (w-56)",
+        "defaultValue": "md"
+      },
       {
         "name": "itemsContainerClass",
         "type": "string",
@@ -1596,6 +2041,7 @@
     ],
     "keywords": [
       "dropdown",
+      "width",
       "itemscontainerclass",
       "transition",
       "anchor",
@@ -1614,13 +2060,17 @@
       "index",
       "props",
       "dropdowntriggerbtnprops",
+      "size",
+      "variant",
+      "custom",
+      "auto",
+      "default",
       "additional",
       "classes",
       "menu",
       "container",
       "enables",
       "animations",
-      "default",
       "controls",
       "placement",
       "accepts",
@@ -1635,7 +2085,6 @@
       "displayed",
       "omitted",
       "used",
-      "custom",
       "applied",
       "each",
       "called",
@@ -1678,6 +2127,144 @@
     ],
     "keywords": ["emptystate", "description", "action", "reactnode"],
     "url": "/empty-state"
+  },
+  {
+    "name": "HeadingText",
+    "description": "HeadingText component",
+    "props": [
+      {
+        "name": "level",
+        "type": "HeadingLevel",
+        "required": false,
+        "description": "Heading HTML element level: 1 (h1), 2 (h2), 3 (h3), 4 (h4), 5 (h5), 6 (h6).\nDefaults to `1`.",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "HeadingSize",
+        "required": false,
+        "description": "Visual font size override.",
+        "defaultValue": null
+      },
+      {
+        "name": "weight",
+        "type": "HeadingWeight",
+        "required": false,
+        "description": "Font weight override.",
+        "defaultValue": null
+      },
+      {
+        "name": "muted",
+        "type": "boolean",
+        "required": false,
+        "description": "Muted secondary text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "required": false,
+        "description": "Error red text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "success",
+        "type": "boolean",
+        "required": false,
+        "description": "Success green text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "warning",
+        "type": "boolean",
+        "required": false,
+        "description": "Warning amber text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "info",
+        "type": "boolean",
+        "required": false,
+        "description": "Info blue text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "invert",
+        "type": "boolean",
+        "required": false,
+        "description": "Inverted text color for dark backgrounds.",
+        "defaultValue": null
+      },
+      {
+        "name": "align",
+        "type": "HeadingAlign",
+        "required": false,
+        "description": "Text alignment (`left`, `center`, `right`).",
+        "defaultValue": null
+      },
+      {
+        "name": "tracking",
+        "type": "\"normal\" | \"tighter\" | \"tight\" | \"wide\"",
+        "required": false,
+        "description": "Letter spacing / tracking (`tighter`, `tight`, `normal`, `wide`).",
+        "defaultValue": null
+      },
+      {
+        "name": "truncate",
+        "type": "boolean",
+        "required": false,
+        "description": "Truncate text with ellipsis.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "headingtext",
+      "level",
+      "size",
+      "weight",
+      "muted",
+      "error",
+      "success",
+      "warning",
+      "info",
+      "invert",
+      "align",
+      "tracking",
+      "truncate",
+      "headinglevel",
+      "headingsize",
+      "headingweight",
+      "headingalign",
+      "normal",
+      "tighter",
+      "tight",
+      "wide",
+      "heading",
+      "html",
+      "element",
+      "defaults",
+      "visual",
+      "font",
+      "override",
+      "secondary",
+      "text",
+      "color",
+      "green",
+      "amber",
+      "blue",
+      "inverted",
+      "dark",
+      "backgrounds",
+      "alignment",
+      "left",
+      "center",
+      "right",
+      "letter",
+      "spacing",
+      "with",
+      "ellipsis"
+    ],
+    "url": "/heading-text"
   },
   {
     "name": "SubTitle",
@@ -2012,6 +2599,93 @@
     "url": "/password-input"
   },
   {
+    "name": "QuantityStepper",
+    "description": "QuantityStepper component",
+    "props": [
+      {
+        "name": "min",
+        "type": "number",
+        "required": false,
+        "description": "Minimum allowable value",
+        "defaultValue": "0"
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "required": false,
+        "description": "Maximum allowable value",
+        "defaultValue": "99999"
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "required": false,
+        "description": "Increment/decrement step interval",
+        "defaultValue": "1"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": "Optional field label text",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "QuantityStepperSize",
+        "required": false,
+        "description": "Size variant controlling button and text dimensions",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "prefix",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional prefix icon or element",
+        "defaultValue": null
+      },
+      {
+        "name": "suffix",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional suffix element (e.g. unit label like \"kg\", \"items\")",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "quantitystepper",
+      "min",
+      "max",
+      "step",
+      "label",
+      "size",
+      "prefix",
+      "suffix",
+      "quantitysteppersize",
+      "reactnode",
+      "minimum",
+      "allowable",
+      "value",
+      "maximum",
+      "increment",
+      "decrement",
+      "interval",
+      "optional",
+      "field",
+      "text",
+      "variant",
+      "controlling",
+      "button",
+      "dimensions",
+      "icon",
+      "element",
+      "unit",
+      "like",
+      "items"
+    ],
+    "url": "/quantity-stepper"
+  },
+  {
     "name": "Radio",
     "description": "Radio component",
     "props": [
@@ -2019,8 +2693,29 @@
         "name": "type",
         "type": "\"radio\"",
         "required": false,
-        "description": "Force type to checkbox only",
+        "description": "Force type to radio only",
         "defaultValue": null
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional subtext description below radio label",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "RadioSize",
+        "required": false,
+        "description": "Size variant ('sm' | 'md' | 'lg')",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "theme",
+        "type": "RadioTheme",
+        "required": false,
+        "description": "Color accent theme ('primary' | 'success' | 'danger')",
+        "defaultValue": "\"primary\""
       },
       {
         "name": "wrapperClass",
@@ -2041,6 +2736,13 @@
         "type": "string",
         "required": false,
         "description": "Label class",
+        "defaultValue": null
+      },
+      {
+        "name": "descriptionClass",
+        "type": "string",
+        "required": false,
+        "description": "Description subtext class",
         "defaultValue": null
       },
       {
@@ -2075,17 +2777,31 @@
     "keywords": [
       "radio",
       "type",
+      "description",
+      "size",
+      "theme",
       "wrapperclass",
       "containerclass",
       "labelclass",
+      "descriptionclass",
       "error",
       "label",
       "labelwrapperclass",
       "showerrormessage",
       "reactnode",
+      "radiosize",
+      "radiotheme",
       "force",
-      "checkbox",
       "only",
+      "optional",
+      "subtext",
+      "below",
+      "variant",
+      "color",
+      "accent",
+      "primary",
+      "success",
+      "danger",
       "extra",
       "class",
       "outer",
@@ -2105,10 +2821,31 @@
     "description": "RadioGroup component",
     "props": [
       {
+        "name": "variant",
+        "type": "RadioGroupVariant",
+        "required": false,
+        "description": "Visual variant mode: 'default' or 'cards' (rich selectable card tiles)",
+        "defaultValue": "\"default\""
+      },
+      {
+        "name": "size",
+        "type": "RadioSize",
+        "required": false,
+        "description": "Size variant for all radios in the group ('sm' | 'md' | 'lg')",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "theme",
+        "type": "RadioTheme",
+        "required": false,
+        "description": "Theme accent color ('primary' | 'success' | 'danger')",
+        "defaultValue": "\"primary\""
+      },
+      {
         "name": "label",
         "type": "ReactNode",
         "required": false,
-        "description": "Optional label displayed above the radio button group.\nCan be a string or a custom ReactNode.",
+        "description": "Optional label displayed above the radio group.",
         "defaultValue": null
       },
       {
@@ -2129,28 +2866,35 @@
         "name": "labelHint",
         "type": "ReactNode",
         "required": false,
-        "description": "Optional hint content displayed beside the label.\nUseful for showing small guidance text.",
+        "description": "Optional hint content displayed beside the label.",
         "defaultValue": null
       },
       {
         "name": "containerClass",
         "type": "string",
         "required": false,
-        "description": "Custom CSS classes applied to the outer container\nthat wraps the entire radio group.",
+        "description": "Custom CSS classes applied to the outer container.",
         "defaultValue": null
       },
       {
         "name": "options",
         "type": "string[] | RadionGroupItem[]",
         "required": true,
-        "description": "The list of options to render.\n- Strings → converted to { label, value } internally\n- Objects → must follow RadionButtonGroupItem structure",
+        "description": "The list of options to render.",
+        "defaultValue": null
+      },
+      {
+        "name": "columns",
+        "type": "RadioGroupColumns",
+        "required": false,
+        "description": "Grid column layout when variant=\"cards\" or row=true (1 | 2 | 3 | 4)",
         "defaultValue": null
       },
       {
         "name": "row",
         "type": "boolean",
         "required": false,
-        "description": "Whether to display radio buttons horizontally in a row.\nDefaults to vertical column layout.",
+        "description": "Whether to display radio buttons horizontally in a row.",
         "defaultValue": null
       },
       {
@@ -2170,23 +2914,44 @@
     ],
     "keywords": [
       "radiogroup",
+      "variant",
+      "size",
+      "theme",
       "label",
       "labelclass",
       "labelwrapperclass",
       "labelhint",
       "containerclass",
       "options",
+      "columns",
       "row",
       "error",
       "showerrormessage",
+      "radiogroupvariant",
+      "radiosize",
+      "radiotheme",
       "reactnode",
       "radiongroupitem",
+      "radiogroupcolumns",
+      "visual",
+      "mode",
+      "default",
+      "cards",
+      "rich",
+      "selectable",
+      "card",
+      "tiles",
+      "radios",
+      "group",
+      "accent",
+      "color",
+      "primary",
+      "success",
+      "danger",
       "optional",
       "displayed",
       "above",
       "radio",
-      "button",
-      "group",
       "custom",
       "classes",
       "applied",
@@ -2196,61 +2961,58 @@
       "hint",
       "content",
       "beside",
-      "useful",
-      "showing",
-      "small",
-      "guidance",
-      "text",
       "outer",
-      "that",
-      "wraps",
-      "entire",
       "list",
       "render",
-      "strings",
-      "converted",
-      "value",
-      "internally",
-      "objects",
-      "must",
-      "follow",
-      "radionbuttongroupitem",
-      "structure",
+      "grid",
+      "column",
+      "layout",
+      "when",
       "whether",
       "display",
       "buttons",
-      "horizontally",
-      "defaults",
-      "vertical",
-      "column",
-      "layout"
+      "horizontally"
     ],
     "url": "/radio-group"
   },
   {
     "name": "RadioSwitch",
-    "description": "GPU-accelerated Radio Switch with perfect highlight alignment.\nSupports wrapping, icons, descriptions, and dark mode.",
+    "description": "RadioSwitch component",
     "props": [
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": "Accessible label for the group.\nUsed internally for aria-label.",
+        "description": "",
         "defaultValue": null
       },
       {
         "name": "selected",
         "type": "string",
         "required": true,
-        "description": "The currently selected value.\nMakes this a controlled component.",
+        "description": "",
         "defaultValue": null
       },
       {
         "name": "items",
         "type": "RadioSwitchItem[]",
         "required": true,
-        "description": "List of switch options.\nCan be:\n- an array of strings\n- an array of objects with label/value/description",
+        "description": "",
         "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "RadioSwitchSize",
+        "required": false,
+        "description": "",
+        "defaultValue": "md"
+      },
+      {
+        "name": "theme",
+        "type": "RadioSwitchTheme",
+        "required": false,
+        "description": "",
+        "defaultValue": "primary"
       },
       {
         "name": "switchClass",
@@ -2286,30 +3048,15 @@
       "label",
       "selected",
       "items",
+      "size",
+      "theme",
       "switchclass",
       "wrapperclass",
       "contentclass",
       "descriptionclass",
       "radioswitchitem",
-      "accessible",
-      "group",
-      "used",
-      "internally",
-      "aria",
-      "currently",
-      "value",
-      "makes",
-      "this",
-      "controlled",
-      "component",
-      "list",
-      "switch",
-      "options",
-      "array",
-      "strings",
-      "objects",
-      "with",
-      "description"
+      "radioswitchsize",
+      "radioswitchtheme"
     ],
     "url": "/radio-switch"
   },
@@ -2568,6 +3315,54 @@
       "defaults"
     ],
     "url": "/range-slider"
+  },
+  {
+    "name": "SegmentedControl",
+    "description": "SegmentedControl component",
+    "props": [
+      {
+        "name": "options",
+        "type": "SegmentedControlOption<string>[]",
+        "required": true,
+        "description": "Options list to display in the control",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "SegmentedControlSize",
+        "required": false,
+        "description": "Size variant controlling padding and text size",
+        "defaultValue": "\"md\""
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Expand control to span full container width",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": [
+      "segmentedcontrol",
+      "options",
+      "size",
+      "fullwidth",
+      "segmentedcontroloption",
+      "segmentedcontrolsize",
+      "list",
+      "display",
+      "control",
+      "variant",
+      "controlling",
+      "padding",
+      "text",
+      "expand",
+      "span",
+      "full",
+      "container",
+      "width"
+    ],
+    "url": "/segmented-control"
   },
   {
     "name": "SelectBox",
@@ -2899,6 +3694,231 @@
     "url": "/select-box"
   },
   {
+    "name": "Skeleton",
+    "description": "Skeleton component",
+    "props": [
+      {
+        "name": "variant",
+        "type": "SkeletonVariant",
+        "required": false,
+        "description": "Shape variant of the skeleton element",
+        "defaultValue": "\"text\""
+      },
+      {
+        "name": "animation",
+        "type": "SkeletonAnimation",
+        "required": false,
+        "description": "Animation style for the placeholder shimmer",
+        "defaultValue": "\"pulse\""
+      },
+      {
+        "name": "width",
+        "type": "string | number",
+        "required": false,
+        "description": "Explicit width (number in px or CSS string like \"100%\", \"200px\")",
+        "defaultValue": null
+      },
+      {
+        "name": "height",
+        "type": "string | number",
+        "required": false,
+        "description": "Explicit height (number in px or CSS string like \"1rem\", \"40px\")",
+        "defaultValue": null
+      },
+      {
+        "name": "borderRadius",
+        "type": "string | number",
+        "required": false,
+        "description": "Optional custom border radius override",
+        "defaultValue": null
+      },
+      {
+        "name": "as",
+        "type": "ElementType",
+        "required": false,
+        "description": "",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "skeleton",
+      "variant",
+      "animation",
+      "width",
+      "height",
+      "borderradius",
+      "as",
+      "skeletonvariant",
+      "skeletonanimation",
+      "elementtype",
+      "shape",
+      "element",
+      "style",
+      "placeholder",
+      "shimmer",
+      "explicit",
+      "like",
+      "200px",
+      "1rem",
+      "40px",
+      "optional",
+      "custom",
+      "border",
+      "radius",
+      "override"
+    ],
+    "url": "/skeleton"
+  },
+  {
+    "name": "StatusPill",
+    "description": "StatusPill component",
+    "props": [
+      {
+        "name": "theme",
+        "type": "StatusPillTheme",
+        "required": false,
+        "description": "Status theme tone",
+        "defaultValue": "\"secondary\""
+      },
+      {
+        "name": "size",
+        "type": "StatusPillSize",
+        "required": false,
+        "description": "Size variant controlling padding and text size",
+        "defaultValue": "\"sm\""
+      },
+      {
+        "name": "dot",
+        "type": "boolean",
+        "required": false,
+        "description": "Display indicator dot inside the status pill",
+        "defaultValue": "true"
+      },
+      {
+        "name": "pulse",
+        "type": "boolean",
+        "required": false,
+        "description": "Enable pulsing animation on indicator dot",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": [
+      "statuspill",
+      "theme",
+      "size",
+      "dot",
+      "pulse",
+      "statuspilltheme",
+      "statuspillsize",
+      "status",
+      "tone",
+      "variant",
+      "controlling",
+      "padding",
+      "text",
+      "display",
+      "indicator",
+      "inside",
+      "pill",
+      "enable",
+      "pulsing",
+      "animation"
+    ],
+    "url": "/status-pill"
+  },
+  {
+    "name": "StickyActionBar",
+    "description": "StickyActionBar component",
+    "props": [
+      {
+        "name": "summaryContent",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Primary summary content rendered on the left/start side (e.g. Total amount, item count)",
+        "defaultValue": null
+      },
+      {
+        "name": "actionsContent",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Action buttons rendered on the right/end side (e.g. Save, Cancel buttons)",
+        "defaultValue": null
+      },
+      {
+        "name": "drawerContent",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional expandable drawer content triggered when clicking summary",
+        "defaultValue": null
+      },
+      {
+        "name": "drawerTitle",
+        "type": "string",
+        "required": false,
+        "description": "Title for the expandable summary drawer",
+        "defaultValue": "\"Summary Details\""
+      },
+      {
+        "name": "position",
+        "type": "\"fixed\" | \"sticky\" | \"relative\"",
+        "required": false,
+        "description": "Positioning mode for the bar",
+        "defaultValue": "\"fixed\""
+      },
+      {
+        "name": "containerMaxWidth",
+        "type": "string",
+        "required": false,
+        "description": "Custom maximum width container class",
+        "defaultValue": "\"max-w-5xl\""
+      }
+    ],
+    "keywords": [
+      "stickyactionbar",
+      "summarycontent",
+      "actionscontent",
+      "drawercontent",
+      "drawertitle",
+      "position",
+      "containermaxwidth",
+      "reactnode",
+      "fixed",
+      "sticky",
+      "relative",
+      "primary",
+      "summary",
+      "content",
+      "rendered",
+      "left",
+      "start",
+      "side",
+      "total",
+      "amount",
+      "item",
+      "count",
+      "action",
+      "buttons",
+      "right",
+      "save",
+      "cancel",
+      "optional",
+      "expandable",
+      "drawer",
+      "triggered",
+      "when",
+      "clicking",
+      "title",
+      "positioning",
+      "mode",
+      "custom",
+      "maximum",
+      "width",
+      "container",
+      "class"
+    ],
+    "url": "/sticky-action-bar"
+  },
+  {
     "name": "EmptyTableRow",
     "description": "EmptyTableRow component",
     "props": [
@@ -3209,63 +4229,165 @@
     "description": "TextContent component",
     "props": [
       {
+        "name": "as",
+        "type": "keyof IntrinsicElements",
+        "required": false,
+        "description": "HTML element to render (e.g. `span`, `code`, `mark`, `label`, `b`, `i`, `div`, `time`).\nDefaults to `span`.",
+        "defaultValue": null
+      },
+      {
+        "name": "size",
+        "type": "TextContentSize",
+        "required": false,
+        "description": "Font size variant (`xs`, `sm`, `md`, `lg`, `xl`).",
+        "defaultValue": null
+      },
+      {
+        "name": "weight",
+        "type": "TextContentWeight",
+        "required": false,
+        "description": "Font weight variant (`light`, `normal`, `medium`, `semibold`, `bold`).",
+        "defaultValue": null
+      },
+      {
         "name": "xsmall",
         "type": "boolean",
         "required": false,
-        "description": "Render extra-small sized text (`text-xs/5`).",
+        "description": "Shortcut for extra-small text (`text-xs/5`). Retained for backward compatibility.",
         "defaultValue": null
       },
       {
         "name": "small",
         "type": "boolean",
         "required": false,
-        "description": "Render small sized text (`text-sm/6`).",
+        "description": "Shortcut for small text (`text-sm/6`). Retained for backward compatibility.",
         "defaultValue": null
       },
       {
         "name": "strong",
         "type": "boolean",
         "required": false,
-        "description": "Render bold/semibold text (`font-semibold`).",
+        "description": "Shortcut for semibold text (`font-semibold`). Retained for backward compatibility.",
         "defaultValue": null
       },
       {
         "name": "muted",
         "type": "boolean",
         "required": false,
-        "description": "Apply muted gray tone (commonly used for secondary text).",
+        "description": "Apply muted gray tone.",
         "defaultValue": null
       },
       {
         "name": "error",
         "type": "boolean",
         "required": false,
-        "description": "Apply error color styling (`text-red-500`).",
+        "description": "Apply error red text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "success",
+        "type": "boolean",
+        "required": false,
+        "description": "Apply success green text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "warning",
+        "type": "boolean",
+        "required": false,
+        "description": "Apply warning amber text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "info",
+        "type": "boolean",
+        "required": false,
+        "description": "Apply info blue text color.",
+        "defaultValue": null
+      },
+      {
+        "name": "invert",
+        "type": "boolean",
+        "required": false,
+        "description": "Inverted text color for dark background contexts.",
+        "defaultValue": null
+      },
+      {
+        "name": "monospace",
+        "type": "boolean",
+        "required": false,
+        "description": "Monospace font family (`font-mono`) for code snippets or numbers.",
+        "defaultValue": null
+      },
+      {
+        "name": "truncate",
+        "type": "boolean",
+        "required": false,
+        "description": "Truncate single line text with ellipsis.",
         "defaultValue": null
       }
     ],
     "keywords": [
       "textcontent",
+      "as",
+      "size",
+      "weight",
       "xsmall",
       "small",
       "strong",
       "muted",
       "error",
+      "success",
+      "warning",
+      "info",
+      "invert",
+      "monospace",
+      "truncate",
+      "keyof",
+      "intrinsicelements",
+      "textcontentsize",
+      "textcontentweight",
+      "html",
+      "element",
       "render",
-      "extra",
-      "sized",
-      "text",
-      "bold",
-      "semibold",
+      "span",
+      "code",
+      "mark",
+      "label",
+      "time",
+      "defaults",
       "font",
+      "variant",
+      "light",
+      "normal",
+      "medium",
+      "semibold",
+      "bold",
+      "shortcut",
+      "extra",
+      "text",
+      "retained",
+      "backward",
+      "compatibility",
       "apply",
       "gray",
       "tone",
-      "commonly",
-      "used",
-      "secondary",
       "color",
-      "styling"
+      "green",
+      "amber",
+      "blue",
+      "inverted",
+      "dark",
+      "background",
+      "contexts",
+      "family",
+      "mono",
+      "snippets",
+      "numbers",
+      "single",
+      "line",
+      "with",
+      "ellipsis"
     ],
     "url": "/text-content"
   },
@@ -3369,23 +4491,65 @@
     "props": [
       {
         "name": "message",
-        "type": "string",
+        "type": "ReactNode",
         "required": true,
-        "description": "The message text displayed inside the toast.",
+        "description": "Main text message displayed inside the toast.",
         "defaultValue": null
       },
       {
         "name": "type",
-        "type": "\"success\" | \"error\" | \"info\" | \"warning\"",
+        "type": "ToastType",
         "required": true,
-        "description": "Visual style of the toast based on its purpose.\n- `success` — positive confirmations\n- `error` — failures or critical issues\n- `info` — general helpful information\n- `warning` — caution or attention required",
+        "description": "Visual intent style of the toast.",
         "defaultValue": null
+      },
+      {
+        "name": "variant",
+        "type": "ToastVariant",
+        "required": false,
+        "description": "Container variant style.\nDefaults to `\"accent\"`.",
+        "defaultValue": "accent"
+      },
+      {
+        "name": "action",
+        "type": "{ label: string; onClick: () => void; }",
+        "required": false,
+        "description": "Optional action button.",
+        "defaultValue": null
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional custom icon override slot.",
+        "defaultValue": null
+      },
+      {
+        "name": "showProgressBar",
+        "type": "boolean",
+        "required": false,
+        "description": "Controls whether an animated auto-close progress bar is displayed.\nDefaults to `true` when autoClose is enabled.",
+        "defaultValue": "true"
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "required": false,
+        "description": "Total duration in milliseconds for progress bar countdown.",
+        "defaultValue": "4000"
+      },
+      {
+        "name": "isPaused",
+        "type": "boolean",
+        "required": false,
+        "description": "State indicating whether auto-close countdown is paused (e.g. on hover).",
+        "defaultValue": "false"
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": "Triggers removal of the toast.\nManaged internally by the ToastProvider.",
+        "description": "Triggers removal of the toast.",
         "defaultValue": null
       },
       {
@@ -3400,35 +4564,52 @@
       "toast",
       "message",
       "type",
+      "variant",
+      "action",
+      "icon",
+      "showprogressbar",
+      "duration",
+      "ispaused",
       "onclose",
       "istop",
-      "success",
-      "error",
-      "info",
-      "warning",
+      "reactnode",
+      "toasttype",
+      "toastvariant",
+      "label",
+      "onclick",
+      "main",
       "text",
       "displayed",
       "inside",
       "visual",
+      "intent",
       "style",
-      "based",
-      "purpose",
-      "positive",
-      "confirmations",
-      "failures",
-      "critical",
-      "issues",
-      "general",
-      "helpful",
-      "information",
-      "caution",
-      "attention",
-      "required",
+      "container",
+      "defaults",
+      "accent",
+      "optional",
+      "button",
+      "custom",
+      "override",
+      "slot",
+      "controls",
+      "whether",
+      "animated",
+      "auto",
+      "close",
+      "progress",
+      "when",
+      "autoclose",
+      "enabled",
+      "total",
+      "milliseconds",
+      "countdown",
+      "state",
+      "indicating",
+      "paused",
+      "hover",
       "triggers",
-      "removal",
-      "managed",
-      "internally",
-      "toastprovider"
+      "removal"
     ],
     "url": "/toast"
   },
@@ -3440,11 +4621,33 @@
         "name": "placement",
         "type": "ToastPlacement",
         "required": false,
-        "description": "",
-        "defaultValue": "top-center"
+        "description": "Position on screen where toasts appear.\nDefaults to `\"top-right\"`.",
+        "defaultValue": "top-right"
+      },
+      {
+        "name": "maxToasts",
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of toasts visible simultaneously.\nDefaults to `5`.",
+        "defaultValue": "5"
       }
     ],
-    "keywords": ["toastprovider", "placement", "toastplacement"],
+    "keywords": [
+      "toastprovider",
+      "placement",
+      "maxtoasts",
+      "toastplacement",
+      "position",
+      "screen",
+      "where",
+      "toasts",
+      "appear",
+      "defaults",
+      "right",
+      "maximum",
+      "visible",
+      "simultaneously"
+    ],
     "url": "/toast-provider"
   },
   {
@@ -3597,6 +4800,13 @@
         "required": false,
         "description": "Marks specific rows as ineligible for selection — their checkbox is\ndisabled and they're excluded from \"select all\".",
         "defaultValue": null
+      },
+      {
+        "name": "paginationContainerClass",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -3622,6 +4832,7 @@
       "defaultselectedrowkeys",
       "onselectionchange",
       "isrowselectable",
+      "paginationcontainerclass",
       "datatablecolumn",
       "record",
       "reactnode",
