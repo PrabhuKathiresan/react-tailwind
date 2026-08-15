@@ -1,88 +1,48 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { PasswordInput, PASSWORD_TYPE, PASSWORD_PLACEHOLDER } from './PasswordInput'
-
-// --- Mock Input to simplify testing ---
-jest.mock('../Input', () => ({
-  Input: ({ rightGroup, ...props }: any) => (
-    <div>
-      <input data-testid="password-input" {...props} />
-      <div data-testid="right-group">{rightGroup}</div>
-    </div>
-  ),
-}))
-
-// Mock Button so we can interact easily
-jest.mock('../Button', () => ({
-  Button: ({ children, ...props }: any) => (
-    <button data-testid="toggle-btn" {...props}>
-      {children}
-    </button>
-  ),
-}))
+import { PasswordInput, evaluatePasswordStrength } from './PasswordInput'
 
 describe('PasswordInput', () => {
-  test('renders an input with default password type', () => {
-    render(<PasswordInput />)
+  test('evaluates password strength correctly', () => {
+    expect(evaluatePasswordStrength('123')).toEqual({
+      score: 1,
+      label: 'Weak',
+      colorClass: 'bg-red-500',
+      percent: 25,
+    })
 
-    const input = screen.getByTestId('password-input')
-    expect(input).toHaveAttribute('type', PASSWORD_TYPE)
+    expect(evaluatePasswordStrength('P@ssw0rd123!')).toEqual({
+      score: 4,
+      label: 'Strong',
+      colorClass: 'bg-emerald-500',
+      percent: 100,
+    })
   })
 
-  test('uses fixed password placeholder', () => {
-    render(<PasswordInput />)
+  test('renders password input with show/hide toggle button', () => {
+    render(<PasswordInput id="pwd" name="password" />)
 
-    const input = screen.getByTestId('password-input')
-    expect(input).toHaveAttribute('placeholder', PASSWORD_PLACEHOLDER)
+    const toggleBtn = screen.getByLabelText('Show password')
+    expect(toggleBtn).toBeInTheDocument()
+
+    const input = document.getElementById('pwd') as HTMLInputElement
+    expect(input.type).toBe('password')
+
+    fireEvent.click(toggleBtn)
+    expect(input.type).toBe('text')
   })
 
-  test('toggles between password and text type on button click', () => {
-    render(<PasswordInput />)
+  test('forwards ref correctly to HTMLInputElement', () => {
+    const ref = createRef<HTMLInputElement>()
+    render(<PasswordInput ref={ref} />)
 
-    const input = screen.getByTestId('password-input')
-    const toggle = screen.getByTestId('toggle-btn')
-
-    // Initially password
-    expect(input).toHaveAttribute('type', PASSWORD_TYPE)
-
-    // Click once → show password
-    fireEvent.click(toggle)
-    expect(input).toHaveAttribute('type', 'text')
-
-    // Click again → hide password
-    fireEvent.click(toggle)
-    expect(input).toHaveAttribute('type', PASSWORD_TYPE)
+    expect(ref.current).toBeInstanceOf(HTMLInputElement)
   })
 
-  test('renders eye icon when hidden and eye-off icon when visible', () => {
-    render(<PasswordInput />)
+  test('renders password strength indicator when showStrength=true and value exists', () => {
+    render(<PasswordInput showStrength defaultValue="SecretP@ss123" />)
 
-    const toggle = screen.getByTestId('toggle-btn')
-
-    // Initially eye icon is shown
-    expect(toggle.innerHTML).toContain('svg')
-
-    // After click → eye-off icon is shown
-    fireEvent.click(toggle)
-    expect(toggle.innerHTML).toContain('svg')
-  })
-
-  test('forwards other input props', () => {
-    render(<PasswordInput id="pwd" name="password" className="custom" />)
-
-    const input = screen.getByTestId('password-input')
-
-    expect(input).toHaveAttribute('id', 'pwd')
-    expect(input).toHaveAttribute('name', 'password')
-    expect(input).toHaveClass('custom')
-  })
-
-  test('always enforces password type and fixed placeholder regardless of state', () => {
-    render(<PasswordInput />)
-
-    const input = screen.getByTestId('password-input')
-
-    expect(input).toHaveAttribute('type', PASSWORD_TYPE)
-    expect(input).toHaveAttribute('placeholder', PASSWORD_PLACEHOLDER)
+    expect(screen.getByText('Password Strength')).toBeInTheDocument()
+    expect(screen.getByText('Strong')).toBeInTheDocument()
   })
 })
