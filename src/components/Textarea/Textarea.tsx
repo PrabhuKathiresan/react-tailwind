@@ -1,9 +1,38 @@
-import { forwardRef } from 'react'
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from 'react'
 import { Label } from '../Label'
 import { isEmpty } from '../../utils/is-empty'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
-import type { TextareaProps } from './Textarea.types'
+import type { TextareaProps, TextareaResize, TextareaSize } from './Textarea.types'
+
+const sizeClasses: Record<TextareaSize, { textarea: string; text: string }> = {
+  sm: {
+    textarea: 'px-2.5 py-1.5 text-xs leading-5 min-h-[60px]',
+    text: 'text-xs',
+  },
+  md: {
+    textarea: 'px-3.5 py-2 text-sm leading-6 min-h-[80px]',
+    text: 'text-sm',
+  },
+  lg: {
+    textarea: 'px-4 py-2.5 text-base leading-7 min-h-[100px]',
+    text: 'text-base',
+  },
+}
+
+const resizeClasses: Record<TextareaResize, string> = {
+  none: 'resize-none',
+  vertical: 'resize-y',
+  horizontal: 'resize-x',
+  both: 'resize',
+}
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
   const {
@@ -19,44 +48,86 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     showErrorMessage = true,
     rightGroup = null,
     leftGroup = null,
+    size = 'md',
+    autoSize = false,
+    showCount = false,
+    helperText,
+    resize = 'vertical',
+    value,
+    defaultValue,
+    onChange,
+    maxLength,
     ...inputProps
   } = props
+
+  const innerRef = useRef<HTMLTextAreaElement>(null)
+  useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement)
+
+  const [uncontrolledValue, setUncontrolledValue] = useState<string>(String(defaultValue ?? ''))
+
+  const isControlled = value !== undefined
+  const currentVal = isControlled ? String(value ?? '') : uncontrolledValue
+  const charLength = currentVal.length
+
+  // Handle Auto-Resize behavior
+  useEffect(() => {
+    if (autoSize && innerRef.current) {
+      innerRef.current.style.height = 'auto'
+      innerRef.current.style.height = `${innerRef.current.scrollHeight}px`
+    }
+  }, [autoSize, currentVal])
+
+  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (!isControlled) {
+      setUncontrolledValue(e.target.value)
+    }
+    onChange?.(e)
+  }
+
   const hasError = !isEmpty(error)
   const hasRightGroup = rightGroup != null && rightGroup !== undefined
   const hasLeftGroup = leftGroup != null && leftGroup !== undefined
+  const currentSize = sizeClasses[size] || sizeClasses.md
 
   return (
     <div className={buildClassName('group', hasError && 'has-error', containerClass)}>
       {label && (
         <div
-          className={buildClassName('flex items-center justify-between mb-2', labelWrapperClass)}
+          className={buildClassName('flex items-center justify-between mb-1.5', labelWrapperClass)}
         >
           <Label className={labelClass} htmlFor={id}>
             {label}
           </Label>
-          <TextContent xsmall>{labelHint}</TextContent>
+          {labelHint && <TextContent xsmall>{labelHint}</TextContent>}
         </div>
       )}
       <div className="relative">
         {hasLeftGroup && (
-          <span className="absolute top-0 h-full flex items-center justify-center w-10">
+          <span className="absolute top-2.5 left-3 flex items-center justify-center text-gray-400 dark:text-gray-500">
             {leftGroup}
           </span>
         )}
         <textarea
-          ref={ref}
+          ref={innerRef}
           autoComplete="off"
           {...inputProps}
+          value={value}
+          defaultValue={defaultValue}
+          onChange={handleTextareaChange}
+          maxLength={maxLength}
           name={name}
           id={id}
           className={buildClassName(
-            'transition-all',
-            'block w-full rounded-lg bg-white px-3.5 py-2 text-base sm:text-sm/6',
-            'text-gray-900 outline dark:outline outline-1 -outline-offset-1',
-            'outline-gray-300 dark:outline-gray-600',
-            'focus:outline-blue-600 dark:focus:outline-blue-600 focus:outline-2 focus:-outline-offset-2',
-            'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 placeholder:text-gray-400 dark:text-white',
-            'invalid:group-[.has-error]:outline-red-500',
+            'transition-all duration-150',
+            'block w-full rounded-lg bg-white',
+            currentSize.textarea,
+            autoSize ? 'resize-none overflow-hidden' : resizeClasses[resize],
+            'text-gray-900 outline outline-1 -outline-offset-1',
+            hasError
+              ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
+              : 'outline-gray-300 dark:outline-gray-600',
+            'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
+            'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:text-gray-400 dark:text-white',
             'disabled:pointer-events-none disabled:bg-gray-100 disabled:outline-gray-200',
             'dark:disabled:bg-gray-800 dark:disabled:text-gray-600 dark:disabled:placeholder-gray-600 dark:disabled:outline-gray-700',
             hasRightGroup ? 'pe-10' : '',
@@ -65,18 +136,44 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
           )}
         />
         {hasRightGroup && (
-          <span className="absolute end-0.75 top-0 h-full flex items-center justify-center">
+          <span className="absolute end-3 top-2.5 flex items-center justify-center text-gray-400 dark:text-gray-500">
             {rightGroup}
           </span>
         )}
       </div>
-      {showErrorMessage && error && (
-        <div className="mt-1">
-          <TextContent error small>
-            {error}
-          </TextContent>
+
+      {/* Footer Row: Error / Helper Text & Live Character Count */}
+      {(showErrorMessage && error) || helperText || showCount ? (
+        <div className="mt-1.5 flex items-center justify-between gap-2 text-xs">
+          <div className="min-w-0 flex-1">
+            {showErrorMessage && error ? (
+              <TextContent error small>
+                {error}
+              </TextContent>
+            ) : helperText ? (
+              <TextContent muted small>
+                {helperText}
+              </TextContent>
+            ) : null}
+          </div>
+
+          {showCount && (
+            <span
+              className={buildClassName(
+                'text-[11px] font-medium shrink-0 ml-auto',
+                maxLength && charLength >= maxLength
+                  ? 'text-red-500 font-semibold'
+                  : 'text-gray-400 dark:text-gray-500',
+              )}
+            >
+              {charLength}
+              {maxLength ? ` / ${maxLength}` : ''}
+            </span>
+          )}
         </div>
-      )}
+      ) : null}
     </div>
   )
 })
+
+Textarea.displayName = 'Textarea'
