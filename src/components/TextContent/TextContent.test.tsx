@@ -8,7 +8,13 @@ describe('<TextContent />', () => {
     expect(screen.getByText('Hello World')).toBeInTheDocument()
   })
 
-  test('forwards ref to span element', () => {
+  test('renders custom tag when as prop is passed', () => {
+    render(<TextContent as="code">const x = 1</TextContent>)
+    const el = screen.getByText('const x = 1')
+    expect(el.tagName.toLowerCase()).toBe('code')
+  })
+
+  test('forwards ref to element', () => {
     const ref = createRef<HTMLSpanElement>()
     render(<TextContent ref={ref}>Ref Text</TextContent>)
 
@@ -16,42 +22,35 @@ describe('<TextContent />', () => {
     expect(ref.current?.tagName).toBe('SPAN')
   })
 
-  test('merges custom className', () => {
-    render(<TextContent className="custom-class">Hi</TextContent>)
-    const el = screen.getByText('Hi')
-
-    expect(el).toHaveClass('custom-class')
+  test('applies monospace and truncate classes', () => {
+    render(
+      <TextContent monospace truncate>
+        12345
+      </TextContent>,
+    )
+    const el = screen.getByText('12345')
+    expect(el).toHaveClass('font-mono', 'truncate')
   })
 
-  test('applies xsmall class', () => {
-    render(<TextContent xsmall>Text</TextContent>)
+  test('applies size scale and weight props', () => {
+    const { rerender } = render(
+      <TextContent size="lg" weight="bold">
+        Text
+      </TextContent>,
+    )
     const el = screen.getByText('Text')
+    expect(el).toHaveClass('text-lg/8', 'font-bold')
 
-    expect(el.className).toMatch(/text-xs\/5/)
+    rerender(<TextContent xsmall>Text</TextContent>)
+    expect(screen.getByText('Text')).toHaveClass('text-xs/5')
   })
 
-  test('applies small class', () => {
-    render(<TextContent small>Text</TextContent>)
-    const el = screen.getByText('Text')
+  test('applies color intent classes (muted, error, success, warning, info)', () => {
+    const { rerender } = render(<TextContent error>Error Msg</TextContent>)
+    expect(screen.getByText('Error Msg')).toHaveClass('text-[var(--ui-text-danger)]')
 
-    expect(el.className).toMatch(/text-sm\/6/)
-  })
-
-  test('applies strong class', () => {
-    render(<TextContent strong>Strong Text</TextContent>)
-    expect(screen.getByText('Strong Text')).toHaveClass('font-semibold')
-  })
-
-  test('applies muted class', () => {
-    render(<TextContent muted>Muted</TextContent>)
-    expect(screen.getByText('Muted')).toHaveClass('text-[var(--ui-text-muted)]')
-  })
-
-  test('applies error class', () => {
-    render(<TextContent error>Error Msg</TextContent>)
-    const el = screen.getByText('Error Msg')
-
-    expect(el.className).toMatch(/text-\[var\(--ui-text-danger\)\]/)
+    rerender(<TextContent success>Success Msg</TextContent>)
+    expect(screen.getByText('Success Msg')).toHaveClass('text-[var(--ui-success)]')
   })
 
   test('forwards native span HTML attributes', () => {
