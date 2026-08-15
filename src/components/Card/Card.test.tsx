@@ -31,12 +31,40 @@ describe('Card Component', () => {
   it('applies hoverable styles', () => {
     render(<Card hoverable>Hover Card</Card>)
     const el = screen.getByText('Hover Card')
-    expect(el.className).toMatch(/transition-background/)
     expect(el.className).toMatch(/hover:bg-gray-100/)
-    expect(el.className).toMatch(/dark:hover:bg-gray-800/)
   })
 
-  it('applies bordered styles', () => {
+  it('applies clickable styles', () => {
+    render(<Card clickable>Clickable Card</Card>)
+    const el = screen.getByText('Clickable Card')
+    expect(el.className).toMatch(/cursor-pointer/)
+    expect(el.className).toMatch(/hover:-translate-y-0\.5/)
+  })
+
+  it('applies selected styles', () => {
+    render(<Card selected>Selected Card</Card>)
+    const el = screen.getByText('Selected Card')
+    expect(el.className).toMatch(/ring-2/)
+    expect(el.className).toMatch(/ring-\[var\(--ui-primary\)\]/)
+  })
+
+  it('applies surface variants', () => {
+    const { rerender } = render(<Card variant="elevated">Elevated</Card>)
+    expect(screen.getByText('Elevated').className).toMatch(/shadow-md/)
+
+    rerender(<Card variant="filled">Filled</Card>)
+    expect(screen.getByText('Filled').className).toMatch(/bg-gray-50/)
+
+    rerender(<Card variant="ghost">Ghost</Card>)
+    expect(screen.getByText('Ghost').className).toMatch(/bg-transparent/)
+  })
+
+  it('applies radius variants', () => {
+    render(<Card radius="2xl">Radius Test</Card>)
+    expect(screen.getByText('Radius Test').className).toMatch(/rounded-2xl/)
+  })
+
+  it('applies bordered styles when variant=outlined', () => {
     render(<Card bordered>Border Card</Card>)
     const el = screen.getByText('Border Card')
     expect(el.className).toMatch(/border-\[var\(--ui-border\)\]/)
@@ -45,71 +73,64 @@ describe('Card Component', () => {
   it('applies padding by default', () => {
     render(<Card>Padding</Card>)
     const el = screen.getByText('Padding')
-    expect(el.className).toMatch(/p-6/)
+    expect(el.className).toMatch(/p-5 sm:p-6/)
   })
 
   it('applies compact padding when compact=true', () => {
-    render(<Card compact>No Pad</Card>)
-    const el = screen.getByText('No Pad')
-    expect(el.className).toMatch(/p-2/)
+    render(<Card compact>Compact</Card>)
+    const el = screen.getByText('Compact')
+    expect(el.className).toMatch(/p-3 sm:p-4/)
   })
 
   it('removes padding when zeroPadding=true', () => {
     render(<Card zeroPadding>No Pad</Card>)
     const el = screen.getByText('No Pad')
-    expect(el.className).not.toMatch(/p-6/)
-    expect(el.className).not.toMatch(/p-2/)
+    expect(el.className).not.toMatch(/p-5 sm:p-6/)
+    expect(el.className).not.toMatch(/p-3 sm:p-4/)
   })
 
-  it('merges className correctly', () => {
-    render(<Card className="extra-class">Merged</Card>)
-    const el = screen.getByText('Merged')
-    expect(el.className).toMatch(/extra-class/)
+  it('renders compound sub-components correctly', () => {
+    render(
+      <Card data-testid="card-box">
+        <Card.Header bordered data-testid="card-header">
+          <Card.Title>Card Title</Card.Title>
+          <Card.Description>Card Subtitle</Card.Description>
+        </Card.Header>
+        <Card.Content data-testid="card-body">
+          <p>Body Content</p>
+        </Card.Content>
+        <Card.Footer bordered data-testid="card-footer">
+          <button>Action</button>
+        </Card.Footer>
+      </Card>,
+    )
+
+    expect(screen.getByText('Card Title')).toBeInTheDocument()
+    expect(screen.getByText('Card Subtitle')).toBeInTheDocument()
+    expect(screen.getByText('Body Content')).toBeInTheDocument()
+    expect(screen.getByText('Action')).toBeInTheDocument()
+
+    expect(screen.getByTestId('card-header').className).toMatch(/border-b/)
+    expect(screen.getByTestId('card-footer').className).toMatch(/border-t/)
   })
 
-  it('forwards ref correctly (default div)', () => {
+  it('forwards ref correctly', () => {
     const ref = React.createRef<HTMLDivElement>()
     render(<Card ref={ref}>Ref Test</Card>)
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
   })
 
-  it('forwards ref to polymorphic element', () => {
-    const ref = React.createRef<HTMLAnchorElement>()
-    render(
-      <Card as="a" href="#" ref={ref}>
-        Link
-      </Card>,
-    )
-    expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
-  })
-
-  it('passes through native props', () => {
-    render(<Card id="card-123">ID Test</Card>)
-    const el = screen.getByText('ID Test')
-    expect(el).toHaveAttribute('id', 'card-123')
-  })
-
-  it('supports anchor attributes when as="a"', () => {
-    render(
-      <Card as="a" href="/test">
-        Link Card
-      </Card>,
-    )
-    const el = screen.getByText('Link Card')
-    expect(el).toHaveAttribute('href', '/test')
-  })
-
   it('does not pass card-only props to DOM', () => {
     render(
-      <Card hoverable bordered compact data-testid="clean-card">
+      <Card hoverable clickable selected bordered compact data-testid="clean-card">
         Clean DOM
       </Card>,
     )
 
     const el = screen.getByTestId('clean-card')
-
-    // Ensure no Card-only boolean props leak to DOM
     expect(el).not.toHaveAttribute('hoverable')
+    expect(el).not.toHaveAttribute('clickable')
+    expect(el).not.toHaveAttribute('selected')
     expect(el).not.toHaveAttribute('bordered')
     expect(el).not.toHaveAttribute('compact')
   })

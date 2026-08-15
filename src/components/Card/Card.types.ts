@@ -1,16 +1,49 @@
-import type { ComponentPropsWithoutRef, ElementType, JSX } from 'react'
+import type {
+  ComponentPropsWithoutRef,
+  ElementType,
+  HTMLAttributes,
+  ImgHTMLAttributes,
+  JSX,
+  FC,
+} from 'react'
 import { PolymorphicRef } from '../common-type'
+
+export type CardVariant = 'outlined' | 'elevated' | 'filled' | 'ghost'
+export type CardRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 export type CardBaseProps = {
   /**
-   * Make card hoverable (adds background transitions)
+   * Surface visual variant ('outlined' | 'elevated' | 'filled' | 'ghost')
+   * @default 'outlined'
+   */
+  variant?: CardVariant
+
+  /**
+   * Border radius variant ('none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')
+   * @default 'xl'
+   */
+  radius?: CardRadius
+
+  /**
+   * Make card hoverable (adds subtle background transitions)
    * @default false
    */
   hoverable?: boolean
 
   /**
-   * Adds border around the card
-   * @default true
+   * Make card clickable (adds hover elevation lift & pointer cursor)
+   * @default false
+   */
+  clickable?: boolean
+
+  /**
+   * Highlights card with a primary brand ring & border
+   * @default false
+   */
+  selected?: boolean
+
+  /**
+   * Adds border around the card. Default is true (when variant='outlined')
    */
   bordered?: boolean
 
@@ -27,56 +60,44 @@ export type CardBaseProps = {
   zeroPadding?: boolean
 }
 
-/**
- * Utility: Builds a polymorphic prop type.
- *
- * This allows the component to accept **any HTML element** or **any custom React component**
- * via the `as` prop while automatically inheriting the correct props.
- *
- * Example:
- * ```tsx
- * <Card as="a" href="/home" />
- * <Card as={MyLink} to="/home" customProp />
- * ```
- */
 export type PolymorphicCardProps<C extends ElementType, Props = {}> = Props & {
   /**
    * The element or component to render.
-   *
-   * Supports:
-   * - HTML elements (e.g., `"a"`, `"div"`)
-   * - React components (e.g., `Link`, `NextLink`, `MyCustomCard`)
-   *
    * @default "div"
    */
   as?: C
 } & Omit<ComponentPropsWithoutRef<C>, keyof Props | 'as'>
 
-/**
- * Complete Card props,
- * supporting **polymorphic rendering** via the `as` prop.
- *
- * Examples:
- *
- * Render as a native card:
- * ```tsx
- * <Card>Card content</Card>
- * ```
- *
- * Render as a link:
- * ```tsx
- * <Card as="a" href="/pricing" target="_blank">Learn More</Card>
- * ```
- *
- * Render as a custom component:
- * ```tsx
- * <Card as={MyCustomComponent} customProp="123">Custom card content</Card>
- * ```
- */
 export type CardProps<C extends ElementType = 'div'> = PolymorphicCardProps<C, CardBaseProps>
+
+export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  bordered?: boolean
+}
+
+export interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+}
+
+export interface CardDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {}
+
+export interface CardContentProps extends HTMLAttributes<HTMLDivElement> {}
+
+export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
+  bordered?: boolean
+}
+
+export interface CardMediaProps extends ImgHTMLAttributes<HTMLImageElement> {
+  aspectRatio?: 'auto' | 'square' | 'video' | 'wide'
+}
 
 export interface CardComponent {
   <C extends ElementType = 'div'>(props: CardProps<C> & { ref?: PolymorphicRef<C> }): JSX.Element
-
+  Header: FC<CardHeaderProps>
+  Title: FC<CardTitleProps>
+  Description: FC<CardDescriptionProps>
+  Content: FC<CardContentProps>
+  Body: FC<CardContentProps>
+  Footer: FC<CardFooterProps>
+  Media: FC<CardMediaProps>
   displayName?: string
 }

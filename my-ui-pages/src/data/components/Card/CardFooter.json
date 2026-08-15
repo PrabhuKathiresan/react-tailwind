@@ -1,0 +1,15 @@
+{
+  "name": "CardFooter",
+  "description": "",
+  "props": [
+    {
+      "name": "bordered",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": ""
+    }
+  ]
+}
