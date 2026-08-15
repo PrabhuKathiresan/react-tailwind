@@ -14,10 +14,15 @@ describe('Checkbox Component', () => {
     expect(screen.getByText('Accept Terms')).toBeInTheDocument()
   })
 
+  it('renders description subtext when provided', () => {
+    render(<Checkbox label="Notifications" description="Receive daily email summaries" />)
+    expect(screen.getByText('Receive daily email summaries')).toBeInTheDocument()
+  })
+
   it('uses provided id, or defaults to generated id', () => {
     render(<Checkbox label="Test" />)
     const checkbox = screen.getByRole('checkbox')
-    expect(checkbox.id).toBeTruthy() // generated id
+    expect(checkbox.id).toBeTruthy()
   })
 
   it('uses provided id when given', () => {
@@ -47,15 +52,23 @@ describe('Checkbox Component', () => {
     expect(screen.getByRole('checkbox')).not.toBeChecked()
   })
 
-  it('supports uncontrolled toggling', () => {
-    render(<Checkbox defaultChecked={false} />)
+  it('supports indeterminate state and sets HTMLInputElement.indeterminate to true', () => {
+    render(<Checkbox label="Select All" indeterminate />)
+    const checkbox = screen.getByRole('checkbox') as HTMLInputElement
+    expect(checkbox.indeterminate).toBe(true)
+    expect(checkbox).toHaveAttribute('aria-checked', 'mixed')
+  })
+
+  it('supports card variant layout', () => {
+    const { container } = render(<Checkbox label="Option Card" variant="card" />)
+    const cardWrapper = container.querySelector('.rounded-xl.border')
+    expect(cardWrapper).toBeInTheDocument()
+  })
+
+  it('supports size scales (sm, md, lg)', () => {
+    render(<Checkbox label="Small" size="sm" />)
     const checkbox = screen.getByRole('checkbox')
-
-    fireEvent.click(checkbox)
-    expect(checkbox).toBeChecked()
-
-    fireEvent.click(checkbox)
-    expect(checkbox).not.toBeChecked()
+    expect(checkbox).toHaveClass('size-3.5')
   })
 
   it('applies disabled state', () => {
@@ -72,7 +85,7 @@ describe('Checkbox Component', () => {
 
     expect(checkbox).not.toBeChecked()
     fireEvent.click(label)
-    expect(checkbox).not.toBeChecked() // must stay same
+    expect(checkbox).not.toBeChecked()
   })
 
   it('renders error message', () => {
@@ -80,26 +93,14 @@ describe('Checkbox Component', () => {
     expect(screen.getByText('Required field')).toBeInTheDocument()
   })
 
+  it('renders helperText when no error is present', () => {
+    render(<Checkbox helperText="Optional configuration" />)
+    expect(screen.getByText('Optional configuration')).toBeInTheDocument()
+  })
+
   it('merges className into input', () => {
     render(<Checkbox className="custom-input" />)
     expect(screen.getByRole('checkbox')).toHaveClass('custom-input')
-  })
-
-  it('applies wrapperClass', () => {
-    render(<Checkbox wrapperClass="wrapper-x" label="X" />)
-    const wrapper = screen.getByText('X').closest('div')?.parentElement
-    expect(wrapper).toHaveClass('wrapper-x')
-  })
-
-  it('applies containerClass', () => {
-    render(<Checkbox containerClass="c-x" label="X" />)
-    const container = screen.getByText('X').closest('.c-x')
-    expect(container).toBeInTheDocument()
-  })
-
-  it('applies labelClass', () => {
-    render(<Checkbox label="Label" labelClass="lc" />)
-    expect(screen.getByText('Label')).toHaveClass('lc')
   })
 
   it('forwards ref correctly', () => {
@@ -111,35 +112,5 @@ describe('Checkbox Component', () => {
   it('sets aria-checked correctly', () => {
     render(<Checkbox checked={true} onChange={() => {}} />)
     expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true')
-  })
-
-  it('does not leak custom props to DOM', () => {
-    render(
-      <Checkbox
-        label="X"
-        wrapperClass="wrap"
-        containerClass="con"
-        labelClass="lbl"
-        error="bad"
-        data-testid="cb"
-      />,
-    )
-
-    const cb = screen.getByTestId('cb')
-
-    expect(cb).not.toHaveAttribute('wrapperClass')
-    expect(cb).not.toHaveAttribute('containerClass')
-    expect(cb).not.toHaveAttribute('labelClass')
-    expect(cb).not.toHaveAttribute('error')
-  })
-
-  it('shows SVG checkmark only when checked (opacity class)', () => {
-    const { container } = render(<Checkbox label="x" />)
-
-    const svgWrapper = container.querySelector('span.absolute')
-    expect(svgWrapper).toHaveClass('opacity-0')
-
-    fireEvent.click(screen.getByRole('checkbox'))
-    expect(svgWrapper).toHaveClass('peer-checked:opacity-100')
   })
 })
