@@ -1,1 +1,0 @@
-const e="CardHeader",o="",a=[{name:"bordered",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:""}],r={name:e,description:"",props:a};export{r as default,o as description,e as name,a as props};

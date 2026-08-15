@@ -1,1 +1,0 @@
-const e="CardTitle",s="",a=[{name:"as",type:"enum",raw:'"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span"',enumValues:["h1","h2","h3","h4","h5","h6","span"],required:!1,defaultValue:"h3",description:""}],h={name:e,description:"",props:a};export{h as default,s as description,e as name,a as props};
