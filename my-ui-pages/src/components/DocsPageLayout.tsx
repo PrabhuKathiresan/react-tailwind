@@ -4,11 +4,11 @@ import { CodeBlock } from './CodeBlock'
 import { PropExplorer, type PropExplorerProps } from './PropExplorer'
 import { BodyText, Breadcrumb, buildClassName, HeadingText, Tabs } from '@pk-design/react-tailwind'
 import { Link } from 'react-router'
-import { navSections } from './NavList'
+import { navSections, pageRoutes } from './NavList'
 import { motion } from 'framer-motion'
-import { Eye, Code2, Hash } from 'lucide-react'
+import { Eye, Code2, Hash, ChevronLeft, ChevronRight } from 'lucide-react'
 
-interface ExampleSection {
+export interface ExampleSection {
   title: string
   description?: string
   code?: string
@@ -23,8 +23,6 @@ interface DocsPageLayoutProps {
   bestPractices?: ReactNode
 }
 
-/* ── ExampleBlock — tabbed Preview / Code using library <Tabs> ───── */
-
 function ExampleBlock({ example }: { example: ExampleSection }) {
   const hasCode = Boolean(example.code?.trim())
 
@@ -37,7 +35,7 @@ function ExampleBlock({ example }: { example: ExampleSection }) {
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden focus-within:outline-none focus-within:ring-0">
       <Tabs
         variant="underline"
         listClass="bg-gray-50 dark:bg-gray-800/40 border-b border-gray-200 dark:border-gray-700 px-2"
@@ -75,8 +73,6 @@ function ExampleBlock({ example }: { example: ExampleSection }) {
   )
 }
 
-/* ── SectionHeading — with hover anchor link ──────────────────────── */
-
 function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
   return (
     <div className="flex items-center gap-2 group">
@@ -92,9 +88,6 @@ function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
   )
 }
 
-/**
- * Auto-load ALL JSON docs inside data/components/<ComponentName>/
- */
 async function loadAllDocs(component: string) {
   const folder = `../data/components/${component}`
 
@@ -144,9 +137,6 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
       .catch(() => setDocsList([]))
   }, [component])
 
-  /* -------------------------------------------------------
-   * Build TOC dynamically
-   * ------------------------------------------------------- */
   const tocItems = useMemo(() => {
     const list: { id: string; label: string }[] = [{ id: 'overview', label: 'Overview' }]
 
@@ -182,8 +172,8 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
         })
       },
       {
-        root: null, // window scrolling
-        rootMargin: '0px 0px -70% 0px', // triggers early (makes UX perfect)
+        root: null,
+        rootMargin: '0px 0px -70% 0px',
         threshold: 0,
       },
     )
@@ -196,25 +186,28 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
     return () => observer.disconnect()
   }, [tocItems])
 
-  /* -------------------------------------------------------
-   * Smooth Scroll to Section
-   * ------------------------------------------------------- */
   const scrollToId = (id: string) => {
-    const container = document.getElementById('scrollable-container')
     const el = document.getElementById(id)
-
-    if (container && el) {
+    if (el) {
       const top = el.offsetTop - 20
       window.scrollTo({ top, behavior: 'smooth' })
     }
   }
 
+  const { prevPage, nextPage } = useMemo(() => {
+    const idx = pageRoutes.findIndex((r) => r.label === component)
+    return {
+      prevPage: idx > 0 ? pageRoutes[idx - 1] : null,
+      nextPage: idx >= 0 && idx < pageRoutes.length - 1 ? pageRoutes[idx + 1] : null,
+    }
+  }, [component])
+
   return (
-    <div className="relative flex w-full">
+    <div className="flex w-full items-start gap-8 px-2 md:px-4 lg:px-8">
       {/* MAIN CONTENT */}
       <motion.div
         key={component}
-        className="w-full pr-0 lg:pr-64"
+        className="flex-1 min-w-0"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
@@ -222,7 +215,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
         <div className="space-y-8">
           {/* Overview */}
           <section id="overview">
-            <header className="space-y-4 px-2 md:px-4 lg:px-8 py-2">
+            <header className="space-y-4 py-2">
               <Breadcrumb
                 items={[
                   { key: 'docs', text: 'Docs' },
@@ -258,7 +251,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
 
           {/* Playground */}
           {playground && (
-            <section id="playground" className="space-y-4 px-2 md:px-4 lg:px-8 py-2">
+            <section id="playground" className="space-y-4 py-2">
               <SectionHeading id="playground">Playground</SectionHeading>
               <PropExplorer componentName={component} {...playground} />
             </section>
@@ -268,7 +261,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
           {examples.map((example, idx) => {
             const id = example.title.replace(/\s+/g, '-').toLowerCase()
             return (
-              <section key={idx} id={id} className="space-y-3 px-2 md:px-4 lg:px-8 py-2">
+              <section key={idx} id={id} className="space-y-3 py-2">
                 <SectionHeading id={id}>{example.title}</SectionHeading>
                 {example.description && (
                   <BodyText className="text-gray-500 dark:text-gray-400">
@@ -282,7 +275,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
 
           {/* Best Practices */}
           {bestPractices && (
-            <section id="best-practices" className="space-y-3 px-2 md:px-4 lg:px-8 py-2">
+            <section id="best-practices" className="space-y-3 py-2">
               <SectionHeading id="best-practices">Best Practices</SectionHeading>
               <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900/30 space-y-2">
                 {bestPractices}
@@ -292,7 +285,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
 
           {/* Props */}
           {docsList.length > 0 && (
-            <section id="props" className="space-y-4 px-2 md:px-4 lg:px-8 py-4">
+            <section id="props" className="space-y-4 py-4">
               <SectionHeading id="props">Props</SectionHeading>
               {docsList.map((doc, index) =>
                 doc.props?.length ? (
@@ -307,39 +300,73 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
             </section>
           )}
         </div>
+
+        {/* PAGE NAVIGATION FOOTER */}
+        {(prevPage || nextPage) && (
+          <nav
+            aria-label="Page navigation"
+            className="mt-10 pt-6 pb-8 border-t border-gray-200 dark:border-gray-800 w-full"
+          >
+            <div className="flex items-center justify-between gap-4 w-full">
+              {prevPage ? (
+                <Link
+                  to={prevPage.path}
+                  className="group inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/60 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition-all cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  <ChevronLeft className="size-3.5 text-gray-400 group-hover:text-blue-600 shrink-0" />
+                  <span>
+                    Previous:{' '}
+                    <strong className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600">
+                      {prevPage.label}
+                    </strong>
+                  </span>
+                </Link>
+              ) : (
+                <div />
+              )}
+              {nextPage && (
+                <Link
+                  to={nextPage.path}
+                  className="group inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/60 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition-all cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  <span>
+                    Next:{' '}
+                    <strong className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600">
+                      {nextPage.label}
+                    </strong>
+                  </span>
+                  <ChevronRight className="size-3.5 text-gray-400 group-hover:text-blue-600 shrink-0" />
+                </Link>
+              )}
+            </div>
+          </nav>
+        )}
       </motion.div>
 
-      {/* RIGHT SIDE TOC — STICKY */}
-      <aside
-        className={buildClassName(
-          'hidden lg:block',
-          'fixed right-0 top-[60px]',
-          'w-64 h-[calc(100vh-60px)]',
-          'overflow-y-auto',
-          'px-4 py-6',
-        )}
-      >
-        <nav className="space-y-4">
-          <HeadingText.SubTitle3>On this page</HeadingText.SubTitle3>
-          <ul className="space-y-2 text-sm">
-            {tocItems.map((item) => (
+      {/* RIGHT TOC SIDEBAR */}
+      <aside className="hidden lg:block w-64 shrink-0 sticky top-[80px] space-y-4 max-h-[calc(100vh-100px)] overflow-y-auto py-2">
+        <HeadingText.SubTitle3>On this page</HeadingText.SubTitle3>
+        <ul className="space-y-1 text-sm border-l border-gray-200 dark:border-gray-800 pl-3">
+          {tocItems.map((item) => {
+            const isActive = activeId === item.id
+            return (
               <li key={item.id}>
                 <button
                   key={item.id}
                   onClick={() => scrollToId(item.id)}
                   className={buildClassName(
-                    'text-left block w-full text-sm cursor-pointer transition-colors',
-                    activeId === item.id
-                      ? 'text-primary font-medium'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary',
+                    'text-left block w-full text-sm cursor-pointer transition-colors py-1 pl-2.5 -ml-3.5 border-l-2',
+                    isActive
+                      ? 'text-blue-600 dark:text-blue-400 font-semibold border-blue-600 dark:border-blue-400'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent',
                   )}
                 >
                   {item.label}
                 </button>
               </li>
-            ))}
-          </ul>
-        </nav>
+            )
+          })}
+        </ul>
       </aside>
     </div>
   )
