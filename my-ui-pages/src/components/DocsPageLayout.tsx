@@ -2,11 +2,33 @@ import React, { type ReactNode, useEffect, useState, useMemo } from 'react'
 import { PropsTable } from './PropsTable'
 import { CodeBlock } from './CodeBlock'
 import { PropExplorer, type PropExplorerProps } from './PropExplorer'
-import { BodyText, Breadcrumb, buildClassName, HeadingText, Tabs } from '@pk-design/react-tailwind'
+import {
+  BodyText,
+  Breadcrumb,
+  buildClassName,
+  HeadingText,
+  Tabs,
+  Badge,
+} from '@pk-design/react-tailwind'
 import { Link } from 'react-router'
 import { navSections, pageRoutes } from './NavList'
-import { motion } from 'framer-motion'
-import { Eye, Code2, Hash, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Eye,
+  Code2,
+  Hash,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Check,
+  Search,
+  ArrowUp,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react'
+
+import pkg from '../../../package.json'
 
 export interface ExampleSection {
   title: string
@@ -27,50 +49,77 @@ interface DocsPageLayoutProps {
 
 function ExampleBlock({ example }: { example: ExampleSection }) {
   const hasCode = Boolean(example.code?.trim())
+  const [showCode, setShowCode] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    if (example.code) {
+      navigator.clipboard.writeText(example.code.trim())
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
 
   if (!hasCode) {
     return (
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden p-6 bg-white dark:bg-gray-900/30 min-h-24">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700/80 overflow-hidden p-6 bg-white dark:bg-gray-900/30 min-h-24 shadow-xs">
         {example.render}
       </div>
     )
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden focus-within:outline-none focus-within:ring-0">
-      <Tabs
-        variant="underline"
-        listClass="bg-gray-50 dark:bg-gray-800/40 border-b border-gray-200 dark:border-gray-700 px-2"
-        panelsClass="!mt-0"
-        tabs={[
-          {
-            label: (
-              <span className="flex items-center gap-1.5">
-                <Eye className="size-3.5" /> Preview
-              </span>
-            ),
-            content: (
-              <div className="p-6 bg-white dark:bg-gray-900/30 min-h-24">{example.render}</div>
-            ),
-            panelClass: '',
-          },
-          {
-            label: (
-              <span className="flex items-center gap-1.5">
-                <Code2 className="size-3.5" /> Code
-              </span>
-            ),
-            content: (
-              <CodeBlock
-                code={example.code!.trim()}
-                language="tsx"
-                className="rounded-none border-0 shadow-none"
-              />
-            ),
-            panelClass: '',
-          },
-        ]}
-      />
+    <div className="rounded-xl border border-gray-200 dark:border-gray-700/80 overflow-hidden shadow-xs bg-white dark:bg-gray-900/30">
+      {/* Live Preview Container */}
+      <div className="p-6 bg-white dark:bg-gray-900/30 min-h-24 overflow-x-auto">
+        {example.render}
+      </div>
+
+      {/* Code Toolbar */}
+      <div className="bg-gray-50/80 dark:bg-gray-800/40 border-t border-gray-200 dark:border-gray-700/80 px-4 py-2 flex items-center justify-between text-xs font-medium">
+        <button
+          onClick={() => setShowCode(!showCode)}
+          className="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer font-semibold"
+        >
+          <Code2 className="size-3.5 text-blue-600 dark:text-blue-400" />
+          <span>{showCode ? 'Hide Code' : 'View Code'}</span>
+          {showCode ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
+        </button>
+
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-md shadow-2xs transition-all cursor-pointer"
+          title="Copy TSX Code"
+        >
+          {copied ? (
+            <>
+              <Check className="size-3 text-emerald-500" />
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied!</span>
+            </>
+          ) : (
+            <>
+              <Copy className="size-3 text-gray-400" />
+              <span>Copy Code</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Expandable TSX Code Snippet */}
+      {showCode && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="border-t border-gray-200 dark:border-gray-800 overflow-hidden"
+        >
+          <CodeBlock
+            code={example.code!.trim()}
+            language="tsx"
+            className="rounded-none border-0 shadow-none text-xs"
+          />
+        </motion.div>
+      )}
     </div>
   )
 }
@@ -85,11 +134,11 @@ function SectionHeading({
   children: ReactNode
 }) {
   return (
-    <div className="flex items-center gap-2 group">
+    <div className="flex items-center gap-2.5 group">
       <HeadingText.SubTitle2>{children}</HeadingText.SubTitle2>
       {since && (
-        <span className="rounded-full border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 text-[10px] font-medium text-blue-600 dark:text-blue-400">
-          New in v{since}
+        <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-0.5 text-[10px] font-semibold text-blue-600 dark:text-blue-400">
+          <Sparkles className="size-3" /> New in v{since}
         </span>
       )}
       <a
@@ -138,6 +187,9 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
 }) => {
   const [docsList, setDocsList] = useState<any[]>([])
   const [activeId, setActiveId] = useState<string>('overview')
+  const [copiedImport, setCopiedImport] = useState(false)
+  const [propQuery, setPropQuery] = useState('')
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
   const categoryLabel = useMemo(() => {
     for (const section of navSections) {
@@ -151,6 +203,22 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
       .then(setDocsList)
       .catch(() => setDocsList([]))
   }, [component])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 350)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const importCode = `import { ${component} } from '@pk-design/react-tailwind'`
+
+  const handleCopyImport = () => {
+    navigator.clipboard.writeText(importCode)
+    setCopiedImport(true)
+    setTimeout(() => setCopiedImport(false), 2000)
+  }
 
   const tocItems = useMemo(() => {
     const list: { id: string; label: string }[] = [{ id: 'overview', label: 'Overview' }]
@@ -209,6 +277,10 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
     }
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const { prevPage, nextPage } = useMemo(() => {
     const idx = pageRoutes.findIndex((r) => r.label === component)
     return {
@@ -217,8 +289,23 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
     }
   }, [component])
 
+  const filteredDocsList = useMemo(() => {
+    if (!propQuery.trim()) return docsList
+
+    const query = propQuery.toLowerCase()
+    return docsList.map((doc) => ({
+      ...doc,
+      props: doc.props?.filter(
+        (p: any) =>
+          p.name?.toLowerCase().includes(query) ||
+          p.type?.toLowerCase().includes(query) ||
+          p.description?.toLowerCase().includes(query),
+      ),
+    }))
+  }, [docsList, propQuery])
+
   return (
-    <div className="flex w-full items-start gap-8 px-2 md:px-4 lg:px-8">
+    <div className="flex w-full items-start gap-8 px-2 md:px-4 lg:px-8 relative">
       {/* MAIN CONTENT */}
       <motion.div
         key={component}
@@ -228,38 +315,103 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <div className="space-y-8">
-          {/* Overview */}
+          {/* Header Hero Section */}
           <section id="overview">
             <header className="space-y-4 py-2">
-              <Breadcrumb
-                items={[
-                  { key: 'docs', text: 'Docs' },
-                  { key: 'category', text: categoryLabel },
-                  { key: 'component', text: component },
-                ]}
-                render={(item) => (
-                  <Link
-                    to={item.key === 'docs' ? '/installation' : '#'}
-                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    {item.text}
-                  </Link>
-                )}
-              />
-              <HeadingText.Title>{component}</HeadingText.Title>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <Breadcrumb
+                  items={[
+                    { key: 'docs', text: 'Docs' },
+                    { key: 'category', text: categoryLabel },
+                    { key: 'component', text: component },
+                  ]}
+                  render={(item) => (
+                    <Link
+                      to={item.key === 'docs' ? '/installation' : '#'}
+                      className="text-xs text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >
+                      {item.text}
+                    </Link>
+                  )}
+                />
+                <div className="flex items-center gap-2">
+                  <Badge theme="info" size="sm">
+                    v{pkg.version}
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <HeadingText.Title>{component}</HeadingText.Title>
+              </div>
+
               {description && (
-                <BodyText className="text-gray-600 dark:text-gray-300 border-l-2 border-[var(--ui-primary)] pl-3">
+                <BodyText className="text-gray-600 dark:text-gray-300 border-l-2 border-[var(--ui-primary)] pl-3 text-base leading-relaxed">
                   {description}
                 </BodyText>
               )}
-              <div className="space-y-1 pt-1">
-                <p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                  Import
-                </p>
-                <CodeBlock
-                  code={`import { ${component} } from '@pk-design/react-tailwind'`}
-                  language="tsx"
-                />
+
+              {/* Import Code Box with 1-Click Copy */}
+              <div className="space-y-1.5 pt-2">
+                <div className="flex items-center justify-between text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                  <span>Import Statement</span>
+                  <button
+                    onClick={handleCopyImport}
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                  >
+                    {copiedImport ? (
+                      <>
+                        <Check className="size-3 text-emerald-500" />
+                        <span className="text-emerald-600 dark:text-emerald-400">
+                          Copied to clipboard
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="size-3" />
+                        <span>Copy Import</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <CodeBlock code={importCode} language="tsx" />
+              </div>
+
+              {/* Quick Jump Anchor Bar */}
+              <div className="flex items-center gap-2 pt-1 flex-wrap">
+                <span className="text-xs text-gray-400 font-medium mr-1">Quick Jump:</span>
+                {playground && (
+                  <button
+                    onClick={() => scrollToId('playground')}
+                    className="text-xs px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                  >
+                    Playground
+                  </button>
+                )}
+                {examples.length > 0 && (
+                  <button
+                    onClick={() => scrollToId(examples[0].title.replace(/\s+/g, '-').toLowerCase())}
+                    className="text-xs px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                  >
+                    Examples ({examples.length})
+                  </button>
+                )}
+                {docsList.length > 0 && (
+                  <button
+                    onClick={() => scrollToId('props')}
+                    className="text-xs px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                  >
+                    Props Reference
+                  </button>
+                )}
+                {bestPractices && (
+                  <button
+                    onClick={() => scrollToId('best-practices')}
+                    className="text-xs px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                  >
+                    Best Practices
+                  </button>
+                )}
               </div>
             </header>
           </section>
@@ -294,25 +446,47 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
           {bestPractices && (
             <section id="best-practices" className="space-y-3 py-2">
               <SectionHeading id="best-practices">Best Practices</SectionHeading>
-              <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900/30 space-y-2">
+              <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900/30 space-y-2 shadow-xs">
                 {bestPractices}
               </div>
             </section>
           )}
 
-          {/* Props */}
+          {/* Props Section with Search Input */}
           {docsList.length > 0 && (
             <section id="props" className="space-y-4 py-4">
-              <SectionHeading id="props">Props</SectionHeading>
-              {docsList.map((doc, index) =>
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <SectionHeading id="props">Props Reference</SectionHeading>
+                <div className="relative w-full sm:w-64">
+                  <Search className="absolute left-3 top-2.5 size-4 text-gray-400" />
+                  <input
+                    type="text"
+                    value={propQuery}
+                    onChange={(e) => setPropQuery(e.target.value)}
+                    placeholder="Search props..."
+                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {filteredDocsList.map((doc, index) =>
                 doc.props?.length ? (
                   <div key={index} className="space-y-3">
-                    {docsList.length > 1 && (
+                    {filteredDocsList.length > 1 && (
                       <HeadingText.SubTitle3>{doc.name}</HeadingText.SubTitle3>
                     )}
                     <PropsTable propsData={doc.props} />
                   </div>
-                ) : null,
+                ) : (
+                  propQuery && (
+                    <div
+                      key={index}
+                      className="p-6 text-center text-xs text-gray-400 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-gray-200 dark:border-gray-800"
+                    >
+                      No props matching "{propQuery}"
+                    </div>
+                  )
+                ),
               )}
             </section>
           )}
@@ -363,7 +537,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
       {/* RIGHT TOC SIDEBAR */}
       <aside className="hidden lg:block w-64 shrink-0 sticky top-[80px] space-y-4 max-h-[calc(100vh-100px)] overflow-y-auto py-2">
         <HeadingText.SubTitle3>On this page</HeadingText.SubTitle3>
-        <ul className="space-y-1 text-sm border-l border-gray-200 dark:border-gray-800 pl-3">
+        <ul className="space-y-1 text-sm border-l border-gray-200 dark:border-gray-800 pl-3 relative">
           {tocItems.map((item) => {
             const isActive = activeId === item.id
             return (
@@ -374,7 +548,7 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
                   className={buildClassName(
                     'text-left block w-full text-sm cursor-pointer transition-colors py-1 pl-2.5 -ml-3.5 border-l-2',
                     isActive
-                      ? 'text-blue-600 dark:text-blue-400 font-semibold border-blue-600 dark:border-blue-400'
+                      ? 'text-blue-600 dark:text-blue-400 font-semibold border-blue-600 dark:border-blue-400 bg-blue-50/40 dark:bg-blue-950/20 rounded-r-md'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent',
                   )}
                 >
@@ -385,6 +559,23 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
           })}
         </ul>
       </aside>
+
+      {/* FLOATING BACK TO TOP BUTTON */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-40 p-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
+            aria-label="Back to top"
+            title="Back to top"
+          >
+            <ArrowUp className="size-4" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
