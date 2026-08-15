@@ -1,12 +1,65 @@
 import { useState } from 'react'
 import { RadioGroup } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
+import { Shield, Zap, Sparkles } from 'lucide-react'
 
 export default function RadioGroupDocsPage() {
   const [selected, setSelected] = useState('Apple')
-  const [size, setSize] = useState('XS')
+  const [plan, setPlan] = useState('pro')
 
   const examples = [
+    {
+      title: 'Selectable Cards Mode (variant="cards")',
+      description:
+        'Use variant="cards" to render options as rich selectable card tiles with icons and descriptions.',
+      render: (
+        <RadioGroup
+          name="pricing-plan"
+          label="Select Subscription Plan"
+          variant="cards"
+          value={plan}
+          onChange={(e) => setPlan(e.target.value)}
+          columns={3}
+          options={[
+            {
+              label: 'Starter Plan',
+              value: 'starter',
+              description: '$9/month • Up to 5 projects and 1GB storage',
+              icon: <Zap className="size-5 text-amber-500" />,
+            },
+            {
+              label: 'Pro Plan',
+              value: 'pro',
+              description: '$29/month • Unlimited projects and priority support',
+              icon: <Sparkles className="size-5 text-blue-500" />,
+            },
+            {
+              label: 'Enterprise',
+              value: 'enterprise',
+              description: '$99/month • Custom SLA, dedicated server & SSO',
+              icon: <Shield className="size-5 text-emerald-500" />,
+            },
+          ]}
+        />
+      ),
+      code: `
+const [plan, setPlan] = useState('pro')
+
+<RadioGroup
+  name="pricing-plan"
+  label="Select Subscription Plan"
+  variant="cards"
+  value={plan}
+  onChange={(e) => setPlan(e.target.value)}
+  columns={3}
+  options={[
+    { label: 'Starter Plan', value: 'starter', description: '$9/month • Up to 5 projects', icon: <Zap /> },
+    { label: 'Pro Plan', value: 'pro', description: '$29/month • Unlimited projects', icon: <Sparkles /> },
+    { label: 'Enterprise', value: 'enterprise', description: '$99/month • Custom SLA & SSO', icon: <Shield /> },
+  ]}
+/>`,
+    },
+
     {
       title: 'Basic Radio Button Group',
       description: 'A simple radio group using string-based options.',
@@ -28,121 +81,22 @@ export default function RadioGroupDocsPage() {
     },
 
     {
-      title: 'Controlled Radio Group',
-      description: 'Control the selected value with React state.',
-      render: (
-        <RadioGroup
-          name="fruit-controlled"
-          value={selected}
-          onChange={(e) => setSelected(e.target.value)}
-          options={['Apple', 'Banana', 'Cherry']}
-        />
-      ),
-      code: `
-const [selected, setSelected] = useState("Apple")
-
-<RadioGroup
-  name="fruit-controlled"
-  value={selected}
-  onChange={(e) => setSelected(e.target.value)}
-  options={["Apple", "Banana", "Cherry"]}
-/>`,
-    },
-
-    {
-      title: 'Column Layout (Default)',
-      description: 'Options are stacked vertically by default.',
-      render: <RadioGroup name="layout-col" options={['Option A', 'Option B', 'Option C']} />,
-      code: `
-<RadioGroup
-  name="layout-col"
-  options={["Option A", "Option B", "Option C"]}
-/>`,
-    },
-
-    {
       title: 'Row Layout',
-      description: 'Set row={true} to display options horizontally.',
+      description: 'Set row={true} to display options horizontally in a single row.',
       render: (
         <RadioGroup
           name="layout-row"
           row
-          options={['XS', 'S', 'M', 'L', 'XL']}
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
+          options={['Small', 'Medium', 'Large', 'Extra Large']}
+          value="Medium"
+          onChange={() => {}}
         />
       ),
       code: `
 <RadioGroup
   name="layout-row"
   row
-  options={["XS", "S", "M", "L", "XL"]}
-/>`,
-    },
-
-    {
-      title: 'Using Object-based Options',
-      description: 'Options can include separate label and value fields.',
-      render: (
-        <RadioGroup
-          name="object-options"
-          options={[
-            { label: 'Low', value: 1 },
-            { label: 'Medium', value: 2 },
-            { label: 'High', value: 3 },
-          ]}
-        />
-      ),
-      code: `
-<RadioGroup
-  name="object-options"
-  options={[
-    { label: "Low", value: 1 },
-    { label: "Medium", value: 2 },
-    { label: "High", value: 3 },
-  ]}
-/>`,
-    },
-
-    {
-      title: 'With Label and Hint',
-      description: 'Add a label and an optional hint beside it.',
-      render: (
-        <RadioGroup
-          name="with-label"
-          label="Select Difficulty"
-          labelHint={<span className="text-sm text-gray-500">Choose one</span>}
-          options={['Easy', 'Medium', 'Hard']}
-        />
-      ),
-      code: `
-<RadioGroup
-  name="with-label"
-  label="Select Difficulty"
-  labelHint={<span className="text-sm text-gray-500">Choose one</span>}
-  options={["Easy", "Medium", "Hard"]}
-/>`,
-    },
-
-    {
-      title: 'Custom Classes',
-      description: 'Customize spacing or alignment using Tailwind classes.',
-      render: (
-        <RadioGroup
-          name="styled-group"
-          label="Sizes"
-          containerClass="p-4 border rounded-lg shadow-sm"
-          row
-          options={['Small', 'Medium', 'Large']}
-        />
-      ),
-      code: `
-<RadioGroup
-  name="styled-group"
-  label="Sizes"
-  containerClass="p-4 border rounded-lg shadow-sm"
-  row
-  options={["Small", "Medium", "Large"]}
+  options={["Small", "Medium", "Large", "Extra Large"]}
 />`,
     },
   ]
@@ -150,7 +104,7 @@ const [selected, setSelected] = useState("Apple")
   return (
     <DocsPageLayout
       component="RadioGroup"
-      description="A controlled list of mutually exclusive radio options rendered from a data array. Handles the group label, hint, error state, and vertical or horizontal layout automatically, so you only need to provide the options and a value-change handler."
+      description="A controlled list of mutually exclusive options. Supports standard vertical/horizontal layout or rich selectable cards (variant='cards') with icons, descriptions, grid column counts, and custom theme colors."
       examples={examples}
     />
   )

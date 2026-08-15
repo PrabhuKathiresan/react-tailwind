@@ -1,4 +1,8 @@
 import type { ChangeEvent, ReactNode } from 'react'
+import type { RadioSize, RadioTheme } from '../Radio/Radio.types'
+
+export type RadioGroupVariant = 'default' | 'cards'
+export type RadioGroupColumns = 1 | 2 | 3 | 4
 
 export type RadionGroupItem = {
   /**
@@ -8,21 +12,51 @@ export type RadionGroupItem = {
 
   /**
    * The underlying value associated with the option.
-   * Can be any type, including string, number, or object.
    */
   value: any
+
+  /**
+   * Optional subtext description for rich option items.
+   */
+  description?: ReactNode
+
+  /**
+   * Optional icon displayed next to the item label.
+   */
+  icon?: ReactNode
+
+  /**
+   * Disable individual option item
+   */
+  disabled?: boolean
 }
 
 export interface RadioGroupProps {
   /**
    * The name attribute shared by all radio buttons in the group.
-   * Ensures only one option can be selected at a time.
    */
   name: string
 
   /**
-   * Optional label displayed above the radio button group.
-   * Can be a string or a custom ReactNode.
+   * Visual variant mode: 'default' or 'cards' (rich selectable card tiles)
+   * @default "default"
+   */
+  variant?: RadioGroupVariant
+
+  /**
+   * Size variant for all radios in the group ('sm' | 'md' | 'lg')
+   * @default "md"
+   */
+  size?: RadioSize
+
+  /**
+   * Theme accent color ('primary' | 'success' | 'danger')
+   * @default "primary"
+   */
+  theme?: RadioTheme
+
+  /**
+   * Optional label displayed above the radio group.
    */
   label?: ReactNode
 
@@ -38,38 +72,41 @@ export interface RadioGroupProps {
 
   /**
    * Optional hint content displayed beside the label.
-   * Useful for showing small guidance text.
    */
   labelHint?: ReactNode
 
   /**
-   * Custom CSS classes applied to the outer container
-   * that wraps the entire radio group.
+   * Custom CSS classes applied to the outer container.
    */
   containerClass?: string
 
   /**
    * The currently selected value.
-   * When provided, the component becomes controlled.
    */
   value?: any
 
   /**
    * The list of options to render.
-   * - Strings → converted to { label, value } internally
-   * - Objects → must follow RadionButtonGroupItem structure
    */
   options: string[] | RadionGroupItem[]
 
   /**
+   * Grid column layout when variant="cards" or row=true (1 | 2 | 3 | 4)
+   */
+  columns?: RadioGroupColumns
+
+  /**
+   * Disables all options in the radio group.
+   */
+  disabled?: boolean
+
+  /**
    * Whether to display radio buttons horizontally in a row.
-   * Defaults to vertical column layout.
    */
   row?: boolean
 
   /**
-   * Change handler called when the selected radio button changes.
-   * Receives the native ChangeEvent from the input element.
+   * Change handler called when selected value changes.
    */
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 

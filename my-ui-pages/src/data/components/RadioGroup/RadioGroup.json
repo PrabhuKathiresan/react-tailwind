@@ -3,13 +3,40 @@
   "description": "",
   "props": [
     {
+      "name": "variant",
+      "type": "enum",
+      "raw": "RadioGroupVariant",
+      "enumValues": ["default", "cards"],
+      "required": false,
+      "defaultValue": "\"default\"",
+      "description": "Visual variant mode: 'default' or 'cards' (rich selectable card tiles)"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "RadioSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": "\"md\"",
+      "description": "Size variant for all radios in the group ('sm' | 'md' | 'lg')"
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "raw": "RadioTheme",
+      "enumValues": ["primary", "success", "danger"],
+      "required": false,
+      "defaultValue": "\"primary\"",
+      "description": "Theme accent color ('primary' | 'success' | 'danger')"
+    },
+    {
       "name": "label",
       "type": "ReactNode",
       "raw": "ReactNode",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Optional label displayed above the radio button group.\nCan be a string or a custom ReactNode."
+      "description": "Optional label displayed above the radio group."
     },
     {
       "name": "labelClass",
@@ -36,7 +63,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Optional hint content displayed beside the label.\nUseful for showing small guidance text."
+      "description": "Optional hint content displayed beside the label."
     },
     {
       "name": "containerClass",
@@ -45,7 +72,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Custom CSS classes applied to the outer container\nthat wraps the entire radio group."
+      "description": "Custom CSS classes applied to the outer container."
     },
     {
       "name": "options",
@@ -54,7 +81,16 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "The list of options to render.\n- Strings → converted to { label, value } internally\n- Objects → must follow RadionButtonGroupItem structure"
+      "description": "The list of options to render."
+    },
+    {
+      "name": "columns",
+      "type": "enum",
+      "raw": "RadioGroupColumns",
+      "enumValues": ["1", "2", "3", "4"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Grid column layout when variant=\"cards\" or row=true (1 | 2 | 3 | 4)"
     },
     {
       "name": "row",
@@ -63,7 +99,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Whether to display radio buttons horizontally in a row.\nDefaults to vertical column layout."
+      "description": "Whether to display radio buttons horizontally in a row."
     },
     {
       "name": "error",

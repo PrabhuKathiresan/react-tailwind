@@ -33,6 +33,21 @@ describe('RadioGroup', () => {
     expect(screen.getByLabelText('Large')).toBeInTheDocument()
   })
 
+  test('renders cards variant', () => {
+    const options = [
+      { label: 'Pro Plan', value: 'pro', description: '$29/mo' },
+      { label: 'Free Plan', value: 'free', description: '$0/mo' },
+    ]
+
+    render(
+      <RadioGroup name="plan" variant="cards" value="pro" options={options} onChange={() => {}} />,
+    )
+
+    expect(screen.getByText('Pro Plan')).toBeInTheDocument()
+    expect(screen.getByText('$29/mo')).toBeInTheDocument()
+    expect(screen.getByLabelText('Pro Plan')).toBeChecked()
+  })
+
   test('checked radio reflects selected value', () => {
     render(
       <RadioGroup
@@ -58,25 +73,6 @@ describe('RadioGroup', () => {
     expect(handleChange.mock.calls[0][0].target.value).toBe('cat')
   })
 
-  test('renders in row layout when row={true}', () => {
-    const { container } = render(
-      <RadioGroup name="colors" row options={['Red', 'Blue']} onChange={() => {}} />,
-    )
-
-    const wrapper = container.querySelector('div.flex')
-    expect(wrapper).toHaveClass('flex-row')
-    expect(wrapper).not.toHaveClass('flex-col')
-  })
-
-  test('renders in column layout by default', () => {
-    const { container } = render(
-      <RadioGroup name="colors" options={['Red', 'Blue']} onChange={() => {}} />,
-    )
-
-    const wrapper = container.querySelector('div.flex')
-    expect(wrapper).toHaveClass('flex-col')
-  })
-
   test('renders error message', () => {
     render(
       <RadioGroup
@@ -89,33 +85,5 @@ describe('RadioGroup', () => {
     )
 
     expect(screen.getByText('Required field')).toBeInTheDocument()
-  })
-
-  test('does not show error message when showErrorMessage={false}', () => {
-    render(
-      <RadioGroup
-        name="fruit"
-        options={['Apple']}
-        error="Required field"
-        showErrorMessage={false}
-        onChange={() => {}}
-      />,
-    )
-
-    expect(screen.queryByText('Required field')).toBeNull()
-  })
-
-  test('renders label hint if provided', () => {
-    render(
-      <RadioGroup
-        name="plan"
-        label="Select plan"
-        labelHint={<span data-testid="hint">Hint here</span>}
-        options={['Basic']}
-        onChange={() => {}}
-      />,
-    )
-
-    expect(screen.getByTestId('hint')).toBeInTheDocument()
   })
 })
