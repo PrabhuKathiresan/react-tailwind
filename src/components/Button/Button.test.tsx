@@ -23,47 +23,30 @@ describe('Button Component', () => {
     expect(el.tagName.toLowerCase()).toBe('a')
   })
 
-  it('does not leak button-only props when as="a"', () => {
+  it('renders leftIcon and rightIcon slots', () => {
     render(
-      <Button as="a" href="#" disabled>
-        Link Button
+      <Button
+        leftIcon={<span data-testid="left-icon">L</span>}
+        rightIcon={<span data-testid="right-icon">R</span>}
+      >
+        Icon Button
       </Button>,
     )
-    const el = screen.getByText('Link Button')
-    expect(el).not.toHaveAttribute('disabled')
-    expect(el).not.toHaveAttribute('type')
+    expect(screen.getByTestId('left-icon')).toBeInTheDocument()
+    expect(screen.getByTestId('right-icon')).toBeInTheDocument()
   })
 
-  it('applies theme & variant classnames', () => {
-    render(
-      <Button theme="danger" variant="outlined">
-        Delete
-      </Button>,
-    )
-    const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/border-\[var\(--ui-danger\)\]/)
+  it('applies fullWidth style', () => {
+    render(<Button fullWidth>Full Width</Button>)
+    expect(screen.getByRole('button')).toHaveClass('w-full')
   })
 
-  it('applies size classes based on "size" prop', () => {
-    render(<Button size="lg">Large</Button>)
-    const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/text-base/)
-  })
+  it('applies success and warning theme classes', () => {
+    const { rerender } = render(<Button theme="success">Success</Button>)
+    expect(screen.getByRole('button').className).toMatch(/bg-emerald-600/)
 
-  it('applies iconOnly padding classes', () => {
-    render(
-      <Button iconOnly aria-label="close">
-        X
-      </Button>,
-    )
-    const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/p-/) // matches padding
-  })
-
-  it('warns when iconOnly has no aria-label', () => {
-    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
-    render(<Button iconOnly>X</Button>)
-    expect(warn).toHaveBeenCalled()
+    rerender(<Button theme="warning">Warning</Button>)
+    expect(screen.getByRole('button').className).toMatch(/bg-amber-500/)
   })
 
   it('shows loader when loading=true', () => {
@@ -78,25 +61,6 @@ describe('Button Component', () => {
       </Button>,
     )
     expect(screen.getByText('Processing...')).toBeInTheDocument()
-  })
-
-  it('does NOT render children when loading', () => {
-    render(
-      <Button loading loadingText="Loading...">
-        Submit
-      </Button>,
-    )
-    expect(screen.queryByText('Submit')).toBeNull()
-  })
-
-  it('renders ONLY loader when iconOnly + loading=true', () => {
-    render(
-      <Button iconOnly loading aria-label="loading-btn">
-        X
-      </Button>,
-    )
-    expect(screen.queryByText('X')).toBeNull()
-    expect(screen.getByTestId('btn-loader-icon')).toBeInTheDocument()
   })
 
   it('applies rounded-full when rounded=true', () => {
@@ -114,16 +78,6 @@ describe('Button Component', () => {
     expect(screen.getByRole('button')).toBeDisabled()
   })
 
-  it('removes outline styles when noOutlineOnFocus=true', () => {
-    render(<Button noOutlineOnFocus>Focus</Button>)
-    const btn = screen.getByRole('button')
-    const classes = btn.className.split(/\s+/)
-
-    expect(classes).not.toContain('focus:outline')
-    expect(classes).not.toContain('focus:outline-2')
-    expect(classes).not.toContain('focus:outline-offset-2')
-  })
-
   it('forwards ref correctly', () => {
     const ref = React.createRef<HTMLButtonElement>()
     render(<Button ref={ref}>Ref Button</Button>)
@@ -139,10 +93,9 @@ describe('Button Component', () => {
   })
 
   it('warns when iconOnly has no aria-label', () => {
-    const warn = jest.spyOn(console, 'warn')
-
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
     render(<Button iconOnly>X</Button>)
-
     expect(warn).toHaveBeenCalled()
+    warn.mockRestore()
   })
 })

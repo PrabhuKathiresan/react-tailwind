@@ -1,30 +1,59 @@
 import { Button } from '@pk-design/react-tailwind'
-import { Loader2, Plus } from 'lucide-react'
+import { Plus, ArrowRight, Check, AlertTriangle, Trash2, Download } from 'lucide-react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function ButtonDocsPage() {
   const examples = [
     {
-      title: 'Themes',
-      description: 'Buttons support multiple themes for different emphasis levels.',
+      title: 'Dedicated Icon Slots (leftIcon & rightIcon)',
+      description: 'Use leftIcon and rightIcon for clean, automated icon placement and alignment.',
+      render: (
+        <div className="flex gap-3 flex-wrap">
+          <Button leftIcon={<Plus className="size-4" />}>Create Project</Button>
+          <Button theme="secondary" rightIcon={<ArrowRight className="size-4" />}>
+            Continue
+          </Button>
+          <Button theme="primary" variant="outlined" leftIcon={<Download className="size-4" />}>
+            Export File
+          </Button>
+        </div>
+      ),
+      code: `
+<Button leftIcon={<Plus className="size-4" />}>Create Project</Button>
+<Button theme="secondary" rightIcon={<ArrowRight className="size-4" />}>Continue</Button>
+<Button theme="primary" variant="outlined" leftIcon={<Download className="size-4" />}>Export File</Button>`,
+    },
+    {
+      title: 'Expanded Color Themes (Primary, Secondary, Danger, Success & Warning)',
+      description: 'Buttons support 5 semantic themes across filled, outlined, and plain variants.',
       render: (
         <div className="flex gap-3 flex-wrap">
           <Button theme="primary">Primary</Button>
           <Button theme="secondary">Secondary</Button>
-          <Button theme="danger">Danger</Button>
+          <Button theme="danger" leftIcon={<Trash2 className="size-4" />}>
+            Danger
+          </Button>
+          <Button theme="success" leftIcon={<Check className="size-4" />}>
+            Success
+          </Button>
+          <Button theme="warning" leftIcon={<AlertTriangle className="size-4" />}>
+            Warning
+          </Button>
         </div>
       ),
       code: `
 <Button theme="primary">Primary</Button>
 <Button theme="secondary">Secondary</Button>
-<Button theme="danger">Danger</Button>`,
+<Button theme="danger" leftIcon={<Trash2 className="size-4" />}>Danger</Button>
+<Button theme="success" leftIcon={<Check className="size-4" />}>Success</Button>
+<Button theme="warning" leftIcon={<AlertTriangle className="size-4" />}>Warning</Button>`,
     },
     {
       title: 'Variants',
-      description: 'Use variants to control how the button appears: filled, outlined, or plain.',
+      description: 'Choose between filled default, bordered outlined, or text-only plain variants.',
       render: (
         <div className="flex gap-3 flex-wrap">
-          <Button variant="default">Default</Button>
+          <Button variant="default">Default (Filled)</Button>
           <Button variant="outlined">Outlined</Button>
           <Button variant="plain">Plain</Button>
         </div>
@@ -36,13 +65,13 @@ export default function ButtonDocsPage() {
     },
     {
       title: 'Sizes',
-      description: 'Buttons can be sized to fit different UI contexts.',
+      description: 'Four consistent sizes (xs: 28px, sm: 32px, md: 36px, lg: 40px height).',
       render: (
         <div className="flex gap-3 flex-wrap items-center">
-          <Button size="xs">XS</Button>
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
+          <Button size="xs">XS (28px)</Button>
+          <Button size="sm">Small (32px)</Button>
+          <Button size="md">Medium (36px)</Button>
+          <Button size="lg">Large (40px)</Button>
         </div>
       ),
       code: `
@@ -52,85 +81,42 @@ export default function ButtonDocsPage() {
 <Button size="lg">Large</Button>`,
     },
     {
-      title: 'Disabled State',
-      description: 'Use the disabled prop to prevent interactions.',
+      title: 'Full Width Button',
+      description: 'Use fullWidth to stretch the button to fill 100% of container width.',
       render: (
-        <div className="flex gap-3 flex-wrap">
-          <Button disabled>Disabled</Button>
-          <Button theme="secondary" disabled>
-            Secondary Disabled
+        <div className="max-w-md w-full">
+          <Button fullWidth theme="primary" leftIcon={<Plus className="size-4" />}>
+            Full Width Action Button
           </Button>
         </div>
       ),
       code: `
-<Button disabled>Disabled</Button>
-<Button theme="secondary" disabled>Secondary Disabled</Button>`,
-    },
-    {
-      title: 'Loading State',
-      description: 'Use the `loading` and `loadingText` props to indicate progress.',
-      render: (
-        <div className="flex gap-3 flex-wrap">
-          <Button loading>Loading...</Button>
-          <Button theme="secondary" loading loadingText="Saving..." />
-          <Button theme="danger" loading>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Deleting...
-          </Button>
-        </div>
-      ),
-      code: `
-<Button loading>Loading...</Button>
-<Button theme="secondary" loading loadingText="Saving..." />
-<Button theme="danger" loading>
-  <Loader2 className="w-4 h-4 animate-spin" />
-  Deleting...
+<Button fullWidth theme="primary" leftIcon={<Plus className="size-4" />}>
+  Full Width Action Button
 </Button>`,
     },
     {
-      title: 'Icon Buttons',
-      description: 'You can render buttons with icons or use `iconOnly` for compact icon buttons.',
+      title: 'Loading States',
+      description:
+        'Set loading=true to automatically show a spinner loader and disable interaction.',
       render: (
         <div className="flex gap-3 flex-wrap">
-          <Button>
-            <Plus className="size-5 mr-1" />
-            Add Item
-          </Button>
-          <Button theme="secondary" iconOnly>
-            <Plus className="size-5" />
-          </Button>
+          <Button loading>Saving...</Button>
+          <Button theme="secondary" loading loadingText="Processing..." />
+          <Button theme="danger" loading iconOnly aria-label="Deleting" />
         </div>
       ),
       code: `
-<Button>
-  <Plus className="size-5 mr-1" />
-  Add Item
-</Button>
-
-<Button theme="secondary" iconOnly>
-  <Plus className="size-5" />
-</Button>`,
-    },
-    {
-      title: 'Rounded Buttons',
-      description: 'Use `rounded` for pill-like buttons.',
-      render: (
-        <div className="flex gap-3 flex-wrap">
-          <Button rounded>Rounded</Button>
-          <Button theme="secondary" rounded>
-            Secondary Rounded
-          </Button>
-        </div>
-      ),
-      code: `
-<Button rounded>Rounded</Button>
-<Button theme="secondary" rounded>Secondary Rounded</Button>`,
+<Button loading>Saving...</Button>
+<Button theme="secondary" loading loadingText="Processing..." />
+<Button theme="danger" loading iconOnly aria-label="Deleting" />`,
     },
   ]
+
   return (
     <DocsPageLayout
       component="Button"
-      description="The primary trigger for user actions such as form submissions, confirmations, and navigation. Choose from four semantic color themes, three visual variants (solid, outline, ghost), three sizes, optional leading or trailing icons, full-width layout, and an animated loading state that prevents double submission."
+      description="The primary trigger for user actions. Supports 5 semantic themes (primary, secondary, danger, success, warning), 3 visual variants (default, outlined, plain), dedicated icon slots (leftIcon, rightIcon), full-width layout, rounded pill styling, and animated loading states."
       playground={{
         render: (props) => <Button {...props}>Click me</Button>,
         initialProps: { theme: 'primary', variant: 'default', size: 'md' },
