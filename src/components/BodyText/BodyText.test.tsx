@@ -20,6 +20,22 @@ describe('BodyText Component', () => {
     expect(el.tagName.toLowerCase()).toBe('span')
   })
 
+  it('applies size scale classes (xs, sm, md, lg, xl)', () => {
+    const { rerender } = render(<BodyText size="xs">Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-xs/5')
+
+    rerender(<BodyText size="xl">Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-xl/9')
+  })
+
+  it('applies font weight classes (light, normal, medium, semibold, bold)', () => {
+    const { rerender } = render(<BodyText weight="light">Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('font-light')
+
+    rerender(<BodyText weight="bold">Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('font-bold')
+  })
+
   it('applies "small" class when small=true', () => {
     render(<BodyText small>Text</BodyText>)
     const el = screen.getByText('Text')
@@ -32,16 +48,28 @@ describe('BodyText Component', () => {
     expect(el).toHaveClass('font-semibold')
   })
 
-  it('applies "muted" class when muted=true', () => {
-    render(<BodyText muted>Text</BodyText>)
-    const el = screen.getByText('Text')
-    expect(el).toHaveClass('text-[var(--ui-text-muted)]')
+  it('applies color intent classes (muted, error, success, warning, info)', () => {
+    const { rerender } = render(<BodyText error>Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-text-danger)]')
+
+    rerender(<BodyText success>Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-success)]')
+
+    rerender(<BodyText warning>Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-warning)]')
+
+    rerender(<BodyText info>Text</BodyText>)
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-info)]')
   })
 
-  it('applies "error" class when error=true', () => {
-    render(<BodyText error>Text</BodyText>)
-    const el = screen.getByText('Text')
-    expect(el).toHaveClass('text-[var(--ui-text-danger)]')
+  it('applies align and line-clamp properties', () => {
+    render(
+      <BodyText align="center" clamp={2} truncate>
+        Multi-line Text
+      </BodyText>,
+    )
+    const el = screen.getByText('Multi-line Text')
+    expect(el).toHaveClass('text-center', 'line-clamp-2', 'truncate')
   })
 
   it('applies "inline" class when inline=true', () => {

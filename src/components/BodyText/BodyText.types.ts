@@ -1,30 +1,84 @@
-import type { HTMLAttributes, JSX, JSXElementConstructor } from 'react'
+import type { HTMLAttributes, JSX, JSXElementConstructor, ReactNode } from 'react'
+
+export type BodyTextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+export type BodyTextWeight = 'light' | 'normal' | 'medium' | 'semibold' | 'bold'
+export type BodyTextAlign = 'left' | 'center' | 'right' | 'justify'
 
 export interface BodyTextProps extends HTMLAttributes<HTMLParagraphElement> {
+  children?: ReactNode
+
   /**
-   * Add's `text-sm` class to the element
+   * Font size variant (`xs`, `sm`, `md`, `lg`, `xl`).
+   */
+  size?: BodyTextSize
+
+  /**
+   * Font weight variant (`light`, `normal`, `medium`, `semibold`, `bold`).
+   */
+  weight?: BodyTextWeight
+
+  /**
+   * Shortcut prop adding `text-sm` class (retained for backward compatibility).
    */
   small?: boolean
+
   /**
-   * Add's `font-semibold` class to the element
+   * Shortcut prop adding `font-semibold` class (retained for backward compatibility).
    */
   strong?: boolean
+
   /**
-   * Add's `text-gray-500` class to the element
+   * Muted secondary text color.
    */
   muted?: boolean
+
   /**
-   * Add's `text-red-500` class to the element
+   * Error red text color.
    */
   error?: boolean
+
   /**
-   * Add's `inline-flex items-center gap-2` class to the element
+   * Success green text color.
+   */
+  success?: boolean
+
+  /**
+   * Warning amber text color.
+   */
+  warning?: boolean
+
+  /**
+   * Info blue text color.
+   */
+  info?: boolean
+
+  /**
+   * Renders `inline-flex items-center gap-2`.
    */
   inline?: boolean
+
   /**
-   * JSX element to be render in place of `p`
+   * Inverted text color for dark backgrounds.
+   */
+  invert?: boolean
+
+  /**
+   * Text alignment (`left`, `center`, `right`, `justify`).
+   */
+  align?: BodyTextAlign
+
+  /**
+   * Truncate single line with ellipsis.
+   */
+  truncate?: boolean
+
+  /**
+   * Multi-line line clamp count (`1`, `2`, `3`, `4`).
+   */
+  clamp?: 1 | 2 | 3 | 4
+
+  /**
+   * JSX element to render in place of `p` (e.g. `div`, `span`, `article`).
    */
   as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>
-
-  invert?: boolean
 }
