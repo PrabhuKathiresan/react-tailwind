@@ -1,151 +1,208 @@
-import { BodyText, Card, HeadingText } from '@pk-design/react-tailwind'
+import { BodyText, Button, Card, StatusPill } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-import { SquareArrowOutUpRightIcon } from 'lucide-react'
+import { ExternalLink, Sparkles, Check } from 'lucide-react'
 import { Link } from 'react-router'
 
 export default function CardDocsPage() {
   const examples = [
     {
-      title: 'Basic',
-      description: 'Basic card container.',
+      title: 'Structured Card with Sub-Components',
+      description:
+        'Use Card.Header, Card.Title, Card.Description, Card.Content, and Card.Footer for clean, structured layouts.',
       render: (
         <div className="mx-auto max-w-md">
-          <Card className="space-y-4">
-            <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-            <BodyText>
-              React Tailwind is a React component library that provides a set of pre-built
-              components for building user interfaces.
-            </BodyText>
+          <Card variant="outlined">
+            <Card.Header bordered>
+              <div>
+                <Card.Title>Enterprise Subscription</Card.Title>
+                <Card.Description>Billing period: Annual</Card.Description>
+              </div>
+              <StatusPill color="success">Active</StatusPill>
+            </Card.Header>
+            <Card.Content>
+              <BodyText className="text-gray-600 dark:text-gray-300">
+                Includes unlimited team members, dedicated priority support, custom SSO
+                integrations, and SLA guarantees.
+              </BodyText>
+            </Card.Content>
+            <Card.Footer bordered>
+              <Button variant="outlined" size="sm">
+                Cancel
+              </Button>
+              <Button size="sm">Manage Plan</Button>
+            </Card.Footer>
           </Card>
         </div>
       ),
       code: `
-<Card className="space-y-4">
-  <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-  <BodyText>React Tailwind is a React component library that provides a set of pre-built components for building user interfaces.</BodyText>
-</Card>
-      `,
+<Card variant="outlined">
+  <Card.Header bordered>
+    <div>
+      <Card.Title>Enterprise Subscription</Card.Title>
+      <Card.Description>Billing period: Annual</Card.Description>
+    </div>
+    <StatusPill color="success">Active</StatusPill>
+  </Card.Header>
+  <Card.Content>
+    <p>Includes unlimited team members, priority support, and custom SSO integrations.</p>
+  </Card.Content>
+  <Card.Footer bordered>
+    <Button variant="outlined" size="sm">Cancel</Button>
+    <Button size="sm">Manage Plan</Button>
+  </Card.Footer>
+</Card>`,
     },
     {
-      title: 'Card as Link',
-      description: 'Card as a link.',
+      title: 'Surface Variants (Outlined, Elevated & Filled)',
+      description: 'Choose between outlined, elevated shadow, or filled background variants.',
       render: (
-        <Card as="a" href="#" target="_blank" hoverable>
-          <HeadingText.SubTitle className="flex items-center justify-between gap-2">
-            React Tailwind
-            <SquareArrowOutUpRightIcon size={16} />
-          </HeadingText.SubTitle>
-          <BodyText>
-            React Tailwind is a React component library that provides a set of pre-built components
-            for building user interfaces.
-          </BodyText>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card variant="outlined">
+            <Card.Title>Outlined</Card.Title>
+            <Card.Description>Clean 1px border outline.</Card.Description>
+          </Card>
+          <Card variant="elevated">
+            <Card.Title className="flex items-center gap-1.5">
+              <Sparkles className="size-4 text-amber-500" /> Elevated
+            </Card.Title>
+            <Card.Description>Subtle drop shadow & border.</Card.Description>
+          </Card>
+          <Card variant="filled">
+            <Card.Title>Filled</Card.Title>
+            <Card.Description>Soft tinted background fill.</Card.Description>
+          </Card>
+        </div>
       ),
       code: `
-<Card as="a" href="#" target="_blank" hoverable>
-  <HeadingText.SubTitle className="flex items-center justify-between gap-2">
-    React Tailwind
-    <SquareArrowOutUpRightIcon size={16} />
-  </HeadingText.SubTitle>
-  <BodyText>React Tailwind is a React component library that provides a set of pre-built components for building user interfaces.</BodyText>
+{/* Outlined Variant */}
+<Card variant="outlined">
+  <Card.Title>Outlined</Card.Title>
+  <Card.Description>Clean 1px border outline.</Card.Description>
 </Card>
-      `,
+
+{/* Elevated Variant */}
+<Card variant="elevated">
+  <Card.Title>Elevated</Card.Title>
+  <Card.Description>Subtle drop shadow & border.</Card.Description>
+</Card>
+
+{/* Filled Variant */}
+<Card variant="filled">
+  <Card.Title>Filled</Card.Title>
+  <Card.Description>Soft tinted background fill.</Card.Description>
+</Card>`,
     },
     {
-      title: 'Card as Custom Component',
-      description: 'Card as react router Link.',
+      title: 'Interactive & Selected Cards',
+      description: 'Add clickable hover elevation lift and selected brand highlight rings.',
       render: (
-        <Card as={Link} to="/alert" target="_blank" hoverable>
-          <HeadingText.SubTitle className="flex items-center justify-between gap-2">
-            React Tailwind Alerts
-            <SquareArrowOutUpRightIcon size={16} />
-          </HeadingText.SubTitle>
-          <BodyText>React Tailwind Alerts can be used to show alerts to the user.</BodyText>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+          <Card clickable variant="elevated">
+            <Card.Title>Clickable Card</Card.Title>
+            <Card.Description>Hover over me to see the elevation lift effect.</Card.Description>
+          </Card>
+          <Card selected clickable>
+            <Card.Header>
+              <Card.Title>Pro Plan</Card.Title>
+              <Check className="size-4 text-blue-600 dark:text-blue-400 font-bold" />
+            </Card.Header>
+            <Card.Description>Selected card with active brand ring outline.</Card.Description>
+          </Card>
+        </div>
       ),
       code: `
-<Card as={Link} to="/alert" target="_blank" hoverable>
-  <HeadingText.SubTitle className="flex items-center justify-between gap-2">
-    React Tailwind Alerts
-    <SquareArrowOutUpRightIcon size={16} />
-  </HeadingText.SubTitle>
-  <BodyText>React Tailwind Alerts can be used to show alerts to the user.</BodyText>
+{/* Clickable Card */}
+<Card clickable variant="elevated">
+  <Card.Title>Clickable Card</Card.Title>
+  <Card.Description>Hover over me to see the elevation lift effect.</Card.Description>
 </Card>
-      `,
+
+{/* Selected Card */}
+<Card selected clickable>
+  <Card.Header>
+    <Card.Title>Pro Plan</Card.Title>
+    <Check className="size-4 text-blue-600" />
+  </Card.Header>
+  <Card.Description>Selected card with active brand ring outline.</Card.Description>
+</Card>`,
     },
     {
-      title: 'Card with No Border',
-      description: 'Card without border.',
+      title: 'Card with Media Cover',
+      description: 'Embed cover imagery seamlessly at the top of the card using Card.Media.',
       render: (
-        <Card bordered={false}>
-          <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-          <BodyText>
-            React Tailwind is a React component library that provides a set of pre-built components
-            for building user interfaces.
-          </BodyText>
-        </Card>
+        <div className="mx-auto max-w-sm">
+          <Card variant="elevated">
+            <Card.Media
+              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"
+              alt="Abstract background"
+              aspectRatio="video"
+            />
+            <Card.Title>Design Systems in 2026</Card.Title>
+            <Card.Description>
+              Exploring modern UI component architecture and Tailwind CSS v4 patterns.
+            </Card.Description>
+            <Card.Footer>
+              <Button size="sm" variant="outlined">
+                Read Article
+              </Button>
+            </Card.Footer>
+          </Card>
+        </div>
       ),
       code: `
-<Card bordered={false}>
-  <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-  <BodyText>React Tailwind is a React component library that provides a set of pre-built components for building user interfaces.</BodyText>
-</Card>
-      `,
+<Card variant="elevated">
+  <Card.Media
+    src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"
+    alt="Cover image"
+    aspectRatio="video"
+  />
+  <Card.Title>Design Systems in 2026</Card.Title>
+  <Card.Description>Exploring modern UI component architecture and Tailwind CSS v4 patterns.</Card.Description>
+  <Card.Footer>
+    <Button size="sm" variant="outlined">Read Article</Button>
+  </Card.Footer>
+</Card>`,
     },
     {
-      title: 'Card with Hoverable',
-      description: 'Card that is hoverable.',
+      title: 'Polymorphic Link Card',
+      description: 'Render Card as a native link or React Router Link via the "as" prop.',
       render: (
-        <Card hoverable>
-          <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-          <BodyText>
-            React Tailwind is a React component library that provides a set of pre-built components
-            for building user interfaces.
-          </BodyText>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card as="a" href="#" target="_blank" clickable variant="outlined">
+            <Card.Title className="flex items-center justify-between">
+              External Documentation
+              <ExternalLink className="size-4 text-gray-400" />
+            </Card.Title>
+            <Card.Description>Opens external link in a new browser tab.</Card.Description>
+          </Card>
+          <Card as={Link} to="/alert" clickable variant="outlined">
+            <Card.Title className="flex items-center justify-between">
+              Alert Component
+              <ExternalLink className="size-4 text-gray-400" />
+            </Card.Title>
+            <Card.Description>Navigate internally via React Router Link.</Card.Description>
+          </Card>
+        </div>
       ),
       code: `
-<Card hoverable>
-  <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-  <BodyText>React Tailwind is a React component library that provides a set of pre-built components for building user interfaces.</BodyText>
+{/* Native Link Card */}
+<Card as="a" href="https://example.com" target="_blank" clickable>
+  <Card.Title>External Link</Card.Title>
+  <Card.Description>Opens in a new tab.</Card.Description>
 </Card>
-      `,
-    },
-    {
-      title: 'Compact Card',
-      description: 'Card with compact padding.',
-      render: (
-        <Card compact>
-          <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-          <BodyText>
-            React Tailwind is a React component library that provides a set of pre-built components
-            for building user interfaces.
-          </BodyText>
-        </Card>
-      ),
-      code: `
-<Card compact>
-  <HeadingText.SubTitle>React Tailwind</HeadingText.SubTitle>
-  <BodyText>React Tailwind is a React component library that provides a set of pre-built components for building user interfaces.</BodyText>
-</Card>
-      `,
+
+{/* React Router Link Card */}
+<Card as={Link} to="/alert" clickable>
+  <Card.Title>Alert Component</Card.Title>
+  <Card.Description>Navigate internally.</Card.Description>
+</Card>`,
     },
   ]
 
   return (
     <DocsPageLayout
       component="Card"
-      description="A flexible surface container for grouping related content with a consistent bordered and padded wrapper. Comes with optional header and footer slots, making it a natural fit for product listings, profile summaries, dashboard metrics, and any elevated content block."
-      playground={{
-        render: (props) => (
-          <Card {...props} className="w-80">
-            <HeadingText.SubTitle2>React Tailwind</HeadingText.SubTitle2>
-            <BodyText className="mt-2">
-              A modern component library built for speed, consistency, and scalability.
-            </BodyText>
-          </Card>
-        ),
-      }}
+      description="A versatile surface container for grouping related content with composable sub-components (Card.Header, Card.Title, Card.Description, Card.Content, Card.Footer, Card.Media), multiple surface variants (outlined, elevated, filled, ghost), and interactive selection states."
       examples={examples}
     />
   )

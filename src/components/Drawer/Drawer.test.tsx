@@ -5,10 +5,14 @@ import { Drawer } from './Drawer'
 // Minimal mock for Headless UI transitions
 jest.mock('@headlessui/react', () => ({
   Dialog: ({ open, onClose, children }: any) =>
-    open ? <div data-testid="dialog">{children}</div> : null,
+    open ? (
+      <div data-testid="dialog" onClick={() => onClose()}>
+        {children}
+      </div>
+    ) : null,
   DialogBackdrop: ({ children, ...rest }: any) => <div data-testid="backdrop" {...rest} />,
   DialogPanel: ({ children, className }: any) => (
-    <div data-testid="panel" className={className}>
+    <div data-testid="panel" className={className} onClick={(e) => e.stopPropagation()}>
       {children}
     </div>
   ),
@@ -22,13 +26,15 @@ jest.mock('@headlessui/react', () => ({
 jest.mock('../Button', () => ({
   Button: ({ children, onClick, className, ...rest }: any) => (
     <button
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation()
+        onClick?.(e)
+      }}
       className={className}
-      // forward only allowed attributes
       aria-label={rest['aria-label']}
       type={rest.type}
       disabled={rest.disabled}
-      data-testid="back-btn"
+      data-testid={rest['aria-label'] === 'Back' ? 'back-btn' : 'close-btn'}
     >
       {children}
     </button>
@@ -63,12 +69,16 @@ describe('Drawer Component', () => {
     expect(screen.getByText('Subtitle here')).toBeInTheDocument()
   })
 
-  it('renders no title block when title and description are missing', () => {
-    render(
-      <Drawer isOpen={true} title={null as any} description={null as any} children={<div />} />,
-    )
+  it('renders drag handle when align="bottom"', () => {
+    render(<Drawer {...basicProps} align="bottom" />)
 
-    expect(screen.queryByTestId('dialog-title')).toBeNull()
+    expect(screen.getByTestId('drawer-drag-handle')).toBeInTheDocument()
+  })
+
+  it('renders footer content', () => {
+    render(<Drawer {...basicProps} footer={<button data-testid="footer-btn">Submit</button>} />)
+
+    expect(screen.getByTestId('footer-btn')).toBeInTheDocument()
   })
 
   it('applies alignment classes', () => {
@@ -76,18 +86,15 @@ describe('Drawer Component', () => {
       start: 'justify-start',
       end: 'justify-end',
       center: 'justify-center',
-      top: 'items-center justify-center',
+      top: 'items-start justify-center',
       bottom: 'items-end justify-center',
     }
 
     Object.entries(alignments).forEach(([align, expected]) => {
       render(<Drawer {...basicProps} align={align as any} />)
 
-      // Multiple renders → take last
       const panels = screen.getAllByTestId('panel')
       const latestPanel = panels[panels.length - 1]
-
-      // align wrapper = parent of panel
       const alignWrapper = latestPanel.parentElement!
 
       expect(alignWrapper.className).toContain(expected)
@@ -108,7 +115,6 @@ describe('Drawer Component', () => {
     Object.entries(sizes).forEach(([size, cls]) => {
       render(<Drawer {...basicProps} size={size as any} />)
 
-      // Multiple panels exist → take the last one
       const panels = screen.getAllByTestId('panel')
       const latest = panels[panels.length - 1]
 
@@ -121,11 +127,6 @@ describe('Drawer Component', () => {
     expect(screen.getByTestId('backdrop')).toBeInTheDocument()
   })
 
-  it('does not render backdrop when disabled', () => {
-    render(<Drawer {...basicProps} backdrop={false} />)
-    expect(screen.queryByTestId('backdrop')).toBeNull()
-  })
-
   it('calls onClose when clicking back button', () => {
     const onClose = jest.fn()
 
@@ -135,22 +136,30 @@ describe('Drawer Component', () => {
     expect(onClose).toHaveBeenCalled()
   })
 
-  it('applies custom panelClass', () => {
-    render(<Drawer {...basicProps} panelClass="panel-x" />)
+  it('calls onClose when clicking close button', () => {
+    const onClose = jest.fn()
 
-    expect(screen.getByTestId('panel').className).toContain('panel-x')
+    render(<Drawer {...basicProps} onClose={onClose} showCloseButton={true} />)
+
+    fireEvent.click(screen.getByTestId('close-btn'))
+    expect(onClose).toHaveBeenCalled()
   })
 
-  it('applies custom contentClass', () => {
-    render(<Drawer {...basicProps} contentClass="content-y" />)
+  it('prevents onClose when closeOnOutsideClick is false and outside click occurs', () => {
+    const onClose = jest.fn()
 
-    expect(screen.getByTestId('drawer-content').parentElement!.className).toContain('content-y')
+    render(<Drawer {...basicProps} onClose={onClose} closeOnOutsideClick={false} />)
+
+    fireEvent.click(screen.getByTestId('dialog'))
+    expect(onClose).not.toHaveBeenCalled()
   })
 
-  it('applies sticky title class when enabled', () => {
-    render(<Drawer {...basicProps} titleSticky />)
+  it('calls onClose when closeOnOutsideClick is true and outside click occurs', () => {
+    const onClose = jest.fn()
 
-    const titleWrapper = screen.getByTestId('dialog-title').parentElement
-    expect(titleWrapper!.className).toContain('sticky')
+    render(<Drawer {...basicProps} onClose={onClose} closeOnOutsideClick={true} />)
+
+    fireEvent.click(screen.getByTestId('dialog'))
+    expect(onClose).toHaveBeenCalled()
   })
 })

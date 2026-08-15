@@ -3,13 +3,22 @@
   "description": "",
   "props": [
     {
+      "name": "size",
+      "type": "enum",
+      "raw": "InputSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Size scale of the input component.\n- `sm` (compact 28px/text-xs)\n- `md` (standard 36px/text-sm default)\n- `lg` (prominent 44px/text-base)\nDefaults to `\"md\"`."
+    },
+    {
       "name": "rightGroup",
       "type": "ReactNode",
       "raw": "ReactNode",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Space for right icon"
+      "description": "Space for right icon / control"
     },
     {
       "name": "leftGroup",
@@ -18,7 +27,61 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Space for left icon"
+      "description": "Space for left icon / control"
+    },
+    {
+      "name": "prefix",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Static prefix addon text or element (e.g. `\"https://\"` or `\"$\"`)."
+    },
+    {
+      "name": "suffix",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Static suffix addon text or element (e.g. `\".com\"` or `\"USD\"`)."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Renders a 1-Click clear `✕` button when text is present."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Callback fired when clear button is clicked."
+    },
+    {
+      "name": "showCount",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Renders a live character count (`12 / 50`) below the input field."
+    },
+    {
+      "name": "helperText",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Helper message rendered below the input field."
     },
     {
       "name": "label",

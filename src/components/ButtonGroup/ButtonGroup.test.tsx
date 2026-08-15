@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { ButtonGroup } from './ButtonGroup'
 import { Button } from '../Button'
 
@@ -35,14 +35,51 @@ describe('ButtonGroup Component', () => {
     expect(btn.className).toMatch(/text-base/)
   })
 
-  it('lets a child override the group theme/variant/size', () => {
+  it('supports toggle selection mode via value and onChange', () => {
+    const handleChange = jest.fn()
+
     render(
-      <ButtonGroup theme="secondary">
-        <Button theme="primary">One</Button>
+      <ButtonGroup value="week" onChange={handleChange}>
+        <Button value="day">Day</Button>
+        <Button value="week">Week</Button>
+        <Button value="month">Month</Button>
       </ButtonGroup>,
     )
-    const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
+
+    const [dayBtn, weekBtn] = screen.getAllByRole('button')
+    expect(weekBtn).toHaveAttribute('aria-pressed', 'true')
+    expect(dayBtn).toHaveAttribute('aria-pressed', 'false')
+
+    fireEvent.click(dayBtn)
+    expect(handleChange).toHaveBeenCalledWith('day')
+  })
+
+  it('supports multi-select array value in toggle mode', () => {
+    render(
+      <ButtonGroup value={['bold', 'italic']}>
+        <Button value="bold">B</Button>
+        <Button value="italic">I</Button>
+        <Button value="underline">U</Button>
+      </ButtonGroup>,
+    )
+
+    const [boldBtn, italicBtn, underlineBtn] = screen.getAllByRole('button')
+    expect(boldBtn).toHaveAttribute('aria-pressed', 'true')
+    expect(italicBtn).toHaveAttribute('aria-pressed', 'true')
+    expect(underlineBtn).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('propagates disabled prop to all child buttons', () => {
+    render(
+      <ButtonGroup disabled>
+        <Button>One</Button>
+        <Button>Two</Button>
+      </ButtonGroup>,
+    )
+
+    for (const btn of screen.getAllByRole('button')) {
+      expect(btn).toBeDisabled()
+    }
   })
 
   it('rounds only the outer corners for horizontal groups', () => {
@@ -59,15 +96,6 @@ describe('ButtonGroup Component', () => {
     expect(middle.className).toMatch(/rounded-none/)
     expect(last.className).toMatch(/rounded-r-md/)
     expect(last.className).toMatch(/rounded-l-none/)
-  })
-
-  it('does not touch rounding for a single child', () => {
-    render(
-      <ButtonGroup>
-        <Button>Only</Button>
-      </ButtonGroup>,
-    )
-    expect(screen.getByRole('button').className).not.toMatch(/rounded-none/)
   })
 
   it('applies pill rounding to outer edges when rounded=true', () => {

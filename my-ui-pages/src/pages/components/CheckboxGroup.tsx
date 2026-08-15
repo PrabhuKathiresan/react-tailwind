@@ -1,151 +1,143 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState } from 'react'
 import { CheckboxGroup, type CheckboxGroupItem } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
-const getOptions = (idx: number): CheckboxGroupItem[] => [
-  { label: 'Option 1', value: 'opt1' + idx },
-  { label: 'Option 2', value: 'opt2' + idx },
-  { label: 'Option 3', value: 'opt3' + idx },
+const permissionOptions: CheckboxGroupItem[] = [
+  { label: 'Read Access', value: 'read', description: 'Can view dashboards and reports' },
+  { label: 'Write Access', value: 'write', description: 'Can edit content and data entries' },
+  { label: 'Delete Access', value: 'delete', description: 'Can permanently remove records' },
+  { label: 'Admin Access', value: 'admin', description: 'Full system configuration management' },
 ]
 
-export default function CheckboxGroupDocsPage() {
-  const [selected, setSelected] = useState<Record<string, string[]>>({
-    group3: ['opt13', 'opt33'],
-  })
+function ValidationDemo() {
+  const [consents, setConsents] = useState<string[]>([])
+  const hasError =
+    consents.length < 3 ? 'You must select all required consents to proceed.' : undefined
 
-  const handleChange = (value: any[], e: ChangeEvent<HTMLInputElement>) => {
-    setSelected((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: value,
-      }
-    })
-  }
+  return (
+    <CheckboxGroup
+      label="Required Consents"
+      options={['Terms of Service', 'Privacy Policy', 'Cookie Tracking']}
+      value={consents}
+      onChange={(values) => setConsents(values)}
+      error={hasError}
+    />
+  )
+}
+
+export default function CheckboxGroupDocsPage() {
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>(['read', 'write'])
+  const [selectedCards, setSelectedCards] = useState<string[]>(['push', 'email'])
+  const [selectedGrid, setSelectedGrid] = useState<string[]>(['vite', 'next'])
 
   const examples = [
     {
-      title: 'Basic Checkbox Group',
-      description: 'A simple checkbox group using an array of items.',
+      title: 'Automated "Select All" Parent Header',
+      description:
+        'Use showSelectAll to automatically render a master checkbox with indeterminate state calculation.',
       render: (
         <CheckboxGroup
-          name="group1"
-          options={getOptions(1)}
-          value={selected.group1 || []}
-          onChange={handleChange}
+          label="Team Member Permissions"
+          labelHint={`${selectedPermissions.length} of ${permissionOptions.length} selected`}
+          options={permissionOptions}
+          value={selectedPermissions}
+          showSelectAll
+          selectAllLabel="Select All Permissions"
+          onChange={(values) => setSelectedPermissions(values)}
         />
       ),
       code: `
-const [selected, setSelected] = useState<Record<string, string[]>>({
-  group3: ['opt13', 'opt33']
-})
+<CheckboxGroup
+  label="Team Member Permissions"
+  options={permissionOptions}
+  value={selectedPermissions}
+  showSelectAll
+  selectAllLabel="Select All Permissions"
+  onChange={(values) => setSelectedPermissions(values)}
+/>`,
+    },
+    {
+      title: 'Card Container Variant',
+      description: 'Use variant="card" to render interactive card option tiles.',
+      render: (
+        <CheckboxGroup
+          label="Notification Channels"
+          variant="card"
+          options={[
+            {
+              label: 'Push Notifications',
+              value: 'push',
+              description: 'Instant alerts delivered to mobile and desktop browsers',
+            },
+            {
+              label: 'Email Summaries',
+              value: 'email',
+              description: 'Daily digest of activity sent to your inbox',
+            },
+            {
+              label: 'SMS Alerts',
+              value: 'sms',
+              description: 'Urgent security and billing notifications',
+            },
+          ]}
+          value={selectedCards}
+          onChange={(values) => setSelectedCards(values)}
+        />
+      ),
+      code: `
+<CheckboxGroup
+  label="Notification Channels"
+  variant="card"
+  options={[
+    { label: 'Push Notifications', value: 'push', description: 'Instant alerts delivered...' },
+    { label: 'Email Summaries', value: 'email', description: 'Daily digest of activity...' },
+  ]}
+  value={selectedCards}
+  onChange={(values) => setSelectedCards(values)}
+/>`,
+    },
+    {
+      title: 'Multi-Column Grid Layout (columns={2|3|4})',
+      description: 'Arrange checkbox items in responsive multi-column grid layouts.',
+      render: (
+        <CheckboxGroup
+          label="Supported Frameworks"
+          columns={3}
+          options={[
+            { label: 'Vite', value: 'vite' },
+            { label: 'Next.js', value: 'next' },
+            { label: 'Remix', value: 'remix' },
+            { label: 'Astro', value: 'astro' },
+            { label: 'Gatsby', value: 'gatsby' },
+            { label: 'Nuxt', value: 'nuxt' },
+          ]}
+          value={selectedGrid}
+          onChange={(values) => setSelectedGrid(values)}
+        />
+      ),
+      code: `
+<CheckboxGroup
+  label="Supported Frameworks"
+  columns={3}
+  options={frameworkOptions}
+  value={selectedGrid}
+  onChange={(values) => setSelectedGrid(values)}
+/>`,
+    },
+    {
+      title: 'Group Error & Validation State',
+      description: 'Pass the error prop to display group-level validation messages.',
+      render: <ValidationDemo />,
+      code: `
+const [consents, setConsents] = useState<string[]>([])
+const hasError = consents.length < 3 ? "You must select all required consents to proceed." : undefined
 
-const getOptions = (idx: number): CheckboxGroupItem[] => ([
-  { label: "Option 1", value: "opt1" + idx },
-  { label: "Option 2", value: "opt2" + idx },
-  { label: "Option 3", value: "opt3" + idx },
-]);
-
-const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  // handle setState here.
-}
-
 <CheckboxGroup
-  name="group1"
-  options={getOptions(1)}
-  value={selected.group1 || []}
-  onChange={handleChange}
-/>`,
-    },
-    {
-      title: 'Checkbox Group with Label and Hint',
-      description: 'Add a label and hint for better accessibility and guidance.',
-      render: (
-        <CheckboxGroup
-          name="group2"
-          options={getOptions(2)}
-          label="Select your options"
-          labelHint="You can select multiple items"
-          value={selected.group2 || []}
-          onChange={handleChange}
-        />
-      ),
-      code: `
-<CheckboxGroup
-  name="group2"
-  options={getOptions(2)}
-  label="Select your options"
-  labelHint="You can select multiple items"
-  value={selected.group2 || []}
-  onChange={handleChange}
-/>`,
-    },
-    {
-      title: 'Preselected Values',
-      description: 'You can set initial selected values using the `value` prop.',
-      render: (
-        <CheckboxGroup
-          name="group3"
-          options={getOptions(3)}
-          value={selected.group3}
-          onChange={handleChange}
-        />
-      ),
-      code: `
-<CheckboxGroup
-  name="group3"
-  options={getOptions(3)}
-  value={selected.group3}
-  onChange={handleChange}
-/>`,
-    },
-    {
-      title: 'Custom Styling',
-      description: 'Override container, label wrapper, and label classes for custom styling.',
-      render: (
-        <CheckboxGroup
-          name="group4"
-          options={getOptions(4)}
-          label="Styled options"
-          containerClass="bg-gray-50 p-4 rounded-md"
-          labelWrapperClass="flex items-center gap-2"
-          labelClass="font-medium text-blue-600"
-          value={selected.group4}
-          onChange={handleChange}
-        />
-      ),
-      code: `
-<CheckboxGroup
-  name="group4"
-  options={getOptions(4)}
-  label="Styled options"
-  containerClass="bg-gray-50 p-4 rounded-md"
-  labelWrapperClass="flex items-center gap-2"
-  labelClass="font-medium text-blue-600"
-  value={selected.group4}
-  onChange={handleChange}
-/>`,
-    },
-    {
-      title: 'Inline checkbox',
-      description: "Display's checkbox inline",
-      render: (
-        <CheckboxGroup
-          name="group5"
-          options={getOptions(5)}
-          value={selected.group5}
-          onChange={handleChange}
-          inline
-          containerClass="mb-0"
-          label="Displaying checkbox inline"
-        />
-      ),
-      code: `
-<CheckboxGroup
-  name="group5"
-  options={getOptions(5)}
-  value={selected.group5}
-  onChange={handleChange}
-  inline
+  label="Required Consents"
+  options={['Terms of Service', 'Privacy Policy', 'Cookie Tracking']}
+  value={consents}
+  onChange={(values) => setConsents(values)}
+  error={hasError}
 />`,
     },
   ]
@@ -153,7 +145,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
   return (
     <DocsPageLayout
       component="CheckboxGroup"
-      description="Renders a labeled set of checkboxes from a data array, managing the group label, hint text, and layout so you do not have to wire up each Checkbox individually. Best suited for multi-select option lists like permission pickers, filter panels, and preference screens."
+      description="Renders a collection of checkboxes from a data array, managing group labels, hints, multi-column grid layouts, card variants, and automated Select All parent controls."
       examples={examples}
     />
   )

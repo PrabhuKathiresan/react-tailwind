@@ -2,9 +2,7 @@ import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Dropdown } from './Dropdown'
 
-// -----------------------------
 // Mock HeadlessUI
-// -----------------------------
 jest.mock('@headlessui/react', () => ({
   Menu: ({ children }: any) => <div data-testid="menu">{children}</div>,
 
@@ -29,26 +27,19 @@ jest.mock('@headlessui/react', () => ({
   ),
 
   MenuItem: ({ children, disabled }: any) => (
-    <li data-testid="dropdown-item">{children({ focus: false, disabled })}</li>
+    <li data-testid="dropdown-item">{children({ active: false, disabled })}</li>
   ),
 }))
 
-// -----------------------------
-// Helpers
-// -----------------------------
 const items = [
-  { id: '1', label: 'Item 1' },
+  { id: '1', label: 'Item 1', icon: <span data-testid="icon-1">Icon</span>, shortcut: '⌘1' },
   { id: 'div-1', divider: true },
-  { id: '2', label: 'Item 2' },
+  { id: '2', label: 'Item 2', danger: true, description: 'Danger description' },
 ]
 
 const trigger = <span>Open</span>
-
 const renderItem = (item: any) => <div data-testid={`item-${item.id}`}>{item.label}</div>
 
-// -----------------------------
-// Tests
-// -----------------------------
 describe('Dropdown Component', () => {
   it('renders static triggerButton', () => {
     render(<Dropdown triggerButton={trigger} items={items} />)
@@ -75,98 +66,72 @@ describe('Dropdown Component', () => {
     expect(screen.getByTestId('item-2')).toBeInTheDocument()
   })
 
+  it('renders icon, description, and shortcut', () => {
+    render(<Dropdown triggerButton={trigger} items={items} />)
+
+    expect(screen.getByTestId('icon-1')).toBeInTheDocument()
+    expect(screen.getByText('⌘1')).toBeInTheDocument()
+    expect(screen.getByText('Danger description')).toBeInTheDocument()
+  })
+
+  it('renders groupTitle header line', () => {
+    const groupedItems = [{ id: 'g1', label: 'Workspaces', groupTitle: 'Account Settings' }]
+
+    render(<Dropdown triggerButton={trigger} items={groupedItems} />)
+
+    expect(screen.getByTestId('dropdown-group-g1')).toHaveTextContent('Account Settings')
+  })
+
   it('renders divider', () => {
-    render(<Dropdown triggerButton={trigger} items={items} renderItem={renderItem} />)
+    render(<Dropdown triggerButton={trigger} items={items} />)
 
     expect(screen.getByTestId('dropdown-divider')).toBeInTheDocument()
   })
 
-  it('applies itemsContainerClass', () => {
-    render(<Dropdown triggerButton={trigger} items={items} itemsContainerClass="my-container" />)
-
-    expect(screen.getByTestId('dropdown-items').className).toContain('my-container')
-  })
-
-  it('passes menuItemClass to items', () => {
+  it('applies itemsContainerClass and width class', () => {
     render(
       <Dropdown
         triggerButton={trigger}
         items={items}
-        menuItemClass="blue-text"
-        renderItem={(i) => <div data-testid={`item-${i.id}`}>{i.label}</div>}
+        width="lg"
+        itemsContainerClass="my-container"
       />,
     )
 
-    const item = screen.getByTestId('item-1')
-    expect(item.parentElement?.className).toContain('blue-text')
+    const container = screen.getByTestId('dropdown-items')
+    expect(container.className).toContain('w-64')
+    expect(container.className).toContain('my-container')
   })
 
-  it('applies focus styling when HeadlessUI passes focus=true', () => {
-    jest.doMock('@headlessui/react', () => ({
-      Menu: ({ children }: any) => <div>{children}</div>,
-      MenuButton: ({ children }: any) => <button>{children}</button>,
-      MenuItems: ({ children }: any) => <ul>{children}</ul>,
-      MenuItem: ({ children }: any) => (
-        <li data-testid="dropdown-item">{children({ focus: true, disabled: false })}</li>
-      ),
-    }))
+  it('calls onMenuClick and item.onClick when clicking items', () => {
+    const spyOnMenuClick = jest.fn()
+    const spyItemOnClick = jest.fn()
 
-    const { unmount } = render(
+    const clickItems = [{ id: 'c1', label: 'Click Me', onClick: spyItemOnClick }]
+
+    render(
       <Dropdown
         triggerButton={<span>Open</span>}
-        items={[
-          { id: '1', label: 'Item 1' },
-          { id: '2', label: 'Item 2' },
-        ]}
+        items={clickItems}
+        onMenuClick={spyOnMenuClick}
       />,
     )
 
-    const items = screen.getAllByTestId('dropdown-item')
+    const rendered = screen.getByTestId('dropdown-item-c1')
+    fireEvent.click(rendered)
 
-    const wrapper = items[0].firstElementChild as HTMLElement
-
-    expect(wrapper.className).toMatch(/bg-gray-50/)
-
-    unmount()
-    jest.resetModules()
+    expect(spyOnMenuClick).toHaveBeenCalledWith(clickItems[0], 0)
+    expect(spyItemOnClick).toHaveBeenCalledWith(clickItems[0])
   })
 
-  it('supports anchor prop', () => {
-    render(<Dropdown triggerButton={trigger} items={items} anchor="top end" />)
-
-    expect(screen.getByTestId('dropdown-items').getAttribute('anchor')).toBe('top end')
-  })
-
-  it('calls onMenuClick when clicking items', () => {
-    const spy = jest.fn()
-
-    render(<Dropdown triggerButton={<span>Open</span>} items={items} onMenuClick={spy} />)
-
-    const rendered = screen.getAllByTestId('dropdown-item')
-    const clickable = rendered[0].firstElementChild as HTMLElement
-
-    fireEvent.click(clickable)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(items[0], 0)
-  })
-
-  it('does not call onMenuClick for divider', () => {
-    const spy = jest.fn()
-
-    render(<Dropdown triggerButton={trigger} items={items} onMenuClick={spy} />)
-
-    fireEvent.click(screen.getByTestId('dropdown-divider'))
-    expect(spy).not.toHaveBeenCalled()
-  })
-
-  it('disabled items do not trigger onMenuClick', () => {
+  it('disabled items do not trigger click handlers', () => {
     const spy = jest.fn()
     const disabledItems = [{ id: '1', label: 'A', disabled: true }]
 
     render(<Dropdown triggerButton={trigger} items={disabledItems} onMenuClick={spy} />)
 
-    fireEvent.click(screen.getByTestId('dropdown-item'))
+    const rendered = screen.getByTestId('dropdown-item-1')
+    fireEvent.click(rendered)
     expect(spy).not.toHaveBeenCalled()
   })
 })

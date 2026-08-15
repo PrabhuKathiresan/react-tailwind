@@ -1,0 +1,42 @@
+{
+  "name": "StatusPill",
+  "description": "",
+  "props": [
+    {
+      "name": "theme",
+      "type": "enum",
+      "raw": "StatusPillTheme",
+      "enumValues": ["success", "warning", "danger", "info", "secondary"],
+      "required": false,
+      "defaultValue": "\"secondary\"",
+      "description": "Status theme tone"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "StatusPillSize",
+      "enumValues": ["sm", "md"],
+      "required": false,
+      "defaultValue": "\"sm\"",
+      "description": "Size variant controlling padding and text size"
+    },
+    {
+      "name": "dot",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Display indicator dot inside the status pill"
+    },
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Enable pulsing animation on indicator dot"
+    }
+  ]
+}

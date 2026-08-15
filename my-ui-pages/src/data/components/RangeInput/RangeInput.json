@@ -3,6 +3,15 @@
   "description": "",
   "props": [
     {
+      "name": "size",
+      "type": "enum",
+      "raw": "RangeInputSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Size scale of the slider (`\"sm\"` | `\"md\"` | `\"lg\"`). Defaults to `\"md\"`."
+    },
+    {
       "name": "wrapperClass",
       "type": "string",
       "raw": "string",
@@ -39,13 +48,22 @@
       "description": "Error message"
     },
     {
+      "name": "helperText",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Helper guidance message rendered below the slider"
+    },
+    {
       "name": "showValue",
       "type": "boolean",
       "raw": "boolean",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Whether to display current value on the right side of the slider. Defaults to `true`."
     },
     {
       "name": "valueSuffix",
@@ -54,7 +72,25 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "String suffix appended to value display (e.g. `\"%\"`, `\"px\"`, `\"₹\"`)"
+    },
+    {
+      "name": "showTooltip",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Floating value tooltip popup badge displayed above the thumb on hover or drag"
+    },
+    {
+      "name": "marks",
+      "type": "boolean | Record<number, string>",
+      "raw": "boolean | Record<number, string>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Step tick marks displayed along slider track (boolean or map of values to labels)"
     },
     {
       "name": "label",

@@ -1,4 +1,4 @@
-import type { JSX, ElementType, ComponentPropsWithoutRef } from 'react'
+import type { JSX, ElementType, ComponentPropsWithoutRef, ReactNode } from 'react'
 import type { PolymorphicRef } from '../common-type'
 
 /**
@@ -8,7 +8,7 @@ import type { PolymorphicRef } from '../common-type'
  *
  * @default "primary"
  */
-export type ButtonTheme = 'primary' | 'secondary' | 'danger'
+export type ButtonTheme = 'primary' | 'secondary' | 'danger' | 'success' | 'warning'
 
 /**
  * Visual variant of the button.
@@ -41,26 +41,9 @@ export type ThemedButtonClass = {
   }
 }
 
-/**
- * Utility: Builds a polymorphic prop type.
- *
- * This allows the component to accept **any HTML element** or **any custom React component**
- * via the `as` prop while automatically inheriting the correct props.
- *
- * Example:
- * ```tsx
- * <Button as="a" href="/home" />
- * <Button as={MyLink} to="/home" customProp />
- * ```
- */
 export type PolymorphicButtonProps<C extends ElementType, Props = {}> = Props & {
   /**
    * The element or component to render.
-   *
-   * Supports:
-   * - HTML elements (e.g., `"button"`, `"a"`, `"div"`)
-   * - React components (e.g., `Link`, `NextLink`, `MyCustomButton`)
-   *
    * @default "button"
    */
   as?: C
@@ -68,70 +51,67 @@ export type PolymorphicButtonProps<C extends ElementType, Props = {}> = Props & 
 
 /**
  * Core props shared by all Button variants.
- *
- * These do **not** include any HTML attributes — those come from the polymorphic type.
  */
 export interface ButtonBaseProps {
   /**
    * Controls button theme (color palette).
-   *
    * @default "primary"
    */
   theme?: ButtonTheme
 
   /**
    * Controls the visual styling of the button.
-   *
    * @default "default"
    */
   variant?: ButtonVariant
 
   /**
    * Controls padding, font size, spacing.
-   *
    * @default "md"
    */
   size?: ButtonSize
 
   /**
+   * Icon displayed on the left side of button text.
+   */
+  leftIcon?: ReactNode
+
+  /**
+   * Icon displayed on the right side of button text.
+   */
+  rightIcon?: ReactNode
+
+  /**
+   * Stretches button to share 100% of container width.
+   * @default false
+   */
+  fullWidth?: boolean
+
+  /**
    * If true, shows a Loader inside the button.
-   *
-   * While loading:
-   * - children are replaced
-   * - button typically becomes disabled
    */
   loading?: boolean
 
   /**
    * Optional text to display next to the loader.
-   *
-   * Only shown when `loading=true`.
-   *
    * @default ""
    */
   loadingText?: string
 
   /**
    * Applies 50% border radius, producing a pill-shaped button.
-   *
    * @default false
    */
   rounded?: boolean
 
   /**
    * Indicates that the button only contains an icon.
-   *
-   * Adjusts padding to match icon-only UX.
-   *
    * @default false
    */
   iconOnly?: boolean
 
   /**
    * Prevents outline styles on keyboard focus.
-   *
-   * Useful for icon buttons or custom focus handling.
-   *
    * @default false
    */
   noOutlineOnFocus?: boolean
@@ -142,39 +122,16 @@ export interface ButtonBaseProps {
   className?: string
 
   /**
-   * The HTML button type.
-   * Only valid when rendering as <button>.
+   * The HTML button type. Only valid when rendering as <button>.
    */
   type?: 'button' | 'submit' | 'reset'
 
   /**
-   * Standard disabled attribute.
-   * Only applies when as="button".
+   * Standard disabled attribute. Only applies when as="button".
    */
   disabled?: boolean
 }
 
-/**
- * Complete Button props,
- * supporting **polymorphic rendering** via the `as` prop.
- *
- * Examples:
- *
- * Render as a native button:
- * ```tsx
- * <Button type="submit">Save</Button>
- * ```
- *
- * Render as a link:
- * ```tsx
- * <Button as="a" href="/pricing" target="_blank">Learn More</Button>
- * ```
- *
- * Render as a custom component:
- * ```tsx
- * <Button as={MyCustomComponent} customProp="123">Custom</Button>
- * ```
- */
 export type ButtonProps<C extends ElementType = 'button'> = PolymorphicButtonProps<
   C,
   ButtonBaseProps

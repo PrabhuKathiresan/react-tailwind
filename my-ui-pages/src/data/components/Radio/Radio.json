@@ -9,7 +9,34 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Force type to checkbox only"
+      "description": "Force type to radio only"
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional subtext description below radio label"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "RadioSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": "\"md\"",
+      "description": "Size variant ('sm' | 'md' | 'lg')"
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "raw": "RadioTheme",
+      "enumValues": ["primary", "success", "danger"],
+      "required": false,
+      "defaultValue": "\"primary\"",
+      "description": "Color accent theme ('primary' | 'success' | 'danger')"
     },
     {
       "name": "wrapperClass",
@@ -37,6 +64,15 @@
       "required": false,
       "defaultValue": null,
       "description": "Label class"
+    },
+    {
+      "name": "descriptionClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Description subtext class"
     },
     {
       "name": "error",

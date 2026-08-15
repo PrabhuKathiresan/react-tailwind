@@ -1,92 +1,129 @@
 import { useState } from 'react'
 import { Textarea } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
+import { MessageSquare } from 'lucide-react'
 
 export default function TextareaDocsPage() {
-  const [value, setValue] = useState('')
+  const [autoText, setAutoText] = useState(
+    'Try typing multiple paragraphs here to watch the height expand automatically as new lines are added!',
+  )
+  const [countText, setCountText] = useState('React and Tailwind components are awesome.')
 
   const examples = [
     {
-      title: 'Basic Textarea',
-      description: 'A simple textarea with a label and controlled value.',
+      title: 'Auto-Resize Height (autoSize={true})',
+      description:
+        'Use autoSize={true} to dynamically expand the textarea height as users type multiple lines.',
       render: (
-        <Textarea
-          label="Description"
-          placeholder="Write something..."
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <div className="max-w-md">
+          <Textarea
+            label="Post Content (Auto-expanding)"
+            autoSize
+            value={autoText}
+            onChange={(e) => setAutoText(e.target.value)}
+            helperText="Height adjusts automatically based on content length."
+          />
+        </div>
       ),
       code: `
-const [value, setValue] = useState("")
+const [text, setText] = useState('...')
 
 <Textarea
-  label="Description"
-  placeholder="Write something..."
-  value={value}
-  onChange={(e) => setValue(e.target.value)}
+  label="Post Content"
+  autoSize
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+  helperText="Height adjusts automatically based on content length."
 />`,
     },
-
     {
-      title: 'Textarea with Left Icon',
-      description: 'You can prefix the textarea with any React element using leftGroup.',
+      title: 'Live Character Counter & Max Length',
+      description: 'Use showCount and maxLength to display character counts below the textarea.',
       render: (
-        <Textarea
-          label="Comment"
-          placeholder="Your comment..."
-          leftGroup={<span className="text-gray-400">💬</span>}
-        />
-      ),
-      code: `
-<Textarea
-  label="Comment"
-  placeholder="Your comment..."
-  leftGroup={<span className="text-gray-400">💬</span>}
-/>`,
-    },
-
-    {
-      title: 'Textarea with Right Icon',
-      description: 'Use rightGroup for actionable icons (e.g., character count, clear button).',
-      render: (
-        <Textarea
-          label="Message"
-          placeholder="Start typing..."
-          rightGroup={<span className="text-xs text-gray-500">✏️</span>}
-        />
+        <div className="max-w-md">
+          <Textarea
+            label="Short Bio"
+            maxLength={140}
+            showCount
+            value={countText}
+            onChange={(e) => setCountText(e.target.value)}
+            helperText="Write a brief introduction for your team profile."
+          />
+        </div>
       ),
       code: `
 <Textarea
-  label="Message"
-  placeholder="Start typing..."
-  rightGroup={<span className="text-xs text-gray-500">✏️</span>}
+  label="Short Bio"
+  maxLength={140}
+  showCount
+  value={text}
+  onChange={(e) => setText(e.target.value)}
 />`,
     },
-
     {
-      title: 'Error State',
-      description: 'Provide an error message to highlight invalid input.',
+      title: 'Size Scales (sm, md, lg)',
+      description: 'Choose from 3 responsive sizing scales.',
       render: (
-        <Textarea label="Feedback" placeholder="Enter feedback..." error="Feedback is required." />
+        <div className="max-w-md flex flex-col gap-4">
+          <Textarea
+            size="sm"
+            label="Small Textarea (sm)"
+            placeholder="Compact multi-line entry..."
+          />
+          <Textarea
+            size="md"
+            label="Medium Textarea (md, default)"
+            placeholder="Standard multi-line entry..."
+          />
+          <Textarea
+            size="lg"
+            label="Large Textarea (lg)"
+            placeholder="Prominent multi-line entry..."
+          />
+        </div>
+      ),
+      code: `
+<Textarea size="sm" label="Small Textarea (sm)" />
+<Textarea size="md" label="Medium Textarea (md)" />
+<Textarea size="lg" label="Large Textarea (lg)" />`,
+    },
+    {
+      title: 'With Icons & Helper Guidance',
+      description: 'Prefix textareas with leading icons and add guidance text.',
+      render: (
+        <div className="max-w-md flex flex-col gap-4">
+          <Textarea
+            label="User Feedback"
+            placeholder="Tell us what you think..."
+            leftGroup={<MessageSquare className="size-4" />}
+            helperText="Your feedback will be reviewed by our design system team."
+          />
+        </div>
       ),
       code: `
 <Textarea
-  label="Feedback"
-  placeholder="Enter feedback..."
-  error="Feedback is required."
+  label="User Feedback"
+  placeholder="Tell us what you think..."
+  leftGroup={<MessageSquare className="size-4" />}
+  helperText="Your feedback will be reviewed by our team."
 />`,
     },
-
     {
-      title: 'Disabled State',
-      description: 'Textarea can be disabled to prevent user input.',
-      render: <Textarea label="Notes" placeholder="Disabled textarea" disabled />,
+      title: 'Validation Error State',
+      description: 'Display validation messages when requirements are not met.',
+      render: (
+        <div className="max-w-md">
+          <Textarea
+            label="Support Ticket Description"
+            placeholder="Describe the issue in detail..."
+            error="Please provide at least 20 characters describing the issue."
+          />
+        </div>
+      ),
       code: `
 <Textarea
-  label="Notes"
-  placeholder="Disabled textarea"
-  disabled
+  label="Support Ticket Description"
+  error="Please provide at least 20 characters describing the issue."
 />`,
     },
   ]
@@ -94,7 +131,7 @@ const [value, setValue] = useState("")
   return (
     <DocsPageLayout
       component="Textarea"
-      description="A multi-line text field that shares the same label, hint, icon, and error messaging API as Input. Use it for longer free-text entries like comments, notes, addresses, or descriptions where a single-line input would be too restrictive."
+      description="A multi-line text input control featuring auto-resizing height, live character counters, responsive size scales (sm/md/lg), helper guidance text, and resize controls."
       examples={examples}
     />
   )

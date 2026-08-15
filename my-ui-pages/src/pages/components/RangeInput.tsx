@@ -2,184 +2,110 @@ import { useState } from 'react'
 import { RangeInput } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
+function SizeDemo() {
+  const [val1, setVal1] = useState(30)
+  const [val2, setVal2] = useState(50)
+  const [val3, setVal3] = useState(70)
+
+  return (
+    <div className="max-w-md flex flex-col gap-5">
+      <RangeInput
+        size="sm"
+        label="Small Slider (sm)"
+        value={val1}
+        valueSuffix="%"
+        onChange={(e) => setVal1(Number(e.target.value))}
+      />
+      <RangeInput
+        size="md"
+        label="Medium Slider (md, default)"
+        value={val2}
+        valueSuffix="%"
+        onChange={(e) => setVal2(Number(e.target.value))}
+      />
+      <RangeInput
+        size="lg"
+        label="Large Slider (lg)"
+        value={val3}
+        valueSuffix="%"
+        onChange={(e) => setVal3(Number(e.target.value))}
+      />
+    </div>
+  )
+}
+
+function TooltipAndMarksDemo() {
+  const [volume, setVolume] = useState(65)
+
+  return (
+    <div className="max-w-md">
+      <RangeInput
+        label="Playback Volume"
+        min={0}
+        max={100}
+        value={volume}
+        valueSuffix="%"
+        showTooltip
+        marks={{ 0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%' }}
+        helperText="Hover over or drag thumb to view live value tooltip."
+        onChange={(e) => setVolume(Number(e.target.value))}
+      />
+    </div>
+  )
+}
+
 export default function RangeInputDocsPage() {
   const examples = [
-    // -------------------------------------------------------
-    // Basic Example
-    // -------------------------------------------------------
     {
-      title: 'Basic Range Input',
-      description: 'A simple range slider with a label and current value.',
-      render: (() => {
-        const Example = () => {
-          const [value, setValue] = useState(50)
-          return (
-            <RangeInput
-              label="Volume"
-              min={0}
-              max={100}
-              value={value}
-              onChange={(e) => setValue(Number(e.target.value))}
-            />
-          )
-        }
-        return <Example />
-      })(),
+      title: 'Size Scales (sm, md, lg)',
+      description: 'Choose from 3 responsive sizing scales.',
+      render: <SizeDemo />,
       code: `
-const [value, setValue] = useState(50)
-
-<RangeInput
-  label="Volume"
-  min={0}
-  max={100}
-  value={value}
-  onChange={(e) => setValue(Number(e.target.value))}
-/>`,
+<RangeInput size="sm" label="Small Slider (sm)" value={val1} />
+<RangeInput size="md" label="Medium Slider (md)" value={val2} />
+<RangeInput size="lg" label="Large Slider (lg)" value={val3} />`,
     },
-
-    // -------------------------------------------------------
-    // With Value Suffix
-    // -------------------------------------------------------
     {
-      title: 'With Value Suffix',
-      description: 'Add a suffix like %, px, km, etc. to the displayed value.',
-      render: (() => {
-        const Example = () => {
-          const [opacity, setOpacity] = useState(75)
-          return (
-            <RangeInput
-              label="Opacity"
-              min={0}
-              max={100}
-              value={opacity}
-              valueSuffix="%"
-              onChange={(e) => setOpacity(Number(e.target.value))}
-            />
-          )
-        }
-        return <Example />
-      })(),
+      title: 'Floating Tooltip & Step Marks',
+      description:
+        'Use showTooltip for floating value popups on hover/drag and marks to render tick marks.',
+      render: <TooltipAndMarksDemo />,
       code: `
-const [opacity, setOpacity] = useState(75)
+const [volume, setVolume] = useState(65)
 
 <RangeInput
-  label="Opacity"
+  label="Playback Volume"
   min={0}
   max={100}
-  value={opacity}
+  value={volume}
   valueSuffix="%"
-  onChange={(e) => setOpacity(Number(e.target.value))}
+  showTooltip
+  marks={{ 0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%' }}
+  helperText="Hover over or drag thumb to view live value tooltip."
+  onChange={(e) => setVolume(Number(e.target.value))}
 />`,
     },
-
-    // -------------------------------------------------------
-    // With Hint
-    // -------------------------------------------------------
     {
-      title: 'With Label Hint',
-      description: 'Hints help explain what the slider controls.',
-      render: (() => {
-        const Example = () => {
-          const [temperature, setTemperature] = useState(22)
-          return (
-            <RangeInput
-              label="Temperature"
-              labelHint={<span className="text-sm text-gray-500">In °C</span>}
-              min={10}
-              max={40}
-              value={temperature}
-              onChange={(e) => setTemperature(Number(e.target.value))}
-            />
-          )
-        }
-        return <Example />
-      })(),
+      title: 'Validation Error State',
+      description: 'Display an error message and red highlight when limits are exceeded.',
+      render: (
+        <div className="max-w-md">
+          <RangeInput
+            label="Server CPU Limit"
+            min={0}
+            max={100}
+            defaultValue={95}
+            valueSuffix="%"
+            error="CPU allocation exceeds 90% threshold!"
+          />
+        </div>
+      ),
       code: `
-const [temperature, setTemperature] = useState(22)
-
 <RangeInput
-  label="Temperature"
-  labelHint={<span className="text-sm text-gray-500">In °C</span>}
-  min={10}
-  max={40}
-  value={temperature}
-  onChange={(e) => setTemperature(Number(e.target.value))}
-/>`,
-    },
-
-    // -------------------------------------------------------
-    // Error State
-    // -------------------------------------------------------
-    {
-      title: 'Error State',
-      description: 'Show an error message when validation fails.',
-      render: (() => {
-        const Example = () => {
-          const [brightness, setBrightness] = useState(150)
-          return (
-            <RangeInput
-              label="Brightness"
-              min={0}
-              max={200}
-              value={brightness}
-              error={brightness > 180 ? 'Value too high!' : null}
-              onChange={(e) => setBrightness(Number(e.target.value))}
-            />
-          )
-        }
-        return <Example />
-      })(),
-      code: `
-const [brightness, setBrightness] = useState(150)
-
-<RangeInput
-  label="Brightness"
-  min={0}
-  max={200}
-  value={brightness}
-  error={brightness > 180 ? "Value too high!" : null}
-  onChange={(e) => setBrightness(Number(e.target.value))}
-/>`,
-    },
-
-    // -------------------------------------------------------
-    // Custom Styling
-    // -------------------------------------------------------
-    {
-      title: 'Custom Styling',
-      description: 'Customize the slider track, wrapper, or thumb with classNames.',
-      render: (() => {
-        const Example = () => {
-          const [zoom, setZoom] = useState(1)
-          return (
-            <RangeInput
-              label="Zoom Level"
-              min={1}
-              max={10}
-              step={1}
-              value={zoom}
-              valueSuffix="x"
-              containerClass="p-4 border rounded-lg shadow-sm bg-gray-50 dark:bg-gray-900"
-              className="accent-purple-600"
-              onChange={(e) => setZoom(Number(e.target.value))}
-            />
-          )
-        }
-        return <Example />
-      })(),
-      code: `
-const [zoom, setZoom] = useState(1)
-
-<RangeInput
-  label="Zoom Level"
-  min={1}
-  max={10}
-  step={1}
-  value={zoom}
-  valueSuffix="x"
-  containerClass="p-4 border rounded-lg shadow-sm bg-gray-50 dark:bg-gray-900"
-  className="accent-purple-600"
-  onChange={(e) => setZoom(Number(e.target.value))}
+  label="Server CPU Limit"
+  defaultValue={95}
+  valueSuffix="%"
+  error="CPU allocation exceeds 90% threshold!"
 />`,
     },
   ]
@@ -187,22 +113,7 @@ const [zoom, setZoom] = useState(1)
   return (
     <DocsPageLayout
       component="RangeInput"
-      description="A styled single-thumb slider for selecting a numeric value within a defined min-max range. Pairs the native input range element with a label, hint text, value suffix for units like px or percent, and inline error messaging for validation scenarios."
-      playground={{
-        render: (props) => (
-          <div className="w-full max-w-md">
-            <RangeInput
-              label="Volume"
-              name="volume"
-              min={0}
-              max={100}
-              showValue={props.showValue}
-              valueSuffix={props.valueSuffix}
-            />
-          </div>
-        ),
-        initialProps: { showValue: true, valueSuffix: '%' },
-      }}
+      description="A single-thumb slider control supporting filled active track gradients, floating tooltips, step tick marks, responsive size scales (sm/md/lg), and helper guidance messages."
       examples={examples}
     />
   )

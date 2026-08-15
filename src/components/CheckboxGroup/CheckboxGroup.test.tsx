@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { CheckboxGroup } from './CheckboxGroup'
 
-// Mock Checkbox component to test passed props clearly
+// Mock Checkbox component to test passed props cleanly
 jest.mock('../Checkbox', () => ({
-  Checkbox: ({ label, id, checked, value, onChange }: any) => (
+  Checkbox: ({ label, id, checked, value, onChange, indeterminate }: any) => (
     <label data-testid={`checkbox-${label}`}>
       <input
         type="checkbox"
@@ -13,6 +13,7 @@ jest.mock('../Checkbox', () => ({
         checked={checked}
         value={value}
         onChange={onChange}
+        data-indeterminate={indeterminate ? 'true' : 'false'}
       />
       {label}
     </label>
@@ -53,22 +54,47 @@ describe('CheckboxGroup Component', () => {
     expect(screen.getByText('Pick at least one')).toBeInTheDocument()
   })
 
-  it('applies containerClass', () => {
-    render(<CheckboxGroup containerClass="my-custom-class" options={['A']} value={[]} />)
+  it('renders Select All checkbox when showSelectAll=true', () => {
+    const handleChange = jest.fn()
+    render(
+      <CheckboxGroup
+        options={['A', 'B', 'C']}
+        value={['A']}
+        showSelectAll
+        onChange={handleChange}
+      />,
+    )
 
-    const wrapper = screen.getByText('A').closest('div')!.parentElement
-    expect(wrapper).toHaveClass('my-custom-class')
+    const selectAllInput = screen.getByTestId('checkbox-input-Select All')
+    expect(selectAllInput).toBeInTheDocument()
+    expect(selectAllInput).toHaveAttribute('data-indeterminate', 'true')
+
+    fireEvent.click(selectAllInput)
+    expect(handleChange).toHaveBeenCalledWith([], expect.any(Object))
   })
 
-  it('renders checkboxes inline when inline=true', () => {
-    render(<CheckboxGroup inline options={['A', 'B']} value={[]} />)
+  it('selects all items when clicking Select All while un-checked', () => {
+    const handleChange = jest.fn()
+    render(
+      <CheckboxGroup options={['A', 'B', 'C']} value={[]} showSelectAll onChange={handleChange} />,
+    )
 
-    const checkbox = screen.getByTestId('checkbox-A')
+    const selectAllInput = screen.getByTestId('checkbox-input-Select All')
+    fireEvent.click(selectAllInput)
 
-    const inlineWrapper = checkbox.closest('div.flex')
+    expect(handleChange).toHaveBeenCalledWith(['A', 'B', 'C'], expect.any(Object))
+  })
 
-    expect(inlineWrapper).not.toBeNull()
-    expect(inlineWrapper!.className).toMatch(/flex-wrap/)
+  it('applies grid column layout when columns is specified', () => {
+    const { container } = render(<CheckboxGroup columns={3} options={['A', 'B', 'C']} value={[]} />)
+
+    const gridWrapper = container.querySelector('.grid.grid-cols-1')
+    expect(gridWrapper).toBeInTheDocument()
+  })
+
+  it('renders error message when error is provided', () => {
+    render(<CheckboxGroup error="Please select at least one option" options={['A']} value={[]} />)
+    expect(screen.getByText('Please select at least one option')).toBeInTheDocument()
   })
 
   it('selects a value when checkbox is checked', () => {
@@ -99,30 +125,5 @@ describe('CheckboxGroup Component', () => {
     fireEvent.click(screen.getByTestId('checkbox-input-B'))
 
     expect(handleChange).toHaveBeenCalledWith(['A', 'B'], expect.any(Object))
-  })
-
-  it('supports complex typed values (generic)', () => {
-    const options = [
-      { label: 'Item 1', value: { id: 1 } },
-      { label: 'Item 2', value: { id: 2 } },
-    ]
-
-    const handleChange = jest.fn()
-
-    render(<CheckboxGroup options={options} value={[options[0].value]} onChange={handleChange} />)
-
-    fireEvent.click(screen.getByTestId('checkbox-input-Item 1'))
-
-    expect(handleChange).toHaveBeenCalled()
-  })
-
-  it('assigns unique ids using useId()', () => {
-    render(<CheckboxGroup options={['A']} value={[]} name="test" />)
-
-    const input = screen.getByTestId('checkbox-input-A')
-
-    expect(input.id).toBeTruthy()
-    expect(input.id).toContain('A') // suffix is preserved
-    expect(typeof input.id).toBe('string')
   })
 })

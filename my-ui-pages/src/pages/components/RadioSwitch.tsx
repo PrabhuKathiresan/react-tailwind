@@ -1,25 +1,22 @@
 import { useState } from 'react'
-import { RadioSwitch, TextContent } from '@pk-design/react-tailwind'
+import { RadioSwitch } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
 export default function RadioSwitchDocsPage() {
+  const [basic, setBasic] = useState('Option A')
+  const [plan, setPlan] = useState('basic')
+
   const examples = [
     {
       title: 'Basic Radio Switch',
-      description: 'A simple segmented control using string-based items.',
-      render: (() => {
-        const Example = () => {
-          const [selected, setSelected] = useState('Option A')
-          return (
-            <RadioSwitch
-              selected={selected}
-              onChange={setSelected}
-              items={['Option A', 'Option B', 'Option C']}
-            />
-          )
-        }
-        return <Example />
-      })(),
+      description: 'A GPU-accelerated segmented control with smooth sliding selection highlight.',
+      render: (
+        <RadioSwitch
+          selected={basic}
+          onChange={setBasic}
+          items={['Option A', 'Option B', 'Option C']}
+        />
+      ),
       code: `
 const [selected, setSelected] = useState("Option A")
 
@@ -31,144 +28,47 @@ const [selected, setSelected] = useState("Option A")
     },
 
     {
-      title: 'Controlled Radio Switch',
-      description: 'Manage the selected value using React state.',
-      render: (() => {
-        const Example = () => {
-          const [selected, setSelected] = useState('Monthly')
-          return (
-            <RadioSwitch
-              label="Billing"
-              selected={selected}
-              onChange={setSelected}
-              items={['Monthly', 'Yearly']}
-            />
-          )
-        }
-        return <Example />
-      })(),
+      title: 'Size Variants (sm, md, lg)',
+      description: 'RadioSwitch supports 3 size variants.',
+      render: <ExampleSizeSwitchGroup />,
       code: `
-const [selected, setSelected] = useState("Monthly")
-
-<RadioSwitch
-  label="Billing"
-  selected={selected}
-  onChange={setSelected}
-  items={["Monthly", "Yearly"]}
-/>`,
+<RadioSwitch size="sm" selected={selectedSm} onChange={setSelectedSm} items={['Small', 'Medium', 'Large']} />
+<RadioSwitch size="md" selected={selectedMd} onChange={setSelectedMd} items={['Small', 'Medium', 'Large']} />
+<RadioSwitch size="lg" selected={selectedLg} onChange={setSelectedLg} items={['Small', 'Medium', 'Large']} />`,
     },
 
     {
-      title: 'Options With Descriptions',
-      description: 'Pass objects to show a label and a description.',
-      render: (() => {
-        const Example = () => {
-          const [selected, setSelected] = useState('basic')
-          return (
-            <RadioSwitch
-              selected={selected}
-              onChange={setSelected}
-              items={[
-                { label: 'Basic', value: 'basic', description: 'For individuals' },
-                { label: 'Pro', value: 'pro', description: 'For small teams' },
-                { label: 'Enterprise', value: 'enterprise', description: 'For large orgs' },
-              ]}
-              contentClass="px-3"
-            />
-          )
-        }
-        return <Example />
-      })(),
+      title: 'Color Themes (Primary, Secondary, Dark)',
+      description: 'Customize the sliding indicator highlight color theme.',
+      render: <ExampleThemeSwitchGroup />,
       code: `
-const [selected, setSelected] = useState("basic")
+<RadioSwitch theme="primary" selected={sel1} onChange={setSel1} items={['Primary', 'Secondary', 'Dark']} />
+<RadioSwitch theme="secondary" selected={sel2} onChange={setSel2} items={['Primary', 'Secondary', 'Dark']} />
+<RadioSwitch theme="dark" selected={sel3} onChange={setSel3} items={['Primary', 'Secondary', 'Dark']} />`,
+    },
 
+    {
+      title: 'Options With Descriptions & Disabled Items',
+      description: 'Pass objects with subtext descriptions and disable specific options.',
+      render: (
+        <RadioSwitch
+          selected={plan}
+          onChange={setPlan}
+          items={[
+            { label: 'Basic', value: 'basic', description: 'For individuals' },
+            { label: 'Pro', value: 'pro', description: 'For small teams' },
+            { label: 'Enterprise', value: 'enterprise', description: 'Sold out', disabled: true },
+          ]}
+        />
+      ),
+      code: `
 <RadioSwitch
-  selected={selected}
-  onChange={setSelected}
+  selected={plan}
+  onChange={setPlan}
   items={[
-    { label: "Basic", value: "basic", description: "For individuals" },
-    { label: "Pro", value: "pro", description: "For small teams" },
-    { label: "Enterprise", value: "enterprise", description: "For large orgs" },
-  ]}
-/>`,
-    },
-
-    {
-      title: 'With Label and Hint',
-      description: 'Display additional UI context using an external label block.',
-      render: (() => {
-        const Example = () => {
-          const [selected, setSelected] = useState('Light')
-          return (
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <TextContent strong>Theme</TextContent>
-                <TextContent muted small>
-                  Choose your preference
-                </TextContent>
-              </div>
-
-              <RadioSwitch
-                selected={selected}
-                onChange={setSelected}
-                items={['Light', 'Dark', 'System']}
-              />
-            </div>
-          )
-        }
-        return <Example />
-      })(),
-      code: `
-const [selected, setSelected] = useState("Light")
-
-<div className="space-y-2">
-  <div className="flex justify-between items-center">
-    <span className="font-medium text-gray-700">Theme</span>
-    <span className="text-sm text-gray-500">Choose your preference</span>
-  </div>
-
-  <RadioSwitch
-    selected={selected}
-    onChange={setSelected}
-    items={["Light", "Dark", "System"]}
-  />
-</div>`,
-    },
-
-    {
-      title: 'Custom Styling',
-      description: 'Add Tailwind classes to wrapper or inner content.',
-      render: (() => {
-        const Example = () => {
-          const [selected, setSelected] = useState('medium')
-          return (
-            <RadioSwitch
-              selected={selected}
-              onChange={setSelected}
-              wrapperClass="bg-gray-50 dark:bg-gray-900 shadow-inner"
-              contentClass="py-1"
-              items={[
-                { label: 'Small', value: 'small' },
-                { label: 'Medium', value: 'medium' },
-                { label: 'Large', value: 'large' },
-              ]}
-            />
-          )
-        }
-        return <Example />
-      })(),
-      code: `
-const [selected, setSelected] = useState("medium")
-
-<RadioSwitch
-  selected={selected}
-  onChange={setSelected}
-  wrapperClass="bg-gray-50 dark:bg-gray-900 shadow-inner"
-  contentClass="py-1"
-  items={[
-    { label: "Small", value: "small" },
-    { label: "Medium", value: "medium" },
-    { label: "Large", value: "large" },
+    { label: 'Basic', value: 'basic', description: 'For individuals' },
+    { label: 'Pro', value: 'pro', description: 'For small teams' },
+    { label: 'Enterprise', value: 'enterprise', description: 'Sold out', disabled: true },
   ]}
 />`,
     },
@@ -177,27 +77,75 @@ const [selected, setSelected] = useState("medium")
   return (
     <DocsPageLayout
       component="RadioSwitch"
-      description="A segmented pill-style control for selecting one option from a small, visible set. Renders a smooth sliding highlight animation as the selection changes. Supports both plain string items and rich objects with labels and per-option descriptions, making it suitable for billing toggles, view switchers, and theme selectors."
-      playground={{
-        controls: {
-          items: 'array',
-          selected: { linkedSelect: 'items' },
-        },
-        render: (props, setValue) => (
-          <RadioSwitch
-            label={props.label || 'Choose an option'}
-            selected={props.selected ?? props.items?.[0] ?? 'Option A'}
-            items={props.items ?? ['Option A', 'Option B', 'Option C']}
-            onChange={(v) => setValue('selected', v)}
-          />
-        ),
-        initialProps: {
-          items: ['Option A', 'Option B', 'Option C'],
-          selected: 'Option A',
-          label: 'Choose an option',
-        },
-      }}
+      description="A GPU-accelerated segmented control with smooth sliding selection highlight. Supports size variants, color themes, subtext descriptions, and disabled items."
       examples={examples}
     />
+  )
+}
+
+function ExampleSizeSwitchGroup() {
+  const [sm, setSm] = useState('Small')
+  const [md, setMd] = useState('Medium')
+  const [lg, setLg] = useState('Large')
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <p className="text-xs font-semibold text-gray-500 mb-1">Small (size="sm")</p>
+        <RadioSwitch
+          size="sm"
+          selected={sm}
+          onChange={setSm}
+          items={['Small', 'Medium', 'Large']}
+        />
+      </div>
+      <div>
+        <p className="text-xs font-semibold text-gray-500 mb-1">Medium (size="md")</p>
+        <RadioSwitch
+          size="md"
+          selected={md}
+          onChange={setMd}
+          items={['Small', 'Medium', 'Large']}
+        />
+      </div>
+      <div>
+        <p className="text-xs font-semibold text-gray-500 mb-1">Large (size="lg")</p>
+        <RadioSwitch
+          size="lg"
+          selected={lg}
+          onChange={setLg}
+          items={['Small', 'Medium', 'Large']}
+        />
+      </div>
+    </div>
+  )
+}
+
+function ExampleThemeSwitchGroup() {
+  const [p, setP] = useState('Primary')
+  const [s, setS] = useState('Secondary')
+  const [d, setD] = useState('Dark')
+
+  return (
+    <div className="space-y-4">
+      <RadioSwitch
+        theme="primary"
+        selected={p}
+        onChange={setP}
+        items={['Primary', 'Secondary', 'Dark']}
+      />
+      <RadioSwitch
+        theme="secondary"
+        selected={s}
+        onChange={setS}
+        items={['Primary', 'Secondary', 'Dark']}
+      />
+      <RadioSwitch
+        theme="dark"
+        selected={d}
+        onChange={setD}
+        items={['Primary', 'Secondary', 'Dark']}
+      />
+    </div>
   )
 }

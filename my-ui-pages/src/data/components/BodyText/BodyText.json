@@ -3,13 +3,31 @@
   "description": "",
   "props": [
     {
+      "name": "size",
+      "type": "enum",
+      "raw": "BodyTextSize",
+      "enumValues": ["xs", "sm", "md", "lg", "xl"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Font size variant (`xs`, `sm`, `md`, `lg`, `xl`)."
+    },
+    {
+      "name": "weight",
+      "type": "enum",
+      "raw": "BodyTextWeight",
+      "enumValues": ["light", "normal", "medium", "semibold", "bold"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Font weight variant (`light`, `normal`, `medium`, `semibold`, `bold`)."
+    },
+    {
       "name": "small",
       "type": "boolean",
       "raw": "boolean",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Add's `text-sm` class to the element"
+      "description": "Shortcut prop adding `text-sm` class (retained for backward compatibility)."
     },
     {
       "name": "strong",
@@ -18,7 +36,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Add's `font-semibold` class to the element"
+      "description": "Shortcut prop adding `font-semibold` class (retained for backward compatibility)."
     },
     {
       "name": "muted",
@@ -27,7 +45,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Add's `text-gray-500` class to the element"
+      "description": "Muted secondary text color."
     },
     {
       "name": "error",
@@ -36,7 +54,34 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Add's `text-red-500` class to the element"
+      "description": "Error red text color."
+    },
+    {
+      "name": "success",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Success green text color."
+    },
+    {
+      "name": "warning",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Warning amber text color."
+    },
+    {
+      "name": "info",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Info blue text color."
     },
     {
       "name": "inline",
@@ -45,16 +90,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Add's `inline-flex items-center gap-2` class to the element"
-    },
-    {
-      "name": "as",
-      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": null,
-      "description": "JSX element to be render in place of `p`"
+      "description": "Renders `inline-flex items-center gap-2`."
     },
     {
       "name": "invert",
@@ -63,7 +99,43 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": ""
+      "description": "Inverted text color for dark backgrounds."
+    },
+    {
+      "name": "align",
+      "type": "enum",
+      "raw": "BodyTextAlign",
+      "enumValues": ["center", "left", "right", "justify"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Text alignment (`left`, `center`, `right`, `justify`)."
+    },
+    {
+      "name": "truncate",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Truncate single line with ellipsis."
+    },
+    {
+      "name": "clamp",
+      "type": "enum",
+      "raw": "1 | 2 | 3 | 4",
+      "enumValues": ["1", "2", "3", "4"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Multi-line line clamp count (`1`, `2`, `3`, `4`)."
+    },
+    {
+      "name": "as",
+      "type": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "raw": "keyof IntrinsicElements | JSXElementConstructor<any>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "JSX element to render in place of `p` (e.g. `div`, `span`, `article`)."
     }
   ]
 }

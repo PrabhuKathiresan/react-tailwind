@@ -7,9 +7,18 @@
       "type": "(string | BaseOption)[]",
       "raw": "(string | BaseOption)[]",
       "enumValues": null,
-      "required": true,
+      "required": false,
       "defaultValue": null,
       "description": "List of options to display in the dropdown"
+    },
+    {
+      "name": "groups",
+      "type": "OptionGroup<string | BaseOption>[]",
+      "raw": "OptionGroup<string | BaseOption>[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "List of option groups to display in the dropdown (alternative to options)"
     },
     {
       "name": "selected",
@@ -19,6 +28,15 @@
       "required": false,
       "defaultValue": null,
       "description": "Currently selected option(s).\n- For single select: a single T or null\n- For multi-select: T[]"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "SelectBoxSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Size scale of the SelectBox component (`\"sm\"` | `\"md\"` | `\"lg\"`). Defaults to `\"md\"`."
     },
     {
       "name": "labelKey",
@@ -108,7 +126,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "false",
-      "description": "Whether the open dropdown traps focus and makes the rest of the page\ninert (Headless UI's default Combobox behavior). Disabled by default so\nelements rendered inside the control itself — like the `allowClear`\nbutton — and the rest of the page stay interactive while the dropdown\nis open, matching common combobox libraries (e.g. react-select). Set to\n`true` to restore Headless UI's modal focus-trapping behavior."
+      "description": "Whether the open dropdown traps focus and makes the rest of the page inert."
     },
     {
       "name": "multiple",
@@ -129,13 +147,22 @@
       "description": "Maximum number of selections allowed in multi-select mode"
     },
     {
+      "name": "showSelectAll",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Automatically renders a \"Select All\" / \"Clear All\" action header inside multi-select dropdowns."
+    },
+    {
       "name": "immediate",
       "type": "boolean",
       "raw": "boolean",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Whether to commit value selection immediately when clicking options.\nHeadless UI uses \"immediate\" to control Combobox selection behavior."
+      "description": "Whether to commit value selection immediately when clicking options."
     },
     {
       "name": "showErrorMessage",
@@ -154,6 +181,33 @@
       "required": false,
       "defaultValue": null,
       "description": "Error message displayed below the component"
+    },
+    {
+      "name": "helperText",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Helper guidance message rendered below the field"
+    },
+    {
+      "name": "leftGroup",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional icon or element displayed on the left side of the input"
+    },
+    {
+      "name": "renderOption",
+      "type": "(option: string | BaseOption, isSelected: boolean) => ReactNode",
+      "raw": "(option: string | BaseOption, isSelected: boolean) => ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom option renderer function"
     },
     {
       "name": "async",
@@ -225,7 +279,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Callback when the user chooses the \"create/add\" option.\n\nIt may:\n - return void (do nothing automatically)\n - return a string or BaseOption → the component will auto-add/select it\n - return a Promise resolving to the above"
+      "description": "Callback when the user chooses the \"create/add\" option."
     },
     {
       "name": "allowClear",

@@ -89,7 +89,7 @@ function buildTabClass({
   tabClass?: string
 }) {
   const base = buildClassName(
-    'inline-flex items-center gap-1.5 text-sm font-medium transition focus-visible:outline-none',
+    'inline-flex items-center gap-1.5 text-sm font-medium transition focus:outline-none focus-visible:outline-none focus:ring-0 select-none',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
     stretch && !isVertical && 'flex-1 justify-center',
   )

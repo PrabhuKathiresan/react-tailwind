@@ -18,7 +18,16 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "() => {}",
-      "description": "Handler method that invokes on close attempt\n@returns void"
+      "description": "Handler method that invokes on close attempt"
+    },
+    {
+      "name": "closeOnOutsideClick",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Controls whether clicking outside / backdrop closes the drawer.\nSet to false to prevent accidental dismissal."
     },
     {
       "name": "align",
@@ -27,7 +36,7 @@
       "enumValues": ["center", "start", "end", "top", "bottom"],
       "required": false,
       "defaultValue": "end",
-      "description": "Drawer alignment on the page"
+      "description": "Drawer alignment on the page ('start' | 'end' | 'top' | 'bottom' | 'center')"
     },
     {
       "name": "backdrop",
@@ -36,7 +45,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "true",
-      "description": "Whether to add backdrop, when drawer is open"
+      "description": "Whether to add backdrop overlay"
     },
     {
       "name": "titleSticky",
@@ -54,7 +63,25 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Drawer description section"
+      "description": "Drawer description text"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional drawer footer action bar (e.g. action buttons)"
+    },
+    {
+      "name": "footerSticky",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Keeps the footer sticky at the bottom of the drawer"
     },
     {
       "name": "size",
@@ -63,7 +90,34 @@
       "enumValues": ["xs", "sm", "md", "lg", "xl", "2xl", "full"],
       "required": false,
       "defaultValue": "md",
-      "description": "Drawer size"
+      "description": "Drawer size ('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full')"
+    },
+    {
+      "name": "showCloseButton",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Shows top-right ✕ close button"
+    },
+    {
+      "name": "showBackButton",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Shows left ← back button in header"
+    },
+    {
+      "name": "dragHandle",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Displays top drag handle pill (especially for mobile bottom sheets)\nDefaults to true when align=\"bottom\""
     },
     {
       "name": "panelClass",
@@ -100,15 +154,6 @@
       "required": false,
       "defaultValue": "",
       "description": "Drawer description class"
-    },
-    {
-      "name": "showBackButton",
-      "type": "boolean",
-      "raw": "boolean",
-      "enumValues": null,
-      "required": false,
-      "defaultValue": "false",
-      "description": "Should show back button on Drawer"
     }
   ]
 }

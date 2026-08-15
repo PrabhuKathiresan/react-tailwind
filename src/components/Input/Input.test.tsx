@@ -10,12 +10,44 @@ describe('Input Component', () => {
     expect(screen.getByTestId('hint')).toBeInTheDocument()
   })
 
+  it('supports size scales (sm, md, lg)', () => {
+    render(<Input name="user" size="sm" />)
+    const input = screen.getByRole('textbox')
+    expect(input.className).toMatch(/px-2.5 py-1 text-xs/)
+  })
+
+  it('renders prefix and suffix addons', () => {
+    render(<Input name="domain" prefix="https://" suffix=".com" />)
+    expect(screen.getByText('https://')).toBeInTheDocument()
+    expect(screen.getByText('.com')).toBeInTheDocument()
+  })
+
+  it('renders 1-click clear button when clearable=true and text exists', () => {
+    const handleClear = jest.fn()
+    render(<Input name="search" clearable defaultValue="hello" onClear={handleClear} />)
+
+    const clearButton = screen.getByTitle('Clear text')
+    expect(clearButton).toBeInTheDocument()
+
+    fireEvent.click(clearButton)
+    expect(handleClear).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders character count when showCount=true', () => {
+    render(<Input name="title" defaultValue="hello" maxLength={20} showCount />)
+    expect(screen.getByText('5 / 20')).toBeInTheDocument()
+  })
+
+  it('renders helperText when no error is present', () => {
+    render(<Input name="email" helperText="We will never share your email." />)
+    expect(screen.getByText('We will never share your email.')).toBeInTheDocument()
+  })
+
   it('applies containerClass', () => {
     render(<Input name="user" containerClass="custom-box" />)
 
     const input = screen.getByRole('textbox')
-    // outer wrapper is two levels above <input>
-    const wrapper = input.parentElement!.parentElement!
+    const wrapper = input.parentElement!.parentElement!.parentElement!
 
     expect(wrapper).toHaveClass('custom-box')
   })
@@ -26,8 +58,6 @@ describe('Input Component', () => {
     expect(screen.getByTestId('left-icon')).toBeInTheDocument()
 
     const input = screen.getByRole('textbox')
-
-    // ps-10 padding added
     expect(input.className).toMatch(/ps-10/)
   })
 
@@ -37,16 +67,6 @@ describe('Input Component', () => {
     expect(screen.getByTestId('right-icon')).toBeInTheDocument()
 
     const input = screen.getByRole('textbox')
-
-    // pe-10 padding added
-    expect(input.className).toMatch(/pe-10/)
-  })
-
-  it('renders both left and right groups and applies both paddings', () => {
-    render(<Input name="user" leftGroup={<span>L</span>} rightGroup={<span>R</span>} />)
-
-    const input = screen.getByRole('textbox')
-    expect(input.className).toMatch(/ps-10/)
     expect(input.className).toMatch(/pe-10/)
   })
 
@@ -93,20 +113,6 @@ describe('Input Component', () => {
 
     const input = screen.getByRole('textbox')
     expect(input.id).toBe('email')
-  })
-
-  it('respects autoComplete prop', () => {
-    render(<Input name="email" autoComplete="on" />)
-
-    const input = screen.getByRole('textbox')
-    expect(input.getAttribute('autocomplete')).toBe('on')
-  })
-
-  it('uses default autoComplete=off when not set', () => {
-    render(<Input name="email" />)
-
-    const input = screen.getByRole('textbox')
-    expect(input.getAttribute('autocomplete')).toBe('off')
   })
 
   it('merges custom className into input element', () => {

@@ -117,14 +117,28 @@ function PaginationExample() {
  * -------------------------------------------------- */
 function StickyColumnExample() {
   const columns: DataTableColumn[] = [
-    { name: 'id', label: 'ID', sticky: 'left', width: 50 },
+    {
+      name: 'id',
+      label: 'ID',
+      sticky: 'left',
+      width: 50,
+      cellClass: 'bg-gray-100 dark:bg-gray-800',
+      headerClass: 'bg-gray-100 dark:bg-gray-800',
+    },
     { name: 'name', label: 'Name', width: 120 },
     { name: 'email', label: 'Email', width: 220 },
     { name: 'phone', label: 'Phone', width: 150 },
     { name: 'website', label: 'Website', width: 120 },
     { name: 'company.name', label: 'Company Name', width: 180 },
     { name: 'company.catchPhrase', label: 'Catch Phrase', width: 250 },
-    { name: 'username', label: 'Username', width: 140, sticky: 'right' },
+    {
+      name: 'username',
+      label: 'Username',
+      width: 140,
+      sticky: 'right',
+      cellClass: 'bg-gray-100 dark:bg-gray-800',
+      headerClass: 'bg-gray-100 dark:bg-gray-800',
+    },
   ]
 
   return <DataTable items={[...Users]} columns={columns} layout="fixed" />

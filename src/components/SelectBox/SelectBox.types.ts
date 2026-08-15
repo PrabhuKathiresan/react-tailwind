@@ -1,5 +1,7 @@
 import { type ReactNode } from 'react'
 
+export type SelectBoxSize = 'sm' | 'md' | 'lg'
+
 export type BaseOption = {
   /** Unique value for the option (used for selection comparison) */
   value: string
@@ -14,9 +16,19 @@ export type BaseOption = {
   [k: string]: any
 }
 
+export type OptionGroup<T = BaseOption> = {
+  /** Section header label for the group */
+  group: string
+  /** Options belonging to this group */
+  options: T[]
+}
+
 export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   /** List of options to display in the dropdown */
-  options: T[]
+  options?: T[]
+
+  /** List of option groups to display in the dropdown (alternative to options) */
+  groups?: OptionGroup<T>[]
 
   /**
    * Currently selected option(s).
@@ -24,6 +36,9 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
    * - For multi-select: T[]
    */
   selected?: T | T[] | null
+
+  /** Size scale of the SelectBox component (`"sm"` | `"md"` | `"lg"`). Defaults to `"md"`. */
+  size?: SelectBoxSize
 
   /** Name of the field inside option objects to use as the label (defaults to "label") */
   labelKey?: string
@@ -69,13 +84,7 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   dropdownContainerClass?: string
 
   /**
-   * Whether the open dropdown traps focus and makes the rest of the page
-   * inert (Headless UI's default Combobox behavior). Disabled by default so
-   * elements rendered inside the control itself — like the `allowClear`
-   * button — and the rest of the page stay interactive while the dropdown
-   * is open, matching common combobox libraries (e.g. react-select). Set to
-   * `true` to restore Headless UI's modal focus-trapping behavior.
-   *
+   * Whether the open dropdown traps focus and makes the rest of the page inert.
    * @default false
    */
   modalDropdown?: boolean
@@ -87,8 +96,12 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   maxSelection?: number
 
   /**
+   * Automatically renders a "Select All" / "Clear All" action header inside multi-select dropdowns.
+   */
+  showSelectAll?: boolean
+
+  /**
    * Whether to commit value selection immediately when clicking options.
-   * Headless UI uses "immediate" to control Combobox selection behavior.
    */
   immediate?: boolean
 
@@ -97,6 +110,15 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
 
   /** Error message displayed below the component */
   error?: string | ReactNode
+
+  /** Helper guidance message rendered below the field */
+  helperText?: ReactNode
+
+  /** Optional icon or element displayed on the left side of the input */
+  leftGroup?: ReactNode
+
+  /** Custom option renderer function */
+  renderOption?: (option: T, isSelected: boolean) => ReactNode
 
   /**
    * Enables async search mode:
@@ -133,11 +155,6 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
 
   /**
    * Callback when the user chooses the "create/add" option.
-   *
-   * It may:
-   *  - return void (do nothing automatically)
-   *  - return a string or BaseOption → the component will auto-add/select it
-   *  - return a Promise resolving to the above
    */
   onAdd?: (value: string) => Promise<T | string | void> | T | string | void
 

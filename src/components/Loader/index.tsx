@@ -9,7 +9,7 @@ type LoaderSizeMap = {
   [k in LoaderSize]: string
 }
 
-interface LoaderProps {
+interface LoaderProps extends React.SVGAttributes<SVGSVGElement> {
   size?: LoaderSize
   className?: string
 }
@@ -22,10 +22,12 @@ const loaderSizeMap: LoaderSizeMap = {
 }
 
 export const Loader: React.FC<LoaderProps> = ({ className = '', size = 'md', ...props }) => {
+  const hasColorClass = /\btext-/.test(className)
+
   return (
     <svg
       className={buildClassName(
-        'text-blue-600 dark:text-white',
+        !hasColorClass && 'text-blue-600 dark:text-white',
         loaderSizeMap[size],
         className,
         'spinner',

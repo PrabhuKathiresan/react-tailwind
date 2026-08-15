@@ -7,6 +7,7 @@ import { useAppContext } from '../contexts/AppContext'
 import GithubLogo from '../assets/github.svg?react'
 import { useEffect, useState } from 'react'
 import { SearchModal } from './SearchModal'
+import { VersionSwitcher } from './VersionSwitcher'
 
 export default function Header() {
   const { setExpanded, toggleUiMode } = useAppContext()
@@ -58,6 +59,7 @@ export default function Header() {
             Docs
           </Link>
           <div className="w-px h-6 bg-gray-300 dark:bg-gray-700" />
+          <VersionSwitcher />
           <div className="flex items-center gap-2">
             {uiModeBtn}
             <Button

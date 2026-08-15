@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { buildClassName } from '@pk-design/react-tailwind'
 import { Link, useLocation } from 'react-router'
 
@@ -40,6 +41,7 @@ export const navSections: NavSection[] = [
       { path: '/radio-switch', label: 'RadioSwitch' },
       { path: '/range-input', label: 'RangeInput' },
       { path: '/range-slider', label: 'RangeSlider' },
+      { path: '/quantity-stepper', label: 'QuantityStepper' },
     ],
   },
   {
@@ -55,6 +57,10 @@ export const navSections: NavSection[] = [
       { path: '/card', label: 'Card' },
       { path: '/dropdown', label: 'Dropdown' },
       { path: '/pagination', label: 'Pagination' },
+      { path: '/segmented-control', label: 'SegmentedControl' },
+      { path: '/skeleton', label: 'Skeleton' },
+      { path: '/status-pill', label: 'StatusPill' },
+      { path: '/sticky-action-bar', label: 'StickyActionBar' },
       { path: '/tabs', label: 'Tabs' },
       { path: '/toast', label: 'Toast' },
     ],
@@ -76,6 +82,17 @@ export const pageRoutes = navSections.reduce((routes, section) => {
 
 export default function NavList() {
   const location = useLocation()
+  const activeRef = useRef<HTMLAnchorElement | null>(null)
+
+  useEffect(() => {
+    if (activeRef.current) {
+      activeRef.current.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+        behavior: 'auto',
+      })
+    }
+  }, [location.pathname])
 
   return (
     <nav className="space-y-6">
@@ -90,6 +107,7 @@ export default function NavList() {
               return (
                 <li key={item.path}>
                   <Link
+                    ref={active ? activeRef : undefined}
                     to={item.path}
                     className={buildClassName(
                       'block rounded-md px-3 py-2 text-sm transition-colors',

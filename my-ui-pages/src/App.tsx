@@ -34,6 +34,11 @@ import TextContentDocsPage from './pages/components/TextContent'
 import TableDocsPage from './pages/components/Table'
 import DataTableDocsPage from './pages/components/DataTable'
 import VirtualizedDataTableDocsPage from './pages/components/VirtualizedDataTable'
+import SegmentedControlDocsPage from './pages/components/SegmentedControl'
+import QuantityStepperDocsPage from './pages/components/QuantityStepper'
+import StatusPillDocsPage from './pages/components/StatusPill'
+import StickyActionBarDocsPage from './pages/components/StickyActionBar'
+import SkeletonDocsPage from './pages/components/Skeleton'
 
 export default function App() {
   return (
@@ -61,12 +66,17 @@ export default function App() {
           <Route path="input" element={<InputDocsPage />} />
           <Route path="pagination" element={<PaginationDocsPage />} />
           <Route path="password-input" element={<PasswordInputDocsPage />} />
+          <Route path="quantity-stepper" element={<QuantityStepperDocsPage />} />
           <Route path="radio" element={<RadioDocsPage />} />
           <Route path="radio-group" element={<RadioGroupDocsPage />} />
           <Route path="radio-switch" element={<RadioSwitchDocsPage />} />
           <Route path="range-input" element={<RangeInputDocsPage />} />
           <Route path="range-slider" element={<RangeSliderDocsPage />} />
+          <Route path="segmented-control" element={<SegmentedControlDocsPage />} />
           <Route path="select-box" element={<SelectBoxDocsPage />} />
+          <Route path="skeleton" element={<SkeletonDocsPage />} />
+          <Route path="status-pill" element={<StatusPillDocsPage />} />
+          <Route path="sticky-action-bar" element={<StickyActionBarDocsPage />} />
           <Route path="table" element={<TableDocsPage />} />
           <Route path="tabs" element={<TabsDocsPage />} />
           <Route path="textarea" element={<TextareaDocsPage />} />

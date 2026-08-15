@@ -1,6 +1,6 @@
 {
   "name": "RadioSwitch",
-  "description": "GPU-accelerated Radio Switch with perfect highlight alignment.\nSupports wrapping, icons, descriptions, and dark mode.",
+  "description": "",
   "props": [
     {
       "name": "label",
@@ -9,7 +9,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "Accessible label for the group.\nUsed internally for aria-label."
+      "description": ""
     },
     {
       "name": "selected",
@@ -18,7 +18,7 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "The currently selected value.\nMakes this a controlled component."
+      "description": ""
     },
     {
       "name": "items",
@@ -27,7 +27,25 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "List of switch options.\nCan be:\n- an array of strings\n- an array of objects with label/value/description"
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "RadioSwitchSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": "md",
+      "description": ""
+    },
+    {
+      "name": "theme",
+      "type": "enum",
+      "raw": "RadioSwitchTheme",
+      "enumValues": ["primary", "secondary", "dark"],
+      "required": false,
+      "defaultValue": "primary",
+      "description": ""
     },
     {
       "name": "switchClass",

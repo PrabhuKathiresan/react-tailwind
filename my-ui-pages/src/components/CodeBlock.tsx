@@ -42,7 +42,11 @@ export function CodeBlock({ code, language = 'tsx', className }: CodeBlockProps)
           className="p-1.5 text-gray-400 hover:text-white transition"
           title="Copy to clipboard"
         >
-          {copied ? <Check size={16} /> : <Copy size={16} />}
+          {copied ? (
+            <Check size={16} className="text-emerald-400 transition-transform scale-110" />
+          ) : (
+            <Copy size={16} />
+          )}
         </button>
       </div>
 

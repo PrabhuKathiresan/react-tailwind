@@ -3,6 +3,15 @@
   "description": "",
   "props": [
     {
+      "name": "width",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "md",
+      "description": "Width size variant or custom width ('auto' | 'sm' | 'md' | 'lg' | 'xl' | string). Default is 'md' (w-56)"
+    },
+    {
       "name": "itemsContainerClass",
       "type": "string",
       "raw": "string",

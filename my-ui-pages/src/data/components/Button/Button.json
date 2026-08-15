@@ -6,7 +6,7 @@
       "name": "theme",
       "type": "enum",
       "raw": "ButtonTheme",
-      "enumValues": ["primary", "secondary", "danger"],
+      "enumValues": ["primary", "secondary", "danger", "success", "warning"],
       "required": false,
       "defaultValue": "\"primary\"",
       "description": "Controls button theme (color palette)."
@@ -30,13 +30,40 @@
       "description": "Controls padding, font size, spacing."
     },
     {
+      "name": "leftIcon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Icon displayed on the left side of button text."
+    },
+    {
+      "name": "rightIcon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Icon displayed on the right side of button text."
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Stretches button to share 100% of container width."
+    },
+    {
       "name": "loading",
       "type": "boolean",
       "raw": "boolean",
       "enumValues": null,
       "required": false,
       "defaultValue": null,
-      "description": "If true, shows a Loader inside the button.\n\nWhile loading:\n- children are replaced\n- button typically becomes disabled"
+      "description": "If true, shows a Loader inside the button."
     },
     {
       "name": "loadingText",
@@ -45,7 +72,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "\"\"",
-      "description": "Optional text to display next to the loader.\n\nOnly shown when `loading=true`."
+      "description": "Optional text to display next to the loader."
     },
     {
       "name": "rounded",
@@ -63,7 +90,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "false",
-      "description": "Indicates that the button only contains an icon.\n\nAdjusts padding to match icon-only UX."
+      "description": "Indicates that the button only contains an icon."
     },
     {
       "name": "noOutlineOnFocus",
@@ -72,7 +99,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "false",
-      "description": "Prevents outline styles on keyboard focus.\n\nUseful for icon buttons or custom focus handling."
+      "description": "Prevents outline styles on keyboard focus."
     },
     {
       "name": "type",
@@ -81,7 +108,7 @@
       "enumValues": ["button", "submit", "reset"],
       "required": false,
       "defaultValue": null,
-      "description": "The HTML button type.\nOnly valid when rendering as <button>."
+      "description": "The HTML button type. Only valid when rendering as <button>."
     },
     {
       "name": "as",
@@ -90,7 +117,7 @@
       "enumValues": null,
       "required": false,
       "defaultValue": "\"button\"",
-      "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"button\"`, `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomButton`)"
+      "description": "The element or component to render."
     }
   ]
 }

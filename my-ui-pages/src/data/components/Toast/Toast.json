@@ -4,21 +4,75 @@
   "props": [
     {
       "name": "message",
-      "type": "string",
-      "raw": "string",
+      "type": "ReactNode",
+      "raw": "ReactNode",
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "The message text displayed inside the toast."
+      "description": "Main text message displayed inside the toast."
     },
     {
       "name": "type",
       "type": "enum",
-      "raw": "\"success\" | \"error\" | \"info\" | \"warning\"",
+      "raw": "ToastType",
       "enumValues": ["success", "error", "info", "warning"],
       "required": true,
       "defaultValue": null,
-      "description": "Visual style of the toast based on its purpose.\n- `success` — positive confirmations\n- `error` — failures or critical issues\n- `info` — general helpful information\n- `warning` — caution or attention required"
+      "description": "Visual intent style of the toast."
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "ToastVariant",
+      "enumValues": ["accent", "filled", "outlined", "glass"],
+      "required": false,
+      "defaultValue": "accent",
+      "description": "Container variant style.\nDefaults to `\"accent\"`."
+    },
+    {
+      "name": "action",
+      "type": "{ label: string; onClick: () => void; }",
+      "raw": "{ label: string; onClick: () => void; }",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional action button."
+    },
+    {
+      "name": "icon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional custom icon override slot."
+    },
+    {
+      "name": "showProgressBar",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Controls whether an animated auto-close progress bar is displayed.\nDefaults to `true` when autoClose is enabled."
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "4000",
+      "description": "Total duration in milliseconds for progress bar countdown."
+    },
+    {
+      "name": "isPaused",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "State indicating whether auto-close countdown is paused (e.g. on hover)."
     },
     {
       "name": "onClose",
@@ -27,7 +81,7 @@
       "enumValues": null,
       "required": true,
       "defaultValue": null,
-      "description": "Triggers removal of the toast.\nManaged internally by the ToastProvider."
+      "description": "Triggers removal of the toast."
     },
     {
       "name": "isTop",

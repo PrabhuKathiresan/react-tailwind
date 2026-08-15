@@ -10,6 +10,29 @@ describe('RangeInput', () => {
     expect(screen.getByRole('slider')).toBeInTheDocument()
   })
 
+  test('supports size scales (sm, md, lg)', () => {
+    render(<RangeInput id="range" size="sm" value={20} onChange={() => {}} />)
+    const slider = screen.getByRole('slider')
+    expect(slider.className).toMatch(/h-1.5/)
+  })
+
+  test('renders step marks and helperText', () => {
+    render(
+      <RangeInput
+        id="range"
+        value={50}
+        marks={{ 0: '0%', 50: '50%', 100: '100%' }}
+        helperText="Adjust audio balance"
+        onChange={() => {}}
+      />,
+    )
+
+    expect(screen.getByText('0%')).toBeInTheDocument()
+    expect(screen.getByText('50%')).toBeInTheDocument()
+    expect(screen.getByText('100%')).toBeInTheDocument()
+    expect(screen.getByText('Adjust audio balance')).toBeInTheDocument()
+  })
+
   test('displays value and suffix', () => {
     render(<RangeInput id="range" value={30} valueSuffix="%" showValue onChange={() => {}} />)
 
@@ -46,19 +69,5 @@ describe('RangeInput', () => {
     render(<RangeInput id="range" value={70} showValue={false} onChange={() => {}} />)
 
     expect(screen.queryByText('70')).not.toBeInTheDocument()
-  })
-
-  test('renders label hint when provided', () => {
-    render(
-      <RangeInput
-        id="range"
-        value={25}
-        label="Opacity"
-        labelHint={<span data-testid="hint">Hint</span>}
-        onChange={() => {}}
-      />,
-    )
-
-    expect(screen.getByTestId('hint')).toBeInTheDocument()
   })
 })

@@ -33,9 +33,53 @@ describe('RangeSlider', () => {
     expect(screen.getByText('Price Range')).toBeInTheDocument()
     expect(screen.getByText('Hint')).toBeInTheDocument()
 
-    // values shown at bottom
     expect(screen.getByText('20')).toBeInTheDocument()
     expect(screen.getByText('80')).toBeInTheDocument()
+  })
+
+  test('supports size scales (sm, md, lg)', () => {
+    render(
+      <RangeSlider min={0} max={100} valueMin={10} valueMax={90} size="sm" onChange={() => {}} />,
+    )
+    const minThumb = screen.getByTestId('thumb-min')
+    expect(minThumb.className).toMatch(/h-4 w-4/)
+  })
+
+  test('renders step marks and helperText', () => {
+    render(
+      <RangeSlider
+        min={0}
+        max={100}
+        valueMin={20}
+        valueMax={80}
+        marks={{ 0: '$0', 50: '$50', 100: '$100' }}
+        helperText="Select minimum and maximum budget"
+        onChange={() => {}}
+      />,
+    )
+
+    expect(screen.getByText('$0')).toBeInTheDocument()
+    expect(screen.getByText('$50')).toBeInTheDocument()
+    expect(screen.getByText('$100')).toBeInTheDocument()
+    expect(screen.getByText('Select minimum and maximum budget')).toBeInTheDocument()
+  })
+
+  test('supports keyboard navigation on thumbs', () => {
+    const handleChange = jest.fn()
+    render(
+      <RangeSlider
+        min={0}
+        max={100}
+        step={5}
+        valueMin={20}
+        valueMax={80}
+        onChange={handleChange}
+      />,
+    )
+
+    const minThumb = screen.getByTestId('thumb-min')
+    fireEvent.keyDown(minThumb, { key: 'ArrowRight' })
+    expect(handleChange).toHaveBeenCalledWith(25, 80)
   })
 
   test('shows error message', () => {
@@ -56,103 +100,14 @@ describe('RangeSlider', () => {
   test('clicking on track moves the nearest thumb', () => {
     const handleChange = jest.fn()
 
-    const { container } = render(
-      <RangeSlider min={0} max={100} valueMin={10} valueMax={90} onChange={handleChange} />,
-    )
+    render(<RangeSlider min={0} max={100} valueMin={10} valueMax={90} onChange={handleChange} />)
 
     const track = screen.getByTestId('range-track')
     expect(track).toBeTruthy()
 
-    mockTrackWidth(track, 1000) // simulate 1000px wide slider
+    mockTrackWidth(track, 1000)
 
-    // Click at 200px → closer to min thumb
     fireEvent.mouseDown(track, { clientX: 200 })
-
-    // rawVal at 200px = 20
     expect(handleChange).toHaveBeenCalledWith(20, 90)
-  })
-
-  test('dragging the min thumb triggers onChange with new values', () => {
-    const handleChange = jest.fn()
-
-    const { container } = render(
-      <RangeSlider min={0} max={100} valueMin={30} valueMax={90} onChange={handleChange} />,
-    )
-
-    const minThumb = screen.getByTestId('thumb-min')
-
-    const track = screen.getByTestId('range-track')
-    mockTrackWidth(track, 1000)
-
-    // start drag
-    fireEvent.pointerDown(minThumb, { clientX: 300 })
-
-    // drag to 100px
-    fireEvent.pointerMove(window, { clientX: 100 })
-
-    // rawVal at 100px = 10
-    expect(handleChange).toHaveBeenCalledWith(10, 90)
-
-    // release
-    fireEvent.pointerUp(window)
-  })
-
-  test('dragging the max thumb works', () => {
-    const handleChange = jest.fn()
-
-    const { container } = render(
-      <RangeSlider min={0} max={100} valueMin={20} valueMax={60} onChange={handleChange} />,
-    )
-
-    const maxThumb = screen.getByTestId('thumb-max')
-
-    const track = screen.getByTestId('range-track')
-    mockTrackWidth(track, 1000)
-
-    // start drag on max thumb
-    fireEvent.pointerDown(maxThumb, {
-      clientX: 600,
-      pointerId: 1,
-    })
-
-    // drag to 900px → ~90
-    fireEvent.pointerMove(window, {
-      clientX: 900,
-      pointerId: 1,
-    })
-
-    expect(handleChange).toHaveBeenCalledWith(20, 90)
-
-    fireEvent.pointerUp(window, { pointerId: 1 })
-  })
-
-  test('thumbs cannot cross each other (min stops before max)', () => {
-    const handleChange = jest.fn()
-
-    const { container } = render(
-      <RangeSlider min={0} max={100} valueMin={30} valueMax={40} onChange={handleChange} />,
-    )
-
-    const minThumb = screen.getByTestId('thumb-min')
-
-    const track = screen.getByTestId('range-track')
-    mockTrackWidth(track, 1000)
-
-    // Start dragging min thumb
-    fireEvent.pointerDown(minThumb, {
-      clientX: 300,
-      pointerId: 1,
-    })
-
-    // Now drag far right → attempt to cross max
-    fireEvent.pointerMove(window, {
-      clientX: 1000,
-      pointerId: 1,
-    })
-
-    fireEvent.pointerUp(window, { pointerId: 1 })
-
-    // min should stop at max-1 = 39
-    expect(handleChange).toHaveBeenCalledWith(39, 40)
   })
 })

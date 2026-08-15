@@ -15,7 +15,7 @@
       "name": "theme",
       "type": "enum",
       "raw": "ButtonTheme",
-      "enumValues": ["primary", "secondary", "danger"],
+      "enumValues": ["primary", "secondary", "danger", "success", "warning"],
       "required": false,
       "defaultValue": "secondary",
       "description": "Fallback theme applied to child buttons that don't set their own `theme`."

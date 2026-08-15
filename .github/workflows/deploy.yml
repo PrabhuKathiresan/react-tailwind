@@ -14,6 +14,7 @@ jobs:
   deploy:
     name: Build and Deploy Demo
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout repository
@@ -51,8 +52,48 @@ jobs:
         working-directory: my-ui-pages
         run: pnpm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # Docs versioning: root always mirrors "latest"; a minor/major release
+      # (patch version 0) also gets a permanent snapshot under /v/<version>/.
+      - name: Resolve release version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          PATCH=$(echo "$VERSION" | cut -d. -f3)
+          if [ "$PATCH" = "0" ]; then ARCHIVE=true; else ARCHIVE=false; fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./my-ui-pages/dist
+          ref: gh-pages
+          path: gh-pages-checkout
+
+      - name: Assemble versioned docs
+        run: |
+          # Clear the previous "latest" build from the root, keeping archived
+          # versions, the manifest, and GitHub Pages control files intact.
+          find gh-pages-checkout -mindepth 1 -maxdepth 1 \
+            ! -name 'v' ! -name 'versions.json' ! -name '.git' ! -name '.nojekyll' ! -name 'CNAME' \
+            -exec rm -rf {} +
+
+          cp -r my-ui-pages/dist/. gh-pages-checkout/
+
+          if [ "${{ steps.version.outputs.archive }}" = "true" ]; then
+            mkdir -p "gh-pages-checkout/v/${{ steps.version.outputs.version }}"
+            cp -r my-ui-pages/dist/. "gh-pages-checkout/v/${{ steps.version.outputs.version }}/"
+          fi
+
+          node scripts/publish-docs-version.mjs \
+            gh-pages-checkout \
+            "${{ steps.version.outputs.version }}" \
+            "${{ steps.version.outputs.archive }}"
+
+      - name: Publish to GitHub Pages
+        working-directory: gh-pages-checkout
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs: publish v${{ steps.version.outputs.version }}" --allow-empty
+          git push origin gh-pages

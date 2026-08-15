@@ -6,118 +6,132 @@ export default function BodyTextDocsPage() {
     {
       title: 'Default Usage',
       description:
-        'The BodyText component is used for rendering readable text blocks with consistent typography and spacing.',
+        'The BodyText component renders readable content paragraphs with standardized font sizes, line heights, and design tokens.',
       render: (
         <div className="space-y-2">
           <BodyText>This is the default body text used for content paragraphs.</BodyText>
-          <BodyText>
-            You can apply additional styling using utility props like `small`, `muted`, or `strong`.
+          <BodyText muted>
+            You can apply additional utility props like size, weight, color intents, or line clamp.
           </BodyText>
         </div>
       ),
       code: `
-<BodyText>
-  This is the default body text used for content paragraphs.
-</BodyText>
-<BodyText>
-  You can apply additional styling using utility props like \`small\`, \`muted\`, or \`strong\`.
-</BodyText>`,
+<BodyText>This is the default body text used for content paragraphs.</BodyText>
+<BodyText muted>You can apply additional utility props...</BodyText>`,
     },
     {
-      title: 'Typography Variants',
-      description: 'Use the props `small`, `strong`, or both to adjust font size and weight.',
+      title: 'Size Scales (xs, sm, md, lg, xl)',
+      description: 'Use size prop to scale body text size smoothly.',
       render: (
         <div className="space-y-2">
-          <BodyText small>This is small text.</BodyText>
-          <BodyText strong>This is strong text.</BodyText>
-          <BodyText small strong>
-            This is small and strong text.
-          </BodyText>
+          <BodyText size="xs">Extra Small BodyText (size="xs")</BodyText>
+          <BodyText size="sm">Small BodyText (size="sm")</BodyText>
+          <BodyText size="md">Medium BodyText (size="md")</BodyText>
+          <BodyText size="lg">Large BodyText (size="lg")</BodyText>
+          <BodyText size="xl">Extra Large BodyText (size="xl")</BodyText>
         </div>
       ),
       code: `
-<BodyText small>This is small text.</BodyText>
-<BodyText strong>This is strong text.</BodyText>
-<BodyText small strong>
-  This is small and strong text.
-</BodyText>`,
+<BodyText size="xs">Extra Small</BodyText>
+<BodyText size="sm">Small</BodyText>
+<BodyText size="md">Medium</BodyText>
+<BodyText size="lg">Large</BodyText>
+<BodyText size="xl">Extra Large</BodyText>`,
     },
     {
-      title: 'Muted & Error States',
-      description:
-        'The `muted` prop makes text less prominent, while `error` highlights text in red to indicate issues.',
+      title: 'Font Weight Variants (light, normal, medium, semibold, bold)',
+      description: 'Use weight prop to control typography hierarchy.',
       render: (
         <div className="space-y-2">
-          <BodyText muted>This text is muted for secondary information.</BodyText>
-          <BodyText error>This text indicates an error or warning.</BodyText>
+          <BodyText weight="light">Light weight body copy</BodyText>
+          <BodyText weight="normal">Normal weight body copy</BodyText>
+          <BodyText weight="medium">Medium weight body copy</BodyText>
+          <BodyText weight="semibold">Semibold weight body copy</BodyText>
+          <BodyText weight="bold">Bold weight body copy</BodyText>
         </div>
       ),
       code: `
-<BodyText muted>This text is muted for secondary information.</BodyText>
-<BodyText error>This text indicates an error or warning.</BodyText>`,
+<BodyText weight="light">Light</BodyText>
+<BodyText weight="medium">Medium</BodyText>
+<BodyText weight="semibold">Semibold</BodyText>
+<BodyText weight="bold">Bold</BodyText>`,
     },
     {
-      title: 'Inline Mode',
-      description:
-        'Set `inline` to make BodyText behave as an inline element — useful for labels or combining with icons.',
+      title: 'Color Intents (muted, error, success, warning, info)',
+      description: 'Built-in semantic color intents.',
       render: (
         <div className="space-y-2">
-          <BodyText inline>
-            <span role="img" aria-label="info">
-              ℹ️
-            </span>{' '}
-            Inline info text
-          </BodyText>
-          <BodyText inline strong>
-            <span role="img" aria-label="check">
-              ✅
-            </span>{' '}
-            Inline success text
-          </BodyText>
+          <BodyText muted>Muted text tone</BodyText>
+          <BodyText error>Error red alert text</BodyText>
+          <BodyText success>Success green text confirmation</BodyText>
+          <BodyText warning>Warning amber text alert</BodyText>
+          <BodyText info>Info blue text note</BodyText>
         </div>
       ),
       code: `
-<BodyText inline>
-  <span role="img" aria-label="info">ℹ️</span> Inline info text
-</BodyText>
-<BodyText inline strong>
-  <span role="img" aria-label="check">✅</span> Inline success text
-</BodyText>`,
+<BodyText muted>Muted text</BodyText>
+<BodyText error>Error text</BodyText>
+<BodyText success>Success text</BodyText>
+<BodyText warning>Warning text</BodyText>
+<BodyText info>Info text</BodyText>`,
     },
     {
-      title: 'Custom Element Rendering',
-      description:
-        'Use the `as` prop to render BodyText as a different element, such as `span`, `div`, or even a heading.',
+      title: 'Line Clamping & Truncation',
+      description: 'Use clamp={2} or truncate for multi-line clamping and text ellipsis.',
+      render: (
+        <div className="space-y-4 max-w-md">
+          <div>
+            <BodyText size="xs" weight="semibold" muted>
+              Line Clamp (2 lines):
+            </BodyText>
+            <BodyText clamp={2}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </BodyText>
+          </div>
+          <div>
+            <BodyText size="xs" weight="semibold" muted>
+              Single Line Truncate:
+            </BodyText>
+            <BodyText truncate>
+              This long title sentence will truncate automatically with an ellipsis when overflowing
+              its container width.
+            </BodyText>
+          </div>
+        </div>
+      ),
+      code: `
+<BodyText clamp={2}>Long multi-line text clamped to 2 lines...</BodyText>
+<BodyText truncate>Single line overflow truncated with ellipsis...</BodyText>`,
+    },
+    {
+      title: 'Custom Element Rendering & Alignment',
+      description: 'Use as prop for semantic element rendering and align for alignment.',
       render: (
         <div className="space-y-2">
-          <BodyText as="span">Rendered as a span.</BodyText>
-          <BodyText as="div" muted>
-            Rendered as a div with muted text.
+          <BodyText as="div" align="center" weight="medium">
+            Rendered as centered div block.
           </BodyText>
-          <BodyText as="h4" strong>
-            Rendered as an h4 with strong text.
+          <BodyText as="span" align="right" info inline>
+            Rendered as right-aligned span element.
           </BodyText>
         </div>
       ),
       code: `
-<BodyText as="span">Rendered as a span.</BodyText>
-<BodyText as="div" muted>
-  Rendered as a div with muted text.
-</BodyText>
-<BodyText as="h4" strong>
-  Rendered as an h4 with strong text.
-</BodyText>`,
+<BodyText as="div" align="center" weight="medium">Centered div</BodyText>
+<BodyText as="span" align="right" info>Right-aligned span</BodyText>`,
     },
   ]
 
   return (
     <DocsPageLayout
       component="BodyText"
-      description="A semantic paragraph wrapper that standardizes body copy styling across the design system. Use it to render descriptive content, explanations, or any flowing text block, ensuring consistent font size, line height, and color without writing Tailwind classes by hand."
+      description="A semantic paragraph wrapper that standardizes body copy typography across the design system. Features size scales, font weights, color intents, line clamp truncation, and custom element rendering."
       playground={{
         render: (props) => (
           <BodyText {...props}>
-            The quick brown fox jumps over the lazy dog. A short sentence to demonstrate typography
+            The quick brown fox jumps over the lazy dog. A short sentence demonstrating typography
             variants and styles.
           </BodyText>
         ),

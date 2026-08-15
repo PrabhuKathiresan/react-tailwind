@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DocsPageLayout } from '../../components/DocsPageLayout'
+import { DocsPageLayout, type ExampleSection } from '../../components/DocsPageLayout'
 import {
   BodyText,
   Button,
@@ -8,25 +8,9 @@ import {
   ToastProvider,
   useToast,
   type ToastPlacement,
+  type ToastVariant,
 } from '@pk-design/react-tailwind'
 import { CodeBlock } from '../../components/CodeBlock'
-
-/* ----------------------------------------------------
- * ROOT SETUP — Example
- * ----------------------------------------------------
- *
- * Wrap your application with:
- *
- * <ToastProvider>
- *    <App />
- * </ToastProvider>
- *
- * Then inside any component:
- *
- * const { showToast } = useToast()
- * showToast("Message!", { type: "success" })
- *
- * ---------------------------------------------------- */
 
 /* ----------------------------------------------
  * Example: Basic Usage
@@ -40,7 +24,7 @@ function BasicToastExample() {
         Show Success
       </Button>
 
-      <Button onClick={() => showToast('Something went wrong!', { type: 'error' })}>
+      <Button onClick={() => showToast('Something went wrong!', { type: 'error' })} theme="danger">
         Show Error
       </Button>
     </div>
@@ -48,37 +32,139 @@ function BasicToastExample() {
 }
 
 /* ----------------------------------------------
- * Example: All Toast Types
+ * Example: Shorthand Helpers (toast.success, etc)
  * ---------------------------------------------- */
-function AllTypesExample() {
-  const { showToast } = useToast()
+function ShorthandToastExample() {
+  const { toast } = useToast()
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Button onClick={() => showToast('Operation completed!', { type: 'success' })}>
-        Success
+      <Button onClick={() => toast.success('Changes saved successfully!')}>toast.success()</Button>
+      <Button onClick={() => toast.error('Failed to connect to server!')} theme="danger">
+        toast.error()
       </Button>
+      <Button onClick={() => toast.info('New software update available.')} theme="secondary">
+        toast.info()
+      </Button>
+      <Button onClick={() => toast.warning('Storage space is 90% full.')} theme="secondary">
+        toast.warning()
+      </Button>
+      <Button onClick={() => toast.dismissAll()} variant="plain" theme="secondary">
+        Dismiss All
+      </Button>
+    </div>
+  )
+}
 
+/* ----------------------------------------------
+ * Example: Title & Description Subtext
+ * ---------------------------------------------- */
+function TitleSubtextExample() {
+  const { toast } = useToast()
+
+  return (
+    <div className="flex flex-wrap gap-2">
       <Button
-        onClick={() => showToast('Something looks off.', { type: 'warning' })}
-        theme="secondary"
+        onClick={() =>
+          toast.success('File invoice_q3.pdf uploaded successfully.', {
+            title: 'Upload Complete',
+          })
+        }
       >
-        Warning
+        Show Title + Message
       </Button>
 
       <Button
-        onClick={() => showToast('Here is some information.', { type: 'info' })}
-        theme="secondary"
-      >
-        Info
-      </Button>
-
-      <Button
-        onClick={() => showToast('Unable to process the request!', { type: 'error' })}
+        onClick={() =>
+          toast.error('Invalid email format or password length.', {
+            title: 'Authentication Error',
+          })
+        }
         theme="danger"
       >
-        Error
+        Show Error Title
       </Button>
+    </div>
+  )
+}
+
+/* ----------------------------------------------
+ * Example: Interactive Action Button
+ * ---------------------------------------------- */
+function ActionButtonExample() {
+  const { toast } = useToast()
+
+  return (
+    <Button
+      onClick={() =>
+        toast.info('Item moved to trash.', {
+          title: 'Deleted',
+          action: {
+            label: 'Undo',
+            onClick: () => alert('Undo action triggered!'),
+          },
+        })
+      }
+    >
+      Show Toast with Action Button
+    </Button>
+  )
+}
+
+/* ----------------------------------------------
+ * Example: Visual Variants (accent, filled, outlined, glass)
+ * ---------------------------------------------- */
+function VariantsToastExample() {
+  const { toast } = useToast()
+  const [variant, setVariant] = useState<ToastVariant>('accent')
+
+  return (
+    <div className="flex flex-col gap-4">
+      <RadioSwitch
+        items={[
+          { label: 'Accent (Default)', value: 'accent' },
+          { label: 'Filled', value: 'filled' },
+          { label: 'Outlined', value: 'outlined' },
+          { label: 'Glass', value: 'glass' },
+        ]}
+        selected={variant}
+        onChange={(v) => setVariant(v as ToastVariant)}
+      />
+
+      <div className="flex flex-wrap gap-2">
+        <Button
+          onClick={() =>
+            toast.success('Your workspace settings were saved.', {
+              title: 'Settings Saved',
+              variant,
+            })
+          }
+        >
+          Success ({variant})
+        </Button>
+        <Button
+          onClick={() =>
+            toast.error('Payment processing failed.', {
+              title: 'Billing Error',
+              variant,
+            })
+          }
+          theme="danger"
+        >
+          Error ({variant})
+        </Button>
+        <Button
+          onClick={() =>
+            toast.warning('Your session will expire in 2 minutes.', {
+              title: 'Session Timeout',
+              variant,
+            })
+          }
+          theme="secondary"
+        >
+          Warning ({variant})
+        </Button>
+      </div>
     </div>
   )
 }
@@ -93,8 +179,8 @@ function LongTextToastExample() {
     <Button
       onClick={() =>
         showToast(
-          "Your backup has started. This may take several minutes depending on the size of your data. You can safely close this window—we'll notify you once everything is complete.",
-          { type: 'info', duration: 6000 },
+          "Your backup has started. This may take several minutes depending on data size. You can safely close this window—we'll notify you once complete.",
+          { title: 'System Backup', type: 'info', duration: 6000 },
         )
       }
     >
@@ -113,6 +199,7 @@ function AutoCloseFalseExample() {
     <Button
       onClick={() =>
         showToast('This toast will remain until manually closed.', {
+          title: 'Persistent Alert',
           type: 'warning',
           autoClose: false,
         })
@@ -131,7 +218,6 @@ function PlacementDemoExample() {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Placement Switcher */}
       <RadioSwitch
         items={[
           { label: 'Top Left', value: 'top-left' },
@@ -152,11 +238,8 @@ function PlacementDemoExample() {
   )
 }
 
-/* ----------------------------------------------
- * Inner Component inside dynamic provider
- * ---------------------------------------------- */
 function PlacementDemoInner({ placement }: { placement: string }) {
-  const { showToast } = useToast()
+  const { toast } = useToast()
 
   return (
     <div className="space-y-3">
@@ -165,9 +248,9 @@ function PlacementDemoInner({ placement }: { placement: string }) {
       </BodyText>
 
       <Button
-        onClick={() => showToast(`Toast at ${placement}`, { type: 'info', autoClose: false })}
+        onClick={() => toast.info(`Toast positioned at ${placement}`, { title: 'Notification' })}
       >
-        Show Toast
+        Show Toast at {placement}
       </Button>
     </div>
   )
@@ -180,35 +263,32 @@ function ToastBestPractices() {
         ✓ Wrap your entire application with <TextContent strong>ToastProvider</TextContent>.
       </BodyText>
       <BodyText>
-        ✓ Use <TextContent strong>useToast()</TextContent> inside any component to trigger toasts.
-      </BodyText>
-      <BodyText>✓ Keep toast messages short, actionable, and concise.</BodyText>
-      <BodyText>
-        ✓ Use <TextContent strong>autoClose = false</TextContent> only for important or blocking
-        warnings.
+        ✓ Use <TextContent strong>useToast()</TextContent> or{' '}
+        <TextContent strong>toast.success()</TextContent> inside components to trigger toasts.
       </BodyText>
       <BodyText>
-        ✓ Select placement that matches your product behavior (e.g., top-right for general apps,
-        bottom-center for mobile-first).
+        ✓ Add short headline <TextContent strong>title</TextContent> for multi-line notifications.
       </BodyText>
-      <BodyText>✓ Avoid stacking too many toasts — limit frequency and importance.</BodyText>
-      <BodyText>✓ Do not use toasts for destructive confirmations — use dialogs instead.</BodyText>
+      <BodyText>
+        ✓ Use <TextContent strong>action</TextContent> slots for quick undo or view operations.
+      </BodyText>
+      <BodyText>
+        ✓ Select container variants (<TextContent strong>accent</TextContent>,{' '}
+        <TextContent strong>filled</TextContent>, <TextContent strong>outlined</TextContent>,{' '}
+        <TextContent strong>glass</TextContent>) matching your app aesthetic.
+      </BodyText>
     </>
   )
 }
 
-/* ----------------------------------------------
- * Main Docs Page
- * ---------------------------------------------- */
 export default function ToastDocsPage() {
-  const examples = [
-    /* Root Setup */
+  const examples: ExampleSection[] = [
     {
       title: 'Setup (Required)',
       description: 'Wrap your entire application with <ToastProvider> to enable toasts globally.',
       render: (
         <div className="space-y-2">
-          <BodyText>This is usually done in your App.tsx:</BodyText>
+          <BodyText>App.tsx setup:</BodyText>
           <CodeBlock
             code={`// App.tsx
 import { ToastProvider } from "@pk-design/react-tailwind"
@@ -222,57 +302,94 @@ export default function App() {
 }`}
           />
 
-          <BodyText>
-            Inside any component, call <TextContent strong>showToast()</TextContent> using{' '}
-            <TextContent strong>useToast()</TextContent>.
-          </BodyText>
+          <BodyText>Inside any component:</BodyText>
           <CodeBlock
-            code={`const { showToast } = useToast()
-showToast("Hello!", { type: "success" })`}
+            code={`const { toast } = useToast()
+toast.success("Changes saved!")`}
           />
         </div>
       ),
       code: ``,
     },
-
-    /* Basic Usage */
     {
       title: 'Basic Usage',
-      description: 'Trigger success or error toasts using useToast().',
+      description: 'Trigger success or error toasts using showToast().',
       render: (
         <ToastProvider>
           <BasicToastExample />
         </ToastProvider>
       ),
       code: `
-<Button onClick={() => showToast("This is a success message!", { type: "success" })}>
-  Show Success
-</Button>
-<Button onClick={() => showToast("Something went wrong!", { type: "success" })}>
-  Show Error
-</Button>`,
+showToast("This is a success message!", { type: "success" })
+showToast("Something went wrong!", { type: "error" })`,
     },
-
-    /* All Types */
     {
-      title: 'All Toast Types',
-      description: 'Built-in variants: success, error, info, warning.',
+      title: 'Shorthand Helper Methods',
+      description:
+        'Use toast.success(), toast.error(), toast.info(), toast.warning(), and toast.dismissAll().',
+      since: '2.0.0',
       render: (
         <ToastProvider>
-          <AllTypesExample />
+          <ShorthandToastExample />
         </ToastProvider>
       ),
       code: `
-showToast("Operation completed!", { type: "success" })
-showToast("Careful!", { type: "warning" })
-showToast("Here is info", { type: "info" })
-showToast("Something went wrong!", { type: "error" })`,
-    },
+const { toast } = useToast()
 
-    /* Large Text */
+toast.success("Changes saved successfully!")
+toast.error("Failed to connect to server!")
+toast.info("New update available.")
+toast.warning("Storage is almost full.")
+toast.dismissAll()`,
+    },
     {
-      title: 'Larger / Multi-line Text',
-      description: 'Toasts automatically expand for long messages.',
+      title: 'Title & Subtext Description',
+      description: 'Pass title prop for structured multi-line notifications.',
+      since: '2.0.0',
+      render: (
+        <ToastProvider>
+          <TitleSubtextExample />
+        </ToastProvider>
+      ),
+      code: `
+toast.success("File invoice_q3.pdf uploaded.", { title: "Upload Complete" })
+toast.error("Invalid credentials.", { title: "Authentication Error" })`,
+    },
+    {
+      title: 'Action Button Slot',
+      description: 'Attach interactive inline action triggers.',
+      since: '2.0.0',
+      render: (
+        <ToastProvider>
+          <ActionButtonExample />
+        </ToastProvider>
+      ),
+      code: `
+toast.info("Item moved to trash.", {
+  title: "Deleted",
+  action: {
+    label: "Undo",
+    onClick: () => handleUndo(),
+  },
+})`,
+    },
+    {
+      title: 'Visual Variants (accent, filled, outlined, glass)',
+      description: 'Choose from 4 visual styles matching your design system.',
+      since: '2.0.0',
+      render: (
+        <ToastProvider>
+          <VariantsToastExample />
+        </ToastProvider>
+      ),
+      code: `
+toast.success("Workspace saved.", { variant: "filled" })
+toast.error("Billing failed.", { variant: "outlined" })
+toast.info("Update available.", { variant: "glass" })`,
+    },
+    {
+      title: 'Larger / Multi-line Text & Progress Bar',
+      description: 'Toasts feature an animated auto-close countdown progress bar.',
       render: (
         <ToastProvider>
           <LongTextToastExample />
@@ -281,11 +398,9 @@ showToast("Something went wrong!", { type: "error" })`,
       code: `
 showToast(
   "Your backup has started. This may take several minutes...",
-  { type: "info", duration: 6000 }
+  { title: "System Backup", type: "info", duration: 6000 }
 )`,
     },
-
-    /* AutoClose false */
     {
       title: 'Persistent Toast (autoClose = false)',
       description: 'Display toasts that remain visible until manually closed.',
@@ -297,27 +412,21 @@ showToast(
       code: `
 showToast("This will not auto-close.", { autoClose: false })`,
     },
-
-    /* Placement Demo */
     {
       title: 'Toast Placement',
-      description: 'Toasts can appear in any screen corner or center. Placement is set globally.',
+      description: 'Toasts can appear in any screen corner or center.',
       render: <PlacementDemoExample />,
       code: `
-<ToastProvider placement="bottom-right">
+<ToastProvider placement="top-right" maxToasts={5}>
   <App />
-</ToastProvider>
-
-// Available placements:
-// "top-left", "top-center", "top-right",
-// "bottom-left", "bottom-center", "bottom-right"`,
+</ToastProvider>`,
     },
   ]
 
   return (
     <DocsPageLayout
       component="Toast"
-      description="Non-blocking notification popups that appear in a configurable screen corner and disappear automatically after a timeout. Triggered imperatively via the useToast() hook from anywhere in the component tree, with no JSX placement needed beyond the single ToastProvider wrapper at the app root."
+      description="Non-blocking notification popups with progress bar countdowns, visual variants, titles, action buttons, and ergonomic toast.success() shorthand helpers."
       examples={examples}
       bestPractices={<ToastBestPractices />}
     />

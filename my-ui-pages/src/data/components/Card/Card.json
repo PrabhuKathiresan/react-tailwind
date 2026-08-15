@@ -3,13 +3,49 @@
   "description": "",
   "props": [
     {
+      "name": "variant",
+      "type": "enum",
+      "raw": "CardVariant",
+      "enumValues": ["outlined", "elevated", "filled", "ghost"],
+      "required": false,
+      "defaultValue": "'outlined'",
+      "description": "Surface visual variant ('outlined' | 'elevated' | 'filled' | 'ghost')"
+    },
+    {
+      "name": "radius",
+      "type": "enum",
+      "raw": "CardRadius",
+      "enumValues": ["none", "sm", "md", "lg", "xl", "2xl"],
+      "required": false,
+      "defaultValue": "'xl'",
+      "description": "Border radius variant ('none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')"
+    },
+    {
       "name": "hoverable",
       "type": "boolean",
       "raw": "boolean",
       "enumValues": null,
       "required": false,
       "defaultValue": "false",
-      "description": "Make card hoverable (adds background transitions)"
+      "description": "Make card hoverable (adds subtle background transitions)"
+    },
+    {
+      "name": "clickable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Make card clickable (adds hover elevation lift & pointer cursor)"
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Highlights card with a primary brand ring & border"
     },
     {
       "name": "bordered",
@@ -17,8 +53,8 @@
       "raw": "boolean",
       "enumValues": null,
       "required": false,
-      "defaultValue": "true",
-      "description": "Adds border around the card"
+      "defaultValue": "false",
+      "description": "Adds border around the card. Default is true (when variant='outlined')"
     },
     {
       "name": "compact",
@@ -44,8 +80,8 @@
       "raw": "ElementType",
       "enumValues": null,
       "required": false,
-      "defaultValue": "\"div\"",
-      "description": "The element or component to render.\n\nSupports:\n- HTML elements (e.g., `\"a\"`, `\"div\"`)\n- React components (e.g., `Link`, `NextLink`, `MyCustomCard`)"
+      "defaultValue": "h3",
+      "description": "The element or component to render."
     }
   ]
 }

@@ -10,10 +10,11 @@ describe('Radio', () => {
     expect(input).toBeInTheDocument()
   })
 
-  test('renders label when provided', () => {
-    render(<Radio name="opt" label="Option A" />)
+  test('renders label and description when provided', () => {
+    render(<Radio name="opt" label="Option A" description="Subtext info" />)
 
     expect(screen.getByText('Option A')).toBeInTheDocument()
+    expect(screen.getByText('Subtext info')).toBeInTheDocument()
   })
 
   test('label is linked to input via htmlFor', () => {
@@ -72,16 +73,13 @@ describe('Radio', () => {
       />,
     )
 
-    // wrapper
-    expect(screen.getByText('A').closest('div')?.parentElement).toHaveClass('wrapper-test')
+    const input = screen.getByRole('radio')
+    const container = input.closest('.container-test')
+    const wrapper = container?.parentElement
 
-    // container
-    expect(screen.getByText('A').closest('div')).toHaveClass('container-test')
-
-    // label class
+    expect(wrapper).toHaveClass('wrapper-test')
+    expect(container).toHaveClass('container-test')
     expect(screen.getByText('A')).toHaveClass('label-test')
-
-    // input class
-    expect(screen.getByRole('radio')).toHaveClass('radio-test')
+    expect(input).toHaveClass('radio-test')
   })
 })
