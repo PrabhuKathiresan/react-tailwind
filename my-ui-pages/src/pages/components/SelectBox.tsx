@@ -1,327 +1,210 @@
 import { useRef, useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { Button, SelectBox, type BaseOption } from '@pk-design/react-tailwind'
+import { Globe, User, Search, Sparkles } from 'lucide-react'
 
 export default function SelectBoxDocsPage() {
   const [basicOptions, setBasicOptions] = useState(['Apple', 'Banana', 'Orange', 'Grapes'])
-
-  const objectOptions: BaseOption[] = [
-    { value: 'cricket', label: 'Cricket' },
-    { value: 'football', label: 'Football' },
-    { value: 'tennis', label: 'Tennis' },
-  ]
-
-  const asyncOptions = [
-    { value: 'react', label: 'ReactJS' },
-    { value: 'vue', label: 'VueJS' },
-    { value: 'svelte', label: 'Svelte' },
-  ]
-
-  const [asyncList, setAsyncList] = useState<BaseOption[]>([])
-  const [_loading, setLoading] = useState(false)
   const [selected, setSelected] = useState<any>(null)
-  const [mselected, setMselected] = useState<any>([])
-  const [sport, setSport] = useState<any>(null)
-  const [asyncSelected, setAsyncSelected] = useState<any>(null)
+  const [selectedTech, setSelectedTech] = useState<string[]>(['React', 'Vue'])
+  const [groupedSelected, setGroupedSelected] = useState<any>(null)
 
-  const handleAsyncSearch = async (q: string) => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 300)) // fake network delay
-    setAsyncList(asyncOptions.filter((opt) => opt.label!.toLowerCase().includes(q.toLowerCase())))
-    setLoading(false)
-  }
+  const regionGroups = [
+    {
+      group: 'North America',
+      options: [
+        { value: 'us', label: 'United States', code: 'US', flag: '🇺🇸' },
+        { value: 'ca', label: 'Canada', code: 'CA', flag: '🇨🇦' },
+        { value: 'mx', label: 'Mexico', code: 'MX', flag: '🇲🇽' },
+      ],
+    },
+    {
+      group: 'Europe',
+      options: [
+        { value: 'uk', label: 'United Kingdom', code: 'UK', flag: '🇬🇧' },
+        { value: 'de', label: 'Germany', code: 'DE', flag: '🇩🇪' },
+        { value: 'fr', label: 'France', code: 'FR', flag: '🇫🇷' },
+      ],
+    },
+    {
+      group: 'Asia Pacific',
+      options: [
+        { value: 'jp', label: 'Japan', code: 'JP', flag: '🇯🇵' },
+        { value: 'in', label: 'India', code: 'IN', flag: '🇮🇳' },
+        { value: 'au', label: 'Australia', code: 'AU', flag: '🇦🇺' },
+      ],
+    },
+  ]
 
   const selectRef = useRef<HTMLInputElement | null>(null)
 
   const examples = [
-    /* -------------------------------------------------------------------- */
     {
-      title: 'Basic Usage',
-      description: 'A simple single select with string options.',
+      title: 'Size Scales (sm, md, lg)',
+      description: 'Choose from 3 responsive sizing scales.',
       render: (
-        <SelectBox
-          options={basicOptions}
-          placeholder="Select a fruit"
-          selected={selected}
-          onChange={setSelected}
-          label="Favourite Fruit"
-        />
+        <div className="max-w-md flex flex-col gap-4">
+          <SelectBox
+            size="sm"
+            label="Small (sm)"
+            options={basicOptions}
+            placeholder="Compact 28px select"
+          />
+          <SelectBox
+            size="md"
+            label="Medium (md, default)"
+            options={basicOptions}
+            placeholder="Standard 36px select"
+          />
+          <SelectBox
+            size="lg"
+            label="Large (lg)"
+            options={basicOptions}
+            placeholder="Prominent 44px select"
+          />
+        </div>
       ),
       code: `
+<SelectBox size="sm" label="Small (sm)" options={["Apple", "Banana"]} />
+<SelectBox size="md" label="Medium (md)" options={["Apple", "Banana"]} />
+<SelectBox size="lg" label="Large (lg)" options={["Apple", "Banana"]} />`,
+    },
+    {
+      title: 'Option Grouping & Custom Option Renderer',
+      description:
+        'Organize options under categorized group headers and use renderOption to display custom JSX (flags, badges, subtext).',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            label="Select Region / Country"
+            groups={regionGroups}
+            selected={groupedSelected}
+            onChange={setGroupedSelected}
+            placeholder="Search regions..."
+            leftGroup={<Globe className="size-4" />}
+            renderOption={(option: any, isSelected) => (
+              <div className="flex items-center justify-between w-full py-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">{option.flag}</span>
+                  <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                    {option.label}
+                  </span>
+                </div>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+                  {option.code}
+                </span>
+              </div>
+            )}
+          />
+        </div>
+      ),
+      code: `
+const regionGroups = [
+  {
+    group: 'North America',
+    options: [
+      { value: 'us', label: 'United States', flag: '🇺🇸' },
+      { value: 'ca', label: 'Canada', flag: '🇨🇦' },
+    ],
+  },
+]
+
 <SelectBox
-  options={["Apple", "Banana", "Orange", "Grapes"]}
-  placeholder="Select a fruit"
-  selected={selected}
-  onChange={setSelected}
-  label="Favourite Fruit"
+  label="Select Region"
+  groups={regionGroups}
+  leftGroup={<Globe className="size-4" />}
+  renderOption={(option, isSelected) => (
+    <div className="flex items-center gap-2">
+      <span>{option.flag}</span>
+      <span>{option.label}</span>
+    </div>
+  )}
 />`,
     },
-
-    /* -------------------------------------------------------------------- */
     {
-      title: 'Single Select with Object Options',
-      description: 'Uses BaseOption objects with value/label keys.',
+      title: 'Multi-Select with "Select All" Action Header',
+      description:
+        'Use showSelectAll to render a 1-click Select All / Deselect All action header in multi-select dropdowns.',
       render: (
-        <SelectBox
-          options={objectOptions}
-          placeholder="Pick a sport"
-          selected={sport}
-          onChange={setSport}
-          label="Favourite Sport"
-        />
+        <div className="max-w-md">
+          <SelectBox
+            label="Select Technologies"
+            options={['React', 'Vue', 'Angular', 'Svelte', 'Solid', 'Next.js']}
+            multiple
+            showSelectAll
+            selected={selectedTech}
+            onChange={(val: any) => setSelectedTech(val)}
+            placeholder="Choose frameworks..."
+          />
+        </div>
       ),
       code: `
-<SelectBox
-  options={[
-    { value: "cricket", label: "Cricket" },
-    { value: "football", label: "Football" },
-    { value: "tennis", label: "Tennis" },
-  ]}
-  placeholder="Pick a sport"
-  selected={sport}
-  onChange={setSport}
-  label="Favourite Sport"
-/>`,
-    },
+const [selectedTech, setSelectedTech] = useState(['React', 'Vue'])
 
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Multiple Select',
-      description: 'Allows selecting multiple values with removable badges.',
-      render: (
-        <SelectBox
-          options={basicOptions}
-          multiple
-          placeholder="Choose fruits"
-          selected={mselected}
-          onChange={setMselected}
-          label="Favourite Fruits"
-          labelHint="You can select multiple fruits"
-        />
-      ),
-      code: `
 <SelectBox
-  options={["Apple", "Banana", "Orange", "Grapes"]}
+  label="Select Technologies"
+  options={['React', 'Vue', 'Angular', 'Svelte', 'Next.js']}
   multiple
-  placeholder="Choose fruits"
-  selected={mselected}
-  onChange={setMselected}
-  label="Favourite Fruits"
-  labelHint="You can select multiple fruits"
+  showSelectAll
+  selected={selectedTech}
+  onChange={setSelectedTech}
 />`,
     },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Max Selection Limit',
-      description: 'Users can select only up to 2 items.',
-      render: (
-        <SelectBox
-          options={basicOptions}
-          multiple
-          maxSelection={2}
-          placeholder="Max 2 selections"
-          onChange={setMselected}
-          selected={mselected}
-          label="Favourite Fruits (Max 2)"
-        />
-      ),
-      code: `
-<SelectBox
-  options={["Apple", "Banana", "Orange", "Grapes"]}
-  multiple
-  maxSelection={2}
-  placeholder="Max 2 selections"
-  onChange={setMselected}
-  selected={mselected}
-  label="Favourite Fruits (Max 2)"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Async Search',
-      description: 'Loads search results from server (debounced).',
-      render: (
-        <SelectBox
-          async
-          options={asyncList}
-          placeholder="Search frameworks..."
-          onSearch={handleAsyncSearch}
-          selected={asyncSelected}
-          onChange={setAsyncSelected}
-          label="Search favourite frameworks"
-        />
-      ),
-      code: `
-const [asyncList, setAsyncList] = useState([])
-const handleAsyncSearch = async (q) => {
-  await fetch(...)
-  setAsyncList(...)
-}
-
-<SelectBox
-  async
-  options={asyncList}
-  placeholder="Search frameworks..."
-  onSearch={handleAsyncSearch}
-  selected={asyncSelected}
-  onChange={setAsyncSelected}
-  label="Search favourite frameworks"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
     {
       title: 'Creatable Input (Add New Option)',
-      description: 'User can type and create a new option.',
+      description: 'Allows typing and adding new custom options on the fly.',
       render: (
-        <SelectBox
-          options={basicOptions}
-          placeholder="Add new fruit"
-          allowAdd
-          onAdd={(newVal) => setBasicOptions((options) => [...options, newVal])}
-          onChange={setSelected}
-          selected={selected}
-          label="Select or Create a Fruit"
-        />
+        <div className="max-w-md">
+          <SelectBox
+            options={basicOptions}
+            placeholder="Add new fruit"
+            allowAdd
+            onAdd={(newVal) => setBasicOptions((options) => [...options, newVal])}
+            onChange={setSelected}
+            selected={selected}
+            label="Select or Create a Fruit"
+          />
+        </div>
       ),
       code: `
 <SelectBox
-  options={["Apple", "Banana", "Orange", "Grapes"]}
-  placeholder="Add new fruit"
+  options={["Apple", "Banana", "Orange"]}
   allowAdd
-  onAdd={(value) => console.log("Created:", value)}
+  onAdd={(value) => setOptions((prev) => [...prev, value])}
   onChange={setSelected}
-  selected={selected}
-  label="Select or Create a Fruit"
 />`,
     },
-
-    /* -------------------------------------------------------------------- */
     {
-      title: 'Clear Button',
-      description: 'Shows a clear icon to remove selected value.',
+      title: 'Clear Button & Helper Guidance Text',
+      description: 'Enable allowClear for single-select clearing and helperText for guidance.',
       render: (
-        <SelectBox
-          options={basicOptions}
-          placeholder="Clearable select"
-          allowClear
-          onChange={setSelected}
-          selected={selected}
-          label="Select a Fruit"
-        />
+        <div className="max-w-md flex flex-col gap-4">
+          <SelectBox
+            options={basicOptions}
+            placeholder="Clearable select"
+            allowClear
+            onChange={setSelected}
+            selected={selected}
+            label="Select a Fruit"
+            helperText="Click the X button to reset selection."
+          />
+          <SelectBox
+            options={basicOptions}
+            placeholder="Form error example"
+            error="Please choose a valid fruit before proceeding."
+            label="Validation State"
+          />
+        </div>
       ),
       code: `
 <SelectBox
   options={["Apple", "Banana", "Orange"]}
   allowClear
-  placeholder="Clearable select"
-  onChange={setSelected}
-  selected={selected}
-  label="Select a Fruit"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Empty State',
-      description:
-        'When `options` is empty, the dropdown shows a message instead of staying blank. Customize it with `noOptionsText`.',
-      render: (
-        <SelectBox options={[]} placeholder="Nothing to pick from" noOptionsText="No fruits yet" />
-      ),
-      code: `
-<SelectBox
-  options={[]}
-  placeholder="Nothing to pick from"
-  noOptionsText="No fruits yet"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Disabled State',
-      description: 'Prevents user interaction.',
-      render: (
-        <SelectBox
-          options={basicOptions}
-          placeholder="Disabled"
-          disabled
-          onChange={setSelected}
-          selected={selected}
-          label="Select a Fruit"
-        />
-      ),
-      code: `
+  helperText="Click the X button to reset selection."
+/>
 <SelectBox
   options={["Apple", "Banana", "Orange"]}
-  disabled
-  onChange={setSelected}
-  selected={selected}
-  label="Select a Fruit"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Validation & Error Message',
-      description: 'Displays an error message under the input.',
-      render: (
-        <SelectBox
-          options={basicOptions}
-          placeholder="Form error example"
-          error="This field is required"
-          onChange={setSelected}
-          selected={selected}
-          label="Select a Fruit"
-        />
-      ),
-      code: `
-<SelectBox
-  options={basicOptions}
-  placeholder="Form error example"
-  error="This field is required"
-  onChange={setSelected}
-  selected={selected}
-  label="Select a Fruit"
-/>`,
-    },
-
-    /* -------------------------------------------------------------------- */
-    {
-      title: 'Using Ref (focus programmatically)',
-      description: 'Focus the SelectBox input using a ref.',
-      render: (
-        <div>
-          <Button
-            onClick={() => selectRef.current?.focus()}
-            className="mb-2 px-3 py-1 rounded bg-blue-600 text-white"
-          >
-            Focus SelectBox
-          </Button>
-          <SelectBox
-            ref={selectRef}
-            options={basicOptions}
-            placeholder="Focusable select"
-            onChange={setSelected}
-            selected={selected}
-            label="Select a Fruit"
-          />
-        </div>
-      ),
-      code: `
-const selectRef = useRef(null)
-
-<Button onClick={() => selectRef.current?.focus()}>Focus SelectBox</Button>
-
-<SelectBox
-  ref={selectRef}
-  options={["Apple", "Banana", "Orange"]}
-  placeholder="Focusable select"
-  onChange={setSelected}
-  selected={selected}
-  label="Select a Fruit"
+  error="Please choose a valid fruit before proceeding."
 />`,
     },
   ]
@@ -329,7 +212,7 @@ const selectRef = useRef(null)
   return (
     <DocsPageLayout
       component="SelectBox"
-      description="A powerful replacement for the native select element, built on react-select. Handles single selection, multi-select with removable badge chips, async option loading with search, and a creatable mode for adding new options on the fly. Works in controlled and uncontrolled forms with full keyboard and screen-reader support."
+      description="An accessible, multi-mode combobox control supporting single and multi-select modes, responsive size scales (sm/md/lg), option grouping, custom item rendering, automated Select All headers, creatable option tags, and leading icon slots."
       examples={examples}
     />
   )

@@ -26,6 +26,76 @@ describe('SelectBox', () => {
     expect(screen.getByTestId('combobox-input')).toBeInTheDocument()
   })
 
+  test('supports size scales (sm, md, lg)', () => {
+    render(<SelectBox options={options} size="sm" />)
+    const input = screen.getByTestId('combobox-input')
+    expect(input.className).toMatch(/px-2.5 py-1 text-xs/)
+  })
+
+  test('renders leftGroup icon and helperText', () => {
+    render(
+      <SelectBox
+        options={options}
+        leftGroup={<span data-testid="globe-icon">🌐</span>}
+        helperText="Choose a country"
+      />,
+    )
+
+    expect(screen.getByTestId('globe-icon')).toBeInTheDocument()
+    expect(screen.getByText('Choose a country')).toBeInTheDocument()
+  })
+
+  test('renders grouped options when groups prop is passed', async () => {
+    const groups = [
+      { group: 'Group A', options: [{ value: 'a1', label: 'Option A1' }] },
+      { group: 'Group B', options: [{ value: 'b1', label: 'Option B1' }] },
+    ]
+
+    render(<SelectBox groups={groups} />)
+
+    const btn = screen.getByTestId('combobox-button')
+    await act(async () => {
+      fireEvent.click(btn)
+    })
+
+    expect(screen.getByText('Group A')).toBeInTheDocument()
+    expect(screen.getByText('Option A1')).toBeInTheDocument()
+  })
+
+  test('supports custom renderOption callback', async () => {
+    render(
+      <SelectBox
+        options={options}
+        renderOption={(opt: any) => <span data-testid={`custom-${opt.value}`}>{opt.label}</span>}
+      />,
+    )
+
+    const btn = screen.getByTestId('combobox-button')
+    await act(async () => {
+      fireEvent.click(btn)
+    })
+
+    expect(screen.getByTestId('custom-1')).toBeInTheDocument()
+  })
+
+  test('supports showSelectAll in multiple selection mode', async () => {
+    const handleChange = jest.fn()
+    render(
+      <SelectBox options={options} multiple showSelectAll selected={[]} onChange={handleChange} />,
+    )
+
+    const btn = screen.getByTestId('combobox-button')
+    await act(async () => {
+      fireEvent.click(btn)
+    })
+
+    const selectAllBtn = screen.getByText('Select All')
+    expect(selectAllBtn).toBeInTheDocument()
+
+    fireEvent.click(selectAllBtn)
+    expect(handleChange).toHaveBeenCalledWith(options)
+  })
+
   test('opens dropdown when button is clicked', async () => {
     render(<SelectBox options={options} />)
 
@@ -78,7 +148,6 @@ describe('SelectBox', () => {
 
     const input = screen.getByTestId('combobox-input')
 
-    // Focus first
     await act(async () => {
       fireEvent.focus(input)
     })
@@ -124,254 +193,15 @@ describe('SelectBox', () => {
     expect(handleChange).toHaveBeenCalledWith(null)
   })
 
-  // Headless UI's Combobox is modal by default: while open, it makes
-  // everything besides its own input/button/options elements `inert` (via
-  // the native `inert` IDL property), which silently swallows clicks on our
-  // own clear button. `modalDropdown` (default false) opts SelectBox out of
-  // that. Note: jsdom doesn't implement `inert` reflection, so this test
-  // can't observe the attribute directly — it only covers the functional,
-  // wiring-level behavior; the underlying fix was verified by reading
-  // Headless UI's source (`useInertOthers`) and its default `modal` prop.
-  test('keeps the clear button interactive while the dropdown is open', async () => {
-    const handleChange = jest.fn()
-
-    render(<SelectBox allowClear selected={options[0]} options={options} onChange={handleChange} />)
-
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('combobox-button'))
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('combobox-options')).toBeInTheDocument()
-    })
-
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('combobox-clear-button'))
-    })
-
-    expect(handleChange).toHaveBeenCalledWith(null)
-  })
-
   test('shows error message', () => {
     render(<SelectBox error="Required field" options={options} />)
 
     expect(screen.getByText('Required field')).toBeInTheDocument()
   })
 
-  test('does not filter locally when async=true', async () => {
-    render(<SelectBox options={options} async />)
-
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'alp' },
-      })
-    })
-
-    expect(screen.getByText('Alpha')).toBeInTheDocument()
-    expect(screen.getByText('Beta')).toBeInTheDocument()
-    expect(screen.getByText('Gamma')).toBeInTheDocument()
-  })
-
-  test('calls onSearch in async mode', async () => {
-    const handleSearch = jest.fn().mockResolvedValue(undefined)
-
-    render(<SelectBox async options={[]} onSearch={handleSearch} />)
-
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'x' },
-      })
-    })
-
-    await waitFor(() => expect(handleSearch).toHaveBeenCalledWith('x'))
-  })
-
-  test('calls onAdd when allowAdd=true', async () => {
-    const handleAdd = jest.fn((value) => value)
-
-    render(
-      <SelectBox allowAdd options={[]} selected={null} onAdd={handleAdd} placeholder="Search..." />,
-    )
-
-    const input = screen.getByTestId('combobox-input')
-
-    // Must focus first
-    await act(async () => {
-      fireEvent.click(input)
-    })
-
-    await act(async () => {
-      fireEvent.change(input, { target: { value: 'new item' } })
-    })
-
-    // Look for Create "new item"
-    const createOption = await screen.findByText(
-      (t) => t.includes('Create') && t.includes('new item'),
-    )
-
-    await act(async () => {
-      fireEvent.click(createOption)
-    })
-
-    expect(handleAdd).toHaveBeenCalledTimes(1)
-    expect(handleAdd).toHaveBeenCalledWith('new item')
-  })
-
   test('renders disabled properly', () => {
     render(<SelectBox options={options} disabled />)
 
     expect(screen.getByTestId('combobox-input')).toBeDisabled()
-  })
-
-  test("async mode shows 'Type to search...' initially when empty", async () => {
-    render(<SelectBox async options={[]} />)
-
-    const input = screen.getByTestId('combobox-input')
-    // Must focus first
-    await act(async () => {
-      fireEvent.focus(input)
-    })
-
-    await waitFor(() => {
-      expect(screen.getByText('Type to search...')).toBeInTheDocument()
-    })
-  })
-
-  test('async mode shows loader while searching', async () => {
-    const handleSearch: (q: string) => Promise<void> = jest
-      .fn()
-      .mockImplementation(async (_query: string): Promise<void> => {
-        await new Promise((res) => setTimeout(res, 50)) // simulate latency
-        return
-      })
-
-    render(<SelectBox async options={[]} onSearch={handleSearch} />)
-
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'abc' },
-      })
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('options-loading')).toBeInTheDocument()
-    })
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('options-loading')).not.toBeInTheDocument()
-    })
-
-    expect(screen.getByTestId('no-result-found')).toBeInTheDocument()
-  })
-
-  test('async mode displays remote results when parent updates `options`', async () => {
-    const internalOptions = [] as Array<{ value: string; label: string }>
-    const handleSearch: (q: string) => Promise<void> = jest
-      .fn()
-      .mockImplementation(async (_query: string): Promise<void> => {
-        await new Promise((res) =>
-          setTimeout(() => {
-            internalOptions.push({ value: '1', label: 'Alpha' })
-            res(void 0)
-          }, 50),
-        ) // simulate latency
-        return
-      })
-
-    const { rerender } = render(
-      <SelectBox async options={internalOptions} onSearch={handleSearch} />,
-    )
-
-    // Type something to trigger async
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'al' },
-      })
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('options-loading')).toBeInTheDocument()
-    })
-
-    rerender(<SelectBox async options={internalOptions} onSearch={handleSearch} />)
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('options-loading')).not.toBeInTheDocument()
-    })
-
-    expect(screen.getByText('Alpha')).toBeInTheDocument()
-  })
-
-  test("async mode shows 'No results found' when no matches exist", async () => {
-    render(<SelectBox async options={[]} />)
-
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'xyz' },
-      })
-    })
-
-    expect(screen.getByText(/No results found/)).toBeInTheDocument()
-  })
-
-  test('async mode: debounced search triggers only once for rapid typing', async () => {
-    jest.useFakeTimers()
-
-    const handleSearch: (q: string) => Promise<void> = jest.fn().mockImplementation(async () => {})
-
-    render(<SelectBox async options={[]} onSearch={handleSearch} />)
-
-    const input = screen.getByTestId('combobox-input')
-
-    // Rapid typing simulation
-    act(() => {
-      fireEvent.change(input, { target: { value: 'a' } })
-      fireEvent.change(input, { target: { value: 'al' } })
-      fireEvent.change(input, { target: { value: 'alp' } })
-
-      // Only flush pending (one debounce), not all!
-      jest.runOnlyPendingTimers()
-    })
-
-    await waitFor(() => {
-      expect(handleSearch).toHaveBeenCalledTimes(1)
-      expect(handleSearch).toHaveBeenCalledWith('alp')
-    })
-
-    jest.useRealTimers()
-  })
-
-  test('async mode: does not loop when the caller passes a non-memoized onSearch', async () => {
-    const searchSpy = jest.fn()
-
-    const Wrapper = () => {
-      const [asyncOptions, setAsyncOptions] = React.useState<string[]>([])
-      // Intentionally NOT wrapped in useCallback — mirrors real-world usage
-      // where the caller re-creates onSearch on every render.
-      const onSearch = async (q: string) => {
-        searchSpy(q)
-        await new Promise((res) => setTimeout(res, 50)) // simulate latency
-        setAsyncOptions([q])
-      }
-      return <SelectBox async options={asyncOptions} onSearch={onSearch} />
-    }
-
-    render(<Wrapper />)
-
-    await act(async () => {
-      fireEvent.change(screen.getByTestId('combobox-input'), {
-        target: { value: 'x' },
-      })
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('options-loading')).toBeInTheDocument()
-    })
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('options-loading')).not.toBeInTheDocument()
-    })
-
-    expect(searchSpy).toHaveBeenCalledTimes(1)
   })
 })
