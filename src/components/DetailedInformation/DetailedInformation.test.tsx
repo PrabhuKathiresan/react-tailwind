@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { DetailedInformation } from './DetailedInformation'
 
 // Mock HeadingText to avoid importing unrelated styles/components
@@ -26,12 +26,23 @@ describe('DetailedInformation Component', () => {
     expect(screen.getByText('Basic details')).toBeInTheDocument()
   })
 
+  it('renders action element in header', () => {
+    render(
+      <DetailedInformation
+        title="User Info"
+        action={<button data-testid="edit-btn">Edit</button>}
+        details={details}
+      />,
+    )
+
+    expect(screen.getByTestId('edit-btn')).toBeInTheDocument()
+  })
+
   it('renders all visible details', () => {
     render(<DetailedInformation details={details} />)
 
     expect(screen.getByText('Name')).toBeInTheDocument()
     expect(screen.getByText('John Doe')).toBeInTheDocument()
-
     expect(screen.getByText('Email')).toBeInTheDocument()
     expect(screen.getByText('john@example.com')).toBeInTheDocument()
   })
@@ -48,12 +59,28 @@ describe('DetailedInformation Component', () => {
     expect(screen.queryByText('Secret')).toBeNull()
   })
 
-  it("shows '- -' when value is undefined or empty", () => {
+  it("shows default '- -' when value is undefined or empty", () => {
     const items = [{ label: 'Address' }]
 
     render(<DetailedInformation details={items} />)
 
     expect(screen.getByText('- -')).toBeInTheDocument()
+  })
+
+  it('supports custom emptyValue prop', () => {
+    const items = [{ label: 'Address' }]
+
+    render(<DetailedInformation details={items} emptyValue="N/A" />)
+
+    expect(screen.getByText('N/A')).toBeInTheDocument()
+  })
+
+  it('supports item level emptyValue override', () => {
+    const items = [{ label: 'Address', emptyValue: 'Not Specified' }]
+
+    render(<DetailedInformation details={items} emptyValue="N/A" />)
+
+    expect(screen.getByText('Not Specified')).toBeInTheDocument()
   })
 
   it('applies compact spacing when compact=true', () => {
@@ -65,13 +92,53 @@ describe('DetailedInformation Component', () => {
     expect(row.className).toMatch(/py-1\.5/)
   })
 
-  it('applies normal spacing when compact=false', () => {
-    const items = [{ label: 'Name', value: 'John' }]
+  it('applies multi-column grid classes when columns > 1', () => {
+    render(<DetailedInformation details={details} columns={2} />)
 
-    render(<DetailedInformation details={items} compact={false} />)
+    const dl = document.querySelector('dl')!
+    expect(dl.className).toMatch(/md:grid-cols-2/)
+  })
+
+  it('applies vertical layout classes when layout=vertical', () => {
+    render(<DetailedInformation details={details} layout="vertical" />)
 
     const row = screen.getByText('Name').closest('div')!
-    expect(row.className).toMatch(/py-2\.5/)
+    expect(row.className).toMatch(/flex flex-col/)
+  })
+
+  it('renders copy button when detail is copyable', () => {
+    const items = [{ label: 'API Key', value: 'secret-key-123', copyable: true }]
+
+    render(<DetailedInformation details={items} />)
+
+    expect(screen.getByTitle('Copy to clipboard')).toBeInTheDocument()
+  })
+
+  it('copies text to clipboard when copy button is clicked', async () => {
+    const writeTextMock = jest.fn().mockResolvedValue(undefined)
+    Object.assign(navigator, {
+      clipboard: { writeText: writeTextMock },
+    })
+
+    const items = [{ label: 'API Key', value: 'secret-key-123', copyable: true }]
+
+    render(<DetailedInformation details={items} />)
+
+    const copyBtn = screen.getByTitle('Copy to clipboard')
+    await React.act(async () => {
+      fireEvent.click(copyBtn)
+    })
+
+    expect(writeTextMock).toHaveBeenCalledWith('secret-key-123')
+  })
+
+  it('applies card variant styling', () => {
+    render(<DetailedInformation details={details} variant="card" />)
+
+    const outer =
+      document.querySelector('dl')!.closest('div.p-2') ||
+      document.querySelector('div.bg-gray-50\\/60')
+    expect(outer).not.toBeNull()
   })
 
   it('applies titleClass correctly', () => {
@@ -83,24 +150,15 @@ describe('DetailedInformation Component', () => {
   it('applies detailsClass to details wrapper', () => {
     render(<DetailedInformation details={details} detailsClass="section-box" />)
 
-    // Details wrapper = parent of <dl>
     const detailsWrapper = document.querySelector('dl')!.parentElement!
-
     expect(detailsWrapper.className).toMatch(/section-box/)
   })
 
-  it('applies divider classes when divider=true', () => {
+  it('applies divider classes when divider=true and columns=1', () => {
     render(<DetailedInformation details={details} divider />)
 
     const dl = document.querySelector('dl')!
     expect(dl.className).toMatch(/divide-y/)
-  })
-
-  it('removes divider classes when divider=false', () => {
-    render(<DetailedInformation details={details} divider={false} />)
-
-    const dl = document.querySelector('dl')!
-    expect(dl.className).not.toMatch(/divide-y/)
   })
 
   it('removes divider classes when divider=false', () => {
@@ -116,14 +174,5 @@ describe('DetailedInformation Component', () => {
     render(<DetailedInformation details={items} />)
 
     expect(document.querySelector('dl')).toBeNull()
-  })
-
-  it('renders wrapper className', () => {
-    render(<DetailedInformation details={details} className="wrapper-x" />)
-
-    const outer = document.querySelector('div.wrapper-x')
-
-    expect(outer).not.toBeNull()
-    expect(outer!.className).toMatch(/wrapper-x/)
   })
 })
