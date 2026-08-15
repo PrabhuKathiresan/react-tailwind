@@ -13,6 +13,8 @@ export interface ExampleSection {
   description?: string
   code?: string
   render: ReactNode
+  /** Library version this example's feature was introduced in, e.g. "2.0.0". */
+  since?: string
 }
 
 interface DocsPageLayoutProps {
@@ -73,10 +75,23 @@ function ExampleBlock({ example }: { example: ExampleSection }) {
   )
 }
 
-function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
+function SectionHeading({
+  id,
+  since,
+  children,
+}: {
+  id: string
+  since?: string
+  children: ReactNode
+}) {
   return (
     <div className="flex items-center gap-2 group">
       <HeadingText.SubTitle2>{children}</HeadingText.SubTitle2>
+      {since && (
+        <span className="rounded-full border border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 text-[10px] font-medium text-blue-600 dark:text-blue-400">
+          New in v{since}
+        </span>
+      )}
       <a
         href={`#${id}`}
         className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 dark:text-gray-600 hover:text-[var(--ui-primary)]"
@@ -262,7 +277,9 @@ export const DocsPageLayout: React.FC<DocsPageLayoutProps> = ({
             const id = example.title.replace(/\s+/g, '-').toLowerCase()
             return (
               <section key={idx} id={id} className="space-y-3 py-2">
-                <SectionHeading id={id}>{example.title}</SectionHeading>
+                <SectionHeading id={id} since={example.since}>
+                  {example.title}
+                </SectionHeading>
                 {example.description && (
                   <BodyText className="text-gray-500 dark:text-gray-400">
                     {example.description}
