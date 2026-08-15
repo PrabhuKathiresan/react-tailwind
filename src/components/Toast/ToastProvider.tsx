@@ -6,9 +6,16 @@ import React, {
   type ReactNode,
   useRef,
   useCallback,
+  useMemo,
 } from 'react'
 import { Toast } from './Toast'
-import type { IToast, ToastContextType, ToastOptions, ToastPlacement } from './Toast.types'
+import type {
+  IToast,
+  ToastContextType,
+  ToastOptions,
+  ToastPlacement,
+  ToastProviderProps,
+} from './Toast.types'
 import { buildClassName } from '../../utils/build-classname'
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
@@ -20,105 +27,197 @@ export const useToast = (): ToastContextType => {
   return context
 }
 
-// Maximum visible toasts at once
-const MAX_TOASTS = 5
-
 const placementClass: Record<ToastPlacement, string> = {
-  'top-right': 'top-10 right-4 items-end',
-  'top-left': 'top-10 left-4 items-start',
-  'top-center': 'top-10 left-1/2 -translate-x-1/2 items-center',
+  'top-right': 'top-20 right-6 items-end',
+  'top-left': 'top-20 left-6 items-start',
+  'top-center': 'top-20 left-1/2 -translate-x-1/2 items-center',
 
-  'bottom-right': 'bottom-10 right-4 items-end',
-  'bottom-left': 'bottom-10 left-4 items-start',
-  'bottom-center': 'bottom-10 left-1/2 -translate-x-1/2 items-center',
+  'bottom-right': 'bottom-6 right-6 items-end',
+  'bottom-left': 'bottom-6 left-6 items-start',
+  'bottom-center': 'bottom-6 left-1/2 -translate-x-1/2 items-center',
 }
 
-export const ToastProvider: React.FC<{
-  children: ReactNode
-  placement?: ToastPlacement
-}> = ({ children, placement = 'top-center' }) => {
+interface ToastMeta {
+  timerId: any
+  startTime: number
+  remainingTime: number
+}
+
+export const ToastProvider: React.FC<ToastProviderProps> = ({
+  children,
+  placement = 'top-right',
+  maxToasts = 5,
+  className,
+}) => {
   const [toasts, setToasts] = useState<IToast[]>([])
-  const timeoutRefs = useRef<Map<number, any>>(new Map())
+  const [pausedIds, setPausedIds] = useState<Set<number>>(new Set())
+  const metaRefs = useRef<Map<number, ToastMeta>>(new Map())
 
   const clearTimer = (id: number) => {
-    const timeout = timeoutRefs.current.get(id)
-    if (timeout) {
-      clearTimeout(timeout)
-      timeoutRefs.current.delete(id)
+    const meta = metaRefs.current.get(id)
+    if (meta?.timerId) {
+      clearTimeout(meta.timerId)
+      meta.timerId = null
     }
   }
 
   const closeToast = useCallback((id: number) => {
     clearTimer(id)
+    metaRefs.current.delete(id)
+    setPausedIds((prev) => {
+      const next = new Set(prev)
+      next.delete(id)
+      return next
+    })
     setToasts((prev) => prev.filter((t) => t.id !== id))
   }, [])
 
-  const scheduleClose = useCallback(
-    (toast: IToast) => {
-      if (!toast.autoClose) return
+  const dismissAll = useCallback(() => {
+    metaRefs.current.forEach((meta) => {
+      if (meta.timerId) clearTimeout(meta.timerId)
+    })
+    metaRefs.current.clear()
+    setPausedIds(new Set())
+    setToasts([])
+  }, [])
 
-      clearTimer(toast.id)
+  const startAutoClose = useCallback(
+    (toastId: number, delay: number) => {
+      clearTimer(toastId)
 
-      const timeout = setTimeout(() => {
-        closeToast(toast.id)
-      }, toast.duration)
+      const timerId = setTimeout(() => {
+        closeToast(toastId)
+      }, delay)
 
-      timeoutRefs.current.set(toast.id, timeout)
+      const meta = metaRefs.current.get(toastId)
+      if (meta) {
+        meta.timerId = timerId
+        meta.startTime = Date.now()
+        meta.remainingTime = delay
+      } else {
+        metaRefs.current.set(toastId, {
+          timerId,
+          startTime: Date.now(),
+          remainingTime: delay,
+        })
+      }
     },
     [closeToast],
   )
 
   useEffect(() => {
-    const refs = timeoutRefs.current
-    return () => refs.forEach((id) => clearTimeout(id))
+    const refs = metaRefs.current
+    return () =>
+      refs.forEach((meta) => {
+        if (meta.timerId) clearTimeout(meta.timerId)
+      })
   }, [])
 
   const showToast = useCallback(
-    (message: string, options?: ToastOptions) => {
+    (message: ReactNode, options?: ToastOptions): number => {
       const id = ++toastCounter
 
       const newToast: IToast = {
         id,
+        title: options?.title,
         message,
         type: options?.type ?? 'info',
-        duration: options?.duration ?? 3000,
+        variant: options?.variant ?? 'accent',
+        duration: options?.duration ?? 4000,
         autoClose: options?.autoClose ?? true,
         pauseOnHover: options?.pauseOnHover ?? true,
+        showProgressBar: options?.showProgressBar ?? options?.autoClose !== false,
+        action: options?.action,
+        icon: options?.icon,
       }
 
       setToasts((prev) => {
         const updated = [...prev, newToast]
-        if (updated.length > MAX_TOASTS) updated.shift()
+        if (updated.length > maxToasts) updated.shift()
         return updated
       })
 
-      scheduleClose(newToast)
+      if (newToast.autoClose) {
+        startAutoClose(id, newToast.duration)
+      }
+
+      return id
     },
-    [scheduleClose],
+    [maxToasts, startAutoClose],
+  )
+
+  // Hover pauses timer and tracks exact remaining milliseconds
+  const handleMouseEnter = (toast: IToast) => {
+    if (!toast.pauseOnHover || !toast.autoClose) return
+
+    const meta = metaRefs.current.get(toast.id)
+    if (meta) {
+      const elapsed = Date.now() - meta.startTime
+      meta.remainingTime = Math.max(0, meta.remainingTime - elapsed)
+      clearTimer(toast.id)
+      setPausedIds((prev) => new Set(prev).add(toast.id))
+    }
+  }
+
+  // Mouse leave resumes timer with exact remaining milliseconds
+  const handleMouseLeave = (toast: IToast) => {
+    if (!toast.pauseOnHover || !toast.autoClose) return
+
+    setPausedIds((prev) => {
+      const next = new Set(prev)
+      next.delete(toast.id)
+      return next
+    })
+
+    const meta = metaRefs.current.get(toast.id)
+    if (meta && meta.remainingTime > 0) {
+      startAutoClose(toast.id, meta.remainingTime)
+    } else if (meta && meta.remainingTime <= 0) {
+      closeToast(toast.id)
+    }
+  }
+
+  const toastHelpers = useMemo(
+    () => ({
+      show: (message: ReactNode, options?: ToastOptions) => showToast(message, options),
+      success: (message: ReactNode, options?: ToastOptions) =>
+        showToast(message, { ...options, type: 'success' }),
+      error: (message: ReactNode, options?: ToastOptions) =>
+        showToast(message, { ...options, type: 'error' }),
+      info: (message: ReactNode, options?: ToastOptions) =>
+        showToast(message, { ...options, type: 'info' }),
+      warning: (message: ReactNode, options?: ToastOptions) =>
+        showToast(message, { ...options, type: 'warning' }),
+      dismiss: (id: number) => closeToast(id),
+      dismissAll: () => dismissAll(),
+    }),
+    [showToast, closeToast, dismissAll],
   )
 
   return (
-    <ToastContext.Provider value={{ showToast, closeToast }}>
+    <ToastContext.Provider value={{ showToast, closeToast, toast: toastHelpers }}>
       {children}
 
       {/* Toast Container */}
       <div
         className={buildClassName(
-          'fixed z-50 flex flex-col gap-3 pointer-events-none',
+          'fixed z-[9999] flex flex-col gap-3 pointer-events-none',
           placementClass[placement],
+          className,
         )}
       >
-        {toasts.map((toast, index) => (
+        {toasts.map((toastItem) => (
           <div
-            key={toast.id}
+            key={toastItem.id}
             className="pointer-events-auto"
-            onMouseEnter={() => toast.pauseOnHover && clearTimer(toast.id)}
-            onMouseLeave={() => toast.pauseOnHover && scheduleClose(toast)}
+            onMouseEnter={() => handleMouseEnter(toastItem)}
+            onMouseLeave={() => handleMouseLeave(toastItem)}
           >
             <Toast
-              {...toast}
+              {...toastItem}
+              isPaused={pausedIds.has(toastItem.id)}
               isTop={placement.startsWith('top')}
-              onClose={() => closeToast(toast.id)}
+              onClose={() => closeToast(toastItem.id)}
             />
           </div>
         ))}
@@ -126,3 +225,5 @@ export const ToastProvider: React.FC<{
     </ToastContext.Provider>
   )
 }
+
+ToastProvider.displayName = 'ToastProvider'

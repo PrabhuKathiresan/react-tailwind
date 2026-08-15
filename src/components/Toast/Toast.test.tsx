@@ -23,17 +23,9 @@ describe('Toast - icons by type', () => {
 
     render(<Toast id={1} message="Hello" type={type} onClose={close} />)
 
-    // Only one status per test
     const status = screen.getByRole('status')
-
     const icon = status.querySelector('svg')
     expect(icon).toBeTruthy()
-
-    // SVG className is SVGAnimatedString → read baseVal
-    const className =
-      typeof icon!.className === 'string' ? icon!.className : (icon!.className as any).baseVal
-
-    expect(className).toMatch(/text-\[var\(--ui-/)
   })
 })
 
@@ -42,18 +34,38 @@ describe('<Toast />', () => {
     jest.clearAllMocks()
   })
 
-  test('renders message text', () => {
-    render(<Toast {...baseProps} type="success" />)
+  test('renders message text and optional title', () => {
+    render(<Toast {...baseProps} title="Notice Title" type="success" />)
 
+    expect(screen.getByText('Notice Title')).toBeInTheDocument()
     expect(screen.getByText('Operation completed')).toBeInTheDocument()
   })
 
-  test('applies correct border color based on type', () => {
-    render(<Toast {...baseProps} type="error" />)
+  test('renders action button and triggers onClick handler', () => {
+    const handleAction = jest.fn()
+    render(
+      <Toast {...baseProps} type="info" action={{ label: 'Undo Action', onClick: handleAction }} />,
+    )
 
-    const container = screen.getByRole('status')
-    expect(container.className).toMatch(/border-t-4/)
-    expect(container.className).toMatch(/border-\[var\(--ui-danger\)\]/)
+    const actionBtn = screen.getByRole('button', { name: /undo action/i })
+    expect(actionBtn).toBeInTheDocument()
+
+    fireEvent.click(actionBtn)
+    expect(handleAction).toHaveBeenCalledTimes(1)
+  })
+
+  test('renders variants correctly (accent, filled, outlined, glass)', () => {
+    const { rerender } = render(<Toast {...baseProps} type="error" variant="accent" />)
+    expect(screen.getByRole('status')).toHaveClass('border-l-4')
+
+    rerender(<Toast {...baseProps} type="error" variant="filled" />)
+    expect(screen.getByRole('status')).toHaveClass('bg-[var(--ui-danger)]')
+
+    rerender(<Toast {...baseProps} type="error" variant="outlined" />)
+    expect(screen.getByRole('status')).toHaveClass('border-2')
+
+    rerender(<Toast {...baseProps} type="error" variant="glass" />)
+    expect(screen.getByRole('status')).toHaveClass('backdrop-blur-md')
   })
 
   test('applies custom className', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import { ToastProvider, useToast } from './ToastProvider'
-import { ToastPlacement } from './Toast.types'
+import type { ToastPlacement } from './Toast.types'
 
 // Mock headlessui Transition for stability
 jest.mock('@headlessui/react', () => ({
@@ -16,13 +16,24 @@ const TriggerToast = ({ message = 'Hello', options }: any) => {
   return <button onClick={() => showToast(message, options)}>Trigger</button>
 }
 
+/** Helper: Test component using helper methods (toast.success, etc) */
+const TriggerHelperToast = () => {
+  const { toast } = useToast()
+  return (
+    <div>
+      <button onClick={() => toast.success('Success helper')}>Success</button>
+      <button onClick={() => toast.error('Error helper')}>Error</button>
+      <button onClick={() => toast.dismissAll()}>Dismiss All</button>
+    </div>
+  )
+}
+
 const renderWithProvider = (ui: React.ReactNode, placement: ToastPlacement = 'top-center') =>
   render(<ToastProvider placement={placement}>{ui}</ToastProvider>)
 
 describe('<ToastProvider />', () => {
   test('throws error when useToast() is used outside provider', () => {
     const BadComponent = () => {
-      // Should crash here
       useToast()
       return null
     }
@@ -36,6 +47,19 @@ describe('<ToastProvider />', () => {
     fireEvent.click(screen.getByText('Trigger'))
 
     expect(screen.getByRole('status')).toHaveTextContent('Hello')
+  })
+
+  test('supports shorthand toast.success() and toast.error() methods', () => {
+    renderWithProvider(<TriggerHelperToast />)
+
+    fireEvent.click(screen.getByText('Success'))
+    expect(screen.getByRole('status')).toHaveTextContent('Success helper')
+
+    fireEvent.click(screen.getByText('Error'))
+    expect(screen.getAllByRole('status').length).toBe(2)
+
+    fireEvent.click(screen.getByText('Dismiss All'))
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
 
   test('auto-closes toast after duration', () => {
@@ -63,29 +87,41 @@ describe('<ToastProvider />', () => {
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
 
-  test('pauseOnHover stops auto-close timer', () => {
-    renderWithProvider(<TriggerToast options={{ duration: 3000, pauseOnHover: true }} />)
+  test('pauseOnHover pauses timer on mouseEnter and resumes remaining time on mouseLeave', () => {
+    renderWithProvider(<TriggerToast options={{ duration: 4000, pauseOnHover: true }} />)
 
     fireEvent.click(screen.getByText('Trigger'))
     const toast = screen.getByRole('status')
 
-    // Hover → timer paused
+    // Advance 1000ms
+    act(() => {
+      jest.advanceTimersByTime(1000)
+    })
+
+    // MouseEnter → pause timer with 3000ms remaining
     fireEvent.mouseEnter(toast)
 
+    // Advance 5000ms while hovering
     act(() => {
-      jest.advanceTimersByTime(4000)
+      jest.advanceTimersByTime(5000)
     })
 
     expect(screen.getByRole('status')).toBeInTheDocument() // still visible
 
-    // Mouse leave → resume timer
+    // MouseLeave → resume remaining 3000ms
     fireEvent.mouseLeave(toast)
 
     act(() => {
-      jest.advanceTimersByTime(3000)
+      jest.advanceTimersByTime(2900)
     })
 
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.getByRole('status')).toBeInTheDocument() // still visible at 2900ms
+
+    act(() => {
+      jest.advanceTimersByTime(200)
+    })
+
+    expect(screen.queryByRole('status')).not.toBeInTheDocument() // closed after remaining 3000ms
   })
 
   test('does NOT pause auto-close if pauseOnHover=false', () => {
@@ -94,7 +130,6 @@ describe('<ToastProvider />', () => {
     fireEvent.click(screen.getByText('Trigger'))
     const toast = screen.getByRole('status')
 
-    // Hover should NOT pause
     fireEvent.mouseEnter(toast)
 
     act(() => jest.advanceTimersByTime(2000))
@@ -109,7 +144,6 @@ describe('<ToastProvider />', () => {
 
     for (let i = 0; i < 8; i++) fireEvent.click(btn)
 
-    // Only 5 toasts should remain
     const toasts = screen.getAllByRole('status')
     expect(toasts.length).toBe(5)
   })
@@ -119,10 +153,10 @@ describe('<ToastProvider />', () => {
 
     fireEvent.click(screen.getByText('Trigger'))
 
-    const container = screen.getByRole('status').parentElement!.parentElement! // parent wrapper
+    const container = screen.getByRole('status').parentElement!.parentElement!
 
-    expect(container.className).toMatch(/bottom-10/)
-    expect(container.className).toMatch(/right-4/)
+    expect(container.className).toMatch(/bottom-6/)
+    expect(container.className).toMatch(/right-6/)
   })
 
   test('sets isTop correctly depending on placement', () => {
@@ -136,7 +170,7 @@ describe('<ToastProvider />', () => {
 
     const container = screen.getByRole('status').parentElement!.parentElement!
 
-    expect(container.className).toMatch(/top-10/) // top placement
+    expect(container.className).toMatch(/top-20/)
 
     rerender(
       <ToastProvider placement="bottom-right">
@@ -148,6 +182,6 @@ describe('<ToastProvider />', () => {
 
     const container2 = screen.getAllByRole('status')[0].parentElement!.parentElement!
 
-    expect(container2.className).toMatch(/bottom-10/) // bottom placement
+    expect(container2.className).toMatch(/bottom-6/)
   })
 })

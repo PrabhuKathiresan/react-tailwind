@@ -15,8 +15,17 @@
         "bottom-center"
       ],
       "required": false,
-      "defaultValue": "top-center",
-      "description": ""
+      "defaultValue": "top-right",
+      "description": "Position on screen where toasts appear.\nDefaults to `\"top-right\"`."
+    },
+    {
+      "name": "maxToasts",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "5",
+      "description": "Maximum number of toasts visible simultaneously.\nDefaults to `5`."
     }
   ]
 }
