@@ -1,257 +1,174 @@
 import { useState } from 'react'
 import { Dropdown, Button } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
+import {
+  User,
+  Settings,
+  CreditCard,
+  LogOut,
+  ChevronDown,
+  Plus,
+  Trash2,
+  Copy,
+  Shield,
+} from 'lucide-react'
 
 const DropdownDocPage = () => {
   const [_selected, setSelected] = useState<string | null>(null)
 
-  const baseItems = [
-    { id: 'profile', label: 'Profile' },
-    { id: 'settings', label: 'Settings' },
-    { id: 'logout', label: 'Logout' },
+  const richItems = [
+    {
+      id: 'account',
+      groupTitle: 'Account',
+      label: 'My Profile',
+      icon: <User className="size-4" />,
+      shortcut: '⇧⌘P',
+    },
+    {
+      id: 'billing',
+      label: 'Billing & Invoices',
+      icon: <CreditCard className="size-4" />,
+      description: 'Manage subscription',
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="size-4" />,
+      shortcut: '⌘S',
+      divider: true,
+    },
+    {
+      id: 'team',
+      groupTitle: 'Workspace',
+      label: 'Invite Team',
+      icon: <Plus className="size-4" />,
+    },
+    { id: 'security', label: 'Security & 2FA', icon: <Shield className="size-4" />, divider: true },
+    { id: 'logout', label: 'Log Out', icon: <LogOut className="size-4" />, danger: true },
   ]
 
   return (
     <DocsPageLayout
       component="Dropdown"
-      description="A contextual action menu anchored to any custom trigger element. Supports grouped items, dividers, icon slots, disabled states, and configurable menu placement so it adapts to any layout without clipping."
+      description="A contextual action menu anchored to any custom trigger element. Supports grouped section titles, item icons, keyboard shortcuts, 2-line descriptions, destructive items, and configurable placement options."
       examples={[
         {
-          title: 'Basic Dropdown',
-          description: 'Uses the simple triggerButton prop.',
+          title: 'Rich Menu Items (Icons, Shortcuts & Group Titles)',
+          description:
+            'Render items with left icons, right-aligned keyboard shortcuts (⌘K), section headers, and red danger actions.',
           code: `
 <Dropdown
-  triggerButton={<Button variant="outlined">Menu</Button>}
+  width="lg"
+  triggerButton={<Button variant="outlined">Account Menu</Button>}
   items={[
-    { id: "profile", label: "Profile" },
-    { id: "settings", label: "Settings" },
-    { id: "logout", label: "Logout" },
+    { id: 'profile', groupTitle: 'Account', label: 'My Profile', icon: <User className="size-4" />, shortcut: '⇧⌘P' },
+    { id: 'billing', label: 'Billing & Invoices', icon: <CreditCard className="size-4" />, description: 'Manage subscription' },
+    { id: 'settings', label: 'Settings', icon: <Settings className="size-4" />, shortcut: '⌘S', divider: true },
+    { id: 'team', groupTitle: 'Workspace', label: 'Invite Team', icon: <Plus className="size-4" />, divider: true },
+    { id: 'logout', label: 'Log Out', icon: <LogOut className="size-4" />, danger: true },
   ]}
   onMenuClick={(item) => console.log(item.id)}
 />`,
           render: (
             <Dropdown
-              triggerButton={<Button variant="outlined">Menu</Button>}
-              items={baseItems}
+              width="lg"
+              triggerButton={<Button variant="outlined">Account Menu</Button>}
+              items={richItems}
               onMenuClick={(item) => setSelected(item.id)}
             />
           ),
         },
-
         {
           title: 'Custom Trigger — renderTriggerButton',
           description:
-            'Use renderTriggerButton(state) for fully custom triggers that react to menu state.',
+            'Use renderTriggerButton(state) for custom triggers that react dynamically to open/close menu state.',
           code: `
 <Dropdown
+  width="md"
   renderTriggerButton={({ open }) => (
-    <div className="flex items-center gap-1 cursor-pointer select-none">
-      <span>Menu</span>
-      <ChevronDownIcon className={
-        \`w-4 h-4 transition-transform \${open ? 'rotate-180' : ''}\`
-      }/>
-    </div>
+    <Button variant="outlined" className="gap-2">
+      <span>Actions</span>
+      <ChevronDown className={\`size-4 transition-transform duration-200 \${open ? 'rotate-180' : ''}\`} />
+    </Button>
   )}
   items={[
-    { id: "account", label: "Account" },
-    { id: "billing", label: "Billing" },
+    { id: 'copy', label: 'Duplicate Item', icon: <Copy className="size-4" />, shortcut: '⌘D' },
+    { id: 'delete', label: 'Delete Item', icon: <Trash2 className="size-4" />, danger: true },
   ]}
 />`,
           render: (
             <Dropdown
+              width="md"
               renderTriggerButton={({ open }) => (
-                <div className="flex items-center gap-1 cursor-pointer select-none">
-                  <span>Menu</span>
-                  <svg
-                    className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
+                <Button variant="outlined" className="gap-2">
+                  <span>Actions</span>
+                  <ChevronDown
+                    className={`size-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+                  />
+                </Button>
               )}
               items={[
-                { id: 'account', label: 'Account' },
-                { id: 'billing', label: 'Billing' },
+                {
+                  id: 'copy',
+                  label: 'Duplicate Item',
+                  icon: <Copy className="size-4" />,
+                  shortcut: '⌘D',
+                },
+                {
+                  id: 'delete',
+                  label: 'Delete Item',
+                  icon: <Trash2 className="size-4" />,
+                  danger: true,
+                },
               ]}
             />
           ),
         },
-
         {
-          title: 'Anchored Dropdown',
-          description: 'Control placement using the anchor prop.',
+          title: 'Anchored Dropdown Placement',
+          description: 'Control placement using anchor ("bottom start", "top end", "right", etc.).',
           code: `
 <Dropdown
-  triggerButton={<Button>Top End</Button>}
   anchor="top end"
+  triggerButton={<Button>Top End Placement</Button>}
   items={[
-    { id: "copy", label: "Copy" },
-    { id: "paste", label: "Paste" },
+    { id: 'copy', label: 'Copy Link' },
+    { id: 'share', label: 'Share Project' },
   ]}
 />`,
           render: (
             <Dropdown
-              triggerButton={<Button>Top End</Button>}
               anchor="top end"
+              triggerButton={<Button>Top End Placement</Button>}
               items={[
-                { id: 'copy', label: 'Copy' },
-                { id: 'paste', label: 'Paste' },
+                { id: 'copy', label: 'Copy Link' },
+                { id: 'share', label: 'Share Project' },
               ]}
             />
           ),
         },
-
         {
-          title: 'Custom Item Rendering',
-          description: 'renderItem lets you replace the entire item UI.',
+          title: 'Disabled & Custom Item States',
+          description: 'Items can be disabled or styled with custom menuItemClass.',
           code: `
 <Dropdown
-  triggerButton={<Button>Custom</Button>}
-  items={[{ id: "bold", label: "Bold" }]}
-  renderItem={(item) => <strong>{item.label}</strong>}
-/>`,
-          render: (
-            <Dropdown
-              triggerButton={<Button>Custom</Button>}
-              items={[
-                { id: 'bold', label: 'Bold' },
-                { id: 'italic', label: 'Italic' },
-              ]}
-              renderItem={(item) => <strong>{item.label}</strong>}
-            />
-          ),
-        },
-
-        {
-          title: 'Dividers & Styling',
-          description: 'Items can include a divider and the container can be styled.',
-          code: `
-<Dropdown
-  triggerButton={<Button>Actions</Button>}
-  itemsContainerClass="border p-2 w-40 rounded-lg shadow"
+  triggerButton={<Button variant="ghost">Document Actions</Button>}
   items={[
-    { id: "edit", label: "Edit" },
-    { id: "delete", label: "Delete", divider: true },
-    { id: "archive", label: "Archive" }
+    { id: 'open', label: 'Open File', shortcut: '⌘O' },
+    { id: 'save', label: 'Save File (Locked)', disabled: true, shortcut: '⌘S' },
+    { id: 'export', label: 'Export PDF' },
   ]}
 />`,
           render: (
             <Dropdown
-              triggerButton={<Button theme="primary">Actions</Button>}
-              itemsContainerClass="border border-gray-200 rounded-lg shadow-md p-2 w-40"
+              triggerButton={<Button variant="outlined">Document Actions</Button>}
               items={[
-                { id: 'edit', label: 'Edit' },
-                { id: 'delete', label: 'Delete', divider: true },
-                { id: 'archive', label: 'Archive' },
+                { id: 'open', label: 'Open File', shortcut: '⌘O' },
+                { id: 'save', label: 'Save File (Locked)', disabled: true, shortcut: '⌘S' },
+                { id: 'export', label: 'Export PDF' },
               ]}
             />
           ),
-        },
-
-        {
-          title: 'Disabled Items',
-          description: 'Disabled items cannot be clicked.',
-          code: `
-<Dropdown
-  triggerButton={<Button>Disabled Items</Button>}
-  items={[
-    { id: "open", label: "Open" },
-    { id: "save", label: "Save", disabled: true },
-    { id: "export", label: "Export" },
-  ]}
-/>`,
-          render: (
-            <Dropdown
-              triggerButton={<Button>Disabled Items</Button>}
-              items={[
-                { id: 'open', label: 'Open' },
-                { id: 'save', label: 'Save', disabled: true },
-                { id: 'export', label: 'Export' },
-              ]}
-            />
-          ),
-        },
-
-        {
-          title: 'Menu Item Styling',
-          description: 'Use menuItemClass to style all items.',
-          code: `
-<Dropdown
-  triggerButton={<Button>Styled</Button>}
-  menuItemClass="text-blue-600 font-medium"
-  items={[{ id: "view", label: "View" }]}
-/>`,
-          render: (
-            <Dropdown
-              triggerButton={<Button>Styled</Button>}
-              menuItemClass="text-blue-600 font-medium"
-              items={[
-                { id: 'view', label: 'View' },
-                { id: 'download', label: 'Download' },
-              ]}
-            />
-          ),
-        },
-
-        {
-          title: 'Selectable Dropdown (Custom Trigger)',
-          description: 'The trigger updates based on the selected item.',
-          code: `
-const [value, setValue] = useState("Select")
-
-<Dropdown
-  renderTriggerButton={({ open }) => (
-    <div className="flex items-center gap-1">
-      <span>{value}</span>
-      <ChevronDownIcon className={open ? "rotate-180" : ""} />
-    </div>
-  )}
-  items={[
-    { id: "apple", label: "Apple" },
-    { id: "banana", label: "Banana" },
-  ]}
-  onMenuClick={(item) => setValue(item.label)}
-/>`,
-          render: (function SelectTriggerDemo() {
-            const [value, setValue] = useState('Select')
-
-            return (
-              <Dropdown
-                renderTriggerButton={({ open }) => (
-                  <div className="flex items-center gap-1 cursor-pointer select-none">
-                    <span>{value}</span>
-                    <svg
-                      className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                )}
-                items={[
-                  { id: 'apple', label: 'Apple' },
-                  { id: 'banana', label: 'Banana' },
-                  { id: 'orange', label: 'Orange' },
-                ]}
-                onMenuClick={(item) => setValue(item.label as string)}
-              />
-            )
-          })(),
         },
       ]}
     />

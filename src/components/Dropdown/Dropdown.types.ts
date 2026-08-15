@@ -47,7 +47,22 @@ export type DropdownItem = {
   id: string
 
   /** Display label (optional if using custom render). */
-  label?: string
+  label?: ReactNode
+
+  /** Subtitle description text displayed underneath the label. */
+  description?: ReactNode
+
+  /** Icon displayed on the left side of the item. */
+  icon?: ReactNode
+
+  /** Keyboard shortcut key badge on the right side (e.g. '⌘K'). */
+  shortcut?: string
+
+  /** Marks item as destructive action (renders in red styling). */
+  danger?: boolean
+
+  /** Group or section title header displayed above this item. */
+  groupTitle?: string
 
   /** If true, renders a horizontal divider instead of an item. */
   divider?: boolean
@@ -55,18 +70,21 @@ export type DropdownItem = {
   /** Optional: mark item as disabled. */
   disabled?: boolean
 
+  /** Custom click handler for this item. */
+  onClick?: (item: DropdownItem) => void
+
   /** Allow additional arbitrary metadata. */
   [key: string]: any
 }
 
-//
-// -------------------------------------------------------------
-// ENFORCE: Either triggerButton OR renderTriggerButton must exist
-// -------------------------------------------------------------
-//
-
 /** Base props shared between both trigger modes. */
 type DropdownBaseProps = {
+  /** Outer container / trigger class name */
+  className?: string
+
+  /** Width size variant or custom width ('auto' | 'sm' | 'md' | 'lg' | 'xl' | string). Default is 'md' (w-56) */
+  width?: 'auto' | 'sm' | 'md' | 'lg' | 'xl' | string
+
   /** Additional classes for the menu container. */
   itemsContainerClass?: string
 
