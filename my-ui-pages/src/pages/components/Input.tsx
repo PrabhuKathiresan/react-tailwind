@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Input } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-import { Search, Mail, User, Lock } from 'lucide-react'
+import { Search, Mail } from 'lucide-react'
 
 export default function InputDocsPage() {
   const [clearableText, setClearableText] = useState('John Doe')

@@ -2,19 +2,11 @@ import React, { type ReactNode, useEffect, useState, useMemo } from 'react'
 import { PropsTable } from './PropsTable'
 import { CodeBlock } from './CodeBlock'
 import { PropExplorer, type PropExplorerProps } from './PropExplorer'
-import {
-  BodyText,
-  Breadcrumb,
-  buildClassName,
-  HeadingText,
-  Tabs,
-  Badge,
-} from '@pk-design/react-tailwind'
+import { BodyText, Breadcrumb, buildClassName, HeadingText, Badge } from '@pk-design/react-tailwind'
 import { Link } from 'react-router'
 import { navSections, pageRoutes } from './NavList'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Eye,
   Code2,
   Hash,
   ChevronLeft,

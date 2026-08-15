@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-import { Button, SelectBox, type BaseOption } from '@pk-design/react-tailwind'
-import { Globe, User, Search, Sparkles } from 'lucide-react'
+import { SelectBox } from '@pk-design/react-tailwind'
+import { Globe } from 'lucide-react'
 
 export default function SelectBoxDocsPage() {
   const [basicOptions, setBasicOptions] = useState(['Apple', 'Banana', 'Orange', 'Grapes'])
@@ -35,8 +35,6 @@ export default function SelectBoxDocsPage() {
       ],
     },
   ]
-
-  const selectRef = useRef<HTMLInputElement | null>(null)
 
   const examples = [
     {
@@ -82,7 +80,7 @@ export default function SelectBoxDocsPage() {
             onChange={setGroupedSelected}
             placeholder="Search regions..."
             leftGroup={<Globe className="size-4" />}
-            renderOption={(option: any, isSelected) => (
+            renderOption={(option: any) => (
               <div className="flex items-center justify-between w-full py-0.5">
                 <div className="flex items-center gap-2">
                   <span className="text-base">{option.flag}</span>
