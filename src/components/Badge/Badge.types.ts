@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 
-export type BadgeTheme = 'success' | 'danger' | 'warning' | 'info' | 'secondary'
+export type BadgeTheme = 'success' | 'danger' | 'warning' | 'info' | 'primary' | 'secondary'
 export type BadgeSize = 'sm' | 'md'
 
 export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
