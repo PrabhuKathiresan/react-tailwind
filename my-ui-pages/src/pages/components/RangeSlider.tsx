@@ -1,6 +1,33 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RangeSlider } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
+
+function RangeSliderPlayground(props: any) {
+  const [minVal, setMinVal] = useState(props.valueMin ?? 20)
+  const [maxVal, setMaxVal] = useState(props.valueMax ?? 80)
+
+  useEffect(() => {
+    if (props.valueMin !== undefined) setMinVal(props.valueMin)
+  }, [props.valueMin])
+
+  useEffect(() => {
+    if (props.valueMax !== undefined) setMaxVal(props.valueMax)
+  }, [props.valueMax])
+
+  return (
+    <div className="w-full max-w-md">
+      <RangeSlider
+        {...props}
+        valueMin={minVal}
+        valueMax={maxVal}
+        onChange={(nMin, nMax) => {
+          setMinVal(nMin)
+          setMaxVal(nMax)
+        }}
+      />
+    </div>
+  )
+}
 
 function SizeDemo() {
   const [min1, setMin1] = useState(20)
@@ -80,6 +107,38 @@ function StepAndMarksDemo() {
   )
 }
 
+function ValidationErrorDemo() {
+  const [minVal, setMinVal] = useState(20)
+  const [maxVal, setMaxVal] = useState(40)
+
+  const diff = maxVal - minVal
+  const isInvalid = diff < 30
+  const errorMessage = isInvalid
+    ? `Selected range (${diff}k) spans less than the minimum required threshold of 30k.`
+    : undefined
+
+  return (
+    <div className="max-w-md space-y-2">
+      <RangeSlider
+        label="Salary Expectation Range (Min span: 30k)"
+        min={0}
+        max={200}
+        valueMin={minVal}
+        valueMax={maxVal}
+        valueSuffix="k"
+        error={errorMessage}
+        onChange={(nMin, nMax) => {
+          setMinVal(nMin)
+          setMaxVal(nMax)
+        }}
+      />
+      <p className="text-xs text-gray-500 dark:text-gray-400">
+        Drag thumbs to adjust range. Spans under 30k trigger validation error state.
+      </p>
+    </div>
+  )
+}
+
 export default function RangeSliderDocsPage() {
   const examples = [
     {
@@ -119,31 +178,26 @@ const [max, setMax] = useState(800)
     },
     {
       title: 'Validation Error State',
-      description: 'Display an error message below the range slider when criteria are violated.',
-      render: (
-        <div className="max-w-md">
-          <RangeSlider
-            label="Salary Expectation Range"
-            min={0}
-            max={200}
-            valueMin={20}
-            valueMax={40}
-            valueSuffix="k"
-            error="Selected range spans less than the minimum required threshold of 30k."
-            onChange={() => {}}
-          />
-        </div>
-      ),
+      description:
+        'Pass an `error` string to highlight the track and thumbs in red and display an error message.',
+      render: <ValidationErrorDemo />,
       code: `
+const [min, setMin] = useState(20)
+const [max, setMax] = useState(40)
+const isInvalid = (max - min) < 30
+
 <RangeSlider
   label="Salary Expectation Range"
   min={0}
   max={200}
-  valueMin={20}
-  valueMax={40}
+  valueMin={min}
+  valueMax={max}
   valueSuffix="k"
-  error="Selected range spans less than the minimum required threshold of 30k."
-  onChange={handleChange}
+  error={isInvalid ? "Selected range spans less than the minimum required threshold of 30k." : undefined}
+  onChange={(nMin, nMax) => {
+    setMin(nMin)
+    setMax(nMax)
+  }}
 />`,
     },
   ]
@@ -151,21 +205,9 @@ const [max, setMax] = useState(800)
   return (
     <DocsPageLayout
       component="RangeSlider"
-      description="A dual-thumb range selector supporting step snap increments, step tick marks, floating value tooltips, keyboard navigation accessibility, and responsive size scales (sm/md/lg)."
+      description="A dual-thumb range selector supporting step snap increments, step tick marks, floating value tooltips, validation error states, keyboard navigation accessibility, and responsive size scales (sm/md/lg)."
       playground={{
-        render: (props) => (
-          <div className="w-full max-w-md">
-            <RangeSlider
-              min={props.min ?? 0}
-              max={props.max ?? 100}
-              valueMin={props.valueMin ?? 20}
-              valueMax={props.valueMax ?? 80}
-              label={props.label || 'Price range'}
-              valueSuffix={props.valueSuffix || ''}
-              onChange={() => {}}
-            />
-          </div>
-        ),
+        render: (props) => <RangeSliderPlayground {...props} />,
         initialProps: {
           min: 0,
           max: 100,
@@ -173,6 +215,11 @@ const [max, setMax] = useState(800)
           valueMax: 80,
           label: 'Price range',
           valueSuffix: '$',
+          size: 'md',
+          disabled: false,
+          showTooltips: true,
+          error: '',
+          helperText: 'Select minimum and maximum limits',
         },
       }}
       examples={examples}

@@ -130,11 +130,17 @@ export default function BodyTextDocsPage() {
       description="A semantic paragraph wrapper that standardizes body copy typography across the design system. Features size scales, font weights, color intents, line clamp truncation, and custom element rendering."
       playground={{
         render: (props) => (
-          <BodyText {...props}>
-            The quick brown fox jumps over the lazy dog. A short sentence demonstrating typography
-            variants and styles.
-          </BodyText>
+          <div className="w-full max-w-lg">
+            <BodyText {...props}>
+              The quick brown fox jumps over the lazy dog. A short sentence demonstrating typography
+              variants and styles.
+            </BodyText>
+          </div>
         ),
+        initialProps: {
+          size: 'md',
+          weight: 'normal',
+        },
       }}
       examples={examples}
     />
