@@ -8,9 +8,9 @@ export interface InputProps
     InputCustomProps {
   /**
    * Size scale of the input component.
-   * - `sm` (compact 28px/text-xs)
-   * - `md` (standard 36px/text-sm default)
-   * - `lg` (prominent 44px/text-base)
+   * - `sm` (compact 32px/text-xs)
+   * - `md` (standard 40px/text-sm default)
+   * - `lg` (prominent 48px/text-base)
    * Defaults to `"md"`.
    */
   size?: InputSize

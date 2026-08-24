@@ -7,7 +7,7 @@ import { TextContent } from '../TextContent'
 const sizeClasses: Record<InputSize, { input: string; group: string; icon: string; text: string }> =
   {
     sm: {
-      input: 'px-2.5 py-1 text-xs leading-5',
+      input: 'px-2.5 py-1.5 text-xs leading-5',
       group: 'w-8 text-xs',
       icon: 'size-3.5',
       text: 'text-xs',
@@ -44,10 +44,10 @@ export function buildInputClass(
     'text-gray-900 outline outline-1 -outline-offset-1',
     hasError
       ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-      : 'outline-gray-300 dark:outline-gray-600',
+      : 'outline-[var(--ui-border)]',
     disabled
-      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-gray-200 dark:outline-gray-700'
-      : 'bg-white dark:bg-gray-700 dark:text-white outline-gray-300 dark:outline-gray-600 dark:placeholder-gray-400 placeholder-gray-400',
+      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-[var(--ui-border-muted)]'
+      : 'bg-white dark:bg-gray-700 dark:text-white outline-[var(--ui-border)] dark:placeholder-gray-400 placeholder-gray-400',
     isFocusWithin
       ? 'focus-within:outline-[var(--ui-focus-ring)] focus-within:outline-2 focus-within:-outline-offset-2'
       : 'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
@@ -160,7 +160,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <div className="flex rounded-lg shadow-2xs">
         {/* Static Prefix Addon */}
         {prefix && (
-          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
+          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
             {prefix}
           </span>
         )}
@@ -215,7 +215,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
         {/* Static Suffix Addon */}
         {suffix && (
-          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
+          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
             {suffix}
           </span>
         )}

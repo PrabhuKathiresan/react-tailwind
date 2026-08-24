@@ -13,15 +13,15 @@ export default function InputDocsPage() {
         'Choose from 3 responsive sizing scales to fit tight data toolbars or prominent hero forms.',
       render: (
         <div className="max-w-md flex flex-col gap-4">
-          <Input size="sm" label="Small Input (sm)" placeholder="Compact 28px height" />
-          <Input size="md" label="Medium Input (md, default)" placeholder="Standard 36px height" />
-          <Input size="lg" label="Large Input (lg)" placeholder="Prominent 44px height" />
+          <Input size="sm" label="Small Input (sm)" placeholder="Compact 32px height" />
+          <Input size="md" label="Medium Input (md, default)" placeholder="Standard 40px height" />
+          <Input size="lg" label="Large Input (lg)" placeholder="Prominent 48px height" />
         </div>
       ),
       code: `
-<Input size="sm" label="Small Input (sm)" placeholder="Compact 28px height" />
-<Input size="md" label="Medium Input (md)" placeholder="Standard 36px height" />
-<Input size="lg" label="Large Input (lg)" placeholder="Prominent 44px height" />`,
+<Input size="sm" label="Small Input (sm)" placeholder="Compact 32px height" />
+<Input size="md" label="Medium Input (md)" placeholder="Standard 40px height" />
+<Input size="lg" label="Large Input (lg)" placeholder="Prominent 48px height" />`,
     },
     {
       title: '1-Click Clearable Field',
