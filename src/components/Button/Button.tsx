@@ -27,9 +27,9 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
   },
   secondary: {
     default:
-      'text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:bg-gray-200 dark:disabled:bg-gray-700',
+      'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:bg-gray-200 dark:disabled:bg-gray-700',
     outlined:
-      'text-gray-700 hover:text-white border border-gray-500 hover:bg-gray-700 dark:border-gray-500 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-gray-400',
+      'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-[var(--ui-border-muted)]',
     plain:
       'text-gray-700 hover:bg-black/5 dark:text-gray-200 dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
   },

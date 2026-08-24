@@ -63,7 +63,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         anchor={anchor}
         className={buildClassName(
           'origin-top-right rounded-xl shadow-lg p-1.5 text-sm transition duration-100 ease-out z-50',
-          'border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200',
+          'border border-[var(--ui-border)] bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200',
           'focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0',
           '[--anchor-gap:--spacing(1)]',
           widthClass,
@@ -137,7 +137,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
                         </div>
                       </div>
                       {item.shortcut && (
-                        <kbd className="shrink-0 text-[10px] font-medium font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700/80 border border-gray-200/60 dark:border-gray-600/60 text-gray-400 dark:text-gray-400">
+                        <kbd className="shrink-0 text-[10px] font-medium font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700/80 border border-[var(--ui-border-muted)] text-gray-400 dark:text-gray-400">
                           {item.shortcut}
                         </kbd>
                       )}

@@ -133,7 +133,7 @@ export const RadioSwitch: React.FC<RadioSwitchProps> = ({
       aria-label={label}
       onKeyDown={handleGroupKeyDown}
       className={buildClassName(
-        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
+        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80 border border-[var(--ui-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
         SIZE_CONTAINER_CLASS[size],
         disabled && 'opacity-60 pointer-events-none',
         wrapperClass,

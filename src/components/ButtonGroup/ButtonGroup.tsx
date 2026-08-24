@@ -137,10 +137,10 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
                 (isVertical
                   ? resolvedTheme === 'primary' || resolvedTheme === 'danger'
                     ? 'border-t border-white/25 dark:border-white/20'
-                    : 'border-t border-gray-300/70 dark:border-gray-700/70'
+                    : 'border-t border-[var(--ui-border)]'
                   : resolvedTheme === 'primary' || resolvedTheme === 'danger'
                     ? 'border-l border-white/25 dark:border-white/20'
-                    : 'border-l border-gray-300/70 dark:border-gray-700/70'),
+                    : 'border-l border-[var(--ui-border)]'),
             ],
             fullWidth && 'flex-1',
           ),

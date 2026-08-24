@@ -45,7 +45,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
         ref={ref}
         className={buildClassName(
           positionClass,
-          'border-t border-gray-200/80 bg-white/90 p-3.5 backdrop-blur-md shadow-lg dark:border-gray-800 dark:bg-gray-900/90 transition-all',
+          'border-t border-[var(--ui-border)] bg-white/90 p-3.5 backdrop-blur-md shadow-lg dark:bg-gray-900/90 transition-all',
           className,
         )}
         data-testid="sticky-action-bar"
