@@ -44,4 +44,26 @@ describe('QuantityStepper', () => {
     fireEvent.change(input, { target: { value: '12' } })
     expect(handleChange).toHaveBeenCalledWith(12)
   })
+
+  it('renders label, labelHint, helperText, and error correctly', () => {
+    render(
+      <QuantityStepper
+        value={2}
+        onChange={jest.fn()}
+        label="Quantity"
+        labelHint="Max 10 per order"
+        helperText="Enter item quantity"
+        error="Invalid quantity"
+      />,
+    )
+    expect(screen.getByText('Quantity')).toBeInTheDocument()
+    expect(screen.getByText('Max 10 per order')).toBeInTheDocument()
+    expect(screen.getByText('Invalid quantity')).toBeInTheDocument()
+  })
+
+  it('renders prefix and suffix elements', () => {
+    render(<QuantityStepper value={3} onChange={jest.fn()} prefix="$" suffix="items" />)
+    expect(screen.getByText('$')).toBeInTheDocument()
+    expect(screen.getByText('items')).toBeInTheDocument()
+  })
 })

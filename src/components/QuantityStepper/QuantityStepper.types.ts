@@ -32,7 +32,24 @@ export interface QuantityStepperProps
    */
   label?: string
   /**
-   * Size variant controlling button and text dimensions
+   * Optional label hint text displayed next to label
+   */
+  labelHint?: string
+  /**
+   * Optional helper text rendered beneath the field
+   */
+  helperText?: string
+  /**
+   * Error message text. Setting this marks field as invalid.
+   */
+  error?: string
+  /**
+   * Show or hide the error message text underneath
+   * @default true
+   */
+  showErrorMessage?: boolean
+  /**
+   * Size variant matching Input component dimensions
    * @default "md"
    */
   size?: QuantityStepperSize
