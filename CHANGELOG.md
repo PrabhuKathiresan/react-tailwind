@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.7.1 (2026-08-24)</small>
+
+* fix(Dropdown): don't render a menu item row for divider entries ([dc3ec9f727c7100983ae9eb043f87f362649e286](https://github.com/PrabhuKathiresan/react-tailwind/commit/dc3ec9f727c7100983ae9eb043f87f362649e286))
+* chore(docs): use relative Vite base so archived doc versions load their own assets ([793e2753665f1ceb3ec4d0fbe547f17724595293](https://github.com/PrabhuKathiresan/react-tailwind/commit/793e2753665f1ceb3ec4d0fbe547f17724595293))
+
 ## 1.7.0 (2026-08-24)
 
 * feat(Grid,Flex): add Grid and Flex layout components ([23d00a2d44624963f4834fac650472d9ea83b4fb](https://github.com/PrabhuKathiresan/react-tailwind/commit/23d00a2d44624963f4834fac650472d9ea83b4fb))
