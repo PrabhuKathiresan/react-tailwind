@@ -8,10 +8,18 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/react-tailwind.es.js",
-      "require": "./dist/react-tailwind.cjs.js"
+      "default": "./dist/react-tailwind.cjs.js"
     },
-    "./react-tailwind.css": "./dist/react-tailwind.css"
+    "./components/*": {
+      "types": "./dist/types/components/*/index.d.ts",
+      "import": "./dist/es/components/*/index.js",
+      "default": "./dist/cjs/components/*/index.js"
+    },
+    "./*": "./dist/*"
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
