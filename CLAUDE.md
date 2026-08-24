@@ -30,14 +30,15 @@ Run tests matching a name: `pnpm exec jest -t "renders as a custom element"`
 
 ```bash
 cd my-ui-pages
-pnpm run dev            # vite dev server
-pnpm run build          # tsc -b && vite build
+pnpm run dev            # vite dev server (does NOT regenerate docs data — see below)
+pnpm run build          # generate-data, then tsc -b && vite build
 pnpm run lint           # eslint .
+pnpm run generate-data  # build-docs + build-search (see below)
 pnpm run build-docs     # regenerates src/data/components/**/*.json from library source via react-docgen-typescript
 pnpm run build-search   # regenerates public/search-index.json
 ```
 
-`build-docs` and `build-search` read component source directly from `../src/components`, so **after changing any component's props/types/JSDoc in the root library, re-run `pnpm run build-docs` (and `build-search` if navigation/search content is affected) inside `my-ui-pages/`** to keep the docs site in sync. These JSON files under `my-ui-pages/src/data/components/` are generated output, not hand-authored.
+`build-docs` and `build-search` read component source directly from `../src/components`. `src/data/components/**/*.json` and `public/search-index.json` are gitignored, purely-generated output (never hand-edited, never committed) — `pnpm run build` regenerates them automatically first, so CI and the GitHub Pages deploy (`.github/workflows/deploy.yml`) always publish fresh data with no manual step. `pnpm run dev` does _not_ regenerate them (to keep dev-server startup fast on repeat runs), so on a fresh checkout, or after changing any component's props/types/JSDoc, run `pnpm run generate-data` manually before/while using `dev` to see the docs site reflect the current library source.
 
 ### Git hooks (husky)
 

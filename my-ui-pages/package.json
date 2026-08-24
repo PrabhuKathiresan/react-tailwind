@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "pnpm run generate-data && tsc -b && vite build",
     "clean": "rm -rf dist node_modules",
     "reset": "pnpm run clean && pnpm install",
     "lint": "eslint .",
     "preview": "vite preview",
+    "generate-data": "pnpm run build-docs && pnpm run build-search",
     "build-docs": "tsx utils/generateDocs.ts",
     "build-search": "tsx utils/generateSearchIndex.ts"
   },
