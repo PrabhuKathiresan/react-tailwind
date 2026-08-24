@@ -26,7 +26,7 @@ export interface ExampleSection {
   title: string
   description?: string
   code?: string
-  render: ReactNode
+  render: ReactNode | (() => ReactNode)
   /** Library version this example's feature was introduced in, e.g. "2.0.0". */
   since?: string
 }
@@ -55,7 +55,7 @@ function ExampleBlock({ example }: { example: ExampleSection }) {
   if (!hasCode) {
     return (
       <div className="rounded-xl border border-gray-200 dark:border-gray-700/80 overflow-hidden p-6 bg-white dark:bg-gray-900/30 min-h-24 shadow-xs">
-        {example.render}
+        {typeof example.render === 'function' ? (example.render as Function)() : example.render}
       </div>
     )
   }
@@ -64,7 +64,7 @@ function ExampleBlock({ example }: { example: ExampleSection }) {
     <div className="rounded-xl border border-gray-200 dark:border-gray-700/80 overflow-hidden shadow-xs bg-white dark:bg-gray-900/30">
       {/* Live Preview Container */}
       <div className="p-6 bg-white dark:bg-gray-900/30 min-h-24 overflow-x-auto">
-        {example.render}
+        {typeof example.render === 'function' ? (example.render as Function)() : example.render}
       </div>
 
       {/* Code Toolbar */}

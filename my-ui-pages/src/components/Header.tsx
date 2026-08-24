@@ -37,7 +37,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-15 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+    <header className="fixed left-0 right-0 top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       <div className="w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between h-15">
         <div className="flex gap-1">
           <ReactTailwindIcon />

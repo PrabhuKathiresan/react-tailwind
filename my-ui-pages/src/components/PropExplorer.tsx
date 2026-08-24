@@ -55,7 +55,7 @@ function parseDefault(p: PropMeta): any {
   if (v === null || v === undefined) {
     if (p.raw === 'boolean') return false
     if (p.raw === 'number') return 0
-    return p.enumValues ? p.enumValues[0] : ''
+    return undefined
   }
   try {
     return JSON.parse(v)
@@ -108,7 +108,12 @@ function EnumControl({
   onChange: (v: any) => void
 }) {
   return (
-    <select value={value ?? ''} onChange={(e) => onChange(e.target.value)} className={inputCls}>
+    <select
+      value={value ?? ''}
+      onChange={(e) => onChange(e.target.value ? e.target.value : undefined)}
+      className={inputCls}
+    >
+      {!meta.required && <option value="">(default)</option>}
       {meta.enumValues!.map((opt) => (
         <option key={opt} value={opt}>
           {opt}
