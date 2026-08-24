@@ -1,0 +1,42 @@
+{
+  "name": "WheelPicker",
+  "description": "",
+  "props": [
+    {
+      "name": "columns",
+      "type": "WheelPickerColumn[]",
+      "raw": "WheelPickerColumn[]",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Array of column configurations"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "200",
+      "description": "Height of wheel container in px (default: 200)"
+    },
+    {
+      "name": "itemHeight",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "40",
+      "description": "Height of each item row in px (default: 40)"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Custom container class string"
+    }
+  ]
+}

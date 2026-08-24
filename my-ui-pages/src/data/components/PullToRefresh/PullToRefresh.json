@@ -1,0 +1,69 @@
+{
+  "name": "PullToRefresh",
+  "description": "",
+  "props": [
+    {
+      "name": "onRefresh",
+      "type": "() => void | Promise<void>",
+      "raw": "() => void | Promise<void>",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Async callback function triggered when user pulls to refresh"
+    },
+    {
+      "name": "pullThreshold",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "70",
+      "description": "Pull distance threshold in px to trigger refresh (default: 70)"
+    },
+    {
+      "name": "maxPullDistance",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "120",
+      "description": "Maximum pull distance in px (default: 120)"
+    },
+    {
+      "name": "refreshing",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled refreshing state"
+    },
+    {
+      "name": "pullingContent",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom content rendered while pulling down"
+    },
+    {
+      "name": "refreshingContent",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom content rendered while refreshing"
+    },
+    {
+      "name": "contentClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Content wrapper class string"
+    }
+  ]
+}

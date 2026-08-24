@@ -1,0 +1,96 @@
+{
+  "name": "FloatingActionButton",
+  "description": "",
+  "props": [
+    {
+      "name": "icon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": true,
+      "defaultValue": null,
+      "description": "Primary button icon"
+    },
+    {
+      "name": "activeIcon",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional active icon when speed dial menu is expanded (e.g. X close icon)"
+    },
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label text for Extended FAB (Icon + Text layout)"
+    },
+    {
+      "name": "variant",
+      "type": "enum",
+      "raw": "FABVariant",
+      "enumValues": ["primary", "secondary", "danger", "dark"],
+      "required": false,
+      "defaultValue": "primary",
+      "description": "Color theme variant (default: 'primary')"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "FABSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": "md",
+      "description": "Button size scale (default: 'md')"
+    },
+    {
+      "name": "position",
+      "type": "enum",
+      "raw": "FABPosition",
+      "enumValues": ["bottom-right", "bottom-left", "bottom-center", "inline"],
+      "required": false,
+      "defaultValue": "bottom-right",
+      "description": "Screen positioning (default: 'bottom-right')"
+    },
+    {
+      "name": "speedDialActions",
+      "type": "FABSpeedDialAction[]",
+      "raw": "FABSpeedDialAction[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "List of expandable speed dial sub-actions"
+    },
+    {
+      "name": "isOpen",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled open state for speed dial"
+    },
+    {
+      "name": "onToggle",
+      "type": "(open: boolean) => void",
+      "raw": "(open: boolean) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Handler called when speed dial open state changes"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Outer container class string"
+    }
+  ]
+}

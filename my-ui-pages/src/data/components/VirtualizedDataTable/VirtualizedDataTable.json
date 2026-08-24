@@ -84,6 +84,24 @@
       "description": "External sorting handler. When omitted, DataTable auto-sorts internally."
     },
     {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Pins the table header to the top when scrolling."
+    },
+    {
+      "name": "stickyPagination",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Pins the pagination footer to the bottom when scrolling."
+    },
+    {
       "name": "rowKey",
       "type": "string | ((item: T) => string | number)",
       "raw": "string | ((item: T) => string | number)",

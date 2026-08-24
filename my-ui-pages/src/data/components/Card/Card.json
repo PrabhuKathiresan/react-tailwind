@@ -75,6 +75,51 @@
       "description": "Remove default padding from the card"
     },
     {
+      "name": "subtitle",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional secondary subtitle node for mobile & web card rows"
+    },
+    {
+      "name": "leading",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Leading node (e.g. Avatar, thumbnail image, or icon)"
+    },
+    {
+      "name": "trailing",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Trailing detail text or action node"
+    },
+    {
+      "name": "badge",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional status badge or count pill"
+    },
+    {
+      "name": "showChevron",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Render trailing chevron arrow navigation icon"
+    },
+    {
       "name": "as",
       "type": "ElementType",
       "raw": "ElementType",

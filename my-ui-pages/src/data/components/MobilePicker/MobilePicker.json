@@ -1,0 +1,348 @@
+{
+  "name": "MobilePicker",
+  "description": "",
+  "props": [
+    {
+      "name": "options",
+      "type": "T[]",
+      "raw": "T[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "List of options to display in the mobile sheet"
+    },
+    {
+      "name": "groups",
+      "type": "OptionGroup<T>[]",
+      "raw": "OptionGroup<T>[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "List of option groups to display in the mobile sheet"
+    },
+    {
+      "name": "selected",
+      "type": "string | T[] | BaseOption",
+      "raw": "string | T[] | BaseOption",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Currently selected option(s). Single: T | null, Multi: T[]"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "raw": "SelectBoxSize",
+      "enumValues": ["sm", "md", "lg"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Size scale of the trigger field (`\"sm\"` | `\"md\"` | `\"lg\"`). Defaults to `\"md\"`."
+    },
+    {
+      "name": "labelKey",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Field name for display label (default \"label\")"
+    },
+    {
+      "name": "valueKey",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Field name for unique value (default \"value\")"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label text displayed above the component"
+    },
+    {
+      "name": "labelWrapperClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label wrapper custom class"
+    },
+    {
+      "name": "labelClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label element custom class"
+    },
+    {
+      "name": "labelHint",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Hint element beside label"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Description shown in the top header of the mobile sheet"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Placeholder text shown when no value is selected"
+    },
+    {
+      "name": "multiple",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Multi-select mode"
+    },
+    {
+      "name": "maxSelection",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Maximum selections allowed in multi-select mode"
+    },
+    {
+      "name": "showSelectAll",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Shows a 1-click Select All / Deselect All header in multi-select mode"
+    },
+    {
+      "name": "confirmText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Primary CTA button text for multi-select confirmation (default \"Apply Selection\")"
+    },
+    {
+      "name": "searchable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Enables search input bar inside the bottom sheet"
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Search input placeholder inside sheet"
+    },
+    {
+      "name": "async",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Enables async search mode (server-side search)"
+    },
+    {
+      "name": "onSearch",
+      "type": "(query: string) => void | Promise<void>",
+      "raw": "(query: string) => void | Promise<void>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Callback triggered when user types in async search mode"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Loading state spinner inside search bar or option list"
+    },
+    {
+      "name": "typeToSearchText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Text displayed in async mode before typing query"
+    },
+    {
+      "name": "filterOption",
+      "type": "(option: T, query: string) => boolean",
+      "raw": "(option: T, query: string) => boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom search filter predicate for client-side filtering"
+    },
+    {
+      "name": "quickOptions",
+      "type": "T[]",
+      "raw": "T[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Quick-access 1-tap option chips displayed above option list"
+    },
+    {
+      "name": "quickOptionsTitle",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Section header for quick-access chips (default \"Quick Picks\")"
+    },
+    {
+      "name": "allowClear",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Enables clear (X) button on single-select trigger"
+    },
+    {
+      "name": "allowFreeText",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Enables typing custom freeform text inside the mobile search bar"
+    },
+    {
+      "name": "allowAdd",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Enables \"+ Create\" option card when search query doesn't match existing options"
+    },
+    {
+      "name": "addNewText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Label prefix for creatable option action (default \"Create\")"
+    },
+    {
+      "name": "onAdd",
+      "type": "(value: string) => string | void | T | Promise<string | void | T>",
+      "raw": "(value: string) => string | void | T | Promise<string | void | T>",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Callback when user clicks the creatable option"
+    },
+    {
+      "name": "leftGroup",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Icon or element displayed inside the trigger on the left"
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Shows error state border and message"
+    },
+    {
+      "name": "showErrorMessage",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Shows error message below field (default true)"
+    },
+    {
+      "name": "helperText",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Helper guidance message rendered below field"
+    },
+    {
+      "name": "noOptionsText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Message shown in the dropdown when options are empty"
+    },
+    {
+      "name": "renderOption",
+      "type": "(option: T, isSelected: boolean) => ReactNode",
+      "raw": "(option: T, isSelected: boolean) => ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom option renderer function"
+    },
+    {
+      "name": "containerClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Outer container class"
+    },
+    {
+      "name": "sheetClass",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Sheet panel custom class"
+    }
+  ]
+}

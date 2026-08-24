@@ -39,13 +39,49 @@
       "description": "Optional field label text"
     },
     {
+      "name": "labelHint",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional label hint text displayed next to label"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Optional helper text rendered beneath the field"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Error message text. Setting this marks field as invalid."
+    },
+    {
+      "name": "showErrorMessage",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Show or hide the error message text underneath"
+    },
+    {
       "name": "size",
       "type": "enum",
       "raw": "QuantityStepperSize",
       "enumValues": ["sm", "md", "lg"],
       "required": false,
       "defaultValue": "\"md\"",
-      "description": "Size variant controlling button and text dimensions"
+      "description": "Size variant matching Input component dimensions"
     },
     {
       "name": "prefix",

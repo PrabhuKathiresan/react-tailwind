@@ -1,0 +1,87 @@
+{
+  "name": "SwipeableRow",
+  "description": "",
+  "props": [
+    {
+      "name": "leftActions",
+      "type": "SwipeableAction[]",
+      "raw": "SwipeableAction[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "[]",
+      "description": "Action buttons revealed when swiping right (from left edge)"
+    },
+    {
+      "name": "rightActions",
+      "type": "SwipeableAction[]",
+      "raw": "SwipeableAction[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "[]",
+      "description": "Action buttons revealed when swiping left (from right edge)"
+    },
+    {
+      "name": "actionWidth",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "76",
+      "description": "Action button width in pixels (defaults to 76px per action button)"
+    },
+    {
+      "name": "threshold",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "40",
+      "description": "Minimum drag threshold in pixels to trigger row expansion (defaults to 40px)"
+    },
+    {
+      "name": "fullSwipeToExecute",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Execute the primary action automatically when full swipe threshold is reached"
+    },
+    {
+      "name": "fullSwipeThreshold",
+      "type": "number",
+      "raw": "number",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "180",
+      "description": "Full swipe threshold in pixels or percentage of width (defaults to 180px)"
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "",
+      "description": "Inner content wrapper class"
+    },
+    {
+      "name": "onOpen",
+      "type": "(direction: \"left\" | \"right\") => void",
+      "raw": "(direction: \"left\" | \"right\") => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Callback fired when row snaps open"
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Callback fired when row returns to closed state"
+    }
+  ]
+}

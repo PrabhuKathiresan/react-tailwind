@@ -289,6 +289,33 @@
       "required": false,
       "defaultValue": null,
       "description": "Show a clear (X) button for single-select mode"
+    },
+    {
+      "name": "allowFreeText",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Allows typing freeform text that is not present in the options list.\nCommits typed text as selected value on Enter or Blur."
+    },
+    {
+      "name": "asBottomSheet",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Renders the select dropdown as a mobile-optimized slide-up bottom sheet"
+    },
+    {
+      "name": "mobileMode",
+      "type": "enum",
+      "raw": "\"dropdown\" | \"sheet\"",
+      "enumValues": ["dropdown", "sheet"],
+      "required": false,
+      "defaultValue": null,
+      "description": "Mobile presentation mode (`\"dropdown\"` or `\"sheet\"`)"
     }
   ]
 }

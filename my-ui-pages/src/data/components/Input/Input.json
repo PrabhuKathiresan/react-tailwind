@@ -9,7 +9,7 @@
       "enumValues": ["sm", "md", "lg"],
       "required": false,
       "defaultValue": null,
-      "description": "Size scale of the input component.\n- `sm` (compact 28px/text-xs)\n- `md` (standard 36px/text-sm default)\n- `lg` (prominent 44px/text-base)\nDefaults to `\"md\"`."
+      "description": "Size scale of the input component.\n- `sm` (compact 32px/text-xs)\n- `md` (standard 40px/text-sm default)\n- `lg` (prominent 48px/text-base)\nDefaults to `\"md\"`."
     },
     {
       "name": "rightGroup",

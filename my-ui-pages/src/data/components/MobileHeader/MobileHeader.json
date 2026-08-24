@@ -1,0 +1,123 @@
+{
+  "name": "MobileHeader",
+  "description": "",
+  "props": [
+    {
+      "name": "subtitle",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Secondary subtitle text or sub-heading"
+    },
+    {
+      "name": "titleAlign",
+      "type": "enum",
+      "raw": "\"center\" | \"left\"",
+      "enumValues": ["center", "left"],
+      "required": false,
+      "defaultValue": "center",
+      "description": "Title text alignment ('center' | 'left', default: 'center')"
+    },
+    {
+      "name": "onBack",
+      "type": "() => void",
+      "raw": "() => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Back button click handler"
+    },
+    {
+      "name": "backLabel",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "Back",
+      "description": "Back button accessible label (default: \"Back\")"
+    },
+    {
+      "name": "leading",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Custom leading element on left (e.g. Hamburger menu icon)"
+    },
+    {
+      "name": "actions",
+      "type": "MobileHeaderAction[]",
+      "raw": "MobileHeaderAction[]",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Right side action items"
+    },
+    {
+      "name": "searchable",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Enables in-header search bar layout"
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Controlled search input value"
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) => void",
+      "raw": "(value: string) => void",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Search input change callback"
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "raw": "string",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "Search...",
+      "description": "Search input placeholder text (default: \"Search...\")"
+    },
+    {
+      "name": "sticky",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "true",
+      "description": "Sticky top positioning (default: true)"
+    },
+    {
+      "name": "transparent",
+      "type": "boolean",
+      "raw": "boolean",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": "false",
+      "description": "Transparent background with backdrop blur"
+    },
+    {
+      "name": "bottomSlot",
+      "type": "ReactNode",
+      "raw": "ReactNode",
+      "enumValues": null,
+      "required": false,
+      "defaultValue": null,
+      "description": "Sub-header slot rendered below main header row (e.g. Filter tabs)"
+    }
+  ]
+}

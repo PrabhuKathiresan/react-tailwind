@@ -1,0 +1,48 @@
+{
+  "name": "Grid.Col",
+  "description": "Grid column / item wrapper inside Grid container.",
+  "props": [
+    {
+      "name": "span",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'auto' | 'full'",
+      "default": "undefined",
+      "required": false,
+      "description": "Column span width out of 12 columns."
+    },
+    {
+      "name": "sm",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | 12 | 'auto' | 'full'",
+      "default": "undefined",
+      "required": false,
+      "description": "Column span on sm viewports (>= 640px)."
+    },
+    {
+      "name": "md",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | 12 | 'auto' | 'full'",
+      "default": "undefined",
+      "required": false,
+      "description": "Column span on md viewports (>= 768px)."
+    },
+    {
+      "name": "lg",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | 12 | 'auto' | 'full'",
+      "default": "undefined",
+      "required": false,
+      "description": "Column span on lg viewports (>= 1024px)."
+    },
+    {
+      "name": "grow",
+      "type": "boolean",
+      "default": "false",
+      "required": false,
+      "description": "Enables flex grow factor."
+    },
+    {
+      "name": "shrink",
+      "type": "boolean",
+      "default": "false",
+      "required": false,
+      "description": "Enables flex shrink factor."
+    }
+  ]
+}
