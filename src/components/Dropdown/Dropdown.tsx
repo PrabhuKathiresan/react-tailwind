@@ -83,69 +83,73 @@ export const Dropdown: React.FC<DropdownProps> = ({
                 {item.groupTitle}
               </li>
             )}
-            <MenuItem as="li" disabled={item.disabled}>
-              {({ disabled, active }) => (
-                <div
-                  onClick={() => {
-                    if (!disabled) {
-                      item.onClick?.(item)
-                      onMenuClick?.(item, idx)
-                    }
-                  }}
-                  className={buildClassName(
-                    'flex items-center justify-between gap-3 w-full px-2.5 py-1.5 rounded-lg text-sm transition-colors cursor-pointer select-none',
-                    item.danger
-                      ? buildClassName(
-                          'text-rose-600 dark:text-rose-400',
-                          active
-                            ? 'bg-rose-50 dark:bg-rose-950/40'
-                            : 'hover:bg-rose-50 dark:hover:bg-rose-950/40',
-                        )
-                      : buildClassName(
-                          'text-gray-700 dark:text-gray-200',
-                          active
-                            ? 'bg-gray-100 dark:bg-gray-700/80'
-                            : 'hover:bg-gray-100/80 dark:hover:bg-gray-700/80',
-                        ),
-                    disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
-                    menuItemClass,
-                  )}
-                  data-testid={`dropdown-item-${item.id}`}
-                >
-                  {renderItem ? (
-                    renderItem(item)
-                  ) : (
-                    <>
-                      <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                        {item.icon && (
-                          <span
-                            className={buildClassName(
-                              'shrink-0',
-                              item.danger ? 'text-rose-500' : 'text-gray-400 dark:text-gray-500',
-                            )}
-                          >
-                            {item.icon}
-                          </span>
-                        )}
-                        <div className="flex flex-col min-w-0">
-                          {item.label && <span className="font-medium truncate">{item.label}</span>}
-                          {item.description && (
-                            <span className="text-xs text-gray-400 dark:text-gray-500 font-normal truncate">
-                              {item.description}
+            {!item.divider && (
+              <MenuItem as="li" disabled={item.disabled}>
+                {({ disabled, active }) => (
+                  <div
+                    onClick={() => {
+                      if (!disabled) {
+                        item.onClick?.(item)
+                        onMenuClick?.(item, idx)
+                      }
+                    }}
+                    className={buildClassName(
+                      'flex items-center justify-between gap-3 w-full px-2.5 py-1.5 rounded-lg text-sm transition-colors cursor-pointer select-none',
+                      item.danger
+                        ? buildClassName(
+                            'text-rose-600 dark:text-rose-400',
+                            active
+                              ? 'bg-rose-50 dark:bg-rose-950/40'
+                              : 'hover:bg-rose-50 dark:hover:bg-rose-950/40',
+                          )
+                        : buildClassName(
+                            'text-gray-700 dark:text-gray-200',
+                            active
+                              ? 'bg-gray-100 dark:bg-gray-700/80'
+                              : 'hover:bg-gray-100/80 dark:hover:bg-gray-700/80',
+                          ),
+                      disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
+                      menuItemClass,
+                    )}
+                    data-testid={`dropdown-item-${item.id}`}
+                  >
+                    {renderItem ? (
+                      renderItem(item)
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                          {item.icon && (
+                            <span
+                              className={buildClassName(
+                                'shrink-0',
+                                item.danger ? 'text-rose-500' : 'text-gray-400 dark:text-gray-500',
+                              )}
+                            >
+                              {item.icon}
                             </span>
                           )}
+                          <div className="flex flex-col min-w-0">
+                            {item.label && (
+                              <span className="font-medium truncate">{item.label}</span>
+                            )}
+                            {item.description && (
+                              <span className="text-xs text-gray-400 dark:text-gray-500 font-normal truncate">
+                                {item.description}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      {item.shortcut && (
-                        <kbd className="shrink-0 text-[10px] font-medium font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700/80 border border-[var(--ui-border-muted)] text-gray-400 dark:text-gray-400">
-                          {item.shortcut}
-                        </kbd>
-                      )}
-                    </>
-                  )}
-                </div>
-              )}
-            </MenuItem>
+                        {item.shortcut && (
+                          <kbd className="shrink-0 text-[10px] font-medium font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700/80 border border-[var(--ui-border-muted)] text-gray-400 dark:text-gray-400">
+                            {item.shortcut}
+                          </kbd>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+              </MenuItem>
+            )}
             {item.divider && idx < items.length - 1 && (
               <li
                 key={`divider-${item.id}`}

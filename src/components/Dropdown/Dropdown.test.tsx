@@ -88,6 +88,12 @@ describe('Dropdown Component', () => {
     expect(screen.getByTestId('dropdown-divider')).toBeInTheDocument()
   })
 
+  it('does not render a menu item row for a divider entry', () => {
+    render(<Dropdown triggerButton={trigger} items={items} />)
+
+    expect(screen.queryByTestId('dropdown-item-div-1')).not.toBeInTheDocument()
+  })
+
   it('applies itemsContainerClass and width class', () => {
     render(
       <Dropdown
