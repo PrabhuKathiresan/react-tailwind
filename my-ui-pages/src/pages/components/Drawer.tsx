@@ -1,10 +1,68 @@
 import React from 'react'
 import { Drawer, Button, type DrawerAlignment, type DrawerSize } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
-import { Filter, Check, ShieldAlert } from 'lucide-react'
+import { Filter, Check, ShieldAlert, FileText } from 'lucide-react'
 
 export default function DrawerDocsPage() {
   const examples = [
+    {
+      title: 'Scrollable Content Drawer (titleSticky & footerSticky)',
+      description:
+        'When drawer body content exceeds viewport height, set `titleSticky` and `footerSticky` so the header remains pinned at the top and the action buttons stay pinned at the bottom while the content body scrolls smoothly.',
+      render: <ExampleScrollableContentDrawer />,
+      code: `
+function ExampleScrollableContentDrawer() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <Button leftIcon={<FileText className="size-4" />} onClick={() => setOpen(true)}>
+        Open Scrollable Terms & Conditions
+      </Button>
+
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        align="end"
+        size="md"
+        title="Terms of Service & Privacy Policy"
+        description="Please review our terms before proceeding"
+        titleSticky
+        footerSticky
+        footer={
+          <div className="flex justify-end gap-2 w-full">
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Decline
+            </Button>
+            <Button theme="primary" onClick={() => setOpen(false)}>
+              I Accept
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-4 text-sm text-gray-600 dark:text-gray-300">
+          <p className="font-medium text-gray-900 dark:text-white">1. Overview & Agreement</p>
+          <p>By accessing or using our application, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+
+          <p className="font-medium text-gray-900 dark:text-white">2. User Responsibilities</p>
+          <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+
+          <p className="font-medium text-gray-900 dark:text-white">3. Privacy & Data Collection</p>
+          <p>We collect personal data to provide and improve our service. Data processing is conducted in compliance with applicable laws.</p>
+
+          <p className="font-medium text-gray-900 dark:text-white">4. Service Availability & Modifications</p>
+          <p>We reserve the right to update, modify, or discontinue any feature of the service at any time with or without prior notice.</p>
+
+          <p className="font-medium text-gray-900 dark:text-white">5. Limitation of Liability</p>
+          <p>In no event shall the company be liable for any indirect, incidental, special, or consequential damages.</p>
+
+          <p className="font-medium text-gray-900 dark:text-white">6. Governing Law</p>
+          <p>These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which the company is headquartered.</p>
+        </div>
+      </Drawer>
+    </>
+  );
+}`,
+    },
     {
       title: 'Mobile Bottom Sheet (align="bottom")',
       description:
@@ -161,7 +219,7 @@ function ExamplePreventOutsideClickDrawer() {
   return (
     <DocsPageLayout
       component="Drawer"
-      description="A slide-in overlay panel or mobile bottom sheet that keeps users in context. Supports 5 alignments (start, end, top, bottom, center), 7 width sizes (xs, sm, md, lg, xl, 2xl, full), closeOnOutsideClick protection, mobile drag handle indicators, sticky headers, top-right close buttons, and custom action footers."
+      description="A slide-in overlay panel or mobile bottom sheet that keeps users in context. Supports 5 alignments (start, end, top, bottom, center), 7 width sizes (xs, sm, md, lg, xl, 2xl, full), scrollable content body with titleSticky and footerSticky props, closeOnOutsideClick protection, mobile drag handle indicators, and custom action footers."
       examples={examples}
     />
   )
@@ -170,6 +228,77 @@ function ExamplePreventOutsideClickDrawer() {
 /* -------------------------
    Example helper components
    ------------------------- */
+
+function ExampleScrollableContentDrawer() {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <Button leftIcon={<FileText className="size-4" />} onClick={() => setOpen(true)}>
+        Open Scrollable Terms & Conditions
+      </Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        align="end"
+        size="md"
+        title="Terms of Service & Privacy Policy"
+        description="Please review our terms before proceeding"
+        titleSticky
+        footerSticky
+        footer={
+          <div className="flex justify-end gap-2 w-full">
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Decline
+            </Button>
+            <Button theme="primary" onClick={() => setOpen(false)}>
+              I Accept
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-4 text-sm text-gray-600 dark:text-gray-300">
+          <p className="font-medium text-gray-900 dark:text-white">1. Overview & Agreement</p>
+          <p>
+            By accessing or using our application, you agree to be bound by these Terms of Service.
+            Please read them carefully. If you do not agree to these terms, you must not use or
+            access our services.
+          </p>
+          <p className="font-medium text-gray-900 dark:text-white">2. User Responsibilities</p>
+          <p>
+            You are responsible for maintaining the confidentiality of your account credentials and
+            for all activities that occur under your account. You agree to notify us immediately of
+            any unauthorized use of your account.
+          </p>
+          <p className="font-medium text-gray-900 dark:text-white">3. Privacy & Data Collection</p>
+          <p>
+            We collect personal data to provide and improve our service. Data processing is
+            conducted in compliance with applicable data protection laws. We never sell your
+            personal information to third parties.
+          </p>
+          <p className="font-medium text-gray-900 dark:text-white">
+            4. Service Availability & Modifications
+          </p>
+          <p>
+            We reserve the right to update, modify, or discontinue any feature of the service at any
+            time with or without prior notice. We strive to maintain 99.9% uptime for all core
+            systems.
+          </p>
+          <p className="font-medium text-gray-900 dark:text-white">5. Limitation of Liability</p>
+          <p>
+            In no event shall the company be liable for any indirect, incidental, special,
+            consequential, or punitive damages arising out of your access to or use of the service.
+          </p>
+          <p className="font-medium text-gray-900 dark:text-white">6. Governing Law</p>
+          <p>
+            These terms shall be governed by and construed in accordance with the laws of the
+            jurisdiction in which the company is headquartered, without regard to conflict of law
+            provisions.
+          </p>
+        </div>
+      </Drawer>
+    </>
+  )
+}
 
 function ExampleBottomSheetDrawer() {
   const [open, setOpen] = React.useState(false)

@@ -19,7 +19,8 @@ const panelAlignmentMap: AlignmentMap = {
   start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
   end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
   top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
-  bottom: 'data-[closed]:translate-y-1/2 rounded-t-2xl md:rounded-t-3xl max-h-[92svh]',
+  bottom:
+    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[88vh] max-h-[88dvh]',
 }
 
 const panelSizeMap: SizeMap = {
@@ -55,6 +56,30 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const showTitleSection = Boolean(title || description || showBackButton || showCloseButton)
   const shouldShowDragHandle = dragHandle ?? align === 'bottom'
+  const [viewportHeight, setViewportHeight] = React.useState<number | null>(null)
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      setViewportHeight(null)
+      return
+    }
+
+    const updateHeight = () => {
+      if (typeof window !== 'undefined' && window.visualViewport) {
+        setViewportHeight(window.visualViewport.height)
+      }
+    }
+
+    updateHeight()
+    const vv = typeof window !== 'undefined' ? window.visualViewport : null
+    vv?.addEventListener('resize', updateHeight)
+    vv?.addEventListener('scroll', updateHeight)
+
+    return () => {
+      vv?.removeEventListener('resize', updateHeight)
+      vv?.removeEventListener('scroll', updateHeight)
+    }
+  }, [isOpen])
 
   const handleDialogClose = () => {
     if (closeOnOutsideClick) {
@@ -74,13 +99,16 @@ export const Drawer: React.FC<DrawerProps> = ({
         <DialogBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200" />
       )}
 
-      <div className="fixed inset-0 w-screen h-[100svh]">
+      <div
+        className="fixed left-0 top-0 w-full"
+        style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+      >
         <div className={buildClassName('flex', alignmentMap[align])}>
           <DialogPanel
             transition
             className={buildClassName(
               'w-full max-w-full bg-white dark:bg-gray-800 shadow-xl flex flex-col min-w-0',
-              'overflow-y-auto overflow-x-hidden duration-200 ease-out data-[closed]:opacity-0',
+              'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
               panelAlignmentMap[align],
               panelSizeMap[size],
               panelClass,
@@ -98,7 +126,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             {showTitleSection && (
               <div
                 className={buildClassName(
-                  'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-gray-100 dark:border-gray-700/60 shrink-0',
+                  'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-[var(--ui-border)] shrink-0',
                   titleSticky && 'sticky top-0 bg-white dark:bg-gray-800 z-10',
                 )}
               >
@@ -166,7 +194,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             {footer && (
               <div
                 className={buildClassName(
-                  'p-4 border-t border-gray-100 dark:border-gray-700/60 bg-gray-50/50 dark:bg-gray-800/80 shrink-0 min-w-0',
+                  'p-4 border-t border-[var(--ui-border-muted)] bg-white dark:bg-gray-800 shrink-0 min-w-0',
                   footerSticky && 'sticky bottom-0 z-10',
                 )}
               >
