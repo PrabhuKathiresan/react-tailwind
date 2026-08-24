@@ -160,4 +160,16 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
 
   /** Show a clear (X) button for single-select mode */
   allowClear?: boolean
+
+  /**
+   * Allows typing freeform text that is not present in the options list.
+   * Commits typed text as selected value on Enter or Blur.
+   */
+  allowFreeText?: boolean
+
+  /** Renders the select dropdown as a mobile-optimized slide-up bottom sheet */
+  asBottomSheet?: boolean
+
+  /** Mobile presentation mode (`"dropdown"` or `"sheet"`) */
+  mobileMode?: 'dropdown' | 'sheet'
 }
