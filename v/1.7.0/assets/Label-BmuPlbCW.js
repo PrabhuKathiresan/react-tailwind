@@ -1,0 +1,1 @@
+const e="Label",t="",n=[{name:"htmlFor",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:null,description:""}],s={name:e,description:"",props:n};export{s as default,t as description,e as name,n as props};

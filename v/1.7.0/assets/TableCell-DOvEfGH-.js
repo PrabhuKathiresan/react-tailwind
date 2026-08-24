@@ -1,0 +1,1 @@
+const e="TableCell",l="",t=[{name:"align",type:"enum",raw:'"left" | "center" | "right"',enumValues:["left","center","right"],required:!1,defaultValue:"left",description:"Horizontal alignment"}],n={name:e,description:"",props:t};export{n as default,l as description,e as name,t as props};
