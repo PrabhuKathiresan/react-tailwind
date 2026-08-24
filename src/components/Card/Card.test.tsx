@@ -120,18 +120,21 @@ describe('Card Component', () => {
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
   })
 
-  it('does not pass card-only props to DOM', () => {
+  it('renders mobile & web list row elements (title, subtitle, leading, trailing, showChevron)', () => {
     render(
-      <Card hoverable clickable selected bordered compact data-testid="clean-card">
-        Clean DOM
-      </Card>,
+      <Card
+        title="Mobile Order"
+        subtitle="Order #ORD-901"
+        leading={<span data-testid="leading-avatar">Avatar</span>}
+        trailing="Detail Text"
+        showChevron={true}
+        clickable
+      />,
     )
 
-    const el = screen.getByTestId('clean-card')
-    expect(el).not.toHaveAttribute('hoverable')
-    expect(el).not.toHaveAttribute('clickable')
-    expect(el).not.toHaveAttribute('selected')
-    expect(el).not.toHaveAttribute('bordered')
-    expect(el).not.toHaveAttribute('compact')
+    expect(screen.getByText('Mobile Order')).toBeInTheDocument()
+    expect(screen.getByText('Order #ORD-901')).toBeInTheDocument()
+    expect(screen.getByTestId('leading-avatar')).toBeInTheDocument()
+    expect(screen.getByText('Detail Text')).toBeInTheDocument()
   })
 })

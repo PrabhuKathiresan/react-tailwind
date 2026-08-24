@@ -58,6 +58,37 @@ export type CardBaseProps = {
    * @default false
    */
   zeroPadding?: boolean
+
+  /**
+   * Optional primary title node for mobile & web card rows
+   */
+  title?: React.ReactNode
+
+  /**
+   * Optional secondary subtitle node for mobile & web card rows
+   */
+  subtitle?: React.ReactNode
+
+  /**
+   * Leading node (e.g. Avatar, thumbnail image, or icon)
+   */
+  leading?: React.ReactNode
+
+  /**
+   * Trailing detail text or action node
+   */
+  trailing?: React.ReactNode
+
+  /**
+   * Optional status badge or count pill
+   */
+  badge?: React.ReactNode
+
+  /**
+   * Render trailing chevron arrow navigation icon
+   * @default false
+   */
+  showChevron?: boolean
 }
 
 export type PolymorphicCardProps<C extends ElementType, Props = {}> = Props & {
