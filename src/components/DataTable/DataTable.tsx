@@ -81,6 +81,8 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   defaultSelectedRowKeys,
   onSelectionChange,
   isRowSelectable,
+  stickyHeader = true,
+  stickyPagination = true,
   paginationContainerClass,
 }: DataTableProps<T>) {
   const internalSorting = useRef<SortQuery>({})
@@ -128,12 +130,16 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
 
   const densityCellClass = DENSITY_CELL_CLASS[density]
   const colSize = columns.length + (selectable ? 1 : 0)
+  const wrapperHasOverflow = /\boverflow-(x-|y-)?(auto|hidden|scroll|visible|clip)\b/.test(
+    wrapperClass,
+  )
 
   return (
     <div className={buildClassName('w-full rounded-lg relative', containerClass)}>
       <div
         className={buildClassName(
-          'overflow-x-auto overflow-y-hidden rounded-lg border border-[var(--ui-border)]',
+          !wrapperHasOverflow && 'overflow-x-auto',
+          'rounded-lg border border-[var(--ui-border)]',
           wrapperClass,
           pagination && 'rounded-b-none border-b-0',
         )}
@@ -145,7 +151,11 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
           <TableHead className={headClass}>
             {selectable && (
               <TableHeaderCell
-                className={buildClassName('bg-gray-50 dark:bg-gray-800 w-px', densityCellClass)}
+                className={buildClassName(
+                  'bg-gray-50 dark:bg-gray-800 w-px',
+                  densityCellClass,
+                  stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
+                )}
               >
                 <Checkbox
                   aria-label="Select all rows"
@@ -165,10 +175,11 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                 className={buildClassName(
                   'bg-gray-50 dark:bg-gray-800',
                   densityCellClass,
+                  stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
                   column.sticky === 'left' &&
-                    'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
+                    'sticky left-0 z-30 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
                   column.sticky === 'right' &&
-                    'sticky right-0 z-10 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                    'sticky right-0 z-30 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
                   column.headerClass,
                 )}
               >
@@ -256,7 +267,8 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
         <Pagination
           {...pagination}
           className={buildClassName(
-            'rounded-b-lg border-t border-[var(--ui-border)]',
+            'rounded-b-lg border border-[var(--ui-border)]',
+            stickyPagination && 'sticky bottom-0 z-20 bg-white dark:bg-gray-800',
             paginationContainerClass,
           )}
           onChange={setPagination}

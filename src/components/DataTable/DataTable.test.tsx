@@ -52,8 +52,8 @@ jest.mock('../Table', () => ({
 }))
 
 jest.mock('../Pagination', () => ({
-  Pagination: ({ page, onChange }: any) => (
-    <div data-testid="pagination">
+  Pagination: ({ page, onChange, className }: any) => (
+    <div data-testid="pagination" className={className}>
       <button data-testid="page-next" onClick={() => onChange({ page: page + 1 })}>
         next
       </button>
@@ -422,5 +422,40 @@ describe('DataTable', () => {
     const checkboxes = screen.getAllByRole('checkbox')
     fireEvent.click(checkboxes[1])
     expect(onRowClick).not.toHaveBeenCalled()
+  })
+
+  // ── stickyHeader & stickyPagination ─────────────────────────────────
+
+  it('applies sticky header classes by default', () => {
+    render(<DataTable items={rows} columns={columns} />)
+    const th = screen.getByText('ID').closest('th')!
+    expect(th.className).toMatch(/sticky top-0/)
+  })
+
+  it('can disable sticky header via stickyHeader=false', () => {
+    render(<DataTable items={rows} columns={columns} stickyHeader={false} />)
+    const th = screen.getByText('ID').closest('th')!
+    expect(th.className).not.toMatch(/sticky top-0/)
+  })
+
+  it('applies sticky pagination classes by default', () => {
+    render(
+      <DataTable items={rows} columns={columns} pagination={{ page: 1, limit: 5, total: 20 }} />,
+    )
+    const paginationEl = screen.getByTestId('pagination')
+    expect(paginationEl.className).toMatch(/sticky bottom-0/)
+  })
+
+  it('can disable sticky pagination via stickyPagination=false', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        stickyPagination={false}
+        pagination={{ page: 1, limit: 5, total: 20 }}
+      />,
+    )
+    const paginationEl = screen.getByTestId('pagination')
+    expect(paginationEl.className).not.toMatch(/sticky bottom-0/)
   })
 })

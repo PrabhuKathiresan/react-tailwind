@@ -113,6 +113,106 @@ function PaginationExample() {
 }
 
 /* --------------------------------------------------
+ * Example: Sticky Header & Pagination (All Patterns)
+ * -------------------------------------------------- */
+function StickyHeaderAndPaginationExample() {
+  const [paginationA, setPaginationA] = useState<TPagination>({
+    page: 1,
+    limit: 10,
+    total: 50,
+  })
+
+  const [paginationB, setPaginationB] = useState<TPagination>({
+    page: 1,
+    limit: 10,
+    total: 50,
+  })
+
+  const [paginationC, setPaginationC] = useState<TPagination>({
+    page: 1,
+    limit: 10,
+    total: 50,
+  })
+
+  const columns: DataTableColumn[] = [
+    { name: 'id', label: 'ID', width: 80, sticky: 'left' },
+    { name: 'name', label: 'Name' },
+    { name: 'email', label: 'Email' },
+    { name: 'role', label: 'Role' },
+    { name: 'status', label: 'Status' },
+  ]
+
+  const items = useMemo(() => {
+    const roles = ['Developer', 'Designer', 'Product Manager', 'QA Engineer', 'DevOps']
+    const statuses = ['Active', 'Pending', 'Inactive']
+    return Array.from({ length: 25 }).map((_, i) => ({
+      id: i + 1,
+      name: `User ${i + 1}`,
+      email: `user${i + 1}@example.com`,
+      role: roles[i % roles.length],
+      status: statuses[i % statuses.length],
+    }))
+  }, [])
+
+  return (
+    <div className="space-y-8 w-full">
+      {/* Pattern 1: Fixed Container Height Flex Column */}
+      <div className="space-y-2">
+        <TextContent small className="font-semibold text-gray-900 dark:text-gray-100 block">
+          Pattern 1: Fixed Container Height (Header stuck at top-0, Pagination stuck at bottom-0 of
+          container)
+        </TextContent>
+        <DataTable
+          items={items}
+          columns={columns}
+          pagination={paginationA}
+          setPagination={(page) => setPaginationA((prev) => ({ ...prev, ...page }))}
+          containerClass="h-80 flex flex-col"
+          wrapperClass="flex-1 overflow-auto"
+          stickyHeader
+          stickyPagination
+        />
+      </div>
+
+      {/* Pattern 2: Outer Scrollable Container */}
+      <div className="space-y-2">
+        <TextContent small className="font-semibold text-gray-900 dark:text-gray-100 block">
+          Pattern 2: Outer Scrollable Container (Scroll the box below — Header sticks to top-0,
+          Pagination sticks to bottom-0 of outer scroll box)
+        </TextContent>
+        <div className="max-h-80 overflow-y-auto border rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+          <DataTable
+            items={items}
+            columns={columns}
+            pagination={paginationC}
+            setPagination={(page) => setPaginationC((prev) => ({ ...prev, ...page }))}
+            wrapperClass="overflow-visible"
+            stickyHeader
+            stickyPagination
+          />
+        </div>
+      </div>
+
+      {/* Pattern 3: Scrollable Table Body */}
+      <div className="space-y-2">
+        <TextContent small className="font-semibold text-gray-900 dark:text-gray-100 block">
+          Pattern 3: Scrollable Table Body (Header stuck to top of table body scrollbox)
+        </TextContent>
+        <DataTable
+          items={items}
+          columns={columns}
+          pagination={paginationB}
+          setPagination={(page) => setPaginationB((prev) => ({ ...prev, ...page }))}
+          wrapperClass="max-h-64 overflow-auto"
+          stickyHeader
+          stickyPagination
+        />
+      </div>
+    </div>
+  )
+}
+
+/* --------------------------------------------------
  * Example: Sticky Columns
  * -------------------------------------------------- */
 function StickyColumnExample() {
@@ -422,6 +522,20 @@ const bestPractices = (
     </li>
     <li>Use pagination for large datasets to improve performance.</li>
     <li>
+      When rendering <code>DataTable</code> inside an outer scrollable container div, pass{' '}
+      <code>wrapperClass="overflow-visible"</code> so <code>stickyHeader</code> (top-0) and{' '}
+      <code>stickyPagination</code> (bottom-0) bubble up directly to the outer scroll container.
+    </li>
+    <li>
+      For container-level sticky controls, pass{' '}
+      <code>containerClass="h-[height] flex flex-col"</code> and{' '}
+      <code>wrapperClass="flex-1 overflow-auto"</code>.
+    </li>
+    <li>
+      Sticky headers and pagination are enabled by default. Pass{' '}
+      <code>stickyHeader={'{false}'}</code> or <code>stickyPagination={'{false}'}</code> to opt out.
+    </li>
+    <li>
       Sticky columns can be placed on both <code>left</code> and <code>right</code>.
     </li>
     <li>
@@ -490,6 +604,47 @@ const handleSort = (column: DataTableColumn) => {
   columns={columns}
   pagination={pagination}
   setPagination={(page) => setPagination(prev => ({ ...prev, ...page }))}
+/>`,
+    },
+    {
+      title: 'Sticky Header & Sticky Pagination Patterns',
+      description:
+        'Demonstrates 3 Patterns: (1) Fixed container height flex column, (2) Outer scrollable container where header & pagination stick to outer scroll box via wrapperClass="overflow-visible", and (3) Table body vertical scrolling.',
+      render: <StickyHeaderAndPaginationExample />,
+      code: `// Pattern 1: Fixed Container Height (Header stuck at top, Pagination stuck at bottom of container)
+<DataTable
+  items={items}
+  columns={columns}
+  pagination={pagination}
+  setPagination={setPagination}
+  containerClass="h-80 flex flex-col"
+  wrapperClass="flex-1 overflow-auto"
+  stickyHeader
+  stickyPagination
+/>
+
+// Pattern 2: Outer Scrollable Container (Pass wrapperClass="overflow-visible" so both header top-0 & pagination bottom-0 stick to outer scrollbox)
+<div className="max-h-80 overflow-y-auto border rounded-xl">
+  <DataTable
+    items={items}
+    columns={columns}
+    pagination={pagination}
+    setPagination={setPagination}
+    wrapperClass="overflow-visible"
+    stickyHeader
+    stickyPagination
+  />
+</div>
+
+// Pattern 3: Scrollable Table Body
+<DataTable
+  items={items}
+  columns={columns}
+  pagination={pagination}
+  setPagination={setPagination}
+  wrapperClass="max-h-64 overflow-auto"
+  stickyHeader
+  stickyPagination
 />`,
     },
     {
@@ -630,7 +785,7 @@ const handleSort = (column: DataTableColumn) => {
   return (
     <DocsPageLayout
       component="DataTable"
-      description="A feature-rich data table for in-memory datasets. Supports built-in or external column sorting, sticky columns, row click handling, conditional row and cell styling, density presets, striped rows, a footer summary row, and integrated pagination. For very large lists, see VirtualizedDataTable."
+      description="A feature-rich data table for in-memory datasets. Supports built-in or external column sorting, sticky headers and pagination, sticky columns, row click handling, conditional row and cell styling, density presets, striped rows, a footer summary row, and integrated pagination. For very large lists, see VirtualizedDataTable."
       playground={{
         controls: {
           footerRow: 'hidden',
