@@ -84,7 +84,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                   'relative flex items-start gap-3 p-4 rounded-xl border transition-all cursor-pointer select-none min-w-[200px] flex-1',
                   isSelected
                     ? 'border-[var(--ui-primary)] bg-blue-50/40 dark:bg-blue-950/30 ring-2 ring-[var(--ui-primary-ring)]/30'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
+                    : 'border-[var(--ui-border)] bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
                   isItemDisabled &&
                     'opacity-50 cursor-not-allowed pointer-events-none bg-gray-50 dark:bg-gray-800/50',
                 )}

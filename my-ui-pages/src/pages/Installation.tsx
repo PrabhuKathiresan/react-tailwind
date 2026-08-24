@@ -6,6 +6,12 @@ import {
   RadioSwitch,
   Badge,
   Tabs,
+  Table,
+  TableHead,
+  TableHeaderCell,
+  TableBody,
+  TableRow,
+  TableCell,
 } from '@pk-design/react-tailwind'
 import { Link } from 'react-router'
 import { CodeBlock } from '../components/CodeBlock'
@@ -350,6 +356,36 @@ export default function Dashboard() {
 }`}
             language="tsx"
           />
+
+          {/* Tree-Shaking Callout inside Step 4 */}
+          <div className="mt-4 p-4 border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="font-semibold text-xs text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+                <span>⚡</span> Tree-Shaking &amp; Subpath Imports
+              </div>
+              <Badge theme="success" size="sm">
+                ~10 KB per Component
+              </Badge>
+            </div>
+            <p className="text-xs text-emerald-800 dark:text-emerald-300">
+              Modern bundlers (Vite, Webpack 5, Next.js) automatically tree-shake unimported
+              components thanks to our package's{' '}
+              <code className="font-mono bg-emerald-100 dark:bg-emerald-900/60 px-1 py-0.5 rounded">
+                sideEffects: ["**/*.css"]
+              </code>{' '}
+              declaration. For guaranteed minimum bundle footprint, you can also use direct
+              component subpath imports:
+            </p>
+            <CodeBlock
+              code={`// Option A: Named Root Import (Tree-Shaken in Vite / Next.js / Webpack 5)
+import { Button, Input } from "@pk-design/react-tailwind"
+
+// Option B: Direct Subpath Import (Guaranteed ~10KB footprint on any setup)
+import { Button } from "@pk-design/react-tailwind/components/Button"
+import { Input } from "@pk-design/react-tailwind/components/Input"`}
+              language="tsx"
+            />
+          </div>
         </div>
       </section>
 
@@ -456,35 +492,39 @@ export default function Dashboard() {
         </div>
 
         {/* Tokens Table */}
-        <div className="overflow-x-auto border border-gray-200 dark:border-gray-800 rounded-2xl">
-          <table className="w-full text-left text-sm text-gray-700 dark:text-gray-300">
-            <thead className="bg-gray-100 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 font-semibold border-b border-gray-200 dark:border-gray-800">
-              <tr>
-                <th className="p-3.5">CSS Token</th>
-                <th className="p-3.5">Default Color Swatch</th>
-                <th className="p-3.5">Usage &amp; Purpose</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
+        <div className="overflow-hidden border border-[var(--ui-border)] rounded-2xl shadow-xs">
+          <Table>
+            <TableHead>
+              <TableHeaderCell className="w-48 whitespace-nowrap">CSS Token</TableHeaderCell>
+              <TableHeaderCell className="w-64 whitespace-nowrap">
+                Default Color Swatch
+              </TableHeaderCell>
+              <TableHeaderCell>Usage &amp; Purpose</TableHeaderCell>
+            </TableHead>
+            <TableBody>
               {cssTokens.map((item) => (
-                <tr key={item.token} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/40">
-                  <td className="p-3.5 font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
+                <TableRow key={item.token} hoverable>
+                  <TableCell className="w-48 whitespace-nowrap font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
                     {item.token}
-                  </td>
-                  <td className="p-3.5">
+                  </TableCell>
+                  <TableCell>
                     <div className="flex items-center gap-2">
                       <div
-                        className="size-5 rounded-md border border-black/10 shadow-xs"
+                        className="size-5 rounded-md border border-black/10 dark:border-white/10 shadow-xs shrink-0"
                         style={{ backgroundColor: item.defaultVal.split(' / ')[0] }}
                       />
-                      <span className="font-mono text-xs">{item.defaultVal}</span>
+                      <span className="font-mono text-xs text-gray-700 dark:text-gray-300">
+                        {item.defaultVal}
+                      </span>
                     </div>
-                  </td>
-                  <td className="p-3.5 text-xs text-gray-600 dark:text-gray-400">{item.usage}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell className="text-xs text-gray-600 dark:text-gray-400">
+                    {item.usage}
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </section>
 

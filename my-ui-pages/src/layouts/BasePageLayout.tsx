@@ -26,9 +26,7 @@ export default function BasePageLayout() {
           </div>
         }
       >
-        <div className="px-4 py-2">
-          <NavList />
-        </div>
+        <NavList />
       </Drawer>
       <div className="min-h-dvh pt-[61px]">
         <Outlet />

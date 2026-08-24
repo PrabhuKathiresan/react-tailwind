@@ -7,7 +7,11 @@ export const useIsMobile = () => {
     const detect = () => {
       const width = window.innerWidth
 
-      const isTouch = navigator.maxTouchPoints > 1 || window.matchMedia('(pointer: coarse)').matches
+      const isTouch =
+        (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1) ||
+        (typeof window !== 'undefined' &&
+          typeof window.matchMedia === 'function' &&
+          window.matchMedia('(pointer: coarse)').matches)
 
       setIsMobile(width < 600 && isTouch)
     }

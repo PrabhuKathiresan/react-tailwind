@@ -1,11 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RadioGroup } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { Shield, Zap, Sparkles } from 'lucide-react'
 
+function RadioGroupPlayground(props: any) {
+  const [val, setVal] = useState(props.value || 'Apple')
+
+  useEffect(() => {
+    if (props.value !== undefined) setVal(props.value)
+  }, [props.value])
+
+  return (
+    <RadioGroup
+      {...props}
+      options={props.options || ['Apple', 'Banana', 'Cherry']}
+      value={val}
+      onChange={(e) => setVal(e.target.value)}
+    />
+  )
+}
+
 export default function RadioGroupDocsPage() {
   const [selected, setSelected] = useState('Apple')
   const [plan, setPlan] = useState('pro')
+  const [sizeVal, setSizeVal] = useState('Medium')
 
   const examples = [
     {
@@ -72,6 +90,8 @@ const [plan, setPlan] = useState('pro')
         />
       ),
       code: `
+const [selected, setSelected] = useState('Apple')
+
 <RadioGroup
   name="fruit-basic"
   value={selected}
@@ -86,16 +106,22 @@ const [plan, setPlan] = useState('pro')
       render: (
         <RadioGroup
           name="layout-row"
+          label="Size Preference"
           row
           options={['Small', 'Medium', 'Large', 'Extra Large']}
-          value="Medium"
-          onChange={() => {}}
+          value={sizeVal}
+          onChange={(e) => setSizeVal(e.target.value)}
         />
       ),
       code: `
+const [sizeVal, setSizeVal] = useState('Medium')
+
 <RadioGroup
   name="layout-row"
+  label="Size Preference"
   row
+  value={sizeVal}
+  onChange={(e) => setSizeVal(e.target.value)}
   options={["Small", "Medium", "Large", "Extra Large"]}
 />`,
     },
@@ -105,6 +131,17 @@ const [plan, setPlan] = useState('pro')
     <DocsPageLayout
       component="RadioGroup"
       description="A controlled list of mutually exclusive options. Supports standard vertical/horizontal layout or rich selectable cards (variant='cards') with icons, descriptions, grid column counts, and custom theme colors."
+      playground={{
+        render: (props) => <RadioGroupPlayground {...props} />,
+        initialProps: {
+          name: 'playground-radio-group',
+          label: 'Choose a Fruit',
+          row: false,
+          size: 'md',
+          disabled: false,
+          variant: 'default',
+        },
+      }}
       examples={examples}
     />
   )

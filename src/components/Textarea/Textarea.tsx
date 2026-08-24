@@ -125,11 +125,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
             'text-gray-900 outline outline-1 -outline-offset-1',
             hasError
               ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-              : 'outline-gray-300 dark:outline-gray-600',
+              : 'outline-[var(--ui-border)]',
             'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
-            'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:text-gray-400 dark:text-white',
-            'disabled:pointer-events-none disabled:bg-gray-100 disabled:outline-gray-200',
-            'dark:disabled:bg-gray-800 dark:disabled:text-gray-600 dark:disabled:placeholder-gray-600 dark:disabled:outline-gray-700',
+            'dark:bg-gray-700 dark:placeholder-gray-400 placeholder:text-gray-400 dark:text-white',
+            'disabled:pointer-events-none disabled:bg-gray-100 disabled:outline-[var(--ui-border-muted)]',
+            'dark:disabled:bg-gray-800 dark:disabled:text-gray-600 dark:disabled:placeholder-gray-600 dark:disabled:outline-[var(--ui-border-muted)]',
             hasRightGroup ? 'pe-10' : '',
             hasLeftGroup ? 'ps-10' : '',
             className,

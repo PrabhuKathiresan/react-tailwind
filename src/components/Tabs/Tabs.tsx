@@ -103,7 +103,7 @@ function buildTabClass({
             'px-3 py-2 w-full text-left border-l-2',
             selected
               ? 'border-[var(--ui-primary)] text-gray-900 dark:text-white'
-              : 'border-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600',
+              : 'border-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-[var(--ui-border)]',
           )
         : buildClassName(
             'px-3 py-1.5 relative text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white',

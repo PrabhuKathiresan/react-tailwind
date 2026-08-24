@@ -5,15 +5,15 @@ import type { AccordionItem, AccordionProps, AccordionVariant } from './Accordio
 
 const CONTAINER_CLASS: Record<AccordionVariant, string> = {
   bordered:
-    'rounded-lg border border-gray-200 dark:border-white/10 divide-y divide-gray-200 dark:divide-white/10 bg-white dark:bg-gray-800 overflow-hidden',
+    'rounded-lg border border-[var(--ui-border)] divide-y divide-[var(--ui-border)] bg-white dark:bg-gray-800 overflow-hidden',
   separated: 'space-y-2',
-  plain: 'divide-y divide-gray-200 dark:divide-white/10',
+  plain: 'divide-y divide-[var(--ui-border)]',
 }
 
 const ITEM_CLASS: Record<AccordionVariant, string> = {
   bordered: '',
   separated:
-    'rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-800 overflow-hidden',
+    'rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 overflow-hidden',
   plain: '',
 }
 

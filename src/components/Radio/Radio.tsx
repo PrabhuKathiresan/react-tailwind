@@ -59,8 +59,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
               SIZE_MAP[size],
               THEME_MAP[theme],
               disabled
-                ? 'border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 pointer-events-none'
-                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 cursor-pointer',
+                ? 'border-[var(--ui-border-muted)] bg-gray-100 dark:bg-gray-800 pointer-events-none'
+                : 'bg-white dark:bg-gray-700 border-[var(--ui-border)] hover:border-gray-400 dark:hover:border-gray-500 cursor-pointer',
               className,
             )}
           />

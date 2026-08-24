@@ -91,8 +91,8 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
         className={buildClassName(
           isCard
             ? compact
-              ? 'p-3 sm:p-4 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-gray-200 dark:border-gray-700'
-              : 'p-4 sm:p-6 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-gray-200 dark:border-gray-700'
+              ? 'p-3 sm:p-4 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-[var(--ui-border)]'
+              : 'p-4 sm:p-6 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-[var(--ui-border)]'
             : isBordered
               ? compact
                 ? 'p-3 sm:p-4 border border-[var(--ui-border)] rounded-2xl'
@@ -154,8 +154,8 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
                     className={buildClassName(
                       isMultiColumn && isCard
                         ? compact
-                          ? 'p-3 bg-white dark:bg-gray-900 rounded-xl border border-gray-200/80 dark:border-gray-700/80 shadow-2xs flex flex-col gap-1'
-                          : 'p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200/80 dark:border-gray-700/80 shadow-2xs flex flex-col gap-1'
+                          ? 'p-3 bg-white dark:bg-gray-900 rounded-xl border border-[var(--ui-border)] shadow-2xs flex flex-col gap-1'
+                          : 'p-4 bg-white dark:bg-gray-900 rounded-xl border border-[var(--ui-border)] shadow-2xs flex flex-col gap-1'
                         : isVertical
                           ? 'flex flex-col gap-1 py-2 px-1'
                           : 'grid grid-cols-3 gap-4 items-center py-2.5 px-1',

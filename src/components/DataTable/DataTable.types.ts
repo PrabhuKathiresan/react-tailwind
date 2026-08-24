@@ -98,6 +98,18 @@ export interface DataTableProps<T = any> {
   layout?: 'fixed' | 'auto'
 
   /**
+   * Pins the table header to the top when scrolling.
+   * @default true
+   */
+  stickyHeader?: boolean
+
+  /**
+   * Pins the pagination footer to the bottom when scrolling.
+   * @default true
+   */
+  stickyPagination?: boolean
+
+  /**
    * Determines the stable React key for each row.
    * Pass a field name string or a function returning a unique value.
    * @default 'id'

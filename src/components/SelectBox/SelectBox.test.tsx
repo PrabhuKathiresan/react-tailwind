@@ -29,7 +29,7 @@ describe('SelectBox', () => {
   test('supports size scales (sm, md, lg)', () => {
     render(<SelectBox options={options} size="sm" />)
     const input = screen.getByTestId('combobox-input')
-    expect(input.className).toMatch(/px-2.5 py-1 text-xs/)
+    expect(input.className).toMatch(/px-2.5 py-1.5 text-xs/)
   })
 
   test('renders leftGroup icon and helperText', () => {
@@ -203,5 +203,27 @@ describe('SelectBox', () => {
     render(<SelectBox options={options} disabled />)
 
     expect(screen.getByTestId('combobox-input')).toBeDisabled()
+  })
+
+  test('commits custom free text when allowFreeText is true', async () => {
+    const handleChange = jest.fn()
+    render(<SelectBox options={['Apple', 'Banana']} allowFreeText onChange={handleChange} />)
+
+    const input = screen.getByTestId('combobox-input')
+    fireEvent.change(input, { target: { value: 'Mango' } })
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' })
+
+    expect(handleChange).toHaveBeenCalledWith('Mango')
+  })
+
+  test('only displays allowAdd option when user types a non-empty query', () => {
+    render(<SelectBox options={['Apple', 'Banana']} allowAdd addNewText="Create" />)
+
+    expect(screen.queryByText(/Create/)).not.toBeInTheDocument()
+
+    const input = screen.getByTestId('combobox-input')
+    fireEvent.change(input, { target: { value: 'Dragonfruit' } })
+
+    expect(screen.getByText('Create "Dragonfruit"')).toBeInTheDocument()
   })
 })

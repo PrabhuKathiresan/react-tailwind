@@ -65,7 +65,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       role="tablist"
       aria-orientation="horizontal"
       className={buildClassName(
-        'inline-flex items-center border border-gray-200 bg-gray-100/80 dark:border-gray-700 dark:bg-gray-800/80',
+        'inline-flex items-center border border-[var(--ui-border)] bg-gray-100/80 dark:bg-gray-800/80',
         SIZE_CONTAINER_CLASS[size],
         fullWidth ? 'w-full flex' : '',
         disabled ? 'opacity-60 cursor-not-allowed' : '',

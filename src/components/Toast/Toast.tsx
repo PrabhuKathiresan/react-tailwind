@@ -46,12 +46,12 @@ const progressBarColorMap: Record<ToastType, string> = {
 const variantStyleMap: Record<ToastVariant, Record<ToastType, string>> = {
   accent: {
     success:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-success)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-gray-200/80 dark:border-gray-800/80',
+      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-success)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
     error:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-danger)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-gray-200/80 dark:border-gray-800/80',
-    info: 'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-info)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-gray-200/80 dark:border-gray-800/80',
+      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-danger)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
+    info: 'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-info)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
     warning:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-warning)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-gray-200/80 dark:border-gray-800/80',
+      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-warning)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
   },
   filled: {
     success: 'bg-[var(--ui-success)] text-white shadow-lg',

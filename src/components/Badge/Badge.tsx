@@ -4,7 +4,7 @@ import XIcon from '../Icons/X.svg'
 import { BadgeProps } from './Badge.types'
 import { TextContent } from '../TextContent'
 
-const ThemeClassMap = {
+const ThemeClassMap: Record<string, string> = {
   success:
     'bg-[var(--ui-success-light)] text-[var(--ui-success-text)] ring-[var(--ui-success-ring-subtle)]',
   danger:
@@ -12,6 +12,7 @@ const ThemeClassMap = {
   warning:
     'bg-[var(--ui-warning-light)] text-[var(--ui-warning-text)] ring-[var(--ui-warning-ring-subtle)]',
   info: 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)]',
+  primary: 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)]',
   secondary:
     'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 ring-[var(--ui-secondary-ring-subtle)]',
 }
@@ -40,7 +41,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
       className={buildClassName(
         'inline-flex items-center gap-1 font-medium ring-1 ring-inset',
         SIZE_CLASS[size],
-        ThemeClassMap[theme],
+        ThemeClassMap[theme] || ThemeClassMap.info,
         rounded ? 'rounded-full' : 'rounded-md',
         icon ? 'pl-2' : '',
         removable ? 'pr-1' : '',

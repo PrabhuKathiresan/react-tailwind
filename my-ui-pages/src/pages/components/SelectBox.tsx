@@ -1,13 +1,62 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { SelectBox } from '@pk-design/react-tailwind'
 import { Globe } from 'lucide-react'
+
+const PLAYGROUND_OPTIONS = ['Apple', 'Banana', 'Orange', 'Grapes', 'Mango']
+
+function SelectBoxPlayground(props: any) {
+  const [val, setVal] = useState<any>(props.multiple ? ['Apple'] : 'Apple')
+
+  const effectiveOptions =
+    Array.isArray(props.options) && props.options.length > 0 ? props.options : PLAYGROUND_OPTIONS
+
+  useEffect(() => {
+    if (props.multiple) {
+      if (!Array.isArray(val)) {
+        setVal(val ? [val] : ['Apple'])
+      }
+    } else {
+      if (Array.isArray(val)) {
+        setVal(val.length > 0 ? val[0] : 'Apple')
+      }
+    }
+  }, [props.multiple])
+
+  useEffect(() => {
+    if (props.selected !== undefined) {
+      setVal(props.selected)
+    }
+  }, [props.selected])
+
+  return (
+    <div className="w-full max-w-md">
+      <SelectBox
+        {...props}
+        disabled={Boolean(props.disabled)}
+        options={effectiveOptions}
+        selected={val}
+        onChange={(nVal: any) => setVal(nVal)}
+      />
+    </div>
+  )
+}
 
 export default function SelectBoxDocsPage() {
   const [basicOptions, setBasicOptions] = useState(['Apple', 'Banana', 'Orange', 'Grapes'])
   const [selected, setSelected] = useState<any>(null)
   const [selectedTech, setSelectedTech] = useState<string[]>(['React', 'Vue'])
   const [groupedSelected, setGroupedSelected] = useState<any>(null)
+  const [freeTextVal, setFreeTextVal] = useState<any>('New York')
+  const [freeTextObjVal, setFreeTextObjVal] = useState<any>({ label: 'Engineering', value: 'eng' })
+  const [tags, setTags] = useState<string[]>(['React', 'Tailwind', 'Design System'])
+
+  const departmentOptions = [
+    { label: 'Engineering', value: 'eng' },
+    { label: 'Sales & Business', value: 'sales' },
+    { label: 'Marketing & PR', value: 'mkt' },
+    { label: 'Customer Support', value: 'support' },
+  ]
 
   const regionGroups = [
     {
@@ -39,26 +88,27 @@ export default function SelectBoxDocsPage() {
   const examples = [
     {
       title: 'Size Scales (sm, md, lg)',
-      description: 'Choose from 3 responsive sizing scales.',
+      description:
+        'Choose from 3 responsive sizing scales (32px sm, 40px md, 48px lg) to fit tight toolbars or prominent form layouts.',
       render: (
         <div className="max-w-md flex flex-col gap-4">
           <SelectBox
             size="sm"
             label="Small (sm)"
             options={basicOptions}
-            placeholder="Compact 28px select"
+            placeholder="Compact 32px select"
           />
           <SelectBox
             size="md"
             label="Medium (md, default)"
             options={basicOptions}
-            placeholder="Standard 36px select"
+            placeholder="Standard 40px select"
           />
           <SelectBox
             size="lg"
             label="Large (lg)"
             options={basicOptions}
-            placeholder="Prominent 44px select"
+            placeholder="Prominent 48px select"
           />
         </div>
       ),
@@ -122,7 +172,7 @@ const regionGroups = [
     {
       title: 'Multi-Select with "Select All" Action Header',
       description:
-        'Use showSelectAll to render a 1-click Select All / Deselect All action header in multi-select dropdowns.',
+        'Enable multiple selection mode and use showSelectAll to render a 1-click Select All / Deselect All header.',
       render: (
         <div className="max-w-md">
           <SelectBox
@@ -149,13 +199,114 @@ const [selectedTech, setSelectedTech] = useState(['React', 'Vue'])
 />`,
     },
     {
-      title: 'Creatable Input (Add New Option)',
-      description: 'Allows typing and adding new custom options on the fly.',
+      title: 'Free-Text Mode with String Options',
+      description:
+        'Enable allowFreeText to allow users to pick from a list of string options or type any custom string (committed on Enter or Blur).',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            options={['San Francisco', 'New York', 'London', 'Tokyo']}
+            allowFreeText
+            placeholder="Type any city or pick from list..."
+            label="Location"
+            selected={freeTextVal}
+            onChange={(val: any) => setFreeTextVal(val)}
+            helperText="Type any custom location or select an option from dropdown."
+          />
+        </div>
+      ),
+      code: `
+const [location, setLocation] = useState('New York')
+
+<SelectBox
+  options={['San Francisco', 'New York', 'London', 'Tokyo']}
+  allowFreeText
+  label="Location"
+  selected={location}
+  onChange={setLocation}
+  placeholder="Type any city or pick from list..."
+/>`,
+    },
+    {
+      title: 'Free-Text Mode with Object Options',
+      description:
+        'allowFreeText also seamlessly supports object options ({ label, value }). Custom typed values are automatically converted into object options matching labelKey and valueKey.',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            options={departmentOptions}
+            labelKey="label"
+            valueKey="value"
+            allowFreeText
+            placeholder="Select or type custom department..."
+            label="Department"
+            selected={freeTextObjVal}
+            onChange={(val: any) => setFreeTextObjVal(val)}
+            helperText="Type a custom department (e.g. 'Quality Assurance') or pick from list."
+          />
+        </div>
+      ),
+      code: `
+const [dept, setDept] = useState({ label: 'Engineering', value: 'eng' })
+
+const departments = [
+  { label: 'Engineering', value: 'eng' },
+  { label: 'Sales & Business', value: 'sales' },
+  { label: 'Marketing & PR', value: 'mkt' },
+  { label: 'Customer Support', value: 'support' },
+]
+
+<SelectBox
+  options={departments}
+  labelKey="label"
+  valueKey="value"
+  allowFreeText
+  label="Department"
+  selected={dept}
+  onChange={setDept}
+  placeholder="Select or type custom department..."
+/>`,
+    },
+    {
+      title: 'Tags Input Mode (allowFreeText + multiple)',
+      description:
+        'Combine allowFreeText with multiple to create a freeform tag input. Users can type any custom tag and press Enter or comma (,) to add it instantly.',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            options={['React', 'Vue', 'Angular', 'Tailwind', 'TypeScript', 'Design System']}
+            multiple
+            allowFreeText
+            placeholder="Type custom tags (press Enter or comma)..."
+            label="Project Tags"
+            selected={tags}
+            onChange={(val: any) => setTags(val)}
+            helperText="Type any custom tag and press Enter or comma (,) to add it instantly."
+          />
+        </div>
+      ),
+      code: `
+const [tags, setTags] = useState(['React', 'Tailwind', 'Design System'])
+
+<SelectBox
+  options={['React', 'Vue', 'Angular', 'Tailwind', 'TypeScript']}
+  multiple
+  allowFreeText
+  label="Project Tags"
+  selected={tags}
+  onChange={setTags}
+  placeholder="Type custom tags..."
+/>`,
+    },
+    {
+      title: 'Creatable Options (allowAdd)',
+      description:
+        'Use allowAdd and onAdd to render a + Create "item" option when typing custom values not present in the list.',
       render: (
         <div className="max-w-md">
           <SelectBox
             options={basicOptions}
-            placeholder="Add new fruit"
+            placeholder="Add new fruit..."
             allowAdd
             onAdd={(newVal) => setBasicOptions((options) => [...options, newVal])}
             onChange={setSelected}
@@ -173,8 +324,9 @@ const [selectedTech, setSelectedTech] = useState(['React', 'Vue'])
 />`,
     },
     {
-      title: 'Clear Button & Helper Guidance Text',
-      description: 'Enable allowClear for single-select clearing and helperText for guidance.',
+      title: 'Clear Button & Validation States',
+      description:
+        'Enable allowClear for single-select clearing, error for validation state messages, and helperText for guidance.',
       render: (
         <div className="max-w-md flex flex-col gap-4">
           <SelectBox
@@ -210,7 +362,23 @@ const [selectedTech, setSelectedTech] = useState(['React', 'Vue'])
   return (
     <DocsPageLayout
       component="SelectBox"
-      description="An accessible, multi-mode combobox control supporting single and multi-select modes, responsive size scales (sm/md/lg), option grouping, custom item rendering, automated Select All headers, creatable option tags, and leading icon slots."
+      description="An accessible, multi-mode combobox control supporting single and multi-select modes, responsive size scales (sm/md/lg), option grouping, custom item rendering, automated Select All headers, free-text tag input, creatable option tags, and leading icon slots."
+      playground={{
+        render: (props) => <SelectBoxPlayground {...props} />,
+        initialProps: {
+          options: PLAYGROUND_OPTIONS,
+          label: 'Select Fruit',
+          placeholder: 'Choose an option...',
+          size: 'md',
+          disabled: false,
+          immediate: true,
+          allowClear: true,
+          searchable: true,
+          multiple: false,
+          allowFreeText: false,
+          allowAdd: false,
+        },
+      }}
       examples={examples}
     />
   )

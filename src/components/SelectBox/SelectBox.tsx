@@ -20,6 +20,7 @@ import { Badge } from '../Badge'
 import { Loader } from '../Loader'
 import { TextContent } from '../TextContent'
 import { Button } from '../Button'
+import { MobilePicker } from '../MobilePicker'
 
 import { isArray } from '../../utils/is-array'
 import { buildClassName } from '../../utils/build-classname'
@@ -39,7 +40,7 @@ const sizeClasses: Record<
   { input: string; group: string; icon: string; badgeSize: 'sm' | 'md' }
 > = {
   sm: {
-    input: 'px-2.5 py-1 text-xs leading-5 min-h-[30px]',
+    input: 'px-2.5 py-1.5 text-xs leading-5 min-h-[32px]',
     group: 'w-8 text-xs',
     icon: 'size-3.5',
     badgeSize: 'sm',
@@ -97,9 +98,14 @@ export const SelectBox = forwardRef(
       addNewText = 'Create',
       onAdd = () => {},
       allowClear = false,
+      allowFreeText = false,
       modalDropdown = false,
       noOptionsText = 'No options available',
     } = props
+
+    if (props.asBottomSheet || props.mobileMode === 'sheet') {
+      return <MobilePicker {...(props as any)} />
+    }
 
     const hasError = Boolean(error)
     const [query, setQuery] = useState('')
@@ -169,6 +175,61 @@ export const SelectBox = forwardRef(
         return typeof opt === 'string' ? opt : opt[valueKey]
       },
       [valueKey],
+    )
+
+    const createFreeTextOption = useCallback(
+      (text: string): T => {
+        const sample = allOptions[0] || (Array.isArray(selected) ? selected[0] : selected)
+        if (
+          typeof sample === 'string' ||
+          (!sample && typeof labelKey === 'string' && labelKey === 'label')
+        ) {
+          return text as unknown as T
+        }
+        return {
+          [labelKey]: text,
+          [valueKey]: text,
+        } as unknown as T
+      },
+      [allOptions, selected, labelKey, valueKey],
+    )
+
+    const handleFreeTextCommit = useCallback(
+      (queryText: string) => {
+        const trimmed = queryText.trim()
+        if (!trimmed) return
+
+        const existing = allOptions.find((opt) => {
+          const display = getDisplayValue(opt)
+          return display?.toLowerCase() === trimmed.toLowerCase()
+        })
+
+        const valueToCommit = existing || createFreeTextOption(trimmed)
+
+        if (multiple) {
+          const current = isArray(selected) ? selected : []
+          const alreadySelected = current.some(
+            (item) => getDisplayValue(item)?.toLowerCase() === trimmed.toLowerCase(),
+          )
+          if (!alreadySelected) {
+            if (maxSelection && current.length >= maxSelection) return
+            onChange([...current, valueToCommit] as unknown as T[])
+          }
+          setQuery('')
+        } else {
+          onChange(valueToCommit)
+          setQuery('')
+        }
+      },
+      [
+        allOptions,
+        getDisplayValue,
+        createFreeTextOption,
+        multiple,
+        selected,
+        maxSelection,
+        onChange,
+      ],
     )
 
     const removeSelection = (idx: number) => {
@@ -255,10 +316,21 @@ export const SelectBox = forwardRef(
       if (async && debouncedQuery) handleSearch(debouncedQuery)
     }, [debouncedQuery, async, handleSearch])
 
+    const normalizedSelected = useMemo(() => {
+      if (multiple) {
+        if (Array.isArray(selected)) return selected
+        if (selected !== null && selected !== undefined) return [selected as T]
+        return [] as T[]
+      } else {
+        if (Array.isArray(selected)) return selected.length > 0 ? selected[0] : null
+        return selected ?? null
+      }
+    }, [multiple, selected])
+
     const isAllSelected = useMemo(() => {
-      if (!multiple || !Array.isArray(selected) || !allOptions.length) return false
-      return allOptions.length === selected.length
-    }, [multiple, selected, allOptions])
+      if (!multiple || !Array.isArray(normalizedSelected) || !allOptions.length) return false
+      return allOptions.length === normalizedSelected.length
+    }, [multiple, normalizedSelected, allOptions])
 
     const handleToggleSelectAll = () => {
       if (isAllSelected) {
@@ -288,10 +360,11 @@ export const SelectBox = forwardRef(
           multiple={multiple}
           immediate={immediate}
           name={name}
-          value={selected}
+          value={normalizedSelected as any}
           onChange={comboboxOnChangeWrapper as any}
           onClose={() => setQuery('')}
           disabled={disabled}
+          by={(a: any, b: any) => (a && b ? getValue(a) === getValue(b) : a === b)}
         >
           {multiple ? (
             <div
@@ -313,9 +386,9 @@ export const SelectBox = forwardRef(
                 </span>
               )}
 
-              {isArray(selected) &&
-                selected?.length > 0 &&
-                selected.map((option, idx) => (
+              {isArray(normalizedSelected) &&
+                normalizedSelected?.length > 0 &&
+                normalizedSelected.map((option, idx) => (
                   <Badge
                     key={`${getValue(option)}-${idx}`}
                     theme="secondary"
@@ -332,15 +405,34 @@ export const SelectBox = forwardRef(
                 aria-label={name}
                 value={query}
                 autoComplete="off"
-                placeholder={selected?.length ? '' : placeholder}
-                onChange={(e) => setQuery(e.target.value)}
+                placeholder={normalizedSelected?.length ? '' : placeholder}
+                onChange={(e) => {
+                  const val = e.target.value
+                  if (allowFreeText && multiple && val.includes(',')) {
+                    const parts = val.split(',')
+                    parts.forEach((p) => {
+                      if (p.trim()) handleFreeTextCommit(p.trim())
+                    })
+                    setQuery('')
+                  } else {
+                    setQuery(val)
+                  }
+                }}
                 id={id}
                 ref={inputRef}
                 onKeyDown={(e) => {
-                  if (multiple && e.key === 'Backspace' && !query) {
-                    if (Array.isArray(selected) && selected.length > 0) {
-                      removeSelection(selected.length - 1)
+                  if (allowFreeText && (e.key === 'Enter' || e.key === ',') && query.trim()) {
+                    e.preventDefault()
+                    handleFreeTextCommit(query.replace(/,/g, ''))
+                  } else if (multiple && e.key === 'Backspace' && !query) {
+                    if (Array.isArray(normalizedSelected) && normalizedSelected.length > 0) {
+                      removeSelection(normalizedSelected.length - 1)
                     }
+                  }
+                }}
+                onBlur={() => {
+                  if (allowFreeText && query.trim()) {
+                    handleFreeTextCommit(query.replace(/,/g, ''))
                   }
                 }}
                 data-testid="combobox-input"
@@ -372,6 +464,20 @@ export const SelectBox = forwardRef(
                 autoComplete="off"
                 placeholder={placeholder}
                 onChange={(event) => setQuery(event.target.value)}
+                onKeyDown={(e) => {
+                  if (allowFreeText && e.key === 'Enter' && query.trim()) {
+                    e.preventDefault()
+                    handleFreeTextCommit(query)
+                  }
+                }}
+                onBlur={() => {
+                  if (allowFreeText && query.trim()) {
+                    handleFreeTextCommit(query)
+                  }
+                }}
+                onFocus={() => {
+                  setQuery('')
+                }}
                 className={buildClassName(
                   baseInputClass,
                   hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
@@ -383,7 +489,7 @@ export const SelectBox = forwardRef(
                 data-testid="combobox-input"
               />
 
-              {allowClear && !isEmpty(selected) && (
+              {allowClear && !isEmpty(normalizedSelected) && (
                 <Button
                   size="xs"
                   iconOnly
@@ -414,7 +520,7 @@ export const SelectBox = forwardRef(
             as="div"
             modal={modalDropdown}
             className={buildClassName(
-              'w-[var(--input-width)] rounded-lg border border-gray-200 dark:border-white/5 bg-white dark:bg-gray-800 p-1 [--anchor-gap:var(--spacing-1)]',
+              'w-[var(--input-width)] rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
               '[--anchor-max-height:20rem]',
               'origin-top border transition duration-200 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)] data-[closed]:translate-y-[-15%] data-[closed]:opacity-0',
               dropdownContainerClass,
@@ -424,7 +530,7 @@ export const SelectBox = forwardRef(
           >
             {/* Multi-Select "Select All" Action Bar */}
             {multiple && showSelectAll && allOptions.length > 0 && (
-              <div className="pb-1 mb-1 border-b border-gray-200 dark:border-gray-700/80 px-3 pt-1 flex items-center justify-between">
+              <div className="pb-1 mb-1 border-b border-[var(--ui-border-muted)] px-3 pt-1 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={handleToggleSelectAll}
@@ -433,7 +539,8 @@ export const SelectBox = forwardRef(
                   {isAllSelected ? 'Deselect All' : 'Select All'}
                 </button>
                 <span className="text-[11px] font-medium text-gray-400">
-                  {Array.isArray(selected) ? selected.length : 0} of {allOptions.length}
+                  {Array.isArray(normalizedSelected) ? normalizedSelected.length : 0} of{' '}
+                  {allOptions.length}
                 </span>
               </div>
             )}
@@ -451,6 +558,22 @@ export const SelectBox = forwardRef(
               </BodyText>
             ) : (
               <div>
+                {/* Render Free-Text Option if query does not match an option exactly */}
+                {allowFreeText &&
+                  query.trim() &&
+                  !allOptions.some(
+                    (opt) => getDisplayValue(opt)?.toLowerCase() === query.trim().toLowerCase(),
+                  ) && (
+                    <ComboboxOption
+                      key={`freetext-${query.trim()}`}
+                      value={createFreeTextOption(query.trim()) as any}
+                      className="group flex items-center gap-2 rounded-lg py-1.5 px-3 select-none text-sm data-[focus]:bg-blue-50 dark:data-[focus]:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium cursor-pointer w-full"
+                      data-testid="freetext-option"
+                    >
+                      <span>Use "{query.trim()}"</span>
+                    </ComboboxOption>
+                  )}
+
                 {/* Render Grouped Options */}
                 {filteredGroups
                   ? filteredGroups.map((grp, gIdx) => (
@@ -461,20 +584,21 @@ export const SelectBox = forwardRef(
                         {grp.options.map((option) => {
                           const optVal = getValue(option)
                           const isOptSelected = multiple
-                            ? isArray(selected) && selected.some((s) => getValue(s) === optVal)
-                            : selected && getValue(selected as T) === optVal
+                            ? isArray(normalizedSelected) &&
+                              normalizedSelected.some((s) => getValue(s) === optVal)
+                            : normalizedSelected && getValue(normalizedSelected as T) === optVal
 
                           return (
                             <ComboboxOption
                               key={optVal}
                               disabled={(option as BaseOption).disabled}
                               value={option}
-                              className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-black/3 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
+                              className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-100 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
                             >
                               {renderOption ? (
                                 renderOption(option, Boolean(isOptSelected))
                               ) : (
-                                <div className="flex items-center justify-between gap-2 dark:text-white group-data-[selected]:text-blue-600">
+                                <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
                                   <span className="text-sm/6">{getDisplayValue(option)}</span>
                                   <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
                                 </div>
@@ -488,20 +612,21 @@ export const SelectBox = forwardRef(
                     filteredOptions.map((option) => {
                       const optVal = getValue(option)
                       const isOptSelected = multiple
-                        ? isArray(selected) && selected.some((s) => getValue(s) === optVal)
-                        : selected && getValue(selected as T) === optVal
+                        ? isArray(normalizedSelected) &&
+                          normalizedSelected.some((s) => getValue(s) === optVal)
+                        : normalizedSelected && getValue(normalizedSelected as T) === optVal
 
                       return (
                         <ComboboxOption
                           key={optVal}
                           disabled={(option as BaseOption).disabled}
                           value={option}
-                          className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-black/3 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
+                          className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-100 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
                         >
                           {renderOption ? (
                             renderOption(option, Boolean(isOptSelected))
                           ) : (
-                            <div className="flex items-center justify-between gap-2 dark:text-white group-data-[selected]:text-blue-600">
+                            <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
                               <span className="text-sm/6">{getDisplayValue(option)}</span>
                               <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
                             </div>
@@ -510,25 +635,29 @@ export const SelectBox = forwardRef(
                       )
                     })}
 
-                {filteredOptions.length === 0 && !filteredGroups?.length && (
-                  <div
-                    data-testid="no-result-found"
-                    className="flex items-center gap-2 py-1.5 px-3 select-none text-gray-500 dark:text-gray-400"
-                  >
-                    {query ? (
-                      <>
-                        No results found for <span className="font-semibold">{query}</span>
-                      </>
-                    ) : (
-                      noOptionsText
-                    )}
-                  </div>
-                )}
+                {filteredOptions.length === 0 &&
+                  !filteredGroups?.length &&
+                  !allowFreeText &&
+                  !(allowAdd && query.trim()) && (
+                    <div
+                      data-testid="no-result-found"
+                      className="flex items-center gap-2 py-1.5 px-3 select-none"
+                    >
+                      <TextContent muted small>
+                        {noOptionsText}
+                      </TextContent>
+                      <TextContent strong small>
+                        {query}
+                      </TextContent>
+                    </div>
+                  )}
 
-                {allowAdd && (
+                {/* Creatable option (allowAdd) - suppressed when allowFreeText is true */}
+                {!allowFreeText && allowAdd && Boolean(query.trim()) && (
                   <ComboboxOption
+                    key={`add-${query.trim()}`}
                     value={query}
-                    className="group rounded-lg py-1.5 px-3 cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="group rounded-lg py-1.5 px-3 cursor-pointer text-gray-700 dark:text-gray-300 data-[focus]:bg-gray-100 dark:data-[focus]:bg-gray-700"
                     onClick={() => void handleAddAndSelect(query)}
                   >
                     <div className="flex items-center gap-2">

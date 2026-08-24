@@ -13,7 +13,7 @@ describe('Input Component', () => {
   it('supports size scales (sm, md, lg)', () => {
     render(<Input name="user" size="sm" />)
     const input = screen.getByRole('textbox')
-    expect(input.className).toMatch(/px-2.5 py-1 text-xs/)
+    expect(input.className).toMatch(/px-2.5 py-1.5 text-xs/)
   })
 
   it('renders prefix and suffix addons', () => {
