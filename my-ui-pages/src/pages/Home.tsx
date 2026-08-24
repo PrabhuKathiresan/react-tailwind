@@ -21,9 +21,12 @@ import {
   SparklesIcon,
   LayersIcon,
   ShieldCheckIcon,
-  CpuIcon,
+  ZapIcon,
+  SmartphoneIcon,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+
+import pkg from '../../../package.json'
 
 function LiveDemoWidget() {
   const { toast } = useToast()
@@ -41,7 +44,7 @@ function LiveDemoWidget() {
           </StatusPill>
         </div>
         <TextContent size="xs" monospace muted>
-          v1.0.0
+          v{pkg.version}
         </TextContent>
       </div>
 
@@ -148,6 +151,20 @@ const componentCategories = [
       { name: 'DetailedInformation', path: '/detailed-information' },
     ],
   },
+  {
+    title: 'Mobile & Touch',
+    description:
+      'Touch-first mobile header top bars, bottom tab navigation, swipe rows, and pickers.',
+    count: '12 Components',
+    links: [
+      { name: 'MobileHeader', path: '/mobile-header' },
+      { name: 'BottomNavigation', path: '/bottom-navigation' },
+      { name: 'ActionSheet', path: '/action-sheet' },
+      { name: 'FloatingActionButton', path: '/floating-action-button' },
+      { name: 'PinInput', path: '/pin-input' },
+      { name: 'SwipeableTabs', path: '/swipeable-tabs' },
+    ],
+  },
 ]
 
 export default function HomePage() {
@@ -224,7 +241,7 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-6 w-full">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-6 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200/80 dark:border-gray-800 text-center">
           <div className="space-y-1">
-            <div className="text-3xl font-extrabold text-blue-600 dark:text-blue-400">35+</div>
+            <div className="text-3xl font-extrabold text-blue-600 dark:text-blue-400">50+</div>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
               Production Components
             </div>
@@ -239,15 +256,15 @@ export default function HomePage() {
 
           <div className="space-y-1">
             <div className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
-              100%
+              ~10 KB
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-              TypeScript Strict Types
+              Tree-Shaken ESM Modules
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-3xl font-extrabold text-amber-600 dark:text-amber-400">450+</div>
+            <div className="text-3xl font-extrabold text-amber-600 dark:text-amber-400">515+</div>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
               Monorepo Unit Tests
             </div>
@@ -256,41 +273,54 @@ export default function HomePage() {
       </section>
 
       {/* 💎 Feature Pillars */}
-      <section className="max-w-6xl mx-auto px-6 grid sm:grid-cols-3 gap-8">
+      <section className="max-w-6xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3">
           <div className="size-10 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-            <CpuIcon className="size-5" />
+            <ZapIcon className="size-5" />
           </div>
           <HeadingText level={3} size="lg" weight="semibold">
-            Fast &amp; Lightweight
+            100% Tree-Shakeable
           </HeadingText>
           <BodyText size="sm" muted>
-            Built for maximum performance and instant render times with zero runtime overhead.
+            Preserved ES modules and subpath exports eliminate up to 97% of unused library code.
           </BodyText>
         </div>
 
         <div className="p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3">
           <div className="size-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-            <LayersIcon className="size-5" />
+            <SmartphoneIcon className="size-5" />
           </div>
           <HeadingText level={3} size="lg" weight="semibold">
-            Tailwind Tokens
+            Mobile &amp; Touch Native
           </HeadingText>
           <BodyText size="sm" muted>
-            Customize component colors, text shades, and borders directly from your CSS.
+            12+ touch-optimized mobile components (WheelPicker, BottomNavigation, PinInput,
+            ActionSheet).
           </BodyText>
         </div>
 
         <div className="p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3">
           <div className="size-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <LayersIcon className="size-5" />
+          </div>
+          <HeadingText level={3} size="lg" weight="semibold">
+            Tailwind v4 Tokens
+          </HeadingText>
+          <BodyText size="sm" muted>
+            Customize component themes, brand rings, and borders directly from your CSS variables.
+          </BodyText>
+        </div>
+
+        <div className="p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3">
+          <div className="size-10 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center">
             <ShieldCheckIcon className="size-5" />
           </div>
           <HeadingText level={3} size="lg" weight="semibold">
             Accessible Primitives
           </HeadingText>
           <BodyText size="sm" muted>
-            Powered by Headless UI for ARIA keyboard navigation, dialog focus locks, and
-            screen-readers.
+            Full ARIA keyboard navigation, modal focus locks, and screen-reader support out of the
+            box.
           </BodyText>
         </div>
       </section>
