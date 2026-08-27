@@ -89,4 +89,12 @@ describe('<Textarea />', () => {
 
     expect(textarea).toHaveValue('Hello world')
   })
+
+  test('applies aria-invalid and aria-describedby attributes when error is provided', () => {
+    render(<Textarea id="bio-field" error="Invalid bio" helperText="Tell us about yourself" />)
+
+    const textarea = screen.getByRole('textbox')
+    expect(textarea).toHaveAttribute('aria-invalid', 'true')
+    expect(textarea).toHaveAttribute('aria-describedby', 'bio-field-error')
+  })
 })

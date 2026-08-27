@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -57,6 +58,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     defaultValue,
     onChange,
     maxLength,
+    required,
+    'aria-describedby': ariaDescribedBy,
     ...inputProps
   } = props
 
@@ -77,17 +80,24 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     }
   }, [autoSize, currentVal])
 
-  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (!isControlled) {
-      setUncontrolledValue(e.target.value)
-    }
-    onChange?.(e)
-  }
+  const handleTextareaChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (!isControlled) {
+        setUncontrolledValue(e.target.value)
+      }
+      onChange?.(e)
+    },
+    [isControlled, onChange],
+  )
 
   const hasError = !isEmpty(error)
   const hasRightGroup = rightGroup != null && rightGroup !== undefined
   const hasLeftGroup = leftGroup != null && leftGroup !== undefined
   const currentSize = sizeClasses[size] || sizeClasses.md
+
+  const errorId = id && hasError && showErrorMessage ? `${id}-error` : undefined
+  const helperId = id && helperText && !hasError ? `${id}-helper` : undefined
+  const describedBy = [ariaDescribedBy, errorId, helperId].filter(Boolean).join(' ') || undefined
 
   return (
     <div className={buildClassName('group', hasError && 'has-error', containerClass)}>
@@ -95,7 +105,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
         <div
           className={buildClassName('flex items-center justify-between mb-1.5', labelWrapperClass)}
         >
-          <Label className={labelClass} htmlFor={id}>
+          <Label className={labelClass} htmlFor={id} aria-required={required}>
             {label}
           </Label>
           {labelHint && <TextContent xsmall>{labelHint}</TextContent>}
@@ -117,6 +127,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
           maxLength={maxLength}
           name={name}
           id={id}
+          required={required}
+          aria-invalid={hasError ? true : undefined}
+          aria-describedby={describedBy}
           className={buildClassName(
             'transition-all duration-150',
             'block w-full rounded-lg bg-white',
@@ -147,11 +160,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
         <div className="mt-1.5 flex items-center justify-between gap-2 text-xs">
           <div className="min-w-0 flex-1">
             {showErrorMessage && error ? (
-              <TextContent error small>
+              <TextContent error small id={errorId}>
                 {error}
               </TextContent>
             ) : helperText ? (
-              <TextContent muted small>
+              <TextContent muted small id={helperId}>
                 {helperText}
               </TextContent>
             ) : null}
