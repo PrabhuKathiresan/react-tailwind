@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented here.
 
+## 1.8.0 (2026-08-27)
+
+* feat(Button): add active toggle state and improve accessibility attributes ([9891c3062ccaac7a6fdfd6613259f7ec90e55e8f](https://github.com/PrabhuKathiresan/react-tailwind/commit/9891c3062ccaac7a6fdfd6613259f7ec90e55e8f))
+* feat(Checkbox): add required and aria-describedby/aria-invalid accessibility support ([4c07128f0e170bd13d5ee1ec0876c38d910f2fe2](https://github.com/PrabhuKathiresan/react-tailwind/commit/4c07128f0e170bd13d5ee1ec0876c38d910f2fe2))
+* feat(CheckboxGroup): add group accessibility roles, required, and aria-describedby ([7bb6d80efc7eb8c8de2c8dfd5af135af8fd57eae](https://github.com/PrabhuKathiresan/react-tailwind/commit/7bb6d80efc7eb8c8de2c8dfd5af135af8fd57eae))
+* feat(DataList): add custom pagination rendering support ([ad0ace2c7f517b9e482cbbb511138d50d56c21f5](https://github.com/PrabhuKathiresan/react-tailwind/commit/ad0ace2c7f517b9e482cbbb511138d50d56c21f5))
+* feat(DataTable): add row hover actions and custom pagination rendering ([112702912a825652593c07709eed82ce206a30b7](https://github.com/PrabhuKathiresan/react-tailwind/commit/112702912a825652593c07709eed82ce206a30b7))
+* feat(Input): add required and aria-describedby/aria-invalid accessibility support ([cc45b2e371cf364b5579b58dd154a787f1ac2a30](https://github.com/PrabhuKathiresan/react-tailwind/commit/cc45b2e371cf364b5579b58dd154a787f1ac2a30))
+* feat(Pagination): add page/limit aliases, isMobile, showSummary and showPageNumbers props ([057d85ae6732230b563c9b5bde35b00e83579ebd](https://github.com/PrabhuKathiresan/react-tailwind/commit/057d85ae6732230b563c9b5bde35b00e83579ebd))
+* feat(Radio): add required and aria-describedby/aria-invalid accessibility support ([4f5b6f25c6c8ef561f81cec72f43d44a731b43ef](https://github.com/PrabhuKathiresan/react-tailwind/commit/4f5b6f25c6c8ef561f81cec72f43d44a731b43ef))
+* feat(RadioGroup): add group accessibility roles, required, and aria-describedby ([60916528974aa4048ab903d7ce6a60f4759e2f6d](https://github.com/PrabhuKathiresan/react-tailwind/commit/60916528974aa4048ab903d7ce6a60f4759e2f6d))
+* feat(Textarea): add required and aria-describedby/aria-invalid accessibility support ([ff27e296d11553dac12923510326865ae20e8966](https://github.com/PrabhuKathiresan/react-tailwind/commit/ff27e296d11553dac12923510326865ae20e8966))
+* refactor(SelectBox): memoize computed values to reduce re-renders ([26c27059ff20a787854e1ff6c4f3b7aa420de226](https://github.com/PrabhuKathiresan/react-tailwind/commit/26c27059ff20a787854e1ff6c4f3b7aa420de226))
+
 ## <small>1.7.2 (2026-08-27)</small>
 
 * fix(SelectBox): show noOptionsText when allowFreeText has no matching or empty options ([ead3e98665c8e9a2b1063d978fc364c42f573f97](https://github.com/PrabhuKathiresan/react-tailwind/commit/ead3e98665c8e9a2b1063d978fc364c42f573f97))
