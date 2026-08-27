@@ -115,4 +115,13 @@ describe('Pagination Component', () => {
     const container = screen.getByTestId('pagination-container')
     expect(container).toHaveClass('my-custom')
   })
+
+  it('renders mobile layout explicitly when isMobile=true', () => {
+    render(<Pagination {...baseProps} isMobile={true} page={3} />)
+
+    expect(screen.getByTestId('ellipsis-mobile-prev-btn')).toBeInTheDocument()
+    expect(screen.getByTestId('ellipsis-mobile-next-btn')).toBeInTheDocument()
+    expect(screen.getByText('Page 3 of 10')).toBeInTheDocument()
+    expect(screen.queryByTestId('pagination-summary')).not.toBeInTheDocument()
+  })
 })
