@@ -33,11 +33,18 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     error,
     disabled = false,
     className = '',
+    required,
+    'aria-describedby': ariaDescribedBy,
     ...rest
   } = props
 
   const generatedId = useId()
   const radioId = id ?? (name && rest.value ? `${name}-${rest.value}` : generatedId)
+
+  const hasError = Boolean(error)
+  const errorId = radioId && hasError ? `${radioId}-error` : undefined
+  const descId = radioId && description ? `${radioId}-desc` : undefined
+  const describedBy = [ariaDescribedBy, errorId, descId].filter(Boolean).join(' ') || undefined
 
   return (
     <div className={buildClassName(wrapperClass)}>
@@ -50,6 +57,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
             name={name}
             type="radio"
             disabled={disabled}
+            required={required}
+            aria-required={required ? true : undefined}
+            aria-invalid={hasError ? true : undefined}
+            aria-describedby={describedBy}
             aria-checked={rest.checked}
             className={buildClassName(
               'peer transition-all col-start-1 row-start-1 appearance-none shrink-0 rounded-full',
@@ -70,6 +81,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
             {label && (
               <Label
                 htmlFor={radioId}
+                aria-required={required}
                 className={buildClassName(
                   disabled
                     ? 'cursor-not-allowed text-gray-400 dark:text-gray-500'
@@ -82,6 +94,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
             )}
             {description && (
               <p
+                id={descId}
                 className={buildClassName(
                   'text-xs leading-normal',
                   disabled
@@ -98,7 +111,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       </div>
       {error && (
         <div className="mt-1">
-          <TextContent error small>
+          <TextContent error small id={errorId}>
             {error}
           </TextContent>
         </div>
