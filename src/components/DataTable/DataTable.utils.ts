@@ -110,9 +110,11 @@ export const useRowSelection = <T>({
     }
   }, [allSelected, selectableEntries, keys, emit])
 
+  const isSelected = useCallback((key: string | number) => keySet.has(key), [keySet])
+
   return {
     selectedKeys: keys,
-    isSelected: (key: string | number) => keySet.has(key),
+    isSelected,
     toggleRow,
     toggleAll,
     allSelected,

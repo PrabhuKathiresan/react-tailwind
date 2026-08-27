@@ -10,6 +10,7 @@ import {
   updateSortQuery,
   get,
 } from '@pk-design/react-tailwind'
+import { Archive, Trash2, MailOpen, Clock } from 'lucide-react'
 import Users from '../../data/Sample/users.json'
 
 /* --------------------------------------------------
@@ -510,6 +511,228 @@ function EmptyExample() {
 }
 
 /* --------------------------------------------------
+ * Example: Row Hover Actions
+ * -------------------------------------------------- */
+function RowHoverActionsExample() {
+  const [emails, setEmails] = useState([
+    {
+      id: 1,
+      sender: 'redBus',
+      subject:
+        '₹300 OFF to make celebrations better! Use code FESTIVE300 🎉 - Get up to ₹300 off on bus tickets',
+      date: 'Aug 27',
+    },
+    {
+      id: 2,
+      sender: 'GitHub',
+      subject: '[GitHub] A new public key was added to your account (PrabhuKathiresan)',
+      date: 'Aug 26',
+    },
+    {
+      id: 3,
+      sender: 'Stripe',
+      subject: 'Your payout of $1,450.00 USD is on its way to your bank account',
+      date: 'Aug 25',
+    },
+  ])
+
+  const [toastMsg, setToastMsg] = useState<string | null>(null)
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg)
+    setTimeout(() => setToastMsg(null), 3000)
+  }
+
+  const columns: DataTableColumn[] = [
+    { name: 'sender', label: 'Sender', width: 140 },
+    {
+      name: 'subject',
+      label: 'Subject',
+      render: (item) => (
+        <span className="text-gray-900 dark:text-gray-100 font-medium truncate block max-w-xl">
+          {item.subject}
+        </span>
+      ),
+    },
+    {
+      name: 'date',
+      label: 'Date',
+      align: 'right',
+      width: 120,
+      render: (item) => (
+        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
+          {item.date}
+        </span>
+      ),
+    },
+  ]
+
+  return (
+    <div className="space-y-3 w-full">
+      {toastMsg && (
+        <div className="p-2.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800">
+          {toastMsg}
+        </div>
+      )}
+      <DataTable
+        selectable
+        items={emails}
+        columns={columns}
+        rowHoverActions={(row) => [
+          {
+            id: 'archive',
+            icon: <Archive className="size-4 text-gray-600 dark:text-gray-300" />,
+            title: 'Archive',
+            onClick: (item) => showToast(`Archived "${item.sender}"`),
+          },
+          {
+            id: 'delete',
+            icon: <Trash2 className="size-4 text-red-600 dark:text-red-400" />,
+            title: 'Delete',
+            onClick: (item) => {
+              setEmails((prev) => prev.filter((e) => e.id !== item.id))
+              showToast(`Deleted email from "${item.sender}"`)
+            },
+          },
+          {
+            id: 'markRead',
+            icon: <MailOpen className="size-4 text-gray-600 dark:text-gray-300" />,
+            title: 'Mark as read',
+            onClick: (item) => showToast(`Marked "${item.sender}" as read`),
+          },
+          {
+            id: 'snooze',
+            icon: <Clock className="size-4 text-gray-600 dark:text-gray-300" />,
+            title: 'Snooze',
+            onClick: (item) => showToast(`Snoozed "${item.sender}"`),
+          },
+        ]}
+      />
+    </div>
+  )
+}
+
+/* --------------------------------------------------
+ * Example: Horizontally Scrollable Row Hover Actions
+ * -------------------------------------------------- */
+function HorizontallyScrollableRowHoverActionsExample() {
+  const [items, setItems] = useState([
+    {
+      id: 'ORD-501',
+      customer: 'Diana Prince',
+      company: 'Themyscira Inc',
+      amount: '$4,350.00',
+      status: 'Paid',
+      paymentMethod: 'Credit Card',
+      billingAddress: '100 Gateway Blvd, Suite 400',
+      shippingAddress: '100 Gateway Blvd, Suite 400',
+      createdDate: '2026-08-27',
+      fulfillmentDate: '2026-08-28',
+    },
+    {
+      id: 'ORD-502',
+      customer: 'Bruce Wayne',
+      company: 'Wayne Enterprises',
+      amount: '$12,800.00',
+      status: 'Processing',
+      paymentMethod: 'Wire Transfer',
+      billingAddress: '1007 Mountain Drive',
+      shippingAddress: '1007 Mountain Drive',
+      createdDate: '2026-08-26',
+      fulfillmentDate: 'Pending',
+    },
+    {
+      id: 'ORD-503',
+      customer: 'Clark Kent',
+      company: 'Daily Planet',
+      amount: '$890.00',
+      status: 'Shipped',
+      paymentMethod: 'PayPal',
+      billingAddress: '344 Clinton St, Apt 3B',
+      shippingAddress: '344 Clinton St, Apt 3B',
+      createdDate: '2026-08-25',
+      fulfillmentDate: '2026-08-26',
+    },
+  ])
+
+  const [toastMsg, setToastMsg] = useState<string | null>(null)
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg)
+    setTimeout(() => setToastMsg(null), 3000)
+  }
+
+  const columns: DataTableColumn[] = [
+    { name: 'id', label: 'Order ID', width: 110 },
+    { name: 'customer', label: 'Customer', width: 140 },
+    { name: 'company', label: 'Company', width: 160 },
+    { name: 'amount', label: 'Amount', width: 120 },
+    {
+      name: 'status',
+      label: 'Status',
+      width: 120,
+      render: (item: any) => (
+        <Badge
+          theme={
+            item.status === 'Paid' ? 'success' : item.status === 'Shipped' ? 'info' : 'warning'
+          }
+          size="sm"
+        >
+          {item.status}
+        </Badge>
+      ),
+    },
+    { name: 'paymentMethod', label: 'Payment Method', width: 150 },
+    { name: 'billingAddress', label: 'Billing Address', width: 220 },
+    { name: 'shippingAddress', label: 'Shipping Address', width: 220 },
+    { name: 'createdDate', label: 'Created', width: 120 },
+    { name: 'fulfillmentDate', label: 'Fulfillment', width: 120 },
+  ]
+
+  return (
+    <div className="space-y-3 w-full">
+      {toastMsg && (
+        <div className="p-2.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800">
+          {toastMsg}
+        </div>
+      )}
+      <div className="p-2.5 bg-gray-50 dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-300 rounded-md border border-[var(--ui-border-muted)]">
+        💡 Scroll horizontally across the 10 wide columns to see how hover actions stay
+        sticky-pinned to the visible right viewport edge!
+      </div>
+      <DataTable
+        selectable
+        items={items}
+        columns={columns}
+        rowHoverActions={(order) => [
+          {
+            id: 'archive',
+            icon: <Archive className="size-4 text-gray-600 dark:text-gray-300" />,
+            title: 'Archive Order',
+            onClick: (item) => showToast(`Archived ${item.id}`),
+          },
+          {
+            id: 'delete',
+            icon: <Trash2 className="size-4 text-red-600 dark:text-red-400" />,
+            title: 'Delete Order',
+            onClick: (item) => {
+              setItems((prev) => prev.filter((o) => o.id !== item.id))
+              showToast(`Deleted ${item.id}`)
+            },
+          },
+          {
+            id: 'snooze',
+            icon: <Clock className="size-4 text-gray-600 dark:text-gray-300" />,
+            title: 'Snooze Order',
+            onClick: (item) => showToast(`Snoozed ${item.id}`),
+          },
+        ]}
+      />
+    </div>
+  )
+}
+
+/* --------------------------------------------------
  * Best Practices
  * -------------------------------------------------- */
 const bestPractices = (
@@ -604,6 +827,46 @@ const handleSort = (column: DataTableColumn) => {
   columns={columns}
   pagination={pagination}
   setPagination={(page) => setPagination(prev => ({ ...prev, ...page }))}
+/>`,
+    },
+    {
+      title: 'Row Hover Actions (rowHoverActions)',
+      description:
+        'Pass rowHoverActions callback returning action buttons that smoothly fade in on row hover without interfering with row selection or row click events.',
+      render: <RowHoverActionsExample />,
+      code: `<DataTable
+  items={users}
+  columns={columns}
+  rowHoverActions={(user) => [
+    {
+      id: 'edit',
+      label: 'Edit',
+      theme: 'secondary',
+      onClick: (item) => handleEdit(item),
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      theme: 'danger',
+      onClick: (item) => handleDelete(item),
+    },
+  ]}
+/>`,
+    },
+    {
+      title: 'Horizontally Scrollable Row Hover Actions',
+      description:
+        'Demonstrates how row hover actions automatically use sticky-right positioning (`sticky right-0`) on wide horizontally scrollable tables, staying pinned to the visible right viewport edge while scrolling.',
+      render: <HorizontallyScrollableRowHoverActionsExample />,
+      code: `<DataTable
+  selectable
+  items={items}
+  columns={wideColumns} // 10 wide columns
+  rowHoverActions={(order) => [
+    { id: 'archive', icon: <Archive />, title: 'Archive Order', onClick: handleArchive },
+    { id: 'delete', icon: <Trash2 />, title: 'Delete Order', onClick: handleDelete },
+    { id: 'snooze', icon: <Clock />, title: 'Snooze Order', onClick: handleSnooze },
+  ]}
 />`,
     },
     {

@@ -458,4 +458,73 @@ describe('DataTable', () => {
     const paginationEl = screen.getByTestId('pagination')
     expect(paginationEl.className).not.toMatch(/sticky bottom-0/)
   })
+
+  it('renders rowHoverActions and triggers click handlers without bubbling to onRowClick', () => {
+    const handleEdit = jest.fn()
+    const handleRowClick = jest.fn()
+
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        onRowClick={handleRowClick}
+        rowHoverActions={(item) => [
+          {
+            id: 'edit',
+            label: 'Edit',
+            onClick: handleEdit,
+          },
+        ]}
+      />,
+    )
+
+    const actionsContainer = screen.getByTestId('row-hover-actions-1')
+    expect(actionsContainer).toBeInTheDocument()
+
+    const editBtn = screen.getAllByText('Edit')[0]
+    fireEvent.click(editBtn)
+
+    expect(handleEdit).toHaveBeenCalledWith(rows[0], 0, expect.anything())
+    expect(handleRowClick).not.toHaveBeenCalled()
+  })
+
+  it('renders custom renderRowHoverActions node', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        renderRowHoverActions={() => <button>Custom Action</button>}
+      />,
+    )
+
+    expect(screen.getAllByText('Custom Action').length).toBe(rows.length)
+  })
+
+  it('renders inline cell when rowHoverActionMode="inline"', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        rowHoverActionMode="inline"
+        rowHoverActionHeader="Actions"
+        rowHoverActions={() => [{ id: 'edit', label: 'Edit', onClick: () => {} }]}
+      />,
+    )
+
+    expect(screen.getByText('Actions')).toBeInTheDocument()
+  })
+
+  it('applies custom rowHoverActionClass to actions container', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        rowHoverActionClass="custom-hover-class"
+        rowHoverActions={() => [{ id: 'edit', label: 'Edit', onClick: () => {} }]}
+      />,
+    )
+
+    const actionsContainer = screen.getByTestId('row-hover-actions-1')
+    expect(actionsContainer).toHaveClass('custom-hover-class')
+  })
 })

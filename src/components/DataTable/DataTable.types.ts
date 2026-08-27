@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { TPagination } from '../Pagination'
+import type { ButtonTheme, ButtonVariant } from '../Button'
 
 /**
  * Allowed column value data types.
@@ -21,6 +22,30 @@ export type SortQuery = Record<string, Sorting>
  * @default 'default'
  */
 export type DataTableDensity = 'compact' | 'default' | 'spacious'
+
+/**
+ * Single row hover action item definition.
+ */
+export interface DataTableRowAction<T = any> {
+  /** Unique action identifier */
+  id: string
+  /** Display text or React node */
+  label?: ReactNode
+  /** Icon rendered inside or before action button */
+  icon?: ReactNode
+  /** Button color theme palette (@default "secondary") */
+  theme?: ButtonTheme
+  /** Button visual variant style (@default "plain") */
+  variant?: ButtonVariant
+  /** Action click callback handler */
+  onClick: (item: T, index: number, event: React.MouseEvent) => void
+  /** Disables the action button */
+  disabled?: boolean | ((item: T) => boolean)
+  /** Tooltip or title text attribute */
+  title?: string
+  /** Custom CSS classes for the action button */
+  className?: string
+}
 
 /**
  * Column definition for DataTable.
@@ -180,5 +205,38 @@ export interface DataTableProps<T = any> {
    */
   isRowSelectable?: (item: T) => boolean
 
+  /** Action definitions rendered on row hover */
+  rowHoverActions?: (item: T, index: number) => DataTableRowAction<T>[]
+
+  /** Custom renderer function for row hover actions */
+  renderRowHoverActions?: (item: T, index: number) => ReactNode
+
+  /** Optional header title label for the row hover actions column (when rowHoverActionMode="inline") */
+  rowHoverActionHeader?: ReactNode
+
+  /**
+   * Rendering mode for row hover actions.
+   * - **overlay** (default): Floating overlay positioned over the right side of the row on hover without adding extra table columns.
+   * - **inline**: Renders as a dedicated rightmost table column.
+   * @default "overlay"
+   */
+  rowHoverActionMode?: 'overlay' | 'inline'
+
+  /** Extra CSS classes applied to the row hover action container element */
+  rowHoverActionClass?: string
+
+  /** Extra CSS classes applied to the pagination container wrapper */
+  paginationClass?: string
+
+  /** Extra CSS classes applied to the pagination container wrapper (alias for paginationClass) */
   paginationContainerClass?: string
+
+  /** Additional props passed directly to internal Pagination component */
+  paginationProps?: Record<string, any>
+
+  /** Custom renderer function for pagination */
+  renderPagination?: (
+    pagination: TPagination,
+    setPagination?: (pagination: Partial<TPagination>) => void,
+  ) => ReactNode
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   EmptyTableRow,
   Table,
@@ -20,9 +20,13 @@ import type {
 import { TextContent } from '../TextContent'
 import { Pagination } from '../Pagination'
 import { Checkbox } from '../Checkbox'
+import { Button } from '../Button'
 import { get } from '../../utils/get'
 import { updateSortQuery, useRowSelection } from './DataTable.utils'
 import { getSortIcon } from './DataTable.icons'
+
+const OVERFLOW_REGEX = /\boverflow-(x-|y-)?(auto|hidden|scroll|visible|clip)\b/
+const NOOP = () => {}
 
 const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
   compact: 'px-2 py-1.5',
@@ -63,7 +67,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   onSort,
   loading,
   pagination,
-  setPagination = () => {},
+  setPagination = NOOP,
   emptyMessage = 'No data found',
   containerClass = '',
   wrapperClass = '',
@@ -83,41 +87,61 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   isRowSelectable,
   stickyHeader = true,
   stickyPagination = true,
+  rowHoverActions,
+  renderRowHoverActions,
+  rowHoverActionHeader,
+  rowHoverActionMode = 'overlay',
+  rowHoverActionClass,
+  paginationClass,
   paginationContainerClass,
+  paginationProps,
+  renderPagination,
 }: DataTableProps<T>) {
-  const internalSorting = useRef<SortQuery>({})
-  const [sortedItems, setSortedItems] = useState(items)
+  const [internalSortingState, setInternalSortingState] = useState<SortQuery>({})
 
-  useEffect(() => {
-    setSortedItems(items)
-  }, [items])
+  const handleSort = useCallback(
+    (column: DataTableColumn<T>) => {
+      if (!column.sortable) return
+      if (onSort) {
+        onSort(column)
+      } else {
+        setInternalSortingState((prev) => updateSortQuery(prev, column.name, column.type))
+      }
+    },
+    [onSort],
+  )
 
-  const doAutoSort = (column: DataTableColumn<T>) => {
-    internalSorting.current = updateSortQuery(internalSorting.current, column.name, column.type)
-    setSortedItems(autoSortItems(items, column, internalSorting.current[column.name]))
-  }
+  const activeSorting = useMemo(
+    () => ({ ...sorting, ...internalSortingState }),
+    [sorting, internalSortingState],
+  )
 
-  const handleSort = (column: DataTableColumn<T>) => {
-    if (!column.sortable) return
-    onSort ? onSort(column) : doAutoSort(column)
-  }
+  const sortedItems: T[] = useMemo(() => {
+    if (onSort) return items
+    const activeSortKey = Object.keys(activeSorting)[0]
+    if (!activeSortKey) return items
+    const column = columns.find((c) => c.name === activeSortKey)
+    if (!column) return items
+    return autoSortItems(items, column, activeSorting[activeSortKey])
+  }, [items, columns, onSort, activeSorting])
 
-  const getKey = (item: T, idx: number): string | number => {
-    if (typeof rowKey === 'function') return rowKey(item)
-    return (item as any)[rowKey] ?? idx
-  }
+  const getKey = useCallback(
+    (item: T, idx: number): string | number =>
+      typeof rowKey === 'function' ? rowKey(item) : ((item as any)[rowKey] ?? idx),
+    [rowKey],
+  )
 
-  const getRowClass = (item: T, idx: number): string => {
-    if (!rowClass) return ''
-    if (typeof rowClass === 'function') return rowClass(item, idx)
-    return rowClass
-  }
+  const getRowClass = useCallback(
+    (item: T, idx: number): string =>
+      typeof rowClass === 'function' ? rowClass(item, idx) : rowClass || '',
+    [rowClass],
+  )
 
-  const getCellClass = (column: DataTableColumn<T>, item: T): string => {
-    if (!column.cellClass) return ''
-    if (typeof column.cellClass === 'function') return column.cellClass(item)
-    return column.cellClass
-  }
+  const getCellClass = useCallback(
+    (column: DataTableColumn<T>, item: T): string =>
+      typeof column.cellClass === 'function' ? column.cellClass(item) : column.cellClass || '',
+    [],
+  )
 
   const { isSelected, toggleRow, toggleAll, allSelected, someSelected } = useRowSelection({
     items: sortedItems,
@@ -128,10 +152,48 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
     isRowSelectable,
   })
 
+  const hasRowHoverActions = Boolean(rowHoverActions || renderRowHoverActions)
+  const isInlineMode = hasRowHoverActions && rowHoverActionMode === 'inline'
+  const isOverlayMode = hasRowHoverActions && rowHoverActionMode !== 'inline'
+
   const densityCellClass = DENSITY_CELL_CLASS[density]
-  const colSize = columns.length + (selectable ? 1 : 0)
-  const wrapperHasOverflow = /\boverflow-(x-|y-)?(auto|hidden|scroll|visible|clip)\b/.test(
-    wrapperClass,
+  const colSize = columns.length + (selectable ? 1 : 0) + (isInlineMode ? 1 : 0)
+  const wrapperHasOverflow = OVERFLOW_REGEX.test(wrapperClass)
+
+  const renderActionsContent = useCallback(
+    (item: T, idx: number) => {
+      if (renderRowHoverActions) return renderRowHoverActions(item, idx)
+      if (!rowHoverActions) return null
+      return rowHoverActions(item, idx).map((act) => {
+        const isDisabled = typeof act.disabled === 'function' ? act.disabled(item) : act.disabled
+        const isIconOnly = Boolean(act.icon && !act.label)
+
+        return (
+          <Button
+            key={act.id}
+            size="xs"
+            theme={act.theme || 'secondary'}
+            variant={act.variant || 'plain'}
+            disabled={isDisabled}
+            title={act.title || (typeof act.label === 'string' ? act.label : undefined)}
+            className={buildClassName(
+              isIconOnly
+                ? 'p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10'
+                : 'px-2 py-1',
+              act.className,
+            )}
+            onClick={(e) => {
+              e.stopPropagation()
+              act.onClick(item, idx, e)
+            }}
+          >
+            {act.icon && <span className="shrink-0">{act.icon}</span>}
+            {act.label && <span>{act.label}</span>}
+          </Button>
+        )
+      })
+    },
+    [renderRowHoverActions, rowHoverActions],
   )
 
   return (
@@ -167,35 +229,80 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                 />
               </TableHeaderCell>
             )}
-            {columns.map((column) => (
+            {columns.map((column) => {
+              const sortState = activeSorting[column.name]
+              const ariaSortValue = column.sortable
+                ? sortState === 'asc' || sortState === '1'
+                  ? 'ascending'
+                  : sortState === 'desc' || sortState === '-1'
+                    ? 'descending'
+                    : 'none'
+                : undefined
+
+              return (
+                <TableHeaderCell
+                  key={column.name}
+                  align={column.headerAlign}
+                  style={{ width: column.width || 'auto' }}
+                  aria-sort={ariaSortValue}
+                  className={buildClassName(
+                    'bg-gray-50 dark:bg-gray-800',
+                    densityCellClass,
+                    stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
+                    column.sticky === 'left' &&
+                      'sticky left-0 z-30 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
+                    column.sticky === 'right' &&
+                      'sticky right-0 z-30 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                    column.headerClass,
+                  )}
+                >
+                  <TextContent
+                    role={column.sortable ? 'button' : undefined}
+                    tabIndex={column.sortable ? 0 : undefined}
+                    aria-label={column.sortable ? `Sort by ${column.label}` : undefined}
+                    className={buildClassName(
+                      'group',
+                      column.sortable &&
+                        'inline-flex items-center gap-2 cursor-pointer select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 rounded',
+                    )}
+                    onClick={() => handleSort(column)}
+                    onKeyDown={(e) => {
+                      if (column.sortable && (e.key === 'Enter' || e.key === ' ')) {
+                        e.preventDefault()
+                        handleSort(column)
+                      }
+                    }}
+                  >
+                    <TextContent className="shrink-0">{column.label}</TextContent>
+                    {column.sortable ? getSortIcon(activeSorting[column.name]) : null}
+                  </TextContent>
+                </TableHeaderCell>
+              )
+            })}
+            {isInlineMode && (
               <TableHeaderCell
-                key={column.name}
-                align={column.headerAlign}
-                style={{ width: column.width || 'auto' }}
+                align="right"
                 className={buildClassName(
-                  'bg-gray-50 dark:bg-gray-800',
+                  'bg-gray-50 dark:bg-gray-800 text-right w-px',
                   densityCellClass,
                   stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
-                  column.sticky === 'left' &&
-                    'sticky left-0 z-30 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
-                  column.sticky === 'right' &&
-                    'sticky right-0 z-30 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
-                  column.headerClass,
                 )}
               >
-                <TextContent
-                  role={column.sortable ? 'button' : undefined}
-                  className={buildClassName(
-                    'group',
-                    column.sortable && 'inline-flex items-center gap-2 cursor-pointer select-none',
-                  )}
-                  onClick={() => handleSort(column)}
-                >
-                  <TextContent className="shrink-0">{column.label}</TextContent>
-                  {column.sortable ? getSortIcon(sorting[column.name]) : null}
-                </TextContent>
+                {rowHoverActionHeader ?? ''}
               </TableHeaderCell>
-            ))}
+            )}
+            {isOverlayMode && (
+              <TableHeaderCell
+                align="right"
+                style={{ padding: 0, width: 0, minWidth: 0, maxWidth: 0 }}
+                className={buildClassName(
+                  'sticky right-0 z-20 !p-0 !pr-0 !pl-0 !py-0 w-0 max-w-0 min-w-0 border-0 bg-gray-50 dark:bg-gray-800',
+                  stickyHeader && 'top-0',
+                )}
+              >
+                {null}
+              </TableHeaderCell>
+            )}
           </TableHead>
 
           <TableBody loading={loading} colSize={colSize} rowSize={pagination?.limit || 5}>
@@ -253,6 +360,47 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                           : ((get(item, column.name) as any) ?? 'Not set')}
                       </TableCell>
                     ))}
+                    {isInlineMode && (
+                      <TableCell
+                        align="right"
+                        className={buildClassName(
+                          densityCellClass,
+                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                        )}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div
+                          className={buildClassName(
+                            'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150 flex items-center justify-end gap-1.5',
+                            rowHoverActionClass,
+                          )}
+                          data-testid={`row-hover-actions-${key}`}
+                        >
+                          {renderActionsContent(item, idx)}
+                        </div>
+                      </TableCell>
+                    )}
+                    {isOverlayMode && (
+                      <TableCell
+                        align="right"
+                        style={{ padding: 0, width: 0, minWidth: 0, maxWidth: 0 }}
+                        className="sticky right-0 z-20 !p-0 !pr-0 !pl-0 !py-0 w-0 max-w-0 min-w-0 border-0 overflow-visible text-right"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div
+                          className={buildClassName(
+                            'absolute right-0 top-0 bottom-0 h-full opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150 flex items-center justify-end gap-1 px-3 z-30 pointer-events-none group-hover:pointer-events-auto whitespace-nowrap',
+                            striped && idx % 2 === 1
+                              ? 'bg-gray-100 dark:bg-gray-800'
+                              : 'bg-white group-hover:bg-gray-50 dark:bg-gray-900 dark:group-hover:bg-gray-800',
+                            rowHoverActionClass,
+                          )}
+                          data-testid={`row-hover-actions-${key}`}
+                        >
+                          {renderActionsContent(item, idx)}
+                        </div>
+                      </TableCell>
+                    )}
                   </TableRow>
                 )
               })
@@ -264,15 +412,28 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
       </div>
 
       {pagination && (
-        <Pagination
-          {...pagination}
+        <div
           className={buildClassName(
-            'rounded-b-lg border border-[var(--ui-border)]',
             stickyPagination && 'sticky bottom-0 z-20 bg-white dark:bg-gray-800',
+            paginationClass,
             paginationContainerClass,
           )}
-          onChange={setPagination}
-        />
+        >
+          {renderPagination ? (
+            renderPagination(pagination, setPagination)
+          ) : (
+            <Pagination
+              {...pagination}
+              {...paginationProps}
+              className={buildClassName(
+                'rounded-t-none rounded-b-lg border border-[var(--ui-border)]',
+                stickyPagination && 'sticky bottom-0 z-20 bg-white dark:bg-gray-800',
+                paginationProps?.className,
+              )}
+              onChange={setPagination}
+            />
+          )}
+        </div>
       )}
     </div>
   )
