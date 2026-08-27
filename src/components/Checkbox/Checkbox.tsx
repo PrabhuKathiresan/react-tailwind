@@ -3,6 +3,7 @@ import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import type { CheckboxProps, CheckboxSize } from './Checkbox.types'
 import { TextContent } from '../TextContent'
+import { isEmpty } from '../../utils/is-empty'
 
 const sizeStyles: Record<
   CheckboxSize,
@@ -46,6 +47,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
     className = '',
     checked,
     onChange,
+    required,
+    'aria-describedby': ariaDescribedBy,
     ...rest
   } = props
 
@@ -63,6 +66,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
 
   const currentSize = sizeStyles[size] || sizeStyles.md
   const isCard = variant === 'card'
+
+  const hasError = !isEmpty(error)
+  const errorId = checkboxId && hasError ? `${checkboxId}-error` : undefined
+  const helperId = checkboxId && helperText && !hasError ? `${checkboxId}-helper` : undefined
+  const descId = checkboxId && description ? `${checkboxId}-desc` : undefined
+  const describedBy =
+    [ariaDescribedBy, errorId, helperId, descId].filter(Boolean).join(' ') || undefined
 
   return (
     <div className={buildClassName(wrapperClass)}>
@@ -99,6 +109,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
               disabled={disabled}
               checked={checked}
               onChange={onChange}
+              required={required}
+              aria-required={required ? true : undefined}
+              aria-invalid={hasError ? true : undefined}
+              aria-describedby={describedBy}
               aria-checked={indeterminate ? 'mixed' : checked}
               className={buildClassName(
                 'peer cursor-pointer transition-all appearance-none rounded',
@@ -157,6 +171,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
               {label && (
                 <Label
                   htmlFor={checkboxId}
+                  aria-required={required}
                   className={buildClassName(
                     disabled
                       ? 'cursor-not-allowed text-gray-400 dark:text-gray-500'
@@ -171,6 +186,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
 
               {description && (
                 <span
+                  id={descId}
                   className={buildClassName(
                     'mt-0.5 text-gray-500 dark:text-gray-400 font-normal leading-normal',
                     currentSize.subtext,
@@ -188,11 +204,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
       {(error || helperText) && (
         <div className="mt-1.5 ml-0.5">
           {error ? (
-            <TextContent error small>
+            <TextContent error small id={errorId}>
               {error}
             </TextContent>
           ) : (
-            <TextContent muted small>
+            <TextContent muted small id={helperId}>
               {helperText}
             </TextContent>
           )}
