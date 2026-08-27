@@ -1,4 +1,11 @@
-import { forwardRef, useImperativeHandle, useRef, useState, type ChangeEvent } from 'react'
+import {
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from 'react'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import type { InputProps, InputSize } from './Input.types'
@@ -81,6 +88,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     defaultValue,
     onChange,
     maxLength,
+    required,
+    'aria-describedby': ariaDescribedBy,
     ...inputProps
   } = props
 
@@ -93,14 +102,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const currentVal = isControlled ? String(value ?? '') : uncontrolledValue
   const charLength = currentVal.length
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!isControlled) {
-      setUncontrolledValue(e.target.value)
-    }
-    onChange?.(e)
-  }
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) {
+        setUncontrolledValue(e.target.value)
+      }
+      onChange?.(e)
+    },
+    [isControlled, onChange],
+  )
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     if (innerRef.current) {
       innerRef.current.value = ''
       const event = new Event('input', {
@@ -113,10 +125,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       onChange?.(event)
     }
     onClear?.()
-  }
+  }, [isControlled, onChange, onClear])
 
   const hasError = Boolean(error)
   const currentSize = sizeClasses[size] || sizeClasses.md
+
+  const errorId = id && hasError && showErrorMessage ? `${id}-error` : undefined
+  const helperId = id && helperText && !hasError ? `${id}-helper` : undefined
+  const describedBy = [ariaDescribedBy, errorId, helperId].filter(Boolean).join(' ') || undefined
 
   const showClearButton = clearable && charLength > 0 && !inputProps.disabled
 
@@ -127,6 +143,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         type="button"
         onClick={handleClear}
         className="p-1 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+        aria-label="Clear input text"
         title="Clear text"
         tabIndex={-1}
       >
@@ -150,7 +167,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         <div
           className={buildClassName('flex items-center justify-between mb-1.5', labelWrapperClass)}
         >
-          <Label className={labelClass} htmlFor={id}>
+          <Label className={labelClass} htmlFor={id} aria-required={required}>
             {label}
           </Label>
           {labelHint && <TextContent xsmall>{labelHint}</TextContent>}
@@ -188,6 +205,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             name={name}
             id={id}
             type={type}
+            required={required}
+            aria-invalid={hasError ? true : undefined}
+            aria-describedby={describedBy}
             className={buildClassName(
               buildInputClass(className, {
                 disabled: inputProps.disabled,
@@ -226,11 +246,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         <div className="mt-1.5 flex items-center justify-between gap-2 text-xs">
           <div className="min-w-0 flex-1">
             {showErrorMessage && error ? (
-              <TextContent error small>
+              <TextContent error small id={errorId}>
                 {error}
               </TextContent>
             ) : helperText ? (
-              <TextContent muted small>
+              <TextContent muted small id={helperId}>
                 {helperText}
               </TextContent>
             ) : null}

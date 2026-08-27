@@ -109,17 +109,22 @@ describe('Input Component', () => {
   })
 
   it('sets id based on name when no id is provided', () => {
-    render(<Input name="email" />)
+    render(<Input name="username" />)
 
-    const input = screen.getByRole('textbox')
-    expect(input.id).toBe('email')
+    expect(screen.getByRole('textbox')).toHaveAttribute('id', 'username')
   })
 
   it('merges custom className into input element', () => {
-    render(<Input name="user" className="border-red-500" />)
+    render(<Input name="custom" className="my-custom-class" />)
+
+    expect(screen.getByRole('textbox')).toHaveClass('my-custom-class')
+  })
+
+  it('applies aria-invalid and aria-describedby when error or helperText is present', () => {
+    render(<Input id="test-input" error="Invalid format" helperText="Enter email" />)
 
     const input = screen.getByRole('textbox')
-
-    expect(input.className).toMatch(/border-red-500/)
+    expect(input).toHaveAttribute('aria-invalid', 'true')
+    expect(input).toHaveAttribute('aria-describedby', 'test-input-error')
   })
 })
