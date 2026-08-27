@@ -226,4 +226,15 @@ describe('SelectBox', () => {
 
     expect(screen.getByText('Create "Dragonfruit"')).toBeInTheDocument()
   })
+
+  test('displays noOptionsText when allowFreeText is true and options is empty', () => {
+    render(
+      <SelectBox options={[]} multiple allowFreeText noOptionsText="Type to create a tag..." />,
+    )
+
+    const button = screen.getByTestId('combobox-button')
+    fireEvent.click(button)
+
+    expect(screen.getByText('Type to create a tag...')).toBeInTheDocument()
+  })
 })

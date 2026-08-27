@@ -342,6 +342,21 @@ export const SelectBox = forwardRef(
 
     const hasLeftGroup = leftGroup != null && leftGroup !== undefined
 
+    const hasFreeTextOption = Boolean(
+      allowFreeText &&
+        query.trim() &&
+        !allOptions.some(
+          (opt) => getDisplayValue(opt)?.toLowerCase() === query.trim().toLowerCase(),
+        ),
+    )
+
+    const hasAddOption = Boolean(!allowFreeText && allowAdd && query.trim())
+    const hasGroupOptions = Boolean(filteredGroups && filteredGroups.length > 0)
+    const hasFlatOptions = filteredOptions.length > 0
+
+    const hasAnyOptionsToDisplay =
+      hasFlatOptions || hasGroupOptions || hasFreeTextOption || hasAddOption
+
     return (
       <div
         className={buildClassName('group space-y-2', hasError && 'has-error', containerClass)}
@@ -635,22 +650,21 @@ export const SelectBox = forwardRef(
                       )
                     })}
 
-                {filteredOptions.length === 0 &&
-                  !filteredGroups?.length &&
-                  !allowFreeText &&
-                  !(allowAdd && query.trim()) && (
-                    <div
-                      data-testid="no-result-found"
-                      className="flex items-center gap-2 py-1.5 px-3 select-none"
-                    >
-                      <TextContent muted small>
-                        {noOptionsText}
-                      </TextContent>
+                {!hasAnyOptionsToDisplay && Boolean(noOptionsText) && (
+                  <div
+                    data-testid="no-result-found"
+                    className="flex items-center gap-2 py-1.5 px-3 select-none"
+                  >
+                    <TextContent muted small>
+                      {noOptionsText}
+                    </TextContent>
+                    {Boolean(query.trim()) && (
                       <TextContent strong small>
-                        {query}
+                        "{query.trim()}"
                       </TextContent>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                )}
 
                 {/* Creatable option (allowAdd) - suppressed when allowFreeText is true */}
                 {!allowFreeText && allowAdd && Boolean(query.trim()) && (

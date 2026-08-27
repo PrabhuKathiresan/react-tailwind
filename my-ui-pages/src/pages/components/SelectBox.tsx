@@ -270,32 +270,46 @@ const departments = [
     {
       title: 'Tags Input Mode (allowFreeText + multiple)',
       description:
-        'Combine allowFreeText with multiple to create a freeform tag input. Users can type any custom tag and press Enter or comma (,) to add it instantly.',
+        'Combine allowFreeText with multiple to create a freeform tag input. Works both with a preset options list or as a pure freeform tags input with empty options (options={[]}). Users can type any custom tag and press Enter or comma (,) to add it instantly.',
       render: (
-        <div className="max-w-md">
+        <div className="max-w-md flex flex-col gap-6">
           <SelectBox
             options={['React', 'Vue', 'Angular', 'Tailwind', 'TypeScript', 'Design System']}
             multiple
             allowFreeText
-            placeholder="Type custom tags (press Enter or comma)..."
-            label="Project Tags"
+            placeholder="Type or select tags (press Enter or comma)..."
+            label="Preset Tags Input"
             selected={tags}
             onChange={(val: any) => setTags(val)}
-            helperText="Type any custom tag and press Enter or comma (,) to add it instantly."
+            helperText="Select from preset list or type any custom tag and press Enter or comma (,)."
+          />
+
+          <SelectBox
+            options={[]}
+            multiple
+            allowFreeText
+            noOptionsText="Type to create tags..."
+            placeholder="Select or type tags..."
+            label="Pure Custom Tags Input (options={[]})"
+            selected={tags}
+            onChange={(val: any) => setTags(val)}
+            helperText="Pure freeform tag input with no preset options list."
           />
         </div>
       ),
       code: `
 const [tags, setTags] = useState(['React', 'Tailwind', 'Design System'])
 
+// Pure custom tags input (no preset options list)
 <SelectBox
-  options={['React', 'Vue', 'Angular', 'Tailwind', 'TypeScript']}
+  options={[]}
   multiple
   allowFreeText
-  label="Project Tags"
+  noOptionsText="Type to create tags..."
+  label="Tags (Optional)"
   selected={tags}
   onChange={setTags}
-  placeholder="Type custom tags..."
+  placeholder="Select or type tags..."
 />`,
     },
     {
