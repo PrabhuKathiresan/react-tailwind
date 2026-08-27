@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.7.2 (2026-08-27)</small>
+
+* fix(SelectBox): show noOptionsText when allowFreeText has no matching or empty options ([ead3e98665c8e9a2b1063d978fc364c42f573f97](https://github.com/PrabhuKathiresan/react-tailwind/commit/ead3e98665c8e9a2b1063d978fc364c42f573f97))
+
 ## <small>1.7.1 (2026-08-24)</small>
 
 * fix(Dropdown): don't render a menu item row for divider entries ([dc3ec9f727c7100983ae9eb043f87f362649e286](https://github.com/PrabhuKathiresan/react-tailwind/commit/dc3ec9f727c7100983ae9eb043f87f362649e286))
