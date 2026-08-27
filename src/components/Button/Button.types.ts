@@ -117,6 +117,12 @@ export interface ButtonBaseProps {
   noOutlineOnFocus?: boolean
 
   /**
+   * Indicates active toggle state (applies aria-pressed).
+   * @default false
+   */
+  active?: boolean
+
+  /**
    * Additional classNames merged with the computed classes.
    */
   className?: string

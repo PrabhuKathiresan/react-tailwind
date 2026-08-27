@@ -15,7 +15,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)] disabled:border-[var(--ui-primary-disabled)]',
     plain:
-      'text-[var(--ui-primary-text)] hover:bg-black/5 dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
+      'text-[var(--ui-primary-text)] hover:bg-blue-50/80 dark:hover:bg-blue-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
   },
   danger: {
     default:
@@ -23,7 +23,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)] disabled:border-[var(--ui-danger-disabled)]',
     plain:
-      'text-[var(--ui-danger-text)] hover:bg-black/5 dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
+      'text-[var(--ui-danger-text)] hover:bg-red-50/80 dark:hover:bg-red-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
   },
   secondary: {
     default:
@@ -31,7 +31,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-[var(--ui-border-muted)]',
     plain:
-      'text-gray-700 hover:bg-black/5 dark:text-gray-200 dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
+      'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
   },
   success: {
     default:
@@ -79,32 +79,28 @@ const LOADER_TEXT_CLASS: ThemedButtonClass = {
   },
 }
 
-/**
- * Generate size classes.
- */
-const getBtnSizeClasses = (size: ButtonSize, iconOnly = false) => {
-  switch (size) {
-    case 'xs':
-      return iconOnly ? 'h-7 w-7 p-1 rounded-sm text-xs' : 'h-7 px-2.5 rounded-sm gap-1 text-xs'
+const SIZE_CLASSES: Record<ButtonSize, { normal: string; iconOnly: string }> = {
+  xs: { normal: 'h-7 px-2.5 rounded-sm gap-1 text-xs', iconOnly: 'h-7 w-7 p-1 rounded-sm text-xs' },
+  sm: { normal: 'h-8 px-3 rounded gap-1.5 text-sm', iconOnly: 'h-8 w-8 p-1.5 rounded text-sm' },
+  md: { normal: 'h-9 px-4 rounded-md gap-2 text-sm', iconOnly: 'h-9 w-9 p-2 rounded-md text-sm' },
+  lg: {
+    normal: 'h-10 px-5 rounded-lg gap-2 text-base',
+    iconOnly: 'h-10 w-10 p-2.5 rounded-lg text-base',
+  },
+}
 
-    case 'sm':
-      return iconOnly ? 'h-8 w-8 p-1.5 rounded text-sm' : 'h-8 px-3 rounded gap-1.5 text-sm'
-
-    case 'md':
-      return iconOnly ? 'h-9 w-9 p-2 rounded-md text-sm' : 'h-9 px-4 rounded-md gap-2 text-sm'
-
-    case 'lg':
-      return iconOnly
-        ? 'h-10 w-10 p-2.5 rounded-lg text-base'
-        : 'h-10 px-5 rounded-lg gap-2 text-base'
-  }
+const LOADER_SIZE: Record<ButtonSize, 'xs' | 'sm'> = {
+  xs: 'xs',
+  sm: 'xs',
+  md: 'sm',
+  lg: 'sm',
 }
 
 /**
  * Base shared tailwind classes.
  */
 const BASE_BTN_CLASS =
-  'font-medium flex items-center justify-center shrink-0 cursor-pointer ' +
+  'font-medium inline-flex items-center justify-center shrink-0 cursor-pointer select-none ' +
   'disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-75 ' +
   'active:scale-[0.98] transition-all duration-150 ease-out focus:outline-none'
 
@@ -128,42 +124,70 @@ export const Button = forwardRef(
       disabled,
       iconOnly = false,
       noOutlineOnFocus = false,
+      active,
+      onClick,
       ...restProps
     } = props
 
     const Component = as || 'button'
+    const isNativeButton = Component === 'button'
 
     // Accessibility guard for icon-only buttons
     if (iconOnly && !(restProps as Record<string, unknown>)['aria-label']) {
       console.warn('[ui] <Button iconOnly> requires aria-label for accessibility.')
     }
 
-    const resolvedDisabled = disabled || loading
+    const resolvedDisabled = Boolean(disabled || loading)
 
     // Clean invalid props when not rendering a real button
     const { type: _ignoreType, disabled: _ignoreDisabled, ...cleanRest } = restProps
 
-    const buttonSpecificProps =
-      Component === 'button'
-        ? {
-            type: type ?? 'button',
-            disabled: resolvedDisabled,
-          }
-        : {}
+    const handleClick = (e: React.MouseEvent<any>) => {
+      if (resolvedDisabled) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
+      onClick?.(e)
+    }
+
+    const elementProps = isNativeButton
+      ? {
+          type: type ?? 'button',
+          disabled: resolvedDisabled,
+          onClick: handleClick,
+        }
+      : {
+          role: cleanRest.role ?? 'button',
+          tabIndex: resolvedDisabled ? -1 : (cleanRest.tabIndex ?? 0),
+          'aria-disabled': resolvedDisabled ? true : undefined,
+          onClick: handleClick,
+        }
+
+    const sizeObj = SIZE_CLASSES[size] || SIZE_CLASSES.md
 
     const classes = useMemo(
       () =>
         buildClassName(
           BASE_BTN_CLASS,
-          THEMED_BTN_CLASS[theme][variant],
-          getBtnSizeClasses(size, iconOnly),
-          !noOutlineOnFocus && 'focus:outline focus:outline-2 focus:outline-offset-2',
+          THEMED_BTN_CLASS[theme]?.[variant] || THEMED_BTN_CLASS.primary.default,
+          iconOnly ? sizeObj.iconOnly : sizeObj.normal,
+          !noOutlineOnFocus && 'focus-visible:ring-2 focus-visible:ring-offset-2',
           rounded && 'rounded-full',
           fullWidth && 'w-full',
           variant === 'default' && 'shadow-xs hover:shadow-none disabled:shadow-none',
+          active && 'ring-2 ring-offset-2 ring-current',
           className,
         ),
-      [theme, variant, size, iconOnly, rounded, fullWidth, noOutlineOnFocus, className],
+      [theme, variant, sizeObj, iconOnly, noOutlineOnFocus, rounded, fullWidth, active, className],
+    )
+
+    const loaderIcon = (
+      <Loader
+        data-testid="btn-loader-icon"
+        size={LOADER_SIZE[size] || 'xs'}
+        className={buildClassName(LOADER_TEXT_CLASS[theme]?.[variant])}
+      />
     )
 
     /**
@@ -171,43 +195,44 @@ export const Button = forwardRef(
      */
     if (loading && iconOnly) {
       return (
-        <Component ref={ref} className={classes} {...buttonSpecificProps} {...cleanRest}>
-          <Loader
-            data-testid="btn-loader-icon"
-            size="xs"
-            className={buildClassName(LOADER_TEXT_CLASS[theme][variant])}
-          />
+        <Component
+          ref={ref}
+          className={classes}
+          aria-busy="true"
+          aria-pressed={active !== undefined ? active : undefined}
+          {...elementProps}
+          {...cleanRest}
+        >
+          {loaderIcon}
         </Component>
       )
     }
 
-    const loaderIcon = (
-      <Loader
-        data-testid="btn-loader-icon"
-        size="xs"
-        className={buildClassName(LOADER_TEXT_CLASS[theme][variant])}
-      />
-    )
-
     return (
-      <Component ref={ref} className={classes} {...buttonSpecificProps} {...cleanRest}>
-        {loading && !loadingText ? (
-          <span className="flex items-center gap-2" aria-live="polite">
+      <Component
+        ref={ref}
+        className={classes}
+        aria-busy={loading ? 'true' : undefined}
+        aria-pressed={active !== undefined ? active : undefined}
+        {...elementProps}
+        {...cleanRest}
+      >
+        {loading ? (
+          <span className="inline-flex items-center gap-2" aria-live="polite">
             {loaderIcon}
-            {children}
-          </span>
-        ) : loading && loadingText ? (
-          <span className="flex items-center gap-2" aria-live="polite">
-            {loaderIcon}
-            <TextContent className={buildClassName(LOADER_TEXT_CLASS[theme][variant])}>
-              {loadingText}
-            </TextContent>
+            {loadingText ? (
+              <TextContent className={buildClassName(LOADER_TEXT_CLASS[theme]?.[variant])}>
+                {loadingText}
+              </TextContent>
+            ) : (
+              children
+            )}
           </span>
         ) : (
           <>
-            {leftIcon && <span className="shrink-0 flex items-center">{leftIcon}</span>}
+            {leftIcon && <span className="shrink-0 inline-flex items-center">{leftIcon}</span>}
             {children}
-            {rightIcon && <span className="shrink-0 flex items-center">{rightIcon}</span>}
+            {rightIcon && <span className="shrink-0 inline-flex items-center">{rightIcon}</span>}
           </>
         )}
       </Component>

@@ -98,4 +98,28 @@ describe('Button Component', () => {
     expect(warn).toHaveBeenCalled()
     warn.mockRestore()
   })
+
+  it('supports active toggle state and aria-pressed', () => {
+    render(<Button active>Toggle</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('applies aria-busy when loading', () => {
+    render(<Button loading>Loading</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('aria-busy', 'true')
+  })
+
+  it('handles non-button element disabled state and prevents click', () => {
+    const onClick = jest.fn()
+    render(
+      <Button as="a" disabled onClick={onClick}>
+        Link Button
+      </Button>,
+    )
+    const btn = screen.getByRole('button')
+    expect(btn).toHaveAttribute('aria-disabled', 'true')
+    expect(btn).toHaveAttribute('tabindex', '-1')
+    fireEvent.click(btn)
+    expect(onClick).not.toHaveBeenCalled()
+  })
 })
