@@ -79,6 +79,17 @@ export interface DataListProps<T = any> {
   pagination?: TPagination
   /** Pagination setter */
   setPagination?: (pagination: Partial<TPagination>) => void
+  /** Extra CSS classes for the pagination container wrapper */
+  paginationClass?: string
+  /** Extra CSS classes for the pagination container wrapper (alias for paginationClass) */
+  paginationContainerClass?: string
+  /** Additional props passed directly to the internal Pagination component */
+  paginationProps?: Record<string, any>
+  /** Custom renderer function for pagination */
+  renderPagination?: (
+    pagination: TPagination,
+    setPagination?: (pagination: Partial<TPagination>) => void,
+  ) => ReactNode
   /** Outer container class */
   containerClass?: string
   /** Item card wrapper class */

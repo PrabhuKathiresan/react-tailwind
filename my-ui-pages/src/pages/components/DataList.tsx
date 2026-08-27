@@ -105,6 +105,139 @@ function DataListPlayground(props: any) {
   )
 }
 
+function PaginatedDataListDemo() {
+  const [allOrders] = useState([
+    {
+      id: 'ORD-101',
+      customer: 'Alice Smith',
+      amount: '$120.00',
+      status: 'Delivered',
+      date: '2026-08-25',
+    },
+    {
+      id: 'ORD-102',
+      customer: 'Bob Jones',
+      amount: '$240.00',
+      status: 'Processing',
+      date: '2026-08-24',
+    },
+    {
+      id: 'ORD-103',
+      customer: 'Charlie Brown',
+      amount: '$85.50',
+      status: 'Shipped',
+      date: '2026-08-23',
+    },
+    {
+      id: 'ORD-104',
+      customer: 'Diana Prince',
+      amount: '$430.00',
+      status: 'Delivered',
+      date: '2026-08-22',
+    },
+    {
+      id: 'ORD-105',
+      customer: 'Ethan Hunt',
+      amount: '$195.00',
+      status: 'Processing',
+      date: '2026-08-21',
+    },
+    {
+      id: 'ORD-106',
+      customer: 'Fiona Gallagher',
+      amount: '$67.00',
+      status: 'Shipped',
+      date: '2026-08-20',
+    },
+    {
+      id: 'ORD-107',
+      customer: 'George Clark',
+      amount: '$310.00',
+      status: 'Delivered',
+      date: '2026-08-19',
+    },
+    {
+      id: 'ORD-108',
+      customer: 'Hannah Abbott',
+      amount: '$150.00',
+      status: 'Processing',
+      date: '2026-08-18',
+    },
+    {
+      id: 'ORD-109',
+      customer: 'Ian Malcolm',
+      amount: '$520.00',
+      status: 'Shipped',
+      date: '2026-08-17',
+    },
+    {
+      id: 'ORD-110',
+      customer: 'Julia Roberts',
+      amount: '$99.00',
+      status: 'Delivered',
+      date: '2026-08-16',
+    },
+  ])
+
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 3,
+    total: 10,
+  })
+
+  const [isMobilePagination, setIsMobilePagination] = useState(true)
+
+  const currentPageItems = allOrders.slice(
+    (pagination.page - 1) * pagination.limit,
+    pagination.page * pagination.limit,
+  )
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between text-xs font-semibold text-gray-500 bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-lg border border-[var(--ui-border-muted)]">
+        <span>Enable Mobile Pagination UX (isMobile)</span>
+        <input
+          type="checkbox"
+          checked={isMobilePagination}
+          onChange={(e) => setIsMobilePagination(e.target.checked)}
+          className="size-4 text-blue-600 rounded cursor-pointer"
+        />
+      </div>
+
+      <DataList
+        items={currentPageItems}
+        columns={[
+          { name: 'id', label: 'Order ID' },
+          {
+            name: 'status',
+            label: 'Status',
+            render: (item: any) => (
+              <StatusPill
+                theme={
+                  item.status === 'Delivered'
+                    ? 'success'
+                    : item.status === 'Shipped'
+                      ? 'info'
+                      : 'warning'
+                }
+                size="sm"
+              >
+                {item.status}
+              </StatusPill>
+            ),
+          },
+          { name: 'customer', label: 'Customer' },
+          { name: 'amount', label: 'Amount' },
+          { name: 'date', label: 'Date' },
+        ]}
+        pagination={pagination}
+        setPagination={(newPag) => setPagination((prev) => ({ ...prev, ...newPag }))}
+        paginationProps={{ isMobile: isMobilePagination }}
+      />
+    </div>
+  )
+}
+
 export default function DataListDocsPage() {
   const [orderItems, setOrderItems] = useState([
     {
@@ -359,9 +492,40 @@ const [selected, setSelected] = useState(['ORD-901'])
         <h4>{item.customer}</h4>
         <p>{item.id}</p>
       </div>
-      <div>{item.amount}</div>
-    </div>
   )}
+/>`,
+    },
+    {
+      title: 'DataList with Pagination (pagination & setPagination)',
+      description:
+        'Pass pagination (TPagination config) and setPagination callback to render page navigation controls at the bottom of the DataList.',
+      render: (
+        <div className="w-full max-w-md">
+          <PaginatedDataListDemo />
+        </div>
+      ),
+      code: `
+const [pagination, setPagination] = useState({
+  page: 1,
+  limit: 3,
+  total: 10,
+})
+
+const currentPageItems = orders.slice(
+  (pagination.page - 1) * pagination.limit,
+  pagination.page * pagination.limit,
+)
+
+<DataList
+  items={currentPageItems}
+  columns={[
+    { name: 'id', label: 'Order ID' },
+    { name: 'customer', label: 'Customer' },
+    { name: 'amount', label: 'Amount' },
+    { name: 'status', label: 'Status' },
+  ]}
+  pagination={pagination}
+  setPagination={(newPag) => setPagination((prev) => ({ ...prev, ...newPag }))}
 />`,
     },
   ]

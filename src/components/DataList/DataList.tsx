@@ -91,6 +91,10 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
   emptyMessage = 'No items found',
   pagination,
   setPagination,
+  paginationClass,
+  paginationContainerClass,
+  paginationProps,
+  renderPagination,
   containerClass = '',
   itemClass = '',
 }: DataListProps<T>) {
@@ -617,8 +621,22 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
 
       {/* Pagination Footer */}
       {pagination && pagination.total > 0 && (
-        <div className="pt-2 flex justify-center">
-          <Pagination {...pagination} onChange={(newPag) => setPagination?.(newPag)} />
+        <div
+          className={buildClassName(
+            'pt-2 flex justify-center w-full',
+            paginationClass,
+            paginationContainerClass,
+          )}
+        >
+          {renderPagination ? (
+            renderPagination(pagination, setPagination)
+          ) : (
+            <Pagination
+              {...pagination}
+              {...paginationProps}
+              onChange={(newPag) => setPagination?.(newPag)}
+            />
+          )}
         </div>
       )}
     </div>
