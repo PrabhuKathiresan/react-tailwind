@@ -121,7 +121,17 @@ export interface CheckboxGroupProps<T = any> {
   helperText?: ReactNode
 
   /**
-   * Disable all checkboxes in the group.
+   * Disables all checkboxes in the group
    */
   disabled?: boolean
+
+  /**
+   * Marks the field as required.
+   */
+  required?: boolean
+
+  /**
+   * Custom aria-describedby attribute.
+   */
+  'aria-describedby'?: string
 }

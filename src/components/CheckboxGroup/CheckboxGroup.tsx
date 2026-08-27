@@ -1,4 +1,4 @@
-import { useId, useMemo, useState, type ChangeEvent } from 'react'
+import { useCallback, useId, useMemo, useState, type ChangeEvent } from 'react'
 import { Checkbox } from '../Checkbox'
 import { Label } from '../Label'
 import { BodyText } from '../BodyText'
@@ -34,13 +34,15 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
     error,
     helperText,
     disabled = false,
+    required,
+    'aria-describedby': ariaDescribedBy,
   } = props
 
   const groupId = useId()
   const [internalValue, setInternalValue] = useState<T[]>(defaultValue || [])
 
   const isControlled = controlledValue !== undefined
-  const currentValue = isControlled ? controlledValue : internalValue
+  const currentValue = isControlled ? controlledValue || [] : internalValue
 
   const items = useMemo(
     () =>
@@ -55,53 +57,67 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
     [items, disabled],
   )
 
+  const currentValueKeySet = useMemo(() => new Set(currentValue), [currentValue])
+
   // Select All State calculation
   const allSelected = useMemo(() => {
     if (!enabledItems.length) return false
-    return enabledItems.every((item) => currentValue.includes(item.value))
-  }, [enabledItems, currentValue])
+    return enabledItems.every((item) => currentValueKeySet.has(item.value))
+  }, [enabledItems, currentValueKeySet])
 
   const isIndeterminate = useMemo(() => {
     if (allSelected) return false
-    return enabledItems.some((item) => currentValue.includes(item.value))
-  }, [allSelected, enabledItems, currentValue])
+    return enabledItems.some((item) => currentValueKeySet.has(item.value))
+  }, [allSelected, enabledItems, currentValueKeySet])
 
-  const handleSelectAllChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let updated: T[]
-    if (allSelected || isIndeterminate) {
-      const enabledValues = new Set(enabledItems.map((i) => i.value))
-      updated = currentValue.filter((v) => !enabledValues.has(v))
-    } else {
-      const enabledValues = enabledItems.map((i) => i.value)
-      const uniqueSet = new Set([...currentValue, ...enabledValues])
-      updated = Array.from(uniqueSet)
-    }
+  const handleSelectAllChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      let updated: T[]
+      if (allSelected || isIndeterminate) {
+        const enabledValues = new Set(enabledItems.map((i) => i.value))
+        updated = currentValue.filter((v) => !enabledValues.has(v))
+      } else {
+        const enabledValues = enabledItems.map((i) => i.value)
+        const uniqueSet = new Set([...currentValue, ...enabledValues])
+        updated = Array.from(uniqueSet)
+      }
 
-    if (!isControlled) {
-      setInternalValue(updated)
-    }
-    onChange?.(updated, e)
-  }
+      if (!isControlled) {
+        setInternalValue(updated)
+      }
+      onChange?.(updated, e)
+    },
+    [allSelected, isIndeterminate, enabledItems, currentValue, isControlled, onChange],
+  )
 
-  const handleGroupChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value
-    const checked = e.target.checked
+  const handleGroupChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const raw = e.target.value
+      const checked = e.target.checked
 
-    const matched = items.find((i) => String(i.value) === raw)
-    const itemValue = matched ? matched.value : (raw as unknown as T)
+      const matched = items.find((i) => String(i.value) === raw)
+      const itemValue = matched ? matched.value : (raw as unknown as T)
 
-    let updated: T[]
-    if (checked) {
-      updated = [...currentValue, itemValue]
-    } else {
-      updated = currentValue.filter((v) => v !== itemValue)
-    }
+      let updated: T[]
+      if (checked) {
+        updated = [...currentValue, itemValue]
+      } else {
+        updated = currentValue.filter((v) => v !== itemValue)
+      }
 
-    if (!isControlled) {
-      setInternalValue(updated)
-    }
-    onChange?.(updated, e)
-  }
+      if (!isControlled) {
+        setInternalValue(updated)
+      }
+      onChange?.(updated, e)
+    },
+    [items, currentValue, isControlled, onChange],
+  )
+
+  const hasError = Boolean(error)
+  const labelId = label ? `${groupId}-label` : undefined
+  const errorId = groupId && hasError ? `${groupId}-error` : undefined
+  const helperId = groupId && helperText && !hasError ? `${groupId}-helper` : undefined
+  const describedBy = [ariaDescribedBy, errorId, helperId].filter(Boolean).join(' ') || undefined
 
   const layoutClass = columns
     ? columnClasses[columns]
@@ -110,10 +126,17 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
       : 'flex flex-col gap-3'
 
   return (
-    <div className={buildClassName('mb-3 space-y-3', containerClass)}>
+    <div
+      role="group"
+      aria-labelledby={labelId}
+      aria-describedby={describedBy}
+      className={buildClassName('mb-3 space-y-3', containerClass)}
+    >
       {label && (
         <div className={buildClassName('flex items-center justify-between', labelWrapperClass)}>
-          <Label className={labelClass}>{label}</Label>
+          <Label id={labelId} className={labelClass} aria-required={required}>
+            {label}
+          </Label>
           {labelHint && (
             <BodyText muted small>
               {labelHint}
@@ -155,7 +178,7 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
               size={size}
               variant={variant}
               disabled={disabled || item.disabled}
-              checked={currentValue.includes(item.value)}
+              checked={currentValueKeySet.has(item.value)}
               onChange={handleGroupChange}
             />
           )
@@ -166,11 +189,11 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
       {(error || helperText) && (
         <div className="mt-1.5 ml-0.5">
           {error ? (
-            <TextContent error small>
+            <TextContent error small id={errorId}>
               {error}
             </TextContent>
           ) : (
-            <TextContent muted small>
+            <TextContent muted small id={helperId}>
               {helperText}
             </TextContent>
           )}
