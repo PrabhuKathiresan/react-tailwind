@@ -35,6 +35,9 @@ import type { BaseOption, SelectBoxProps, SelectBoxSize } from './SelectBox.type
 import { buildInputClass } from '../Input'
 import { BodyText } from '../BodyText'
 
+const NOOP = () => {}
+const EMPTY_ARRAY: any[] = []
+
 const sizeClasses: Record<
   SelectBoxSize,
   { input: string; group: string; icon: string; badgeSize: 'sm' | 'md' }
@@ -69,7 +72,7 @@ export const SelectBox = forwardRef(
       valueKey = 'value',
       name,
       id = name,
-      options = [],
+      options = EMPTY_ARRAY,
       groups,
       selected,
       size = 'md',
@@ -79,7 +82,7 @@ export const SelectBox = forwardRef(
       labelHint = null,
       disabled = false,
       containerClass = '',
-      onChange = () => {},
+      onChange = NOOP,
       placeholder,
       dropdownContainerClass = 'z-20',
       multiple = false,
@@ -96,7 +99,7 @@ export const SelectBox = forwardRef(
       required = false,
       allowAdd = false,
       addNewText = 'Create',
-      onAdd = () => {},
+      onAdd = NOOP,
       allowClear = false,
       allowFreeText = false,
       modalDropdown = false,
@@ -128,11 +131,15 @@ export const SelectBox = forwardRef(
       [disabled, hasError, size],
     )
 
-    const chevronIconClass = buildClassName(
-      currentSize.icon,
-      'stroke-gray-500 group-data-[hover]:stroke-gray-800',
-      'dark:stroke-gray-300 dark:group-data-[hover]:stroke-gray-100',
-      disabled && 'dark:stroke-gray-600 stroke-gray-400',
+    const chevronIconClass = useMemo(
+      () =>
+        buildClassName(
+          currentSize.icon,
+          'stroke-gray-500 group-data-[hover]:stroke-gray-800',
+          'dark:stroke-gray-300 dark:group-data-[hover]:stroke-gray-100',
+          disabled && 'dark:stroke-gray-600 stroke-gray-400',
+        ),
+      [currentSize.icon, disabled],
     )
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -232,13 +239,16 @@ export const SelectBox = forwardRef(
       ],
     )
 
-    const removeSelection = (idx: number) => {
-      if (!isArray(selected)) return
-      const next = [...selected]
-      next.splice(idx, 1)
-      onChange(next)
-      inputRef.current?.focus()
-    }
+    const removeSelection = useCallback(
+      (idx: number) => {
+        if (!isArray(selected)) return
+        const next = [...selected]
+        next.splice(idx, 1)
+        onChange(next)
+        inputRef.current?.focus()
+      },
+      [selected, onChange],
+    )
 
     const handleOnChangeInternal = useCallback(
       (value: T | T[] | null) => {
@@ -297,9 +307,7 @@ export const SelectBox = forwardRef(
     )
 
     const onSearchRef = useRef(props.onSearch)
-    useEffect(() => {
-      onSearchRef.current = props.onSearch
-    }, [props.onSearch])
+    onSearchRef.current = props.onSearch
 
     const handleSearch = useCallback(async (searchString: string) => {
       try {
@@ -327,18 +335,26 @@ export const SelectBox = forwardRef(
       }
     }, [multiple, selected])
 
+    const selectedValueSet = useMemo(() => {
+      if (!normalizedSelected) return new Set<any>()
+      if (Array.isArray(normalizedSelected)) {
+        return new Set(normalizedSelected.map((s) => getValue(s)))
+      }
+      return new Set([getValue(normalizedSelected as T)])
+    }, [normalizedSelected, getValue])
+
     const isAllSelected = useMemo(() => {
       if (!multiple || !Array.isArray(normalizedSelected) || !allOptions.length) return false
       return allOptions.length === normalizedSelected.length
     }, [multiple, normalizedSelected, allOptions])
 
-    const handleToggleSelectAll = () => {
+    const handleToggleSelectAll = useCallback(() => {
       if (isAllSelected) {
         onChange([] as unknown as T[])
       } else {
         onChange(allOptions as unknown as T[])
       }
-    }
+    }, [isAllSelected, onChange, allOptions])
 
     const hasLeftGroup = leftGroup != null && leftGroup !== undefined
 
@@ -356,6 +372,29 @@ export const SelectBox = forwardRef(
 
     const hasAnyOptionsToDisplay =
       hasFlatOptions || hasGroupOptions || hasFreeTextOption || hasAddOption
+
+    const renderOptionItem = (option: T) => {
+      const optVal = getValue(option)
+      const isOptSelected = selectedValueSet.has(optVal)
+
+      return (
+        <ComboboxOption
+          key={optVal}
+          disabled={(option as BaseOption).disabled}
+          value={option}
+          className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-100 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
+        >
+          {renderOption ? (
+            renderOption(option, Boolean(isOptSelected))
+          ) : (
+            <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
+              <span className="text-sm/6">{getDisplayValue(option)}</span>
+              <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
+            </div>
+          )}
+        </ComboboxOption>
+      )
+    }
 
     return (
       <div
@@ -596,59 +635,11 @@ export const SelectBox = forwardRef(
                         <div className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 py-1 select-none">
                           {grp.group}
                         </div>
-                        {grp.options.map((option) => {
-                          const optVal = getValue(option)
-                          const isOptSelected = multiple
-                            ? isArray(normalizedSelected) &&
-                              normalizedSelected.some((s) => getValue(s) === optVal)
-                            : normalizedSelected && getValue(normalizedSelected as T) === optVal
-
-                          return (
-                            <ComboboxOption
-                              key={optVal}
-                              disabled={(option as BaseOption).disabled}
-                              value={option}
-                              className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-100 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
-                            >
-                              {renderOption ? (
-                                renderOption(option, Boolean(isOptSelected))
-                              ) : (
-                                <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
-                                  <span className="text-sm/6">{getDisplayValue(option)}</span>
-                                  <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
-                                </div>
-                              )}
-                            </ComboboxOption>
-                          )
-                        })}
+                        {grp.options.map(renderOptionItem)}
                       </div>
                     ))
                   : /* Render Standard Flat Options */
-                    filteredOptions.map((option) => {
-                      const optVal = getValue(option)
-                      const isOptSelected = multiple
-                        ? isArray(normalizedSelected) &&
-                          normalizedSelected.some((s) => getValue(s) === optVal)
-                        : normalizedSelected && getValue(normalizedSelected as T) === optVal
-
-                      return (
-                        <ComboboxOption
-                          key={optVal}
-                          disabled={(option as BaseOption).disabled}
-                          value={option}
-                          className="group rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-100 dark:data-[focus]:bg-white/10 data-disabled:opacity-50 cursor-pointer data-disabled:pointer-events-none"
-                        >
-                          {renderOption ? (
-                            renderOption(option, Boolean(isOptSelected))
-                          ) : (
-                            <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
-                              <span className="text-sm/6">{getDisplayValue(option)}</span>
-                              <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
-                            </div>
-                          )}
-                        </ComboboxOption>
-                      )
-                    })}
+                    filteredOptions.map(renderOptionItem)}
 
                 {!hasAnyOptionsToDisplay && Boolean(noOptionsText) && (
                   <div
