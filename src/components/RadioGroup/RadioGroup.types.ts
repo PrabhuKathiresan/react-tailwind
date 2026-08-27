@@ -110,6 +110,16 @@ export interface RadioGroupProps {
    */
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 
+  /**
+   * Marks the field as required.
+   */
+  required?: boolean
+
+  /**
+   * Custom aria-describedby attribute.
+   */
+  'aria-describedby'?: string
+
   error?: string | null
 
   showErrorMessage?: boolean

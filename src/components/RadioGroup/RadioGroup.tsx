@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useId, useMemo } from 'react'
 import { Radio } from '../Radio'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
-import type { RadioGroupProps, RadionGroupItem } from './RadioGroup.types'
+import type { RadioGroupProps } from './RadioGroup.types'
 
 const COLUMN_GRID_MAP: Record<number, string> = {
   1: 'grid-cols-1',
@@ -31,7 +31,11 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     error,
     showErrorMessage = true,
     onChange,
+    required,
+    'aria-describedby': ariaDescribedBy,
   } = props
+
+  const groupId = useId()
 
   const items = useMemo(
     () =>
@@ -50,14 +54,25 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
   )
 
   const isCards = variant === 'cards'
+  const hasError = Boolean(error)
+  const labelId = label ? `${groupId}-label` : undefined
+  const errorId = groupId && hasError && showErrorMessage ? `${groupId}-error` : undefined
+  const describedBy = [ariaDescribedBy, errorId].filter(Boolean).join(' ') || undefined
 
   return (
-    <div className={buildClassName(containerClass)}>
+    <div
+      role="radiogroup"
+      aria-labelledby={labelId}
+      aria-describedby={describedBy}
+      className={buildClassName(containerClass)}
+    >
       {label && (
         <div
           className={buildClassName('flex items-center justify-between mb-3', labelWrapperClass)}
         >
-          <Label className={labelClass}>{label}</Label>
+          <Label id={labelId} className={labelClass} aria-required={required}>
+            {label}
+          </Label>
           {labelHint}
         </div>
       )}
@@ -141,7 +156,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
 
       {showErrorMessage && error && (
         <div className="mt-1.5">
-          <TextContent error small>
+          <TextContent error small id={errorId}>
             {error}
           </TextContent>
         </div>
