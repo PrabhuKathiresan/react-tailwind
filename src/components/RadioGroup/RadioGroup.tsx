@@ -36,6 +36,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
   } = props
 
   const groupId = useId()
+  const groupName = name || groupId
 
   const items = useMemo(
     () =>
@@ -89,14 +90,16 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         {items.map((item) => {
           const isSelected = value === item.value
           const isItemDisabled = disabled || Boolean(item.disabled)
+          const radioItemId = `${groupName}-${item.value}`
 
           if (isCards) {
             return (
               <label
                 key={item.value}
-                htmlFor={`${name}-${item.value}`}
+                htmlFor={radioItemId}
                 className={buildClassName(
                   'relative flex items-start gap-3 p-4 rounded-xl border transition-all cursor-pointer select-none min-w-[200px] flex-1',
+                  'focus-within:ring-2 focus-within:ring-[var(--ui-primary-ring)] focus-within:border-[var(--ui-primary)]',
                   isSelected
                     ? 'border-[var(--ui-primary)] bg-blue-50/40 dark:bg-blue-950/30 ring-2 ring-[var(--ui-primary-ring)]/30'
                     : 'border-[var(--ui-border)] bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
@@ -105,8 +108,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                 )}
               >
                 <Radio
-                  name={name}
-                  id={`${name}-${item.value}`}
+                  name={groupName}
+                  id={radioItemId}
                   value={item.value}
                   aria-label={item.label}
                   size={size}
@@ -139,8 +142,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
           return (
             <Radio
               key={item.value}
-              name={name}
-              id={`${name}-${item.value}`}
+              name={groupName}
+              id={radioItemId}
               label={item.label}
               description={item.description}
               value={item.value}
