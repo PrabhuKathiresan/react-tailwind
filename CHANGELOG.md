@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.8.1 (2026-10-04)</small>
+
+* fix(DataTable): separate paginationClass and paginationContainerClass targets ([bc309b0bd42bf6cb45d84a6d9f7d07d8083e6c9e](https://github.com/PrabhuKathiresan/react-tailwind/commit/bc309b0bd42bf6cb45d84a6d9f7d07d8083e6c9e))
+* fix(RadioGroup): fall back to generated id when name is missing and add card focus ring ([1675bc07782d2603ed90d33a733dcc88bdfb917c](https://github.com/PrabhuKathiresan/react-tailwind/commit/1675bc07782d2603ed90d33a733dcc88bdfb917c))
+
 ## 1.8.0 (2026-08-27)
 
 * feat(Button): add active toggle state and improve accessibility attributes ([9891c3062ccaac7a6fdfd6613259f7ec90e55e8f](https://github.com/PrabhuKathiresan/react-tailwind/commit/9891c3062ccaac7a6fdfd6613259f7ec90e55e8f))
