@@ -97,9 +97,11 @@ function PaginationExample() {
   ]
 
   const items = useMemo(() => {
-    return Array.from({ length: pagination.limit }).map((_, i) => ({
-      id: (pagination.page - 1) * pagination.limit + i + 1,
-      title: `Item ${(pagination.page - 1) * pagination.limit + i + 1}`,
+    const limit = pagination.limit ?? 10
+    const page = pagination.page ?? 1
+    return Array.from({ length: limit }).map((_, i) => ({
+      id: (page - 1) * limit + i + 1,
+      title: `Item ${(page - 1) * limit + i + 1}`,
     }))
   }, [pagination.limit, pagination.page, pagination.total])
 
@@ -578,7 +580,7 @@ function RowHoverActionsExample() {
         selectable
         items={emails}
         columns={columns}
-        rowHoverActions={(row) => [
+        rowHoverActions={() => [
           {
             id: 'archive',
             icon: <Archive className="size-4 text-gray-600 dark:text-gray-300" />,
@@ -704,7 +706,7 @@ function HorizontallyScrollableRowHoverActionsExample() {
         selectable
         items={items}
         columns={columns}
-        rowHoverActions={(order) => [
+        rowHoverActions={() => [
           {
             id: 'archive',
             icon: <Archive className="size-4 text-gray-600 dark:text-gray-300" />,
