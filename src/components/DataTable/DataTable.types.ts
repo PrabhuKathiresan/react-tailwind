@@ -225,10 +225,10 @@ export interface DataTableProps<T = any> {
   /** Extra CSS classes applied to the row hover action container element */
   rowHoverActionClass?: string
 
-  /** Extra CSS classes applied to the pagination container wrapper */
+  /** Extra CSS classes applied directly to the internal Pagination component */
   paginationClass?: string
 
-  /** Extra CSS classes applied to the pagination container wrapper (alias for paginationClass) */
+  /** Extra CSS classes applied to the outer pagination container wrapper div */
   paginationContainerClass?: string
 
   /** Additional props passed directly to internal Pagination component */

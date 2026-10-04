@@ -438,12 +438,12 @@ describe('DataTable', () => {
     expect(th.className).not.toMatch(/sticky top-0/)
   })
 
-  it('applies sticky pagination classes by default', () => {
+  it('applies sticky pagination classes by default to container', () => {
     render(
       <DataTable items={rows} columns={columns} pagination={{ page: 1, limit: 5, total: 20 }} />,
     )
     const paginationEl = screen.getByTestId('pagination')
-    expect(paginationEl.className).toMatch(/sticky bottom-0/)
+    expect(paginationEl.parentElement?.className).toMatch(/sticky bottom-0/)
   })
 
   it('can disable sticky pagination via stickyPagination=false', () => {
@@ -456,7 +456,22 @@ describe('DataTable', () => {
       />,
     )
     const paginationEl = screen.getByTestId('pagination')
-    expect(paginationEl.className).not.toMatch(/sticky bottom-0/)
+    expect(paginationEl.parentElement?.className).not.toMatch(/sticky bottom-0/)
+  })
+
+  it('applies paginationContainerClass to outer wrapper div and paginationClass to Pagination component', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={columns}
+        pagination={{ page: 1, limit: 5, total: 20 }}
+        paginationContainerClass="my-container-class"
+        paginationClass="my-pagination-class"
+      />,
+    )
+    const paginationEl = screen.getByTestId('pagination')
+    expect(paginationEl.parentElement).toHaveClass('my-container-class')
+    expect(paginationEl).toHaveClass('my-pagination-class')
   })
 
   it('renders rowHoverActions and triggers click handlers without bubbling to onRowClick', () => {

@@ -414,8 +414,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
       {pagination && (
         <div
           className={buildClassName(
-            stickyPagination && 'sticky bottom-0 z-20 bg-white dark:bg-gray-800',
-            paginationClass,
+            stickyPagination && 'sticky bottom-0 z-20',
             paginationContainerClass,
           )}
         >
@@ -426,8 +425,8 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               {...pagination}
               {...paginationProps}
               className={buildClassName(
-                'rounded-t-none rounded-b-lg border border-[var(--ui-border)]',
-                stickyPagination && 'sticky bottom-0 z-20 bg-white dark:bg-gray-800',
+                'rounded-t-none rounded-b-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800',
+                paginationClass,
                 paginationProps?.className,
               )}
               onChange={setPagination}
