@@ -983,6 +983,13 @@
         "defaultValue": "false"
       },
       {
+        "name": "active",
+        "type": "boolean",
+        "required": false,
+        "description": "Indicates active toggle state (applies aria-pressed).",
+        "defaultValue": "false"
+      },
+      {
         "name": "type",
         "type": "\"button\" | \"submit\" | \"reset\"",
         "required": false,
@@ -1010,6 +1017,7 @@
       "rounded",
       "icononly",
       "nooutlineonfocus",
+      "active",
       "type",
       "as",
       "buttontheme",
@@ -1056,6 +1064,9 @@
       "prevents",
       "outline",
       "focus",
+      "toggle",
+      "state",
+      "pressed",
       "html",
       "valid",
       "when",
@@ -1705,6 +1716,13 @@
         "required": false,
         "description": "Group-level helper text.",
         "defaultValue": null
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Marks the field as required.",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -1728,6 +1746,7 @@
       "selectalllabel",
       "error",
       "helpertext",
+      "required",
       "reactnode",
       "checkboxgroupitem",
       "checkboxsize",
@@ -1771,7 +1790,9 @@
       "state",
       "level",
       "message",
-      "helper"
+      "helper",
+      "marks",
+      "field"
     ],
     "url": "/checkbox-group"
   },
@@ -1934,6 +1955,34 @@
         "defaultValue": null
       },
       {
+        "name": "paginationClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes for the pagination container wrapper",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationContainerClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes for the pagination container wrapper (alias for paginationClass)",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationProps",
+        "type": "Record<string, any>",
+        "required": false,
+        "description": "Additional props passed directly to the internal Pagination component",
+        "defaultValue": null
+      },
+      {
+        "name": "renderPagination",
+        "type": "(pagination: TPagination, setPagination?: (pagination: Partial<TPagination>) => void) => ReactNode",
+        "required": false,
+        "description": "Custom renderer function for pagination",
+        "defaultValue": null
+      },
+      {
         "name": "containerClass",
         "type": "string",
         "required": false,
@@ -1977,6 +2026,10 @@
       "emptymessage",
       "pagination",
       "setpagination",
+      "paginationclass",
+      "paginationcontainerclass",
+      "paginationprops",
+      "renderpagination",
       "containerclass",
       "itemclass",
       "datalistcolumn",
@@ -2037,9 +2090,15 @@
       "message",
       "config",
       "setter",
-      "outer",
+      "extra",
       "container",
-      "wrapper"
+      "wrapper",
+      "alias",
+      "additional",
+      "passed",
+      "directly",
+      "internal",
+      "outer"
     ],
     "url": "/data-list"
   },
@@ -2230,10 +2289,66 @@
         "defaultValue": null
       },
       {
+        "name": "rowHoverActions",
+        "type": "(item: T, index: number) => DataTableRowAction<T>[]",
+        "required": false,
+        "description": "Action definitions rendered on row hover",
+        "defaultValue": null
+      },
+      {
+        "name": "renderRowHoverActions",
+        "type": "(item: T, index: number) => ReactNode",
+        "required": false,
+        "description": "Custom renderer function for row hover actions",
+        "defaultValue": null
+      },
+      {
+        "name": "rowHoverActionHeader",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional header title label for the row hover actions column (when rowHoverActionMode=\"inline\")",
+        "defaultValue": null
+      },
+      {
+        "name": "rowHoverActionMode",
+        "type": "\"overlay\" | \"inline\"",
+        "required": false,
+        "description": "Rendering mode for row hover actions.\n- **overlay** (default): Floating overlay positioned over the right side of the row on hover without adding extra table columns.\n- **inline**: Renders as a dedicated rightmost table column.",
+        "defaultValue": "overlay"
+      },
+      {
+        "name": "rowHoverActionClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes applied to the row hover action container element",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes applied directly to the internal Pagination component",
+        "defaultValue": null
+      },
+      {
         "name": "paginationContainerClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Extra CSS classes applied to the outer pagination container wrapper div",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationProps",
+        "type": "Record<string, any>",
+        "required": false,
+        "description": "Additional props passed directly to internal Pagination component",
+        "defaultValue": null
+      },
+      {
+        "name": "renderPagination",
+        "type": "(pagination: TPagination, setPagination?: (pagination: Partial<TPagination>) => void) => ReactNode",
+        "required": false,
+        "description": "Custom renderer function for pagination",
         "defaultValue": null
       }
     ],
@@ -2273,7 +2388,15 @@
       "defaultselectedrowkeys",
       "onselectionchange",
       "isrowselectable",
+      "rowhoveractions",
+      "renderrowhoveractions",
+      "rowhoveractionheader",
+      "rowhoveractionmode",
+      "rowhoveractionclass",
+      "paginationclass",
       "paginationcontainerclass",
+      "paginationprops",
+      "renderpagination",
       "datatablecolumn",
       "record",
       "tpagination",
@@ -2286,6 +2409,9 @@
       "index",
       "datatabledensity",
       "selecteditems",
+      "datatablerowaction",
+      "overlay",
+      "inline",
       "array",
       "definitions",
       "state",
@@ -2382,7 +2508,26 @@
       "they",
       "excluded",
       "from",
-      "select"
+      "select",
+      "action",
+      "hover",
+      "renderer",
+      "actions",
+      "title",
+      "label",
+      "mode",
+      "floating",
+      "positioned",
+      "over",
+      "right",
+      "side",
+      "without",
+      "adding",
+      "dedicated",
+      "rightmost",
+      "internal",
+      "additional",
+      "passed"
     ],
     "url": "/data-table"
   },
@@ -4720,30 +4865,65 @@
       {
         "name": "page",
         "type": "number",
-        "required": true,
+        "required": false,
         "description": "Defines current page number",
+        "defaultValue": null
+      },
+      {
+        "name": "current",
+        "type": "number",
+        "required": false,
+        "description": "Alias for page",
         "defaultValue": null
       },
       {
         "name": "limit",
         "type": "number",
-        "required": true,
-        "description": "Defines page limit",
+        "required": false,
+        "description": "Defines page limit / page size",
+        "defaultValue": null
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "required": false,
+        "description": "Alias for limit",
         "defaultValue": null
       },
       {
         "name": "total",
         "type": "number",
         "required": true,
-        "description": "Defines totol items in the list to be paginated.",
+        "description": "Defines total items in the list to be paginated\nTotal number of items",
         "defaultValue": null
       },
       {
         "name": "ellipsis",
         "type": "boolean",
         "required": false,
-        "description": "Whether to show ellipsis for large page numbers",
-        "defaultValue": "true"
+        "description": "Whether to show ellipsis for large page numbers (@default true)",
+        "defaultValue": null
+      },
+      {
+        "name": "isMobile",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to force mobile UX layout (`Previous` `Page X of Y` `Next`) regardless of screen size",
+        "defaultValue": null
+      },
+      {
+        "name": "showSummary",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to show summary text (\"Showing X to Y of Z results\") (@default true)",
+        "defaultValue": null
+      },
+      {
+        "name": "showPageNumbers",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to show page number navigation buttons (@default true)",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -4753,19 +4933,36 @@
       "paging",
       "pages",
       "page",
+      "current",
       "limit",
+      "pagesize",
       "total",
       "ellipsis",
+      "ismobile",
+      "showsummary",
+      "showpagenumbers",
       "defines",
-      "current",
-      "totol",
+      "alias",
+      "size",
       "items",
       "list",
       "paginated",
       "whether",
       "show",
       "large",
-      "numbers"
+      "numbers",
+      "force",
+      "mobile",
+      "layout",
+      "previous",
+      "next",
+      "regardless",
+      "screen",
+      "summary",
+      "text",
+      "showing",
+      "results",
+      "buttons"
     ],
     "url": "/pagination"
   },
@@ -5592,6 +5789,13 @@
         "defaultValue": null
       },
       {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Marks the field as required.",
+        "defaultValue": null
+      },
+      {
         "name": "error",
         "type": "string",
         "required": false,
@@ -5623,6 +5827,7 @@
       "containerclass",
       "columns",
       "row",
+      "required",
       "error",
       "showerrormessage",
       "radiogroupvariant",
@@ -5665,7 +5870,9 @@
       "whether",
       "display",
       "buttons",
-      "horizontally"
+      "horizontally",
+      "marks",
+      "field"
     ],
     "url": "/radio-group"
   },
@@ -8062,10 +8269,66 @@
         "defaultValue": null
       },
       {
+        "name": "rowHoverActions",
+        "type": "(item: T, index: number) => DataTableRowAction<T>[]",
+        "required": false,
+        "description": "Action definitions rendered on row hover",
+        "defaultValue": null
+      },
+      {
+        "name": "renderRowHoverActions",
+        "type": "(item: T, index: number) => ReactNode",
+        "required": false,
+        "description": "Custom renderer function for row hover actions",
+        "defaultValue": null
+      },
+      {
+        "name": "rowHoverActionHeader",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional header title label for the row hover actions column (when rowHoverActionMode=\"inline\")",
+        "defaultValue": null
+      },
+      {
+        "name": "rowHoverActionMode",
+        "type": "\"overlay\" | \"inline\"",
+        "required": false,
+        "description": "Rendering mode for row hover actions.\n- **overlay** (default): Floating overlay positioned over the right side of the row on hover without adding extra table columns.\n- **inline**: Renders as a dedicated rightmost table column.",
+        "defaultValue": "\"overlay\""
+      },
+      {
+        "name": "rowHoverActionClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes applied to the row hover action container element",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationClass",
+        "type": "string",
+        "required": false,
+        "description": "Extra CSS classes applied directly to the internal Pagination component",
+        "defaultValue": null
+      },
+      {
         "name": "paginationContainerClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Extra CSS classes applied to the outer pagination container wrapper div",
+        "defaultValue": null
+      },
+      {
+        "name": "paginationProps",
+        "type": "Record<string, any>",
+        "required": false,
+        "description": "Additional props passed directly to internal Pagination component",
+        "defaultValue": null
+      },
+      {
+        "name": "renderPagination",
+        "type": "(pagination: TPagination, setPagination?: (pagination: Partial<TPagination>) => void) => ReactNode",
+        "required": false,
+        "description": "Custom renderer function for pagination",
         "defaultValue": null
       }
     ],
@@ -8105,7 +8368,15 @@
       "defaultselectedrowkeys",
       "onselectionchange",
       "isrowselectable",
+      "rowhoveractions",
+      "renderrowhoveractions",
+      "rowhoveractionheader",
+      "rowhoveractionmode",
+      "rowhoveractionclass",
+      "paginationclass",
       "paginationcontainerclass",
+      "paginationprops",
+      "renderpagination",
       "datatablecolumn",
       "record",
       "reactnode",
@@ -8114,6 +8385,13 @@
       "index",
       "datatabledensity",
       "selecteditems",
+      "datatablerowaction",
+      "overlay",
+      "inline",
+      "pagination",
+      "tpagination",
+      "setpagination",
+      "partial",
       "height",
       "each",
       "pixels",
@@ -8164,7 +8442,6 @@
       "internally",
       "pins",
       "header",
-      "pagination",
       "footer",
       "bottom",
       "determines",
@@ -8224,7 +8501,26 @@
       "they",
       "excluded",
       "from",
-      "select"
+      "select",
+      "action",
+      "hover",
+      "renderer",
+      "actions",
+      "title",
+      "label",
+      "mode",
+      "floating",
+      "positioned",
+      "over",
+      "right",
+      "side",
+      "without",
+      "adding",
+      "dedicated",
+      "rightmost",
+      "internal",
+      "additional",
+      "passed"
     ],
     "url": "/virtualized-data-table"
   },
