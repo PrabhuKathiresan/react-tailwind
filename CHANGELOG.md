@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## 1.9.0 (2026-10-15)
+
+* Merge pull request #14 from PrabhuKathiresan/feat/button-selectbox-improvements ([fa0632bc1242224c00cf25213ea0accecb9acca9](https://github.com/PrabhuKathiresan/react-tailwind/commit/fa0632bc1242224c00cf25213ea0accecb9acca9)), closes [#14](https://github.com/PrabhuKathiresan/react-tailwind/issues/14)
+* chore(docs): add SelectBox min-width and uncontrolled examples ([9127feb3d9f4bf06358f5b82c15bfb80dcc0a7d1](https://github.com/PrabhuKathiresan/react-tailwind/commit/9127feb3d9f4bf06358f5b82c15bfb80dcc0a7d1))
+* chore(docs): document Button usage and actions in banners ([254e603dafa3cf467a744077926f8fa7f2d78bad](https://github.com/PrabhuKathiresan/react-tailwind/commit/254e603dafa3cf467a744077926f8fa7f2d78bad))
+* chore(docs): fix DataTable example type errors and unused params ([d697baad0155a14ccec4456c2ead4022a27b1935](https://github.com/PrabhuKathiresan/react-tailwind/commit/d697baad0155a14ccec4456c2ead4022a27b1935))
+* feat(SelectBox): add dropdownMinWidth and uncontrolled defaultSelected mode ([64cdbab8e6225ef4dfad977d91ed7330537ecf8b](https://github.com/PrabhuKathiresan/react-tailwind/commit/64cdbab8e6225ef4dfad977d91ed7330537ecf8b))
+* fix(Banner): make dismiss button follow the banner colour ([b986d54915240729359f0c497141790b3cf12174](https://github.com/PrabhuKathiresan/react-tailwind/commit/b986d54915240729359f0c497141790b3cf12174))
+* fix(Button): fix focus, disabled and keyboard handling for polymorphic buttons ([433b940e95c4044cfaeef9aa8dc15e6d770640d4](https://github.com/PrabhuKathiresan/react-tailwind/commit/433b940e95c4044cfaeef9aa8dc15e6d770640d4))
+* fix(Button): use currentColor hover tint for plain variant on coloured surfaces ([185fe3af39ea52c9b0c4fe049393718bc8318a39](https://github.com/PrabhuKathiresan/react-tailwind/commit/185fe3af39ea52c9b0c4fe049393718bc8318a39))
+
 ## <small>1.8.1 (2026-10-04)</small>
 
 * fix(DataTable): separate paginationClass and paginationContainerClass targets ([bc309b0bd42bf6cb45d84a6d9f7d07d8083e6c9e](https://github.com/PrabhuKathiresan/react-tailwind/commit/bc309b0bd42bf6cb45d84a6d9f7d07d8083e6c9e))
