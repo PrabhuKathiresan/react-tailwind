@@ -75,8 +75,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>((props, ref) => {
           aria-label="Dismiss banner"
           size="xs"
           variant="plain"
-          theme="secondary"
-          className="hover:bg-black/10 dark:hover:bg-white/10 shrink-0"
+          className="text-current focus-visible:outline-current shrink-0"
           onClick={() => onRemove?.()}
           data-testid="banner-remove-btn"
         >
