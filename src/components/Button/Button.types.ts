@@ -99,26 +99,30 @@ export interface ButtonBaseProps {
   loadingText?: string
 
   /**
-   * Applies 50% border radius, producing a pill-shaped button.
+   * Applies a fully rounded border radius, producing a pill-shaped button
+   * (or a circle when combined with `iconOnly`).
    * @default false
    */
   rounded?: boolean
 
   /**
-   * Indicates that the button only contains an icon.
+   * Indicates that the button only contains an icon. Requires `aria-label`
+   * or `aria-labelledby` so the button has an accessible name.
    * @default false
    */
   iconOnly?: boolean
 
   /**
-   * Prevents outline styles on keyboard focus.
+   * Removes the focus ring shown on keyboard focus. Only use this when the
+   * button gets another visible focus indicator, e.g. via `className`.
    * @default false
    */
   noOutlineOnFocus?: boolean
 
   /**
-   * Indicates active toggle state (applies aria-pressed).
-   * @default false
+   * Turns the button into a toggle: when set to `true` or `false`,
+   * `aria-pressed` reflects it and `true` shows a ring. Leave unset for a
+   * regular (non-toggle) button.
    */
   active?: boolean
 
@@ -133,7 +137,9 @@ export interface ButtonBaseProps {
   type?: 'button' | 'submit' | 'reset'
 
   /**
-   * Standard disabled attribute. Only applies when as="button".
+   * Disables the button. Rendered as the native `disabled` attribute on
+   * `<button>`, or as `aria-disabled` (with `tabIndex={-1}` and clicks
+   * blocked) for any other element passed via `as`.
    */
   disabled?: boolean
 }

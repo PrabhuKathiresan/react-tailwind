@@ -194,14 +194,13 @@ export const Toast: React.FC<ToastProps & { isTop?: boolean }> = ({
           onClick={onClose}
           aria-label="Close toast"
           className={buildClassName(
-            'shrink-0 mt-0.5 opacity-60 hover:opacity-100 transition',
-            variant === 'filled' && 'text-white hover:text-white',
+            'shrink-0 mt-0.5 opacity-60 hover:opacity-100 focus-visible:opacity-100 transition',
+            variant === 'filled' && 'text-white hover:text-white focus-visible:outline-current',
           )}
           iconOnly
           size="xs"
           variant="plain"
           theme={variant === 'filled' ? 'primary' : 'secondary'}
-          noOutlineOnFocus
         >
           <XIcon className="size-4" />
         </Button>

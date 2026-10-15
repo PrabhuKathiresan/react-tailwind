@@ -554,7 +554,6 @@ export const SelectBox = forwardRef(
                   onClick={() => handleOnChangeInternal(multiple ? ([] as T[]) : null)}
                   disabled={disabled}
                   data-testid="combobox-clear-button"
-                  noOutlineOnFocus
                 >
                   <XIcon className="size-4 stroke-gray-500 dark:stroke-gray-300" />
                 </Button>

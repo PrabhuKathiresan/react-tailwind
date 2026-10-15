@@ -137,4 +137,153 @@ describe('Button Component', () => {
     fireEvent.click(btn)
     expect(onClick).not.toHaveBeenCalled()
   })
+
+  it('shows a focus ring by default and removes it entirely with noOutlineOnFocus', () => {
+    const { rerender } = render(<Button>Focus</Button>)
+    expect(screen.getByRole('button')).toHaveClass(
+      'focus-visible:outline-2',
+      'focus-visible:outline-offset-2',
+    )
+
+    const themes = ['primary', 'secondary', 'danger', 'success', 'warning'] as const
+    const variants = ['default', 'outlined', 'plain'] as const
+    themes.forEach((theme) =>
+      variants.forEach((variant) => {
+        rerender(
+          <Button theme={theme} variant={variant} noOutlineOnFocus>
+            Focus
+          </Button>,
+        )
+        expect(screen.getByRole('button').className).not.toMatch(
+          /focus-visible:outline-(2|offset|solid)/,
+        )
+      }),
+    )
+  })
+
+  it('applies the same disabled styling to native and non-native elements', () => {
+    render(
+      <>
+        <Button disabled>Native</Button>
+        <Button as="div" disabled>
+          Div
+        </Button>
+      </>,
+    )
+    const [native, div] = screen.getAllByRole('button')
+    expect(native).toHaveClass('disabled:opacity-50', 'disabled:pointer-events-none')
+    expect(div).toHaveClass('aria-disabled:opacity-50', 'aria-disabled:pointer-events-none')
+    expect(div).toHaveAttribute('aria-disabled', 'true')
+  })
+
+  it('activates non-native buttons with Enter and Space', () => {
+    const onClick = jest.fn()
+    render(
+      <Button as="div" onClick={onClick}>
+        Div Button
+      </Button>,
+    )
+    const btn = screen.getByRole('button')
+
+    fireEvent.keyDown(btn, { key: 'Enter' })
+    expect(onClick).toHaveBeenCalledTimes(1)
+
+    // Space activates on keyup, like a native button
+    fireEvent.keyDown(btn, { key: ' ' })
+    expect(onClick).toHaveBeenCalledTimes(1)
+    fireEvent.keyUp(btn, { key: ' ' })
+    expect(onClick).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not activate a disabled non-native button via keyboard', () => {
+    const onClick = jest.fn()
+    render(
+      <Button as="div" disabled onClick={onClick}>
+        Div Button
+      </Button>,
+    )
+    const btn = screen.getByRole('button')
+    fireEvent.keyDown(btn, { key: 'Enter' })
+    fireEvent.keyUp(btn, { key: ' ' })
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('still calls a consumer onKeyDown for non-native buttons', () => {
+    const onKeyDown = jest.fn()
+    render(
+      <Button as="div" onKeyDown={onKeyDown}>
+        Div Button
+      </Button>,
+    )
+    fireEvent.keyDown(screen.getByRole('button'), { key: 'a' })
+    expect(onKeyDown).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps link semantics when rendered as a link with href', () => {
+    render(
+      <Button as="a" href="/docs">
+        Docs
+      </Button>,
+    )
+    const link = screen.getByRole('link', { name: 'Docs' })
+    expect(link).not.toHaveAttribute('role')
+    expect(link).not.toHaveAttribute('tabindex')
+  })
+
+  it('makes a disabled link unfocusable and blocks navigation clicks', () => {
+    const onClick = jest.fn()
+    render(
+      <Button as="a" href="/docs" disabled onClick={onClick}>
+        Docs
+      </Button>,
+    )
+    const link = screen.getByRole('link', { name: 'Docs' })
+    expect(link).toHaveAttribute('aria-disabled', 'true')
+    expect(link).toHaveAttribute('tabindex', '-1')
+    fireEvent.click(link)
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('accepts aria-labelledby for iconOnly and warns only once across re-renders', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+    const { unmount } = render(
+      <Button iconOnly aria-labelledby="lbl">
+        X
+      </Button>,
+    )
+    expect(warn).not.toHaveBeenCalled()
+    unmount()
+
+    const view = render(<Button iconOnly>X</Button>)
+    view.rerender(<Button iconOnly>X</Button>)
+    view.rerender(<Button iconOnly>X</Button>)
+    expect(warn).toHaveBeenCalledTimes(1)
+
+    warn.mockRestore()
+  })
+
+  it('uses an outline (not a box-shadow ring) for focus so the offset gap is transparent', () => {
+    render(<Button theme="danger">Focus</Button>)
+    const btn = screen.getByRole('button')
+    expect(btn).toHaveClass('focus-visible:outline-[var(--ui-danger-ring)]')
+    expect(btn.className).not.toMatch(/focus-visible:ring-/)
+  })
+
+  it('renders the active toggle ring without a ring offset', () => {
+    render(<Button active>Toggle</Button>)
+    const btn = screen.getByRole('button')
+    expect(btn).toHaveClass('ring-2', 'ring-current')
+    expect(btn).not.toHaveClass('ring-offset-2')
+  })
+
+  it('renders the loader and loading text in the button text colour', () => {
+    render(
+      <Button loading loadingText="Saving" variant="outlined">
+        Save
+      </Button>,
+    )
+    expect(screen.getByTestId('btn-loader-icon')).toHaveClass('text-current')
+    expect(screen.getByText('Saving')).toHaveClass('text-current')
+  })
 })
