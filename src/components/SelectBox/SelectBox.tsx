@@ -74,7 +74,8 @@ export const SelectBox = forwardRef(
       id = name,
       options = EMPTY_ARRAY,
       groups,
-      selected,
+      selected: selectedProp,
+      defaultSelected,
       size = 'md',
       label = null,
       labelWrapperClass = '',
@@ -82,9 +83,10 @@ export const SelectBox = forwardRef(
       labelHint = null,
       disabled = false,
       containerClass = '',
-      onChange = NOOP,
+      onChange: onChangeProp = NOOP,
       placeholder,
       dropdownContainerClass = 'z-20',
+      dropdownMinWidth,
       multiple = false,
       maxSelection,
       showSelectAll = false,
@@ -106,8 +108,23 @@ export const SelectBox = forwardRef(
       noOptionsText = 'No options available',
     } = props
 
+    // Uncontrolled when `selected` is not passed: keep the selection internally.
+    const isControlled = selectedProp !== undefined
+    const [internalSelected, setInternalSelected] = useState<T | T[] | null>(
+      defaultSelected ?? null,
+    )
+    const selected = isControlled ? selectedProp : internalSelected
+
+    const onChange = useCallback(
+      (value: T | T[] | null) => {
+        if (!isControlled) setInternalSelected(value)
+        onChangeProp(value)
+      },
+      [isControlled, onChangeProp],
+    )
+
     if (props.asBottomSheet || props.mobileMode === 'sheet') {
-      return <MobilePicker {...(props as any)} />
+      return <MobilePicker {...(props as any)} selected={selected} onChange={onChange} />
     }
 
     const hasError = Boolean(error)
@@ -358,6 +375,17 @@ export const SelectBox = forwardRef(
 
     const hasLeftGroup = leftGroup != null && leftGroup !== undefined
 
+    // Reserve room for the chevron (and the clear button when shown) so long values
+    // don't run underneath them.
+    const showClearButton = allowClear && !multiple && !isEmpty(normalizedSelected)
+    const rightPaddingClass = showClearButton
+      ? 'pe-16'
+      : size === 'lg'
+        ? 'pe-11'
+        : size === 'sm'
+          ? 'pe-9'
+          : 'pe-10'
+
     const hasFreeTextOption = Boolean(
       allowFreeText &&
         query.trim() &&
@@ -425,6 +453,7 @@ export const SelectBox = forwardRef(
               className={buildClassName(
                 baseInputClass,
                 'flex flex-wrap gap-2 peer relative',
+                rightPaddingClass,
                 hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
               )}
               ref={forwardedRef as any}
@@ -534,6 +563,8 @@ export const SelectBox = forwardRef(
                 }}
                 className={buildClassName(
                   baseInputClass,
+                  'text-ellipsis',
+                  rightPaddingClass,
                   hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
                 )}
                 disabled={disabled}
@@ -543,7 +574,7 @@ export const SelectBox = forwardRef(
                 data-testid="combobox-input"
               />
 
-              {allowClear && !isEmpty(normalizedSelected) && (
+              {showClearButton && (
                 <Button
                   size="xs"
                   iconOnly
@@ -569,9 +600,11 @@ export const SelectBox = forwardRef(
           )}
 
           <ComboboxOptions
-            anchor={{ to: 'bottom', gap: 5 }}
+            anchor={{ to: 'bottom start', gap: 5, padding: 8 }}
             as="div"
             modal={modalDropdown}
+            // Matches the input width by default; min-width lets the panel grow wider than a narrow input.
+            style={dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined}
             className={buildClassName(
               'w-[var(--input-width)] rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
               '[--anchor-max-height:20rem]',

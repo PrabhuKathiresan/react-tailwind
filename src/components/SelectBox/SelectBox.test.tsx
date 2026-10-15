@@ -108,6 +108,31 @@ describe('SelectBox', () => {
     expect(screen.getByTestId('combobox-options')).toBeInTheDocument()
   })
 
+  test('applies dropdownMinWidth to the dropdown panel and keeps the input-width class', async () => {
+    const { rerender } = render(<SelectBox options={options} dropdownMinWidth={240} />)
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    const panel = screen.getByTestId('combobox-options')
+    expect(panel).toHaveStyle({ minWidth: '240px' })
+    expect(panel).toHaveClass('w-[var(--input-width)]')
+
+    rerender(<SelectBox options={options} dropdownMinWidth="16rem" />)
+    expect(screen.getByTestId('combobox-options')).toHaveStyle({ minWidth: '16rem' })
+  })
+
+  test('does not set a min-width on the dropdown panel by default', async () => {
+    render(<SelectBox options={options} />)
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    expect(screen.getByTestId('combobox-options').style.minWidth).toBe('')
+  })
+
   test('shows an empty message when there are no options and nothing has been typed', async () => {
     render(<SelectBox options={[]} />)
 
@@ -191,6 +216,107 @@ describe('SelectBox', () => {
     })
 
     expect(handleChange).toHaveBeenCalledWith(null)
+  })
+
+  describe('uncontrolled mode', () => {
+    const openAndPick = async (label: string) => {
+      await act(async () => {
+        fireEvent.click(screen.getByTestId('combobox-button'))
+      })
+      await waitFor(() => {
+        expect(screen.getByTestId('combobox-options')).toBeInTheDocument()
+      })
+      await act(async () => {
+        fireEvent.mouseDown(screen.getByRole('option', { name: label }))
+      })
+    }
+
+    test('keeps the picked option when selected is not passed', async () => {
+      const handleChange = jest.fn()
+      render(<SelectBox options={options} onChange={handleChange} />)
+
+      await openAndPick('Beta')
+
+      expect(handleChange).toHaveBeenCalledWith(options[1])
+      expect(screen.getByTestId('combobox-input')).toHaveValue('Beta')
+    })
+
+    test('starts from defaultSelected', () => {
+      render(<SelectBox options={options} defaultSelected={options[2]} />)
+      expect(screen.getByTestId('combobox-input')).toHaveValue('Gamma')
+    })
+
+    test('keeps picked options in multiple mode', async () => {
+      render(<SelectBox options={options} multiple defaultSelected={[options[0]]} />)
+      expect(screen.getByText('Alpha')).toBeInTheDocument()
+
+      await openAndPick('Beta')
+
+      // Badges in the input area for both selections
+      expect(screen.getAllByText('Alpha').length).toBeGreaterThan(0)
+      expect(screen.getAllByText('Beta').length).toBeGreaterThan(1)
+    })
+
+    test('clear button resets the internal selection', async () => {
+      render(<SelectBox options={options} allowClear defaultSelected={options[0]} />)
+      expect(screen.getByTestId('combobox-input')).toHaveValue('Alpha')
+
+      await act(async () => {
+        fireEvent.click(screen.getByTestId('combobox-clear-button'))
+      })
+
+      expect(screen.getByTestId('combobox-input')).toHaveValue('')
+      expect(screen.queryByTestId('combobox-clear-button')).not.toBeInTheDocument()
+    })
+
+    test('stays controlled when selected is passed, ignoring defaultSelected', async () => {
+      const handleChange = jest.fn()
+      render(
+        <SelectBox
+          options={options}
+          selected={null}
+          defaultSelected={options[2]}
+          onChange={handleChange}
+        />,
+      )
+      expect(screen.getByTestId('combobox-input')).toHaveValue('')
+
+      await openAndPick('Beta')
+
+      expect(handleChange).toHaveBeenCalledWith(options[1])
+      expect(screen.getByTestId('combobox-input')).toHaveValue('')
+    })
+
+    test('works in bottom-sheet mode', () => {
+      render(<SelectBox options={['Apple', 'Banana']} mobileMode="sheet" placeholder="Pick" />)
+
+      fireEvent.click(screen.getByTestId('mobile-picker-trigger'))
+      fireEvent.click(screen.getByText('Banana'))
+
+      expect(screen.getByTestId('mobile-picker-trigger')).toHaveTextContent('Banana')
+    })
+  })
+
+  describe('input right padding', () => {
+    test('reserves room for the chevron per size and truncates long values', () => {
+      const { rerender } = render(<SelectBox options={options} size="sm" />)
+      const input = () => screen.getByTestId('combobox-input')
+      expect(input()).toHaveClass('pe-9', 'text-ellipsis')
+
+      rerender(<SelectBox options={options} size="md" />)
+      expect(input()).toHaveClass('pe-10')
+
+      rerender(<SelectBox options={options} size="lg" />)
+      expect(input()).toHaveClass('pe-11')
+    })
+
+    test('reserves extra room while the clear button is shown', () => {
+      const { rerender } = render(<SelectBox options={options} allowClear selected={options[0]} />)
+      expect(screen.getByTestId('combobox-input')).toHaveClass('pe-16')
+
+      rerender(<SelectBox options={options} allowClear selected={null} />)
+      expect(screen.getByTestId('combobox-input')).toHaveClass('pe-10')
+    })
   })
 
   test('shows error message', () => {

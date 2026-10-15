@@ -31,11 +31,22 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   groups?: OptionGroup<T>[]
 
   /**
-   * Currently selected option(s).
+   * Currently selected option(s). Passing this makes the SelectBox controlled:
+   * it shows exactly this value, so update it from `onChange`.
    * - For single select: a single T or null
    * - For multi-select: T[]
+   *
+   * Leave it undefined to let the SelectBox manage its own selection
+   * (optionally seeded with `defaultSelected`).
    */
   selected?: T | T[] | null
+
+  /**
+   * Initial selection when the SelectBox is uncontrolled (`selected` not passed).
+   * Only read on mount; later changes are ignored. `onChange` still fires on
+   * every change.
+   */
+  defaultSelected?: T | T[] | null
 
   /** Size scale of the SelectBox component (`"sm"` | `"md"` | `"lg"`). Defaults to `"md"`. */
   size?: SelectBoxSize
@@ -82,6 +93,14 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
 
   /** CSS classes applied to the dropdown options container */
   dropdownContainerClass?: string
+
+  /**
+   * Minimum width of the dropdown panel. By default the panel matches the
+   * input width; set this so it can grow wider than a narrow input. Numbers
+   * are treated as pixels, strings accept any CSS length (e.g. `"16rem"`).
+   * The panel stays left-aligned with the input.
+   */
+  dropdownMinWidth?: number | string
 
   /**
    * Whether the open dropdown traps focus and makes the rest of the page inert.
