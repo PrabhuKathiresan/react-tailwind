@@ -79,6 +79,13 @@ describe('Banner Component', () => {
     expect(onRemove).toHaveBeenCalledTimes(1)
   })
 
+  it('dismiss button inherits the banner text colour for icon, hover tint and focus outline', () => {
+    render(<Banner removable>Text</Banner>)
+    const btn = screen.getByTestId('banner-remove-btn')
+    expect(btn).toHaveClass('text-current', 'focus-visible:outline-current', 'hover:bg-current/10')
+    expect(btn.className).not.toMatch(/text-gray-|hover:bg-(black|white)\//)
+  })
+
   it('forwards arbitrary HTML attributes to the div', () => {
     render(<Banner data-custom="value">Text</Banner>)
     const banner = screen.getByTestId('banner-info')

@@ -1,4 +1,4 @@
-import React, { ElementType, forwardRef, useMemo } from 'react'
+import React, { ElementType, forwardRef, useEffect, useMemo } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { Loader } from '../Loader'
 import { TextContent } from '../TextContent'
@@ -7,75 +7,48 @@ import type { PolymorphicRef } from '../common-type'
 
 /**
  * Tailwind CSS classes for theme + variant combinations.
+ *
+ * Only colours live here. Focus outline width/offset and disabled styling are
+ * applied uniformly in the component so they can be toggled in one place.
  */
 const THEMED_BTN_CLASS: ThemedButtonClass = {
   primary: {
     default:
-      'text-white bg-[var(--ui-primary)] hover:bg-[var(--ui-primary-hover)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:bg-[var(--ui-primary-disabled)]',
+      'text-white bg-[var(--ui-primary)] hover:bg-[var(--ui-primary-hover)] focus-visible:outline-[var(--ui-primary-ring)]',
     outlined:
-      'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)] disabled:border-[var(--ui-primary-disabled)]',
+      'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus-visible:outline-[var(--ui-primary-ring)]',
     plain:
-      'text-[var(--ui-primary-text)] hover:bg-blue-50/80 dark:hover:bg-blue-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
+      'text-[var(--ui-primary-text)] hover:bg-current/10 active:bg-current/15 focus-visible:outline-[var(--ui-primary-ring)]',
   },
   danger: {
     default:
-      'text-white bg-[var(--ui-danger)] hover:bg-[var(--ui-danger-hover)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:bg-[var(--ui-danger-disabled)]',
+      'text-white bg-[var(--ui-danger)] hover:bg-[var(--ui-danger-hover)] focus-visible:outline-[var(--ui-danger-ring)]',
     outlined:
-      'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)] disabled:border-[var(--ui-danger-disabled)]',
+      'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus-visible:outline-[var(--ui-danger-ring)]',
     plain:
-      'text-[var(--ui-danger-text)] hover:bg-red-50/80 dark:hover:bg-red-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
+      'text-[var(--ui-danger-text)] hover:bg-current/10 active:bg-current/15 focus-visible:outline-[var(--ui-danger-ring)]',
   },
   secondary: {
     default:
-      'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:bg-gray-200 dark:disabled:bg-gray-700',
+      'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:outline-[var(--ui-focus-ring)]',
     outlined:
-      'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-[var(--ui-border-muted)]',
+      'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
     plain:
-      'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
+      'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:outline-[var(--ui-focus-ring)]',
   },
   success: {
-    default:
-      'text-white bg-emerald-600 hover:bg-emerald-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:bg-emerald-300 dark:disabled:bg-emerald-900',
+    default: 'text-white bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-emerald-500',
     outlined:
-      'text-emerald-600 hover:text-white border border-emerald-600 hover:bg-emerald-600 dark:text-emerald-400 dark:border-emerald-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:opacity-50',
+      'text-emerald-700 hover:text-white border border-emerald-600 hover:bg-emerald-600 dark:text-emerald-400 dark:border-emerald-500 focus-visible:outline-emerald-500',
     plain:
-      'text-emerald-600 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:opacity-50',
+      'text-emerald-700 hover:bg-current/10 active:bg-current/15 dark:text-emerald-400 focus-visible:outline-emerald-500',
   },
   warning: {
-    default:
-      'text-white bg-amber-500 hover:bg-amber-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:bg-amber-300 dark:disabled:bg-amber-900',
+    default: 'text-white bg-amber-500 hover:bg-amber-600 focus-visible:outline-amber-500',
     outlined:
-      'text-amber-600 hover:text-white border border-amber-500 hover:bg-amber-500 dark:text-amber-400 dark:border-amber-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:opacity-50',
+      'text-amber-700 hover:text-white border border-amber-500 hover:bg-amber-500 dark:text-amber-400 dark:border-amber-500 focus-visible:outline-amber-500',
     plain:
-      'text-amber-600 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:opacity-50',
-  },
-}
-
-const LOADER_TEXT_CLASS: ThemedButtonClass = {
-  primary: {
-    default: 'text-white',
-    outlined: 'text-[var(--ui-primary-text)]',
-    plain: 'text-[var(--ui-primary-text)]',
-  },
-  danger: {
-    default: 'text-white',
-    outlined: 'text-[var(--ui-danger-text)]',
-    plain: 'text-[var(--ui-danger-text)]',
-  },
-  secondary: {
-    default: 'text-gray-700 dark:text-white',
-    outlined: 'text-gray-700 dark:text-gray-200',
-    plain: 'text-gray-700 dark:text-gray-200',
-  },
-  success: {
-    default: 'text-white',
-    outlined: 'text-emerald-600 dark:text-emerald-400',
-    plain: 'text-emerald-600 dark:text-emerald-400',
-  },
-  warning: {
-    default: 'text-white',
-    outlined: 'text-amber-600 dark:text-amber-400',
-    plain: 'text-amber-600 dark:text-amber-400',
+      'text-amber-700 hover:bg-current/10 active:bg-current/15 dark:text-amber-400 focus-visible:outline-amber-500',
   },
 }
 
@@ -98,11 +71,16 @@ const LOADER_SIZE: Record<ButtonSize, 'xs' | 'sm'> = {
 
 /**
  * Base shared tailwind classes.
+ *
+ * Disabled styling is keyed off both the native `disabled` attribute and
+ * `aria-disabled`, so non-button elements rendered via `as` look disabled too.
  */
 const BASE_BTN_CLASS =
   'font-medium inline-flex items-center justify-center shrink-0 cursor-pointer select-none ' +
-  'disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-75 ' +
-  'active:scale-[0.98] transition-all duration-150 ease-out focus:outline-none'
+  'transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-150 ease-out ' +
+  'active:scale-[0.98] focus:outline-none ' +
+  'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ' +
+  'aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:shadow-none'
 
 export const Button = forwardRef(
   <C extends ElementType = 'button'>(
@@ -132,15 +110,33 @@ export const Button = forwardRef(
     const Component = as || 'button'
     const isNativeButton = Component === 'button'
 
+    // Clean invalid props when not rendering a real button
+    const {
+      type: _ignoreType,
+      disabled: _ignoreDisabled,
+      role,
+      tabIndex,
+      onKeyDown,
+      onKeyUp,
+      ...domProps
+    } = restProps as Record<string, any>
+
+    const ariaLabel = domProps['aria-label']
+    const ariaLabelledBy = domProps['aria-labelledby']
+
     // Accessibility guard for icon-only buttons
-    if (iconOnly && !(restProps as Record<string, unknown>)['aria-label']) {
-      console.warn('[ui] <Button iconOnly> requires aria-label for accessibility.')
-    }
+    useEffect(() => {
+      if (iconOnly && !ariaLabel && !ariaLabelledBy) {
+        console.warn(
+          '[ui] <Button iconOnly> requires aria-label or aria-labelledby for accessibility.',
+        )
+      }
+    }, [iconOnly, ariaLabel, ariaLabelledBy])
 
     const resolvedDisabled = Boolean(disabled || loading)
 
-    // Clean invalid props when not rendering a real button
-    const { type: _ignoreType, disabled: _ignoreDisabled, ...cleanRest } = restProps
+    // Links (`href`, or `to` for router Link components) keep their native semantics.
+    const isLink = !isNativeButton && (domProps.href != null || domProps.to != null)
 
     const handleClick = (e: React.MouseEvent<any>) => {
       if (resolvedDisabled) {
@@ -151,18 +147,55 @@ export const Button = forwardRef(
       onClick?.(e)
     }
 
+    // Mirror native <button> keyboard activation for non-button elements:
+    // Enter activates on keydown, Space on keyup (and must not scroll the page).
+    const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+      onKeyDown?.(e)
+      if (e.defaultPrevented || e.target !== e.currentTarget) return
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        e.currentTarget.click()
+      } else if (e.key === ' ') {
+        e.preventDefault()
+      }
+    }
+
+    const handleKeyUp = (e: React.KeyboardEvent<any>) => {
+      onKeyUp?.(e)
+      if (e.defaultPrevented || e.target !== e.currentTarget) return
+      if (e.key === ' ') {
+        e.preventDefault()
+        e.currentTarget.click()
+      }
+    }
+
     const elementProps = isNativeButton
       ? {
           type: type ?? 'button',
           disabled: resolvedDisabled,
+          role,
+          tabIndex,
           onClick: handleClick,
+          onKeyDown,
+          onKeyUp,
         }
-      : {
-          role: cleanRest.role ?? 'button',
-          tabIndex: resolvedDisabled ? -1 : (cleanRest.tabIndex ?? 0),
-          'aria-disabled': resolvedDisabled ? true : undefined,
-          onClick: handleClick,
-        }
+      : isLink
+        ? {
+            role,
+            tabIndex: resolvedDisabled ? -1 : tabIndex,
+            'aria-disabled': resolvedDisabled ? true : undefined,
+            onClick: handleClick,
+            onKeyDown,
+            onKeyUp,
+          }
+        : {
+            role: role ?? 'button',
+            tabIndex: resolvedDisabled ? -1 : (tabIndex ?? 0),
+            'aria-disabled': resolvedDisabled ? true : undefined,
+            onClick: handleClick,
+            onKeyDown: handleKeyDown,
+            onKeyUp: handleKeyUp,
+          }
 
     const sizeObj = SIZE_CLASSES[size] || SIZE_CLASSES.md
 
@@ -172,21 +205,24 @@ export const Button = forwardRef(
           BASE_BTN_CLASS,
           THEMED_BTN_CLASS[theme]?.[variant] || THEMED_BTN_CLASS.primary.default,
           iconOnly ? sizeObj.iconOnly : sizeObj.normal,
-          !noOutlineOnFocus && 'focus-visible:ring-2 focus-visible:ring-offset-2',
+          // An outline (not a ring) so the offset gap stays transparent on any surface/mode.
+          !noOutlineOnFocus &&
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid',
           rounded && 'rounded-full',
           fullWidth && 'w-full',
-          variant === 'default' && 'shadow-xs hover:shadow-none disabled:shadow-none',
-          active && 'ring-2 ring-offset-2 ring-current',
+          variant === 'default' && 'shadow-xs hover:shadow-none',
+          active && 'ring-2 ring-current',
           className,
         ),
       [theme, variant, sizeObj, iconOnly, noOutlineOnFocus, rounded, fullWidth, active, className],
     )
 
+    // The spinner and loading text inherit the button's text colour.
     const loaderIcon = (
       <Loader
         data-testid="btn-loader-icon"
         size={LOADER_SIZE[size] || 'xs'}
-        className={buildClassName(LOADER_TEXT_CLASS[theme]?.[variant])}
+        className="text-current"
       />
     )
 
@@ -200,8 +236,8 @@ export const Button = forwardRef(
           className={classes}
           aria-busy="true"
           aria-pressed={active !== undefined ? active : undefined}
+          {...domProps}
           {...elementProps}
-          {...cleanRest}
         >
           {loaderIcon}
         </Component>
@@ -214,16 +250,14 @@ export const Button = forwardRef(
         className={classes}
         aria-busy={loading ? 'true' : undefined}
         aria-pressed={active !== undefined ? active : undefined}
+        {...domProps}
         {...elementProps}
-        {...cleanRest}
       >
         {loading ? (
           <span className="inline-flex items-center gap-2" aria-live="polite">
             {loaderIcon}
             {loadingText ? (
-              <TextContent className={buildClassName(LOADER_TEXT_CLASS[theme]?.[variant])}>
-                {loadingText}
-              </TextContent>
+              <TextContent className="text-current">{loadingText}</TextContent>
             ) : (
               children
             )}

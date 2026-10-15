@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Banner } from '@pk-design/react-tailwind'
+import { Banner, Button } from '@pk-design/react-tailwind'
 import { RocketIcon } from 'lucide-react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
@@ -53,6 +53,46 @@ const [visible, setVisible] = useState(true)
     <a href="#" className="underline font-medium">Upgrade now.</a>
   </Banner>
 )}`,
+    },
+    {
+      title: 'Actions in Banners',
+      description:
+        'Use plain Buttons with className="text-current" so the action takes the banner colour. Its hover tint and focus outline follow that colour, so it reads well on every banner type in light and dark mode.',
+      render: (
+        <div className="space-y-3 w-full">
+          <Banner type="info" removable>
+            <span>A new version is available.</span>
+            <Button variant="plain" size="xs" className="text-current">
+              Reload
+            </Button>
+          </Banner>
+          <Banner type="success" removable>
+            <span>Payment received.</span>
+            <Button variant="plain" size="xs" className="text-current">
+              View receipt
+            </Button>
+          </Banner>
+          <Banner type="warning" removable>
+            <span>Your trial ends in 3 days.</span>
+            <Button variant="plain" size="xs" className="text-current">
+              Upgrade
+            </Button>
+          </Banner>
+          <Banner type="error" removable>
+            <span>We couldn't save your changes.</span>
+            <Button variant="plain" size="xs" className="text-current">
+              Retry
+            </Button>
+          </Banner>
+        </div>
+      ),
+      code: `
+<Banner type="warning" removable onRemove={...}>
+  <span>Your trial ends in 3 days.</span>
+  <Button variant="plain" size="xs" className="text-current">
+    Upgrade
+  </Button>
+</Banner>`,
     },
     {
       title: 'Custom Icon Sizes',
