@@ -15,7 +15,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)] disabled:border-[var(--ui-primary-disabled)]',
     plain:
-      'text-[var(--ui-primary-text)] hover:bg-blue-50/80 dark:hover:bg-blue-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
+      'text-[var(--ui-primary-text)] hover:bg-current/10 active:bg-current/15 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-primary-ring)] disabled:text-[var(--ui-primary-disabled)]',
   },
   danger: {
     default:
@@ -23,7 +23,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)] disabled:border-[var(--ui-danger-disabled)]',
     plain:
-      'text-[var(--ui-danger-text)] hover:bg-red-50/80 dark:hover:bg-red-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
+      'text-[var(--ui-danger-text)] hover:bg-current/10 active:bg-current/15 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-danger-ring)] disabled:text-[var(--ui-danger-disabled)]',
   },
   secondary: {
     default:
@@ -31,7 +31,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400 disabled:border-[var(--ui-border-muted)]',
     plain:
-      'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
+      'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--ui-focus-ring)] disabled:text-gray-400',
   },
   success: {
     default:
@@ -39,7 +39,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-emerald-600 hover:text-white border border-emerald-600 hover:bg-emerald-600 dark:text-emerald-400 dark:border-emerald-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:opacity-50',
     plain:
-      'text-emerald-600 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:opacity-50',
+      'text-emerald-600 hover:bg-current/10 active:bg-current/15 dark:text-emerald-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:opacity-50',
   },
   warning: {
     default:
@@ -47,7 +47,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     outlined:
       'text-amber-600 hover:text-white border border-amber-500 hover:bg-amber-500 dark:text-amber-400 dark:border-amber-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:opacity-50',
     plain:
-      'text-amber-600 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-950/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:opacity-50',
+      'text-amber-600 hover:bg-current/10 active:bg-current/15 dark:text-amber-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 disabled:opacity-50',
   },
 }
 

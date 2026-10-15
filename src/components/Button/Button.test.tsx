@@ -49,6 +49,21 @@ describe('Button Component', () => {
     expect(screen.getByRole('button').className).toMatch(/bg-amber-500/)
   })
 
+  it('uses a currentColor-based hover tint for plain variant so it works on coloured surfaces', () => {
+    const themes = ['primary', 'secondary', 'danger', 'success', 'warning'] as const
+    themes.forEach((theme) => {
+      const { unmount } = render(
+        <Button theme={theme} variant="plain">
+          Plain
+        </Button>,
+      )
+      const btn = screen.getByRole('button')
+      expect(btn).toHaveClass('hover:bg-current/10', 'active:bg-current/15')
+      expect(btn.className).not.toMatch(/hover:bg-(blue|red|gray|emerald|amber)-/)
+      unmount()
+    })
+  })
+
   it('shows loader when loading=true', () => {
     render(<Button loading>Submit</Button>)
     expect(screen.getByTestId('btn-loader-icon')).toBeInTheDocument()
