@@ -50,6 +50,13 @@ export default function SelectBoxDocsPage() {
   const [freeTextVal, setFreeTextVal] = useState<any>('New York')
   const [freeTextObjVal, setFreeTextObjVal] = useState<any>({ label: 'Engineering', value: 'eng' })
   const [tags, setTags] = useState<string[]>(['React', 'Tailwind', 'Design System'])
+  const [sizeValues, setSizeValues] = useState<Record<'sm' | 'md' | 'lg', string | null>>({
+    sm: null,
+    md: null,
+    lg: null,
+  })
+  const [statusDefault, setStatusDefault] = useState<string | null>(null)
+  const [statusMinWidth, setStatusMinWidth] = useState<string | null>(null)
 
   const departmentOptions = [
     { label: 'Engineering', value: 'eng' },
@@ -94,18 +101,24 @@ export default function SelectBoxDocsPage() {
         <div className="max-w-md flex flex-col gap-4">
           <SelectBox
             size="sm"
+            selected={sizeValues.sm}
+            onChange={(v) => setSizeValues((prev) => ({ ...prev, sm: v as string | null }))}
             label="Small (sm)"
             options={basicOptions}
             placeholder="Compact 32px select"
           />
           <SelectBox
             size="md"
+            selected={sizeValues.md}
+            onChange={(v) => setSizeValues((prev) => ({ ...prev, md: v as string | null }))}
             label="Medium (md, default)"
             options={basicOptions}
             placeholder="Standard 40px select"
           />
           <SelectBox
             size="lg"
+            selected={sizeValues.lg}
+            onChange={(v) => setSizeValues((prev) => ({ ...prev, lg: v as string | null }))}
             label="Large (lg)"
             options={basicOptions}
             placeholder="Prominent 48px select"
@@ -113,9 +126,78 @@ export default function SelectBoxDocsPage() {
         </div>
       ),
       code: `
-<SelectBox size="sm" label="Small (sm)" options={["Apple", "Banana"]} />
-<SelectBox size="md" label="Medium (md)" options={["Apple", "Banana"]} />
-<SelectBox size="lg" label="Large (lg)" options={["Apple", "Banana"]} />`,
+// SelectBox is controlled: pass selected + onChange
+const [fruit, setFruit] = useState<string | null>(null)
+
+<SelectBox size="sm" label="Small (sm)" options={["Apple", "Banana"]} selected={fruit} onChange={setFruit} />
+<SelectBox size="md" label="Medium (md)" options={["Apple", "Banana"]} selected={fruit} onChange={setFruit} />
+<SelectBox size="lg" label="Large (lg)" options={["Apple", "Banana"]} selected={fruit} onChange={setFruit} />`,
+    },
+    {
+      title: 'Uncontrolled Usage (defaultSelected)',
+      description:
+        'Omit selected to let SelectBox manage its own selection. Use defaultSelected for an initial value; onChange still fires on every change. Pass selected (with onChange) instead when the value lives in your own state.',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            label="Favourite fruit"
+            options={basicOptions}
+            defaultSelected="Banana"
+            allowClear
+          />
+        </div>
+      ),
+      code: `
+<SelectBox
+  label="Favourite fruit"
+  options={['Apple', 'Banana', 'Orange', 'Grapes']}
+  defaultSelected="Banana"
+  allowClear
+  onChange={(value) => console.log(value)} // optional
+/>`,
+    },
+    {
+      title: 'Dropdown Minimum Width',
+      description:
+        'The dropdown matches the input width by default. Set dropdownMinWidth (px number or any CSS length) so a narrow select, e.g. in a toolbar or table filter, opens a panel wide enough to read. The panel stays left-aligned with the input.',
+      render: (
+        <div className="flex flex-wrap items-end gap-6">
+          <div className="w-28">
+            <SelectBox
+              size="sm"
+              label="Default"
+              options={['Pending review', 'Approved by finance', 'Rejected']}
+              placeholder="Status"
+              selected={statusDefault}
+              onChange={(v) => setStatusDefault(v as string | null)}
+            />
+          </div>
+          <div className="w-28">
+            <SelectBox
+              size="sm"
+              label="Min width 240px"
+              options={['Pending review', 'Approved by finance', 'Rejected']}
+              placeholder="Status"
+              selected={statusMinWidth}
+              onChange={(v) => setStatusMinWidth(v as string | null)}
+              dropdownMinWidth={240}
+            />
+          </div>
+        </div>
+      ),
+      code: `
+const [status, setStatus] = useState<string | null>(null)
+
+<div className="w-28">
+  <SelectBox
+    size="sm"
+    options={['Pending review', 'Approved by finance', 'Rejected']}
+    placeholder="Status"
+    selected={status}
+    onChange={setStatus}
+    dropdownMinWidth={240} // or "15rem"
+  />
+</div>`,
     },
     {
       title: 'Option Grouping & Custom Option Renderer',
