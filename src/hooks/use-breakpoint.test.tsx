@@ -48,6 +48,19 @@ describe('useMediaQuery', () => {
   })
 })
 
+describe('without matchMedia', () => {
+  const original = window.matchMedia
+  afterEach(() => {
+    window.matchMedia = original
+  })
+
+  test('falls back to compact instead of throwing', () => {
+    // @ts-expect-error simulating an environment without matchMedia
+    delete window.matchMedia
+    expect(renderHook(() => useBreakpoint()).result.current).toBe('compact')
+  })
+})
+
 describe('useResponsiveValue', () => {
   afterEach(() => mockViewport.restore())
 

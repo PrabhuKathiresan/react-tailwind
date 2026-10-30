@@ -17,10 +17,15 @@ export const BREAKPOINT_QUERIES = {
   expanded: '(min-width: 1024px)',
 } as const
 
-/** Live result of a CSS media query. `false` during server rendering. */
+// jsdom and some embedded webviews have no matchMedia; treat every query as
+// unmatched there (the compact layout) rather than throwing.
+const hasMatchMedia = () => typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+
+/** Live result of a CSS media query. `false` during server rendering or without `matchMedia`. */
 export const useMediaQuery = (query: string): boolean => {
   const subscribe = useCallback(
     (onChange: () => void) => {
+      if (!hasMatchMedia()) return () => {}
       const list = window.matchMedia(query)
       list.addEventListener('change', onChange)
       return () => list.removeEventListener('change', onChange)
@@ -30,7 +35,7 @@ export const useMediaQuery = (query: string): boolean => {
 
   return useSyncExternalStore(
     subscribe,
-    () => window.matchMedia(query).matches,
+    () => hasMatchMedia() && window.matchMedia(query).matches,
     () => false,
   )
 }

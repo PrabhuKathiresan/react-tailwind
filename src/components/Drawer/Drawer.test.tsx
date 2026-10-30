@@ -1,6 +1,7 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { act, render, screen, fireEvent } from '@testing-library/react'
 import { Drawer } from './Drawer'
+import { mockViewport } from '../../test-utils/mock-viewport'
 
 // Minimal mock for Headless UI transitions
 jest.mock('@headlessui/react', () => ({
@@ -161,5 +162,42 @@ describe('Drawer Component', () => {
 
     fireEvent.click(screen.getByTestId('dialog'))
     expect(onClose).toHaveBeenCalled()
+  })
+
+  describe('responsive align and size', () => {
+    afterEach(() => mockViewport.restore())
+
+    test.each([
+      [360, true],
+      [1024, false],
+    ])('at %ipx a { base: bottom, md: end } drawer shows a drag handle: %s', (width, handle) => {
+      mockViewport(width)
+      render(
+        <Drawer isOpen align={{ base: 'bottom', md: 'end' }} title="Filters">
+          Body
+        </Drawer>,
+      )
+
+      if (handle) expect(screen.getByTestId('drawer-drag-handle')).toBeInTheDocument()
+      else expect(screen.queryByTestId('drawer-drag-handle')).not.toBeInTheDocument()
+    })
+
+    test('applies the size for the current breakpoint', () => {
+      const viewport = mockViewport(360)
+      const { rerender } = render(
+        <Drawer isOpen size={{ base: 'full', md: 'md' }} title="Customer">
+          Body
+        </Drawer>,
+      )
+      expect(screen.getByTestId('panel')).toHaveClass('w-full')
+
+      act(() => viewport.resize(900))
+      rerender(
+        <Drawer isOpen size={{ base: 'full', md: 'md' }} title="Customer">
+          Body
+        </Drawer>,
+      )
+      expect(screen.getByTestId('panel')).toHaveClass('max-w-md')
+    })
   })
 })
