@@ -100,4 +100,27 @@ describe('MobileHeader', () => {
 
     expect(screen.getByRole('button', { name: 'Business A' })).toBeInTheDocument()
   })
+
+  describe('title alignment', () => {
+    test('a left-aligned title with nothing before it starts at the row padding', () => {
+      render(<MobileHeader title="GST report" titleAlign="left" />)
+
+      expect(screen.queryByTestId('mobile-header-leading')).not.toBeInTheDocument()
+      expect(screen.getByTestId('mobile-header-title').parentElement).toHaveClass('pr-2')
+      expect(screen.getByTestId('mobile-header-title').parentElement).not.toHaveClass('px-2')
+    })
+
+    test('keeps the leading slot when there is a Back button', () => {
+      render(<MobileHeader title="Invoice" titleAlign="left" onBack={jest.fn()} />)
+
+      expect(screen.getByTestId('mobile-header-leading')).toBeInTheDocument()
+      expect(screen.getByTestId('mobile-header-title').parentElement).toHaveClass('px-2')
+    })
+
+    test('keeps the empty leading slot for a centred title so actions stay on the right', () => {
+      render(<MobileHeader title="Orders" />)
+
+      expect(screen.getByTestId('mobile-header-leading')).toBeInTheDocument()
+    })
+  })
 })
