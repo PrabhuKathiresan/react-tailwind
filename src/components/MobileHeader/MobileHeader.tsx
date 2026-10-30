@@ -65,6 +65,7 @@ export function MobileHeader({
   const [isSearchActive, setIsSearchActive] = useState(false)
   const [internalSearchValue, setInternalSearchValue] = useState('')
   const [isOverflowOpen, setIsOverflowOpen] = useState(false)
+  const hasLeadingSlot = Boolean(onBack || leading) || titleAlign === 'center'
 
   // The overflow button takes one of the visible slots.
   const allActions = actions ?? []
@@ -101,7 +102,7 @@ export function MobileHeader({
       data-testid="mobile-header"
     >
       {/* Main Header Row */}
-      <div className="h-14 px-3.5 flex items-center justify-between gap-3 relative">
+      <div className="h-14 px-4 flex items-center justify-between gap-3 relative">
         {/* Search Mode Header View */}
         {searchable && isSearchActive ? (
           <div
@@ -142,28 +143,36 @@ export function MobileHeader({
           </div>
         ) : (
           <>
-            {/* Left Leading / Back Section */}
-            <div className="flex items-center gap-1 min-w-[40px] shrink-0 z-10">
-              {onBack ? (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  aria-label={backLabel}
-                  className="flex items-center gap-0.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 p-1 -ml-1 rounded-xl transition-colors cursor-pointer"
-                  data-testid="mobile-header-back-btn"
-                >
-                  <ChevronLeftIcon />
-                  <span className="text-xs font-semibold hidden sm:inline">{backLabel}</span>
-                </button>
-              ) : (
-                leading
-              )}
-            </div>
+            {/* Left Leading / Back Section. Omitted for a left-aligned title with nothing
+                before it, so the title lines up with the page content; kept for a centred
+                title, where the empty slot balances the actions. */}
+            {hasLeadingSlot && (
+              <div
+                className="flex items-center gap-1 min-w-[40px] shrink-0 z-10"
+                data-testid="mobile-header-leading"
+              >
+                {onBack ? (
+                  <button
+                    type="button"
+                    onClick={onBack}
+                    aria-label={backLabel}
+                    className="flex items-center gap-0.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 p-1 -ml-1 rounded-xl transition-colors cursor-pointer"
+                    data-testid="mobile-header-back-btn"
+                  >
+                    <ChevronLeftIcon />
+                    <span className="text-xs font-semibold hidden sm:inline">{backLabel}</span>
+                  </button>
+                ) : (
+                  leading
+                )}
+              </div>
+            )}
 
             {/* Title & Subtitle Section */}
             <div
               className={buildClassName(
-                'flex-1 min-w-0 px-2',
+                'flex-1 min-w-0',
+                hasLeadingSlot ? 'px-2' : 'pr-2',
                 titleAlign === 'center'
                   ? 'absolute inset-x-12 text-center pointer-events-none flex flex-col items-center justify-center'
                   : 'text-left',
