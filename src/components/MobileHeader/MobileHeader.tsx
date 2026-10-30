@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import type { MobileHeaderProps, MobileHeaderAction } from './MobileHeader.types'
 import { buildClassName } from '../../utils/build-classname'
+import { ActionSheet } from '../ActionSheet'
 
 function ChevronLeftIcon() {
   return (
@@ -23,6 +24,16 @@ function SearchIcon() {
   )
 }
 
+function MoreIcon() {
+  return (
+    <svg className="size-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="5" r="1.75" />
+      <circle cx="12" cy="12" r="1.75" />
+      <circle cx="12" cy="19" r="1.75" />
+    </svg>
+  )
+}
+
 function ClearIcon() {
   return (
     <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -39,6 +50,9 @@ export function MobileHeader({
   backLabel = 'Back',
   leading,
   actions,
+  maxVisibleActions,
+  overflowLabel = 'More actions',
+  trailing,
   searchable = false,
   searchValue: externalSearchValue,
   onSearchChange,
@@ -50,6 +64,15 @@ export function MobileHeader({
 }: MobileHeaderProps) {
   const [isSearchActive, setIsSearchActive] = useState(false)
   const [internalSearchValue, setInternalSearchValue] = useState('')
+  const [isOverflowOpen, setIsOverflowOpen] = useState(false)
+
+  // The overflow button takes one of the visible slots.
+  const allActions = actions ?? []
+  const shouldOverflow = maxVisibleActions !== undefined && allActions.length > maxVisibleActions
+  const visibleActions = shouldOverflow
+    ? allActions.slice(0, Math.max(maxVisibleActions - 1, 0))
+    : allActions
+  const overflowActions = shouldOverflow ? allActions.slice(visibleActions.length) : []
 
   const searchValue = externalSearchValue !== undefined ? externalSearchValue : internalSearchValue
 
@@ -178,7 +201,7 @@ export function MobileHeader({
                 </button>
               )}
 
-              {actions?.map((action: MobileHeaderAction) => {
+              {visibleActions.map((action: MobileHeaderAction) => {
                 const badgeColor = {
                   danger: 'bg-red-500 text-white',
                   info: 'bg-blue-500 text-white',
@@ -213,10 +236,40 @@ export function MobileHeader({
                   </button>
                 )
               })}
+
+              {overflowActions.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setIsOverflowOpen(true)}
+                  aria-label={overflowLabel}
+                  aria-haspopup="dialog"
+                  aria-expanded={isOverflowOpen}
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
+                  data-testid="mobile-header-overflow"
+                >
+                  <MoreIcon />
+                </button>
+              )}
+
+              {trailing}
             </div>
           </>
         )}
       </div>
+
+      {overflowActions.length > 0 && (
+        <ActionSheet
+          isOpen={isOverflowOpen}
+          onClose={() => setIsOverflowOpen(false)}
+          actions={overflowActions.map((action) => ({
+            id: action.id,
+            label: action.label,
+            icon: action.icon,
+            disabled: action.disabled,
+            onClick: action.onClick,
+          }))}
+        />
+      )}
 
       {/* Optional Bottom Sub-Header Slot (e.g. Category tabs or filter bar) */}
       {bottomSlot && (

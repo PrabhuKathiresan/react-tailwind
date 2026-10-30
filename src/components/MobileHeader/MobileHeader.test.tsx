@@ -50,4 +50,54 @@ describe('MobileHeader', () => {
 
     expect(onSearchChangeMock).toHaveBeenCalledWith('Laptop')
   })
+
+  describe('action overflow', () => {
+    const makeActions = (onClick = jest.fn()): MobileHeaderAction[] => [
+      { id: 'share', label: 'Share', icon: 'S', onClick },
+      { id: 'print', label: 'Print', icon: 'P', onClick },
+      { id: 'void', label: 'Void', icon: 'V', onClick },
+    ]
+
+    test('shows every action when maxVisibleActions is unset', () => {
+      render(<MobileHeader title="Invoice" actions={makeActions()} />)
+
+      expect(screen.getByTestId('mobile-header-action-void')).toBeInTheDocument()
+      expect(screen.queryByTestId('mobile-header-overflow')).not.toBeInTheDocument()
+    })
+
+    test('keeps the header within the limit, counting the overflow button', () => {
+      render(<MobileHeader title="Invoice" actions={makeActions()} maxVisibleActions={2} />)
+
+      expect(screen.getByTestId('mobile-header-action-share')).toBeInTheDocument()
+      expect(screen.queryByTestId('mobile-header-action-print')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('mobile-header-action-void')).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'More actions' })).toHaveAttribute(
+        'aria-expanded',
+        'false',
+      )
+    })
+
+    test('runs an overflowed action from the action sheet', () => {
+      const onClick = jest.fn()
+      render(<MobileHeader title="Invoice" actions={makeActions(onClick)} maxVisibleActions={2} />)
+
+      fireEvent.click(screen.getByRole('button', { name: 'More actions' }))
+      fireEvent.click(screen.getByText('Void'))
+
+      expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('does not overflow when the actions already fit', () => {
+      render(<MobileHeader title="Invoice" actions={makeActions()} maxVisibleActions={3} />)
+
+      expect(screen.getByTestId('mobile-header-action-void')).toBeInTheDocument()
+      expect(screen.queryByTestId('mobile-header-overflow')).not.toBeInTheDocument()
+    })
+  })
+
+  test('renders trailing content after the actions', () => {
+    render(<MobileHeader title="Invoices" trailing={<button type="button">Business A</button>} />)
+
+    expect(screen.getByRole('button', { name: 'Business A' })).toBeInTheDocument()
+  })
 })
