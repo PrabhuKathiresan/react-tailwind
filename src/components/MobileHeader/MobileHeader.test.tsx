@@ -110,10 +110,22 @@ describe('MobileHeader', () => {
       expect(screen.getByTestId('mobile-header-title').parentElement).not.toHaveClass('px-2')
     })
 
-    test('keeps the leading slot when there is a Back button', () => {
+    test('puts a left title close to Back, which stays a 40px touch target on the content edge', () => {
       render(<MobileHeader title="Invoice" titleAlign="left" onBack={jest.fn()} />)
 
-      expect(screen.getByTestId('mobile-header-leading')).toBeInTheDocument()
+      expect(screen.getByTestId('mobile-header-leading')).not.toHaveClass('min-w-[40px]')
+      expect(screen.getByTestId('mobile-header-back-btn')).toHaveClass(
+        'min-h-10',
+        'min-w-10',
+        '-ml-2.5',
+      )
+      expect(screen.getByTestId('mobile-header-title').parentElement).toHaveClass('pr-2')
+      expect(screen.getByTestId('mobile-header-title').parentElement).not.toHaveClass('px-2')
+    })
+
+    test('keeps even padding and the reserved slot for a centred title', () => {
+      render(<MobileHeader title="Orders" onBack={jest.fn()} />)
+
       expect(screen.getByTestId('mobile-header-title').parentElement).toHaveClass('px-2')
     })
 
