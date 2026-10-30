@@ -4,6 +4,7 @@ import { buildClassName } from '../../utils/build-classname'
 import { Button } from '../Button'
 import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import XIcon from '../Icons/X.svg'
+import { useResponsiveValue } from '../../hooks/use-breakpoint'
 import type { AlignmentMap, DrawerProps, SizeMap } from './Drawer.types'
 
 const alignmentMap: AlignmentMap = {
@@ -19,8 +20,9 @@ const panelAlignmentMap: AlignmentMap = {
   start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
   end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
   top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
+  // Bottom sheets clear the home indicator on notched phones (0 elsewhere).
   bottom:
-    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[88vh] max-h-[88dvh]',
+    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[88vh] max-h-[88dvh] pb-[env(safe-area-inset-bottom,0px)]',
 }
 
 const panelSizeMap: SizeMap = {
@@ -37,8 +39,8 @@ export const Drawer: React.FC<DrawerProps> = ({
   isOpen,
   onClose = () => {},
   closeOnOutsideClick = true,
-  align = 'end',
-  size = 'md',
+  align: alignProp = 'end',
+  size: sizeProp = 'md',
   backdrop = true,
   title,
   description,
@@ -54,6 +56,8 @@ export const Drawer: React.FC<DrawerProps> = ({
   showCloseButton = true,
   dragHandle,
 }) => {
+  const align = useResponsiveValue(alignProp)
+  const size = useResponsiveValue(sizeProp)
   const showTitleSection = Boolean(title || description || showBackButton || showCloseButton)
   const shouldShowDragHandle = dragHandle ?? align === 'bottom'
   const [viewportHeight, setViewportHeight] = React.useState<number | null>(null)

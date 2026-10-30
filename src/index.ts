@@ -56,6 +56,7 @@ export * from './components/Toast'
 export * from './components/VirtualizedDataTable'
 export * from './components/common-type'
 
+export * from './hooks/use-breakpoint'
 export * from './hooks/use-debounce'
 export * from './hooks/use-is-mobile'
 export * from './hooks/use-is-tablet'

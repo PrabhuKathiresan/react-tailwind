@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type ElementType } from 'react'
 import type { BottomNavigationProps, BottomNavigationItem } from './BottomNavigation.types'
 import { buildClassName } from '../../utils/build-classname'
 
@@ -12,12 +12,19 @@ export function BottomNavigation({
   activeIndicatorStyle = 'line',
   containerClass = '',
   itemClass = '',
+  linkAs = 'a',
+  linkHrefProp = 'href',
+  ariaLabel = 'Bottom Navigation',
+  hidden = false,
 }: BottomNavigationProps) {
   const handleTabClick = (item: BottomNavigationItem) => {
     if (item.disabled) return
     item.onClick?.()
-    onChange(item.id)
+    onChange?.(item.id)
   }
+
+  // Removed from the tree, not just covered, so hidden tabs can't take focus.
+  if (hidden) return null
 
   const themeStyles = {
     light:
@@ -28,7 +35,7 @@ export function BottomNavigation({
 
   return (
     <nav
-      aria-label="Bottom Navigation"
+      aria-label={ariaLabel}
       className={buildClassName(
         'w-full flex items-center justify-around select-none shadow-lg transition-colors relative',
         fixed && 'fixed bottom-0 left-0 right-0 z-40',
@@ -68,11 +75,17 @@ export function BottomNavigation({
           success: 'bg-emerald-500 text-white',
         }[item.badgeVariant || 'danger']
 
+        // A disabled item stays a button: a link can't be disabled.
+        const isLink = Boolean(item.href) && !item.disabled
+        const ItemElement: ElementType = isLink ? linkAs : 'button'
+        const elementProps = isLink
+          ? { [linkHrefProp]: item.href }
+          : { type: 'button', disabled: item.disabled }
+
         return (
-          <button
+          <ItemElement
             key={item.id}
-            type="button"
-            disabled={item.disabled}
+            {...elementProps}
             onClick={() => handleTabClick(item)}
             className={buildClassName(
               'flex-1 flex flex-col items-center justify-center pt-2 pb-1.5 px-1 transition-all duration-200 relative cursor-pointer group',
@@ -81,7 +94,9 @@ export function BottomNavigation({
               itemClass,
             )}
             data-testid={`bottom-nav-item-${item.id}`}
-            aria-selected={isActive}
+            aria-current={isActive ? 'page' : undefined}
+            // With its label hidden, the item still needs a name; the icon is decorative.
+            aria-label={!showLabelText && typeof item.label === 'string' ? item.label : undefined}
           >
             {/* Active Indicator Bar on Top Border */}
             {activeIndicatorStyle === 'line' && isActive && (
@@ -107,7 +122,10 @@ export function BottomNavigation({
                   : 'px-1 py-0.5',
               )}
             >
-              <span className="text-xl transition-transform duration-150 group-active:scale-95">
+              <span
+                className="text-xl transition-transform duration-150 group-active:scale-95"
+                aria-hidden="true"
+              >
                 {isActive && item.activeIcon ? item.activeIcon : item.icon}
               </span>
 
@@ -146,7 +164,7 @@ export function BottomNavigation({
                 )}
               />
             )}
-          </button>
+          </ItemElement>
         )
       })}
     </nav>

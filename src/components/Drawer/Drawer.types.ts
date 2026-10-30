@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react'
+import type { ResponsiveValue } from '../../hooks/use-breakpoint'
 
 export type DrawerAlignment = 'center' | 'start' | 'end' | 'top' | 'bottom'
 
@@ -23,10 +24,12 @@ export interface DrawerProps {
   closeOnOutsideClick?: boolean
 
   /**
-   * Drawer alignment on the page ('start' | 'end' | 'top' | 'bottom' | 'center')
+   * Drawer alignment on the page ('start' | 'end' | 'top' | 'bottom' | 'center').
+   * Pass `{ base, md, lg }` to change it per breakpoint, e.g. `{ base: 'bottom', md: 'end' }`
+   * for a bottom sheet on phones and a side panel from 768px.
    * @default "end"
    */
-  align?: DrawerAlignment
+  align?: ResponsiveValue<DrawerAlignment>
 
   /**
    * Whether to add backdrop overlay
@@ -66,10 +69,11 @@ export interface DrawerProps {
   footerSticky?: boolean
 
   /**
-   * Drawer size ('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full')
+   * Drawer size ('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full').
+   * Pass `{ base, md, lg }` to change it per breakpoint, e.g. `{ base: 'full', md: 'md' }`.
    * @default "md"
    */
-  size?: DrawerSize
+  size?: ResponsiveValue<DrawerSize>
 
   /**
    * Shows top-right ✕ close button

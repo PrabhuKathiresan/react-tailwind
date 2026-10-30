@@ -32,6 +32,19 @@ export interface MobileHeaderProps {
   leading?: ReactNode
   /** Right side action items */
   actions?: MobileHeaderAction[]
+  /**
+   * Maximum icon buttons shown in the header. When `actions` has more, the
+   * extras collapse into a "More actions" button that opens an `ActionSheet`.
+   * Unset shows every action.
+   */
+  maxVisibleActions?: number
+  /**
+   * Accessible label of the overflow button.
+   * @default 'More actions'
+   */
+  overflowLabel?: string
+  /** Custom content after the actions, e.g. an avatar or a context switcher with its own state */
+  trailing?: ReactNode
   /** Enables in-header search bar layout */
   searchable?: boolean
   /** Controlled search input value */
