@@ -102,7 +102,7 @@ export function MobileHeader({
       data-testid="mobile-header"
     >
       {/* Main Header Row */}
-      <div className="h-14 px-4 flex items-center justify-between gap-3 relative">
+      <div className="h-14 px-4 flex items-center justify-between gap-2 relative">
         {/* Search Mode Header View */}
         {searchable && isSearchActive ? (
           <div
@@ -160,9 +160,10 @@ export function MobileHeader({
                     type="button"
                     onClick={onBack}
                     aria-label={backLabel}
-                    // 40px touch target hanging into the row padding, so the chevron
-                    // itself sits on the content edge and the title follows closely.
-                    className="flex min-h-10 min-w-10 items-center justify-center gap-0.5 px-2.5 -ml-2.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 rounded-xl transition-colors cursor-pointer"
+                    // 40px-tall touch target hanging into the row padding: the chevron
+                    // sits on the content edge, with no right padding, so the title
+                    // follows ~10px after it.
+                    className="flex min-h-10 min-w-8 items-center justify-start gap-0.5 pl-2.5 pr-0 sm:pr-2 -ml-2.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 rounded-xl transition-colors cursor-pointer"
                     data-testid="mobile-header-back-btn"
                   >
                     <ChevronLeftIcon />
