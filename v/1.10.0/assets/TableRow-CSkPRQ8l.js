@@ -1,0 +1,1 @@
+const e="TableRow",a="",o=[{name:"hoverable",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:"Whether the row highlights on hover"}],l={name:e,description:"",props:o};export{l as default,a as description,e as name,o as props};
