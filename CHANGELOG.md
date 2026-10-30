@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.10.3 (2026-10-30)</small>
+
+* Merge pull request #19 from PrabhuKathiresan/fix/mobile-header-back-gap ([625db09b7016d5e46f9a7f99773124684c916da0](https://github.com/PrabhuKathiresan/react-tailwind/commit/625db09b7016d5e46f9a7f99773124684c916da0)), closes [#19](https://github.com/PrabhuKathiresan/react-tailwind/issues/19)
+* fix(MobileHeader): tighten the gap between Back and the title ([6ba962313f0f8e5c2fea7c155cce9a61d7d60486](https://github.com/PrabhuKathiresan/react-tailwind/commit/6ba962313f0f8e5c2fea7c155cce9a61d7d60486))
+
 ## <small>1.10.2 (2026-10-30)</small>
 
 * Merge pull request #18 from PrabhuKathiresan/fix/mobile-header-back-spacing ([7faa66aa5cec29e941a472f1a9d94da931f36197](https://github.com/PrabhuKathiresan/react-tailwind/commit/7faa66aa5cec29e941a472f1a9d94da931f36197)), closes [#18](https://github.com/PrabhuKathiresan/react-tailwind/issues/18)
