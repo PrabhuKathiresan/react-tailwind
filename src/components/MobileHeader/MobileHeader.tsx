@@ -148,7 +148,11 @@ export function MobileHeader({
                 title, where the empty slot balances the actions. */}
             {hasLeadingSlot && (
               <div
-                className="flex items-center gap-1 min-w-[40px] shrink-0 z-10"
+                className={buildClassName(
+                  'flex items-center gap-1 shrink-0 z-10',
+                  // A Back button is its own 40px target; reserve the width only for other content.
+                  !onBack && 'min-w-[40px]',
+                )}
                 data-testid="mobile-header-leading"
               >
                 {onBack ? (
@@ -156,7 +160,9 @@ export function MobileHeader({
                     type="button"
                     onClick={onBack}
                     aria-label={backLabel}
-                    className="flex items-center gap-0.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 p-1 -ml-1 rounded-xl transition-colors cursor-pointer"
+                    // 40px touch target hanging into the row padding, so the chevron
+                    // itself sits on the content edge and the title follows closely.
+                    className="flex min-h-10 min-w-10 items-center justify-center gap-0.5 px-2.5 -ml-2.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 rounded-xl transition-colors cursor-pointer"
                     data-testid="mobile-header-back-btn"
                   >
                     <ChevronLeftIcon />
@@ -172,7 +178,9 @@ export function MobileHeader({
             <div
               className={buildClassName(
                 'flex-1 min-w-0',
-                hasLeadingSlot ? 'px-2' : 'pr-2',
+                // The row's gap already separates a left title from a leading element;
+                // a centred title keeps even padding.
+                titleAlign === 'center' ? 'px-2' : 'pr-2',
                 titleAlign === 'center'
                   ? 'absolute inset-x-12 text-center pointer-events-none flex flex-col items-center justify-center'
                   : 'text-left',
