@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.10.2 (2026-10-30)</small>
+
+* Merge pull request #18 from PrabhuKathiresan/fix/mobile-header-back-spacing ([7faa66aa5cec29e941a472f1a9d94da931f36197](https://github.com/PrabhuKathiresan/react-tailwind/commit/7faa66aa5cec29e941a472f1a9d94da931f36197)), closes [#18](https://github.com/PrabhuKathiresan/react-tailwind/issues/18)
+* fix(MobileHeader): bring a left title close to the Back button ([a8055157ebb6cfa1f8d24a23cda98668e1be5531](https://github.com/PrabhuKathiresan/react-tailwind/commit/a8055157ebb6cfa1f8d24a23cda98668e1be5531))
+
 ## <small>1.10.1 (2026-10-30)</small>
 
 * Merge pull request #17 from PrabhuKathiresan/fix/mobile-header-title-alignment ([343c8d319c61165833a7d9c8cb57d9252c23d1af](https://github.com/PrabhuKathiresan/react-tailwind/commit/343c8d319c61165833a7d9c8cb57d9252c23d1af)), closes [#17](https://github.com/PrabhuKathiresan/react-tailwind/issues/17)
