@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import { ToastProvider, useToast } from './ToastProvider'
 import type { ToastPlacement } from './Toast.types'
+import { mockViewport } from '../../test-utils/mock-viewport'
 
 // Mock headlessui Transition for stability
 jest.mock('@headlessui/react', () => ({
@@ -155,7 +156,9 @@ describe('<ToastProvider />', () => {
 
     const container = screen.getByRole('status').parentElement!.parentElement!
 
-    expect(container.className).toMatch(/bottom-6/)
+    expect(container.className).toMatch(
+      /bottom-\[calc\(1\.5rem\+env\(safe-area-inset-bottom,0px\)\)\]/,
+    )
     expect(container.className).toMatch(/right-6/)
   })
 
@@ -182,6 +185,56 @@ describe('<ToastProvider />', () => {
 
     const container2 = screen.getAllByRole('status')[0].parentElement!.parentElement!
 
-    expect(container2.className).toMatch(/bottom-6/)
+    expect(container2.className).toMatch(
+      /bottom-\[calc\(1\.5rem\+env\(safe-area-inset-bottom,0px\)\)\]/,
+    )
+  })
+
+  describe('responsive placement and offset', () => {
+    afterEach(() => mockViewport.restore())
+
+    test.each([
+      [360, 'bottom-center'],
+      [800, 'top-right'],
+    ])('at %ipx uses %s', (width, expected) => {
+      mockViewport(width)
+      render(
+        <ToastProvider placement={{ base: 'bottom-center', md: 'top-right' }}>
+          <TriggerToast />
+        </ToastProvider>,
+      )
+
+      expect(screen.getByTestId('toast-container')).toHaveAttribute('data-placement', expected)
+    })
+
+    test('applies the bottom offset to bottom placements only', () => {
+      const offset = { top: '5rem', bottom: 'calc(var(--app-bottom-inset) + 0.75rem)' }
+      const { rerender } = render(
+        <ToastProvider placement="bottom-center" offset={offset}>
+          <TriggerToast />
+        </ToastProvider>,
+      )
+      const container = screen.getByTestId('toast-container')
+      expect(container.style.bottom).toBe('calc(var(--app-bottom-inset) + 0.75rem)')
+      expect(container.style.top).toBe('')
+
+      rerender(
+        <ToastProvider placement="top-right" offset={offset}>
+          <TriggerToast />
+        </ToastProvider>,
+      )
+      expect(screen.getByTestId('toast-container').style.top).toBe('5rem')
+      expect(screen.getByTestId('toast-container').style.bottom).toBe('')
+    })
+
+    test('keeps the built-in spacing without an offset', () => {
+      render(
+        <ToastProvider placement="bottom-center">
+          <TriggerToast />
+        </ToastProvider>,
+      )
+
+      expect(screen.getByTestId('toast-container')).not.toHaveAttribute('style')
+    })
   })
 })

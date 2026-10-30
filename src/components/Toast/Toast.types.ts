@@ -1,3 +1,4 @@
+import type { ResponsiveValue } from '../../hooks/use-breakpoint'
 import type { ReactNode } from 'react'
 
 /**
@@ -207,13 +208,30 @@ export type ToastPlacement =
 /**
  * Props for the ToastProvider.
  */
+/** Distance from the viewport edge, as CSS lengths (e.g. `'calc(var(--app-bottom-inset) + 0.75rem)'`). */
+export interface ToastOffset {
+  /** Used by top placements. */
+  top?: string
+  /** Used by bottom placements. */
+  bottom?: string
+}
+
 export interface ToastProviderProps {
   children: ReactNode
   /**
-   * Position on screen where toasts appear.
+   * Position on screen where toasts appear. Pass `{ base, md, lg }` to change it per
+   * breakpoint, e.g. `{ base: 'bottom-center', md: 'top-right' }` for toasts above a
+   * phone's bottom bar and in the corner on wider screens.
    * Defaults to `"top-right"`.
    */
-  placement?: ToastPlacement
+  placement?: ResponsiveValue<ToastPlacement>
+
+  /**
+   * Overrides the default distance from the top or bottom edge, e.g. to sit above an
+   * app's fixed bottom navigation. Defaults keep the built-in spacing (bottom placements
+   * also clear the home-indicator safe area).
+   */
+  offset?: ToastOffset
 
   /**
    * Maximum number of toasts visible simultaneously.

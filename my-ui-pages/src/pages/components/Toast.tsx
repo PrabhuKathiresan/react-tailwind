@@ -256,6 +256,42 @@ function PlacementDemoInner({ placement }: { placement: string }) {
   )
 }
 
+/* ----------------------------------------------
+ * Example: Responsive Placement
+ * ---------------------------------------------- */
+function ResponsivePlacementExample() {
+  return (
+    <ToastProvider
+      placement={{ base: 'bottom-center', md: 'top-right' }}
+      offset={{ bottom: 'calc(4rem + env(safe-area-inset-bottom, 0px))' }}
+    >
+      <ResponsivePlacementInner />
+    </ToastProvider>
+  )
+}
+
+function ResponsivePlacementInner() {
+  const { toast } = useToast()
+
+  return (
+    <div className="space-y-3">
+      <BodyText>
+        Bottom-centre on phones, 4rem above the bottom edge (e.g. clear of a bottom navigation bar);
+        top-right from 768px. Long messages stay within the screen.
+      </BodyText>
+      <Button
+        onClick={() =>
+          toast.error('We could not record this payment. Check your connection and try again.', {
+            title: 'Payment not saved',
+          })
+        }
+      >
+        Show responsive toast
+      </Button>
+    </div>
+  )
+}
+
 function ToastBestPractices() {
   return (
     <>
@@ -418,6 +454,19 @@ showToast("This will not auto-close.", { autoClose: false })`,
       render: <PlacementDemoExample />,
       code: `
 <ToastProvider placement="top-right" maxToasts={5}>
+  <App />
+</ToastProvider>`,
+    },
+    {
+      title: 'Responsive Placement',
+      description:
+        'Pass { base, md, lg } to change placement per breakpoint, and offset to clear fixed app chrome such as a bottom navigation bar.',
+      render: <ResponsivePlacementExample />,
+      code: `
+<ToastProvider
+  placement={{ base: 'bottom-center', md: 'top-right' }}
+  offset={{ bottom: 'calc(var(--app-bottom-inset) + 0.75rem)' }}
+>
   <App />
 </ToastProvider>`,
     },

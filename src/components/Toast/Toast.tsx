@@ -135,7 +135,8 @@ export const Toast: React.FC<ToastProps & { isTop?: boolean }> = ({
         role="status"
         id={id.toString()}
         className={buildClassName(
-          'relative overflow-hidden flex items-start gap-3 rounded-xl px-4 py-3.5 min-w-[280px] max-w-md transition-all',
+          // Never wider than the viewport minus a 16px gutter each side.
+          'relative overflow-hidden flex items-start gap-3 rounded-xl px-4 py-3.5 min-w-[min(280px,calc(100vw-2rem))] max-w-[min(28rem,calc(100vw-2rem))] transition-all',
           variantStyleMap[variant][type],
           className,
         )}
