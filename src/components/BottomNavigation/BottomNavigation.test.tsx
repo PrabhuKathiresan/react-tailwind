@@ -55,5 +55,68 @@ describe('BottomNavigation', () => {
 
     expect(screen.queryByText('Home')).not.toBeInTheDocument()
     expect(screen.queryByText('Search')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument()
+  })
+
+  test('marks only the active tab as the current page', () => {
+    render(<BottomNavigation items={items} activeId="search" onChange={jest.fn()} />)
+
+    expect(screen.getByTestId('bottom-nav-item-search')).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByTestId('bottom-nav-item-home')).not.toHaveAttribute('aria-current')
+    expect(screen.getByTestId('bottom-nav-item-home')).not.toHaveAttribute('aria-selected')
+  })
+
+  test('renders items with an href as links and still reports the selection', () => {
+    const onChangeMock = jest.fn()
+    const linkItems: BottomNavigationItem[] = [
+      { id: 'home', label: 'Home', icon: 'H', href: '/home' },
+      { id: 'orders', label: 'Orders', icon: 'O', href: '/orders' },
+    ]
+    render(<BottomNavigation items={linkItems} activeId="home" onChange={onChangeMock} />)
+
+    const orders = screen.getByRole('link', { name: 'Orders' })
+    expect(orders).toHaveAttribute('href', '/orders')
+    fireEvent.click(orders)
+    expect(onChangeMock).toHaveBeenCalledWith('orders')
+  })
+
+  test('passes the destination to a custom link component on the configured prop', () => {
+    const RouterLink = ({ to, children, ...rest }: { to: string; children?: React.ReactNode }) => (
+      <a data-to={to} href={`#${to}`} {...rest}>
+        {children}
+      </a>
+    )
+    render(
+      <BottomNavigation
+        items={[{ id: 'home', label: 'Home', icon: 'H', href: '/home' }]}
+        activeId="home"
+        linkAs={RouterLink}
+        linkHrefProp="to"
+      />,
+    )
+
+    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('data-to', '/home')
+  })
+
+  test('keeps a disabled item as a disabled button even with an href', () => {
+    render(
+      <BottomNavigation
+        items={[{ id: 'soon', label: 'Soon', icon: 'S', href: '/soon', disabled: true }]}
+        activeId="home"
+      />,
+    )
+
+    expect(screen.queryByRole('link')).not.toBeInTheDocument()
+    expect(screen.getByTestId('bottom-nav-item-soon')).toBeDisabled()
+  })
+
+  test('labels the landmark and can be removed from the tree', () => {
+    const { rerender } = render(
+      <BottomNavigation items={items} activeId="home" onChange={jest.fn()} ariaLabel="Primary" />,
+    )
+    expect(screen.getByRole('navigation', { name: 'Primary' })).toBeInTheDocument()
+
+    rerender(<BottomNavigation items={items} activeId="home" onChange={jest.fn()} hidden />)
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
   })
 })
