@@ -17,6 +17,7 @@ import type {
   ToastProviderProps,
 } from './Toast.types'
 import { buildClassName } from '../../utils/build-classname'
+import { useResponsiveValue } from '../../hooks/use-breakpoint'
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
 let toastCounter = 0
@@ -32,9 +33,11 @@ const placementClass: Record<ToastPlacement, string> = {
   'top-left': 'top-20 left-6 items-start',
   'top-center': 'top-20 left-1/2 -translate-x-1/2 items-center',
 
-  'bottom-right': 'bottom-6 right-6 items-end',
-  'bottom-left': 'bottom-6 left-6 items-start',
-  'bottom-center': 'bottom-6 left-1/2 -translate-x-1/2 items-center',
+  // Bottom placements clear the home indicator on notched phones (0 elsewhere).
+  'bottom-right': 'bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] right-6 items-end',
+  'bottom-left': 'bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] left-6 items-start',
+  'bottom-center':
+    'bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 items-center',
 }
 
 interface ToastMeta {
@@ -45,10 +48,14 @@ interface ToastMeta {
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
   children,
-  placement = 'top-right',
+  placement: placementProp = 'top-right',
   maxToasts = 5,
+  offset,
   className,
 }) => {
+  const placement = useResponsiveValue(placementProp)
+  const isTop = placement.startsWith('top')
+  const edgeOffset = isTop ? offset?.top : offset?.bottom
   const [toasts, setToasts] = useState<IToast[]>([])
   const [pausedIds, setPausedIds] = useState<Set<number>>(new Set())
   const metaRefs = useRef<Map<number, ToastMeta>>(new Map())
@@ -205,6 +212,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
           placementClass[placement],
           className,
         )}
+        style={edgeOffset ? (isTop ? { top: edgeOffset } : { bottom: edgeOffset }) : undefined}
+        data-testid="toast-container"
+        data-placement={placement}
       >
         {toasts.map((toastItem) => (
           <div
@@ -216,7 +226,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
             <Toast
               {...toastItem}
               isPaused={pausedIds.has(toastItem.id)}
-              isTop={placement.startsWith('top')}
+              isTop={isTop}
               onClose={() => closeToast(toastItem.id)}
             />
           </div>

@@ -103,4 +103,20 @@ describe('<Toast />', () => {
     expect(props.enterFrom).toBe('opacity-0 translate-y-3 scale-95')
     expect(props.leaveTo).toBe('opacity-0 translate-y-2 scale-95')
   })
+
+  test('never grows wider than the viewport minus a 16px gutter each side', () => {
+    render(
+      <Toast
+        id={9}
+        message="A long message about a payment that could not be recorded"
+        type="error"
+        onClose={jest.fn()}
+      />,
+    )
+
+    expect(screen.getByRole('status')).toHaveClass(
+      'min-w-[min(280px,calc(100vw-2rem))]',
+      'max-w-[min(28rem,calc(100vw-2rem))]',
+    )
+  })
 })
