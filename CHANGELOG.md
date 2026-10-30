@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## 1.10.0 (2026-10-30)
+
+* Merge pull request #15 from PrabhuKathiresan/feat/mobile-foundations [skip ci] ([8b95fa8adecf00ab0cea1f84f5b5cd80e5f353ac](https://github.com/PrabhuKathiresan/react-tailwind/commit/8b95fa8adecf00ab0cea1f84f5b5cd80e5f353ac)), closes [#15](https://github.com/PrabhuKathiresan/react-tailwind/issues/15) [#16](https://github.com/PrabhuKathiresan/react-tailwind/issues/16)
+* Merge pull request #16 from PrabhuKathiresan/feat/pull-to-refresh-overlay ([377fb459bc7fa7c614c2770503d8f52e149f0ea9](https://github.com/PrabhuKathiresan/react-tailwind/commit/377fb459bc7fa7c614c2770503d8f52e149f0ea9)), closes [#16](https://github.com/PrabhuKathiresan/react-tailwind/issues/16)
+* feat(BottomNavigation): link items, aria-current and a hideable bar ([9baa9c99e8c0927c9471aa7204227a04d8f8a169](https://github.com/PrabhuKathiresan/react-tailwind/commit/9baa9c99e8c0927c9471aa7204227a04d8f8a169))
+* feat(Drawer): responsive align and size, safe area on bottom sheets ([3f96bd7b4696083ce83c715b8d9bde4b327031cb](https://github.com/PrabhuKathiresan/react-tailwind/commit/3f96bd7b4696083ce83c715b8d9bde4b327031cb))
+* feat(hooks): add useBreakpoint, useMediaQuery and useResponsiveValue ([ee845b2a5e8fb8af1c7255188bbed4d18ed941df](https://github.com/PrabhuKathiresan/react-tailwind/commit/ee845b2a5e8fb8af1c7255188bbed4d18ed941df))
+* feat(MobileHeader): trailing slot and opt-in action overflow ([6544b84afb2e91c262890599d7f9ef7c58842424](https://github.com/PrabhuKathiresan/react-tailwind/commit/6544b84afb2e91c262890599d7f9ef7c58842424))
+* feat(PullToRefresh): overlay variant and gesture fixes ([370e395d707473c3214dff70a602a2cb57169a36](https://github.com/PrabhuKathiresan/react-tailwind/commit/370e395d707473c3214dff70a602a2cb57169a36))
+* feat(StickyActionBar): safe-area padding and bottom offset ([e62969991384d795bc7caeb540570ad10534c262](https://github.com/PrabhuKathiresan/react-tailwind/commit/e62969991384d795bc7caeb540570ad10534c262))
+
 ## 1.9.0 (2026-10-15)
 
 * Merge pull request #14 from PrabhuKathiresan/feat/button-selectbox-improvements ([fa0632bc1242224c00cf25213ea0accecb9acca9](https://github.com/PrabhuKathiresan/react-tailwind/commit/fa0632bc1242224c00cf25213ea0accecb9acca9)), closes [#14](https://github.com/PrabhuKathiresan/react-tailwind/issues/14)
