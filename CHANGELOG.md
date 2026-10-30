@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented here.
 
+## 1.11.0 (2026-10-30)
+
+* Merge pull request #20 from PrabhuKathiresan/feat/toast-responsive-placement ([ef5b439d702520e1c57475f3ae640dc9770ec921](https://github.com/PrabhuKathiresan/react-tailwind/commit/ef5b439d702520e1c57475f3ae640dc9770ec921)), closes [#20](https://github.com/PrabhuKathiresan/react-tailwind/issues/20)
+* docs(Toast): responsive placement and offset example ([25b32949208ff6e63f57ea59c17bf6c882f6c7c8](https://github.com/PrabhuKathiresan/react-tailwind/commit/25b32949208ff6e63f57ea59c17bf6c882f6c7c8))
+* feat(Toast): responsive placement, edge offset and a viewport-safe width ([183b0e94e04225b677caa6c5763d5f431f81c7b0](https://github.com/PrabhuKathiresan/react-tailwind/commit/183b0e94e04225b677caa6c5763d5f431f81c7b0))
+
 ## <small>1.10.3 (2026-10-30)</small>
 
 * Merge pull request #19 from PrabhuKathiresan/fix/mobile-header-back-gap ([625db09b7016d5e46f9a7f99773124684c916da0](https://github.com/PrabhuKathiresan/react-tailwind/commit/625db09b7016d5e46f9a7f99773124684c916da0)), closes [#19](https://github.com/PrabhuKathiresan/react-tailwind/issues/19)
