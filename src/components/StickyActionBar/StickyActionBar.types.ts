@@ -28,4 +28,16 @@ export interface StickyActionBarProps extends HTMLAttributes<HTMLDivElement> {
    * @default "max-w-5xl"
    */
   containerMaxWidth?: string
+  /**
+   * Pads the bar's bottom edge for `env(safe-area-inset-bottom)` so its actions clear the
+   * home indicator on notched phones (no effect elsewhere).
+   * @default true
+   */
+  safeArea?: boolean
+  /**
+   * Distance from the viewport bottom for `fixed`/`sticky` bars, as a CSS length or variable,
+   * e.g. `var(--app-bottom-inset)` to sit above an app's bottom navigation.
+   * @default '0px'
+   */
+  bottomOffset?: string
 }

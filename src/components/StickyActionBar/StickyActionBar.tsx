@@ -26,7 +26,10 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
     drawerTitle = 'Summary Details',
     position = 'fixed',
     containerMaxWidth = 'max-w-5xl',
+    safeArea = true,
+    bottomOffset,
     className,
+    style,
     ...restProps
   } = props
 
@@ -46,8 +49,10 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
         className={buildClassName(
           positionClass,
           'border-t border-[var(--ui-border)] bg-white/90 p-3.5 backdrop-blur-md shadow-lg dark:bg-gray-900/90 transition-all',
+          safeArea && 'pb-[calc(0.875rem+env(safe-area-inset-bottom,0px))]',
           className,
         )}
+        style={bottomOffset && position !== 'relative' ? { bottom: bottomOffset, ...style } : style}
         data-testid="sticky-action-bar"
         {...restProps}
       >
