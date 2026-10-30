@@ -132,6 +132,47 @@ const handleRefresh = async () => {
 </PullToRefresh>`,
     },
     {
+      title: 'Overlay Indicator',
+      description:
+        'variant="overlay" keeps the list still and slides a badge down over it, e.g. from behind a sticky app header. It parks at the threshold while refreshing. Pass onError to surface a failed refresh.',
+      render: (
+        <div className="w-full max-w-sm">
+          <PullToRefresh
+            variant="overlay"
+            onRefresh={handleManualRefresh}
+            refreshedLabel="Orders updated"
+            className="h-64 rounded-2xl border border-[var(--ui-border)] bg-white dark:bg-gray-800 p-3"
+          >
+            <div className="space-y-2.5">
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-3 bg-gray-50 dark:bg-gray-900 rounded-xl border border-[var(--ui-border-muted)] flex items-center justify-between"
+                >
+                  <div>
+                    <div className="text-xs font-semibold text-gray-900 dark:text-white">
+                      {item.title}
+                    </div>
+                    <div className="text-[11px] text-gray-400 mt-0.5">{item.time}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </PullToRefresh>
+        </div>
+      ),
+      code: `
+<PullToRefresh
+  variant="overlay"
+  onRefresh={refetchOrders}
+  onError={() => toast.error('Could not refresh orders')}
+  refreshedLabel="Orders updated"
+  className="h-full"
+>
+  <OrderList />
+</PullToRefresh>`,
+    },
+    {
       title: 'Controlled Refreshing State',
       description:
         'Use the refreshing prop to manually control the spinner indicator from parent state or buttons.',
