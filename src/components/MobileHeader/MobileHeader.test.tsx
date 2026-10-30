@@ -110,14 +110,15 @@ describe('MobileHeader', () => {
       expect(screen.getByTestId('mobile-header-title').parentElement).not.toHaveClass('px-2')
     })
 
-    test('puts a left title close to Back, which stays a 40px touch target on the content edge', () => {
+    test('puts a left title close to Back, a 40px-tall touch target on the content edge', () => {
       render(<MobileHeader title="Invoice" titleAlign="left" onBack={jest.fn()} />)
 
       expect(screen.getByTestId('mobile-header-leading')).not.toHaveClass('min-w-[40px]')
       expect(screen.getByTestId('mobile-header-back-btn')).toHaveClass(
         'min-h-10',
-        'min-w-10',
+        'min-w-8',
         '-ml-2.5',
+        'pr-0',
       )
       expect(screen.getByTestId('mobile-header-title').parentElement).toHaveClass('pr-2')
       expect(screen.getByTestId('mobile-header-title').parentElement).not.toHaveClass('px-2')
