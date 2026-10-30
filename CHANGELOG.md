@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.10.1 (2026-10-30)</small>
+
+* Merge pull request #17 from PrabhuKathiresan/fix/mobile-header-title-alignment ([343c8d319c61165833a7d9c8cb57d9252c23d1af](https://github.com/PrabhuKathiresan/react-tailwind/commit/343c8d319c61165833a7d9c8cb57d9252c23d1af)), closes [#17](https://github.com/PrabhuKathiresan/react-tailwind/issues/17)
+* fix(MobileHeader): align a left title with the page content ([6538d9280bb9e2a531bdc25bcf019e7211958ff5](https://github.com/PrabhuKathiresan/react-tailwind/commit/6538d9280bb9e2a531bdc25bcf019e7211958ff5))
+
 ## 1.10.0 (2026-10-30)
 
 * Merge pull request #15 from PrabhuKathiresan/feat/mobile-foundations [skip ci] ([8b95fa8adecf00ab0cea1f84f5b5cd80e5f353ac](https://github.com/PrabhuKathiresan/react-tailwind/commit/8b95fa8adecf00ab0cea1f84f5b5cd80e5f353ac)), closes [#15](https://github.com/PrabhuKathiresan/react-tailwind/issues/15) [#16](https://github.com/PrabhuKathiresan/react-tailwind/issues/16)
