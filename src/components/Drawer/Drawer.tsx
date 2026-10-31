@@ -63,11 +63,15 @@ export const Drawer: React.FC<DrawerProps> = ({
   const size = useResponsiveValue(sizeProp)
   const showTitleSection = Boolean(title || description || showBackButton || showCloseButton)
   const shouldShowDragHandle = dragHandle ?? align === 'bottom'
-  const [viewportHeight, setViewportHeight] = React.useState<number | null>(null)
+  // The visible area while the on-screen keyboard is open; null otherwise.
+  const [keyboardViewport, setKeyboardViewport] = React.useState<{
+    top: number
+    height: number
+  } | null>(null)
 
   React.useEffect(() => {
     if (!isOpen) {
-      setViewportHeight(null)
+      setKeyboardViewport(null)
       return
     }
 
@@ -82,9 +86,18 @@ export const Drawer: React.FC<DrawerProps> = ({
       const vv = window.visualViewport
       if (!vv) return
       const keyboardOpen = window.innerHeight - vv.height > KEYBOARD_THRESHOLD
-      const next = keyboardOpen ? Math.round(vv.height) : null
-      // An unchanged value doesn't re-render.
-      setViewportHeight(next)
+      const top = Math.round(vv.offsetTop)
+      const height = Math.round(vv.height)
+      // The browser scrolls the visible area to the focused field, so the
+      // drawer follows its offset as well as its height. An unchanged value
+      // doesn't re-render.
+      setKeyboardViewport((current) =>
+        !keyboardOpen
+          ? null
+          : current && current.top === top && current.height === height
+            ? current
+            : { top, height },
+      )
     }
     const updateHeight = () => {
       if (!frame) frame = window.requestAnimationFrame(measure)
@@ -123,10 +136,18 @@ export const Drawer: React.FC<DrawerProps> = ({
       {/* Pinned to all four edges rather than given a height: mobile browsers
           move fixed edges with the URL bar on every frame, while 100dvh only
           updates once its animation ends (the drawer briefly came up short).
-          With the keyboard open it takes the visual viewport's height. */}
+          With the keyboard open it takes the visible area's offset and height. */}
       <div
         className="fixed inset-0"
-        style={viewportHeight ? { height: `${viewportHeight}px`, bottom: 'auto' } : undefined}
+        style={
+          keyboardViewport
+            ? {
+                top: `${keyboardViewport.top}px`,
+                height: `${keyboardViewport.height}px`,
+                bottom: 'auto',
+              }
+            : undefined
+        }
         data-testid="drawer-viewport"
       >
         <div className={buildClassName('flex', alignmentMap[align])}>

@@ -207,13 +207,15 @@ describe('Drawer Component', () => {
       const listeners: Array<() => void> = []
       const vv = {
         height,
+        offsetTop: 0,
         addEventListener: (_: string, fn: () => void) => listeners.push(fn),
         removeEventListener: () => {},
       }
       Object.defineProperty(window, 'visualViewport', { value: vv, configurable: true })
       return {
-        resize(next: number) {
+        resize(next: number, offsetTop = 0) {
           vv.height = next
+          vv.offsetTop = offsetTop
           act(() => {
             listeners.forEach((fn) => fn())
             jest.runOnlyPendingTimers()
@@ -259,7 +261,9 @@ describe('Drawer Component', () => {
         </Drawer>,
       )
 
-      vv.resize(420)
+      // The browser has scrolled the visible area 180px down to the field.
+      vv.resize(420, 180)
+      expect(container().style.top).toBe('180px')
       expect(container().style.height).toBe('420px')
       expect(container().style.bottom).toBe('auto')
 
