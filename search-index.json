@@ -2927,6 +2927,20 @@
         "required": false,
         "description": "Drawer description class",
         "defaultValue": ""
+      },
+      {
+        "name": "phoneLayout",
+        "type": "\"default\" | \"fullscreen\"",
+        "required": false,
+        "description": "How the drawer shows on phones (below 768px). 'fullscreen' fills the\nscreen with one bar (close, title, `headerAction`), moves the description\ninto the scrolling content and drops the footer, so forms keep as much\nroom as possible above the keyboard; the phone's back button closes it.\nLarger screens are unchanged. `titleClass` doesn't apply to that bar.",
+        "defaultValue": "default"
+      },
+      {
+        "name": "headerAction",
+        "type": "ReactNode",
+        "required": false,
+        "description": "The main action (e.g. Save) for the phone full-screen bar. A submit\nbutton outside the form names it with `form`.",
+        "defaultValue": null
       }
     ],
     "keywords": [
@@ -2957,10 +2971,13 @@
       "contentclass",
       "titleclass",
       "descriptionclass",
+      "phonelayout",
+      "headeraction",
       "responsivevalue",
       "draweralignment",
       "reactnode",
       "drawersize",
+      "fullscreen",
       "controls",
       "open",
       "handler",
@@ -3014,7 +3031,32 @@
       "defaults",
       "when",
       "dialog",
-      "content"
+      "content",
+      "below",
+      "fills",
+      "screen",
+      "with",
+      "moves",
+      "into",
+      "scrolling",
+      "drops",
+      "forms",
+      "keep",
+      "much",
+      "room",
+      "possible",
+      "above",
+      "phone",
+      "larger",
+      "screens",
+      "unchanged",
+      "doesn",
+      "apply",
+      "main",
+      "save",
+      "submit",
+      "form",
+      "names"
     ],
     "url": "/drawer"
   },

@@ -1,0 +1,1 @@
+const n="Dot",t="",e=[{name:"as",type:"keyof IntrinsicElements | JSXElementConstructor<any>",raw:"keyof IntrinsicElements | JSXElementConstructor<any>",enumValues:null,required:!1,defaultValue:"span",description:""}],s={name:"Dot",description:"",props:e};export{s as default,t as description,n as name,e as props};
