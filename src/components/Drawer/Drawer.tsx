@@ -35,6 +35,9 @@ const panelSizeMap: SizeMap = {
   full: 'w-full',
 }
 
+// How much shorter than the window the visual viewport must be before it's
+// taken to be the on-screen keyboard rather than the URL bar (≈ 56px).
+const KEYBOARD_THRESHOLD = 150
 export const Drawer: React.FC<DrawerProps> = ({
   isOpen,
   onClose = () => {},
@@ -68,18 +71,32 @@ export const Drawer: React.FC<DrawerProps> = ({
       return
     }
 
+    // Follow the visual viewport only while the on-screen keyboard takes space
+    // (it's then much shorter than the window), so the drawer and its footer
+    // stay above the keyboard. Otherwise it's pinned to the edges: tracking every resize and
+    // scroll in state re-rendered the drawer on each frame as the browser's
+    // URL bar moved, and its sticky header and footer jumped while scrolling.
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const vv = window.visualViewport
+      if (!vv) return
+      const keyboardOpen = window.innerHeight - vv.height > KEYBOARD_THRESHOLD
+      const next = keyboardOpen ? Math.round(vv.height) : null
+      // An unchanged value doesn't re-render.
+      setViewportHeight(next)
+    }
     const updateHeight = () => {
-      if (typeof window !== 'undefined' && window.visualViewport) {
-        setViewportHeight(window.visualViewport.height)
-      }
+      if (!frame) frame = window.requestAnimationFrame(measure)
     }
 
-    updateHeight()
+    measure()
     const vv = typeof window !== 'undefined' ? window.visualViewport : null
     vv?.addEventListener('resize', updateHeight)
     vv?.addEventListener('scroll', updateHeight)
 
     return () => {
+      if (frame) window.cancelAnimationFrame(frame)
       vv?.removeEventListener('resize', updateHeight)
       vv?.removeEventListener('scroll', updateHeight)
     }
@@ -103,9 +120,14 @@ export const Drawer: React.FC<DrawerProps> = ({
         <DialogBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200" />
       )}
 
+      {/* Pinned to all four edges rather than given a height: mobile browsers
+          move fixed edges with the URL bar on every frame, while 100dvh only
+          updates once its animation ends (the drawer briefly came up short).
+          With the keyboard open it takes the visual viewport's height. */}
       <div
-        className="fixed left-0 top-0 w-full"
-        style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+        className="fixed inset-0"
+        style={viewportHeight ? { height: `${viewportHeight}px`, bottom: 'auto' } : undefined}
+        data-testid="drawer-viewport"
       >
         <div className={buildClassName('flex', alignmentMap[align])}>
           <DialogPanel

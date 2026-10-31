@@ -200,4 +200,71 @@ describe('Drawer Component', () => {
       expect(screen.getByTestId('panel')).toHaveClass('max-w-md')
     })
   })
+
+  describe('height on phones', () => {
+    // A fake visual viewport whose height the test sets, firing resize like the browser.
+    function fakeVisualViewport(height: number) {
+      const listeners: Array<() => void> = []
+      const vv = {
+        height,
+        addEventListener: (_: string, fn: () => void) => listeners.push(fn),
+        removeEventListener: () => {},
+      }
+      Object.defineProperty(window, 'visualViewport', { value: vv, configurable: true })
+      return {
+        resize(next: number) {
+          vv.height = next
+          act(() => {
+            listeners.forEach((fn) => fn())
+            jest.runOnlyPendingTimers()
+          })
+        },
+      }
+    }
+    const container = () => screen.getByTestId('drawer-viewport')
+
+    beforeEach(() => {
+      jest.useFakeTimers()
+      jest
+        .spyOn(window, 'requestAnimationFrame')
+        .mockImplementation((fn) => setTimeout(() => fn(0), 16) as unknown as number)
+      Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true })
+    })
+    afterEach(() => {
+      jest.useRealTimers()
+      jest.restoreAllMocks()
+    })
+
+    it('stays pinned to the screen edges while the URL bar slides in and out', () => {
+      const vv = fakeVisualViewport(800)
+      render(
+        <Drawer isOpen title="Edit">
+          Fields
+        </Drawer>,
+      )
+      expect(container()).toHaveClass('fixed', 'inset-0')
+      expect(container().style.height).toBe('')
+
+      vv.resize(744)
+      vv.resize(790)
+
+      expect(container().style.height).toBe('')
+    })
+
+    it('fits above the on-screen keyboard while it is open', () => {
+      const vv = fakeVisualViewport(800)
+      render(
+        <Drawer isOpen title="Edit">
+          Fields
+        </Drawer>,
+      )
+
+      vv.resize(420)
+      expect(container().style.height).toBe('420px')
+      expect(container().style.bottom).toBe('auto')
+
+      vv.resize(800)
+      expect(container().style.height).toBe('')
+    })
+  })
 })
