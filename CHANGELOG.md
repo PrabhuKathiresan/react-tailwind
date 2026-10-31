@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## 1.12.0 (2026-10-31)
+
+* feat(MobileHeader,BottomNavigation): larger phone header, rounded bottom bar ([88c5a2ea5b546ef7f42d1b934b543fa27c253fa8](https://github.com/PrabhuKathiresan/react-tailwind/commit/88c5a2ea5b546ef7f42d1b934b543fa27c253fa8))
+* Merge pull request #22 from PrabhuKathiresan/feat/mobile-header-sizes ([c5044e57c057c86d5984cf1a3ddc91f63f6b9678](https://github.com/PrabhuKathiresan/react-tailwind/commit/c5044e57c057c86d5984cf1a3ddc91f63f6b9678)), closes [#22](https://github.com/PrabhuKathiresan/react-tailwind/issues/22)
+* Merge pull request #23 from PrabhuKathiresan/chore/release-mobile-header ([41dc1f8c3ce4e5fe9bdacb0483671e722fb8ad29](https://github.com/PrabhuKathiresan/react-tailwind/commit/41dc1f8c3ce4e5fe9bdacb0483671e722fb8ad29)), closes [#23](https://github.com/PrabhuKathiresan/react-tailwind/issues/23)
+* feat(MobileHeader): larger phone header; BottomNavigation rounded prop ([5a209efae56ba4695281f531cd7881b35f8a6260](https://github.com/PrabhuKathiresan/react-tailwind/commit/5a209efae56ba4695281f531cd7881b35f8a6260)), closes [#22](https://github.com/PrabhuKathiresan/react-tailwind/issues/22)
+* chore: add build:watch script ([81c48b2a111bbbe7ee92d42f8a4bb9e188e6558e](https://github.com/PrabhuKathiresan/react-tailwind/commit/81c48b2a111bbbe7ee92d42f8a4bb9e188e6558e))
+
 ## <small>1.11.1 (2026-10-31)</small>
 
 * Merge pull request #21 from PrabhuKathiresan/fix/segmented-control-full-width ([bc87833684700ffeddcca6aa88592dafea5dd328](https://github.com/PrabhuKathiresan/react-tailwind/commit/bc87833684700ffeddcca6aa88592dafea5dd328)), closes [#21](https://github.com/PrabhuKathiresan/react-tailwind/issues/21)
