@@ -4,7 +4,7 @@ import { buildClassName } from '../../utils/build-classname'
 import { Button } from '../Button'
 import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import XIcon from '../Icons/X.svg'
-import { useResponsiveValue } from '../../hooks/use-breakpoint'
+import { useBreakpoint, useResponsiveValue } from '../../hooks/use-breakpoint'
 import type { AlignmentMap, DrawerProps, SizeMap } from './Drawer.types'
 
 const alignmentMap: AlignmentMap = {
@@ -35,6 +35,9 @@ const panelSizeMap: SizeMap = {
   full: 'w-full',
 }
 
+// How much shorter than the window the visual viewport must be before it's
+// taken to be the on-screen keyboard rather than the URL bar (≈ 56px).
+const KEYBOARD_THRESHOLD = 150
 export const Drawer: React.FC<DrawerProps> = ({
   isOpen,
   onClose = () => {},
@@ -55,31 +58,63 @@ export const Drawer: React.FC<DrawerProps> = ({
   showBackButton = false,
   showCloseButton = true,
   dragHandle,
+  phoneLayout = 'default',
+  headerAction,
 }) => {
   const align = useResponsiveValue(alignProp)
   const size = useResponsiveValue(sizeProp)
+  const breakpoint = useBreakpoint()
+  const fullscreen = phoneLayout === 'fullscreen' && breakpoint === 'compact'
   const showTitleSection = Boolean(title || description || showBackButton || showCloseButton)
-  const shouldShowDragHandle = dragHandle ?? align === 'bottom'
-  const [viewportHeight, setViewportHeight] = React.useState<number | null>(null)
+  const shouldShowDragHandle = !fullscreen && (dragHandle ?? align === 'bottom')
+  useCloseOnBack(fullscreen && isOpen, onClose)
+  // The visible area while the on-screen keyboard is open; null otherwise.
+  const [keyboardViewport, setKeyboardViewport] = React.useState<{
+    top: number
+    height: number
+  } | null>(null)
 
   React.useEffect(() => {
     if (!isOpen) {
-      setViewportHeight(null)
+      setKeyboardViewport(null)
       return
     }
 
+    // Follow the visual viewport only while the on-screen keyboard takes space
+    // (it's then much shorter than the window), so the drawer and its footer
+    // stay above the keyboard. Otherwise it's pinned to the edges: tracking every resize and
+    // scroll in state re-rendered the drawer on each frame as the browser's
+    // URL bar moved, and its sticky header and footer jumped while scrolling.
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const vv = window.visualViewport
+      if (!vv) return
+      const keyboardOpen = window.innerHeight - vv.height > KEYBOARD_THRESHOLD
+      const top = Math.round(vv.offsetTop)
+      const height = Math.round(vv.height)
+      // The browser scrolls the visible area to the focused field, so the
+      // drawer follows its offset as well as its height. An unchanged value
+      // doesn't re-render.
+      setKeyboardViewport((current) =>
+        !keyboardOpen
+          ? null
+          : current && current.top === top && current.height === height
+            ? current
+            : { top, height },
+      )
+    }
     const updateHeight = () => {
-      if (typeof window !== 'undefined' && window.visualViewport) {
-        setViewportHeight(window.visualViewport.height)
-      }
+      if (!frame) frame = window.requestAnimationFrame(measure)
     }
 
-    updateHeight()
+    measure()
     const vv = typeof window !== 'undefined' ? window.visualViewport : null
     vv?.addEventListener('resize', updateHeight)
     vv?.addEventListener('scroll', updateHeight)
 
     return () => {
+      if (frame) window.cancelAnimationFrame(frame)
       vv?.removeEventListener('resize', updateHeight)
       vv?.removeEventListener('scroll', updateHeight)
     }
@@ -103,20 +138,34 @@ export const Drawer: React.FC<DrawerProps> = ({
         <DialogBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200" />
       )}
 
+      {/* Pinned to all four edges rather than given a height: mobile browsers
+          move fixed edges with the URL bar on every frame, while 100dvh only
+          updates once its animation ends (the drawer briefly came up short).
+          With the keyboard open it takes the visible area's offset and height. */}
       <div
-        className="fixed left-0 top-0 w-full"
-        style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+        className="fixed inset-0"
+        style={
+          keyboardViewport
+            ? {
+                top: `${keyboardViewport.top}px`,
+                height: `${keyboardViewport.height}px`,
+                bottom: 'auto',
+              }
+            : undefined
+        }
+        data-testid="drawer-viewport"
       >
-        <div className={buildClassName('flex', alignmentMap[align])}>
+        <div className={buildClassName('flex', fullscreen ? 'h-full' : alignmentMap[align])}>
           <DialogPanel
             transition
             className={buildClassName(
               'w-full max-w-full bg-white dark:bg-gray-800 shadow-xl flex flex-col min-w-0',
               'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
-              panelAlignmentMap[align],
-              panelSizeMap[size],
-              panelClass,
+              ...(fullscreen
+                ? ['h-full data-[closed]:translate-y-4']
+                : [panelAlignmentMap[align], panelSizeMap[size], panelClass]),
             )}
+            data-layout={fullscreen ? 'fullscreen' : undefined}
           >
             {/* Top drag handle indicator for mobile bottom sheet */}
             {shouldShowDragHandle && (
@@ -126,8 +175,33 @@ export const Drawer: React.FC<DrawerProps> = ({
               />
             )}
 
+            {/* Phone full-screen bar: the only fixed part, so the fields keep the room. */}
+            {fullscreen && (
+              <div className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-1 border-b border-[var(--ui-border)] bg-white pl-1 pr-3 pt-[env(safe-area-inset-top,0px)] box-content dark:bg-gray-800">
+                <Button
+                  iconOnly
+                  aria-label="Close"
+                  variant="plain"
+                  theme="secondary"
+                  onClick={onClose}
+                  className="shrink-0"
+                >
+                  <XIcon className="size-5" />
+                </Button>
+                {title && (
+                  <DialogTitle
+                    as="h3"
+                    className="min-w-0 flex-1 truncate text-base font-semibold text-gray-900 dark:text-white"
+                  >
+                    {title}
+                  </DialogTitle>
+                )}
+                {headerAction && <div className="ml-auto shrink-0">{headerAction}</div>}
+              </div>
+            )}
+
             {/* Header Section */}
-            {showTitleSection && (
+            {!fullscreen && showTitleSection && (
               <div
                 className={buildClassName(
                   'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-[var(--ui-border)] shrink-0',
@@ -190,12 +264,28 @@ export const Drawer: React.FC<DrawerProps> = ({
             )}
 
             {/* Content Body */}
-            <div className={buildClassName('flex-1 p-4 md:p-6 space-y-4 min-w-0', contentClass)}>
+            <div
+              className={buildClassName(
+                'flex-1 p-4 md:p-6 space-y-4 min-w-0',
+                contentClass,
+                fullscreen && 'pb-[calc(1rem+env(safe-area-inset-bottom,0px))]',
+              )}
+            >
+              {fullscreen && description && (
+                <p
+                  className={buildClassName(
+                    'text-sm text-gray-500 dark:text-gray-400',
+                    descriptionClass,
+                  )}
+                >
+                  {description}
+                </p>
+              )}
               {children}
             </div>
 
-            {/* Footer Section */}
-            {footer && (
+            {/* Footer Section (the phone full-screen bar carries the action instead) */}
+            {!fullscreen && footer && (
               <div
                 className={buildClassName(
                   'p-4 border-t border-[var(--ui-border-muted)] bg-white dark:bg-gray-800 shrink-0 min-w-0',
@@ -213,3 +303,45 @@ export const Drawer: React.FC<DrawerProps> = ({
 }
 
 Drawer.displayName = 'Drawer'
+
+/**
+ * While `active`, the browser's back button (and Android's back gesture)
+ * closes the drawer instead of leaving the page: opening adds a history entry
+ * (keeping the current state, so routers see the same location), and back
+ * removes it. Closed any other way, the entry is removed too, but only if it's
+ * still the latest one, so a form that saves and then navigates isn't undone.
+ */
+function useCloseOnBack(active: boolean, onClose: () => void) {
+  const onCloseRef = React.useRef(onClose)
+  React.useEffect(() => {
+    onCloseRef.current = onClose
+  })
+  const token = React.useId()
+
+  React.useEffect(() => {
+    if (!active || typeof window === 'undefined') return
+    const pushEntry = () =>
+      window.history.pushState({ ...(window.history.state ?? {}), drawer: token }, '')
+    pushEntry()
+    let entryPresent = true
+    let disposed = false
+    const handlePop = () => {
+      if (window.history.state?.drawer === token) return
+      entryPresent = false
+      onCloseRef.current()
+      // onClose may step back within the drawer instead of closing it; if it's
+      // still open afterwards, take back its entry so the next back works too.
+      window.setTimeout(() => {
+        if (disposed) return
+        pushEntry()
+        entryPresent = true
+      }, 0)
+    }
+    window.addEventListener('popstate', handlePop)
+    return () => {
+      disposed = true
+      window.removeEventListener('popstate', handlePop)
+      if (entryPresent && window.history.state?.drawer === token) window.history.back()
+    }
+  }, [active, token])
+}
