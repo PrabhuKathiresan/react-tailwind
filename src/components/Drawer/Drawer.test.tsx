@@ -271,4 +271,92 @@ describe('Drawer Component', () => {
       expect(container().style.height).toBe('')
     })
   })
+
+  describe('full screen on phones', () => {
+    const renderForm = (onClose = jest.fn()) =>
+      render(
+        <Drawer
+          isOpen
+          onClose={onClose}
+          phoneLayout="fullscreen"
+          title="New item"
+          description="Details appear on your catalogue."
+          headerAction={<button type="submit">Save</button>}
+          footer={<button type="button">Footer save</button>}
+        >
+          Fields
+        </Drawer>,
+      )
+
+    afterEach(() => window.history.replaceState(null, ''))
+
+    it('puts close, title and the main action in one bar, with no footer', () => {
+      renderForm()
+
+      expect(screen.getByTestId('panel')).toHaveClass('h-full')
+      expect(screen.getByTestId('panel')).not.toHaveClass('max-w-md')
+      expect(screen.getByLabelText('Close')).toBeInTheDocument()
+      expect(screen.getByText('New item')).toBeInTheDocument()
+      expect(screen.getByText('Save')).toBeInTheDocument()
+      expect(screen.queryByText('Footer save')).not.toBeInTheDocument()
+      // The description scrolls with the fields, above them.
+      expect(screen.getByText('Details appear on your catalogue.').nextSibling).toHaveTextContent(
+        'Fields',
+      )
+    })
+
+    it('closes on the back button, without leaving the page', () => {
+      const onClose = jest.fn()
+      renderForm(onClose)
+      expect(window.history.state?.drawer).toBeTruthy()
+
+      act(() => {
+        window.history.replaceState(null, '')
+        window.dispatchEvent(new PopStateEvent('popstate'))
+      })
+
+      expect(onClose).toHaveBeenCalledTimes(1)
+    })
+
+    it('takes its entry back when back steps within it instead of closing', () => {
+      jest.useFakeTimers()
+      const onClose = jest.fn() // stays open, e.g. stepping back a page in the drawer
+      renderForm(onClose)
+
+      act(() => {
+        window.history.replaceState(null, '')
+        window.dispatchEvent(new PopStateEvent('popstate'))
+        jest.runOnlyPendingTimers()
+      })
+
+      expect(onClose).toHaveBeenCalledTimes(1)
+      expect(window.history.state?.drawer).toBeTruthy()
+      jest.useRealTimers()
+    })
+
+    it('removes its history entry when closed another way', () => {
+      const back = jest.spyOn(window.history, 'back').mockImplementation(() => {})
+      const { rerender } = renderForm()
+
+      rerender(
+        <Drawer isOpen={false} phoneLayout="fullscreen" title="New item">
+          Fields
+        </Drawer>,
+      )
+
+      expect(back).toHaveBeenCalledTimes(1)
+      back.mockRestore()
+    })
+
+    it('keeps the usual drawer, footer and all, on larger screens', () => {
+      mockViewport(1024)
+      renderForm()
+
+      expect(screen.getByTestId('panel')).toHaveClass('max-w-md')
+      expect(screen.queryByLabelText('Close')).not.toBeInTheDocument()
+      expect(screen.getByText('Footer save')).toBeInTheDocument()
+      expect(window.history.state?.drawer).toBeUndefined()
+      mockViewport.restore()
+    })
+  })
 })

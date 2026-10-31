@@ -4,7 +4,7 @@ import { buildClassName } from '../../utils/build-classname'
 import { Button } from '../Button'
 import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import XIcon from '../Icons/X.svg'
-import { useResponsiveValue } from '../../hooks/use-breakpoint'
+import { useBreakpoint, useResponsiveValue } from '../../hooks/use-breakpoint'
 import type { AlignmentMap, DrawerProps, SizeMap } from './Drawer.types'
 
 const alignmentMap: AlignmentMap = {
@@ -58,11 +58,16 @@ export const Drawer: React.FC<DrawerProps> = ({
   showBackButton = false,
   showCloseButton = true,
   dragHandle,
+  phoneLayout = 'default',
+  headerAction,
 }) => {
   const align = useResponsiveValue(alignProp)
   const size = useResponsiveValue(sizeProp)
+  const breakpoint = useBreakpoint()
+  const fullscreen = phoneLayout === 'fullscreen' && breakpoint === 'compact'
   const showTitleSection = Boolean(title || description || showBackButton || showCloseButton)
-  const shouldShowDragHandle = dragHandle ?? align === 'bottom'
+  const shouldShowDragHandle = !fullscreen && (dragHandle ?? align === 'bottom')
+  useCloseOnBack(fullscreen && isOpen, onClose)
   // The visible area while the on-screen keyboard is open; null otherwise.
   const [keyboardViewport, setKeyboardViewport] = React.useState<{
     top: number
@@ -150,16 +155,17 @@ export const Drawer: React.FC<DrawerProps> = ({
         }
         data-testid="drawer-viewport"
       >
-        <div className={buildClassName('flex', alignmentMap[align])}>
+        <div className={buildClassName('flex', fullscreen ? 'h-full' : alignmentMap[align])}>
           <DialogPanel
             transition
             className={buildClassName(
               'w-full max-w-full bg-white dark:bg-gray-800 shadow-xl flex flex-col min-w-0',
               'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
-              panelAlignmentMap[align],
-              panelSizeMap[size],
-              panelClass,
+              ...(fullscreen
+                ? ['h-full data-[closed]:translate-y-4']
+                : [panelAlignmentMap[align], panelSizeMap[size], panelClass]),
             )}
+            data-layout={fullscreen ? 'fullscreen' : undefined}
           >
             {/* Top drag handle indicator for mobile bottom sheet */}
             {shouldShowDragHandle && (
@@ -169,8 +175,33 @@ export const Drawer: React.FC<DrawerProps> = ({
               />
             )}
 
+            {/* Phone full-screen bar: the only fixed part, so the fields keep the room. */}
+            {fullscreen && (
+              <div className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-1 border-b border-[var(--ui-border)] bg-white pl-1 pr-3 pt-[env(safe-area-inset-top,0px)] box-content dark:bg-gray-800">
+                <Button
+                  iconOnly
+                  aria-label="Close"
+                  variant="plain"
+                  theme="secondary"
+                  onClick={onClose}
+                  className="shrink-0"
+                >
+                  <XIcon className="size-5" />
+                </Button>
+                {title && (
+                  <DialogTitle
+                    as="h3"
+                    className="min-w-0 flex-1 truncate text-base font-semibold text-gray-900 dark:text-white"
+                  >
+                    {title}
+                  </DialogTitle>
+                )}
+                {headerAction && <div className="ml-auto shrink-0">{headerAction}</div>}
+              </div>
+            )}
+
             {/* Header Section */}
-            {showTitleSection && (
+            {!fullscreen && showTitleSection && (
               <div
                 className={buildClassName(
                   'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-[var(--ui-border)] shrink-0',
@@ -233,12 +264,28 @@ export const Drawer: React.FC<DrawerProps> = ({
             )}
 
             {/* Content Body */}
-            <div className={buildClassName('flex-1 p-4 md:p-6 space-y-4 min-w-0', contentClass)}>
+            <div
+              className={buildClassName(
+                'flex-1 p-4 md:p-6 space-y-4 min-w-0',
+                contentClass,
+                fullscreen && 'pb-[calc(1rem+env(safe-area-inset-bottom,0px))]',
+              )}
+            >
+              {fullscreen && description && (
+                <p
+                  className={buildClassName(
+                    'text-sm text-gray-500 dark:text-gray-400',
+                    descriptionClass,
+                  )}
+                >
+                  {description}
+                </p>
+              )}
               {children}
             </div>
 
-            {/* Footer Section */}
-            {footer && (
+            {/* Footer Section (the phone full-screen bar carries the action instead) */}
+            {!fullscreen && footer && (
               <div
                 className={buildClassName(
                   'p-4 border-t border-[var(--ui-border-muted)] bg-white dark:bg-gray-800 shrink-0 min-w-0',
@@ -256,3 +303,45 @@ export const Drawer: React.FC<DrawerProps> = ({
 }
 
 Drawer.displayName = 'Drawer'
+
+/**
+ * While `active`, the browser's back button (and Android's back gesture)
+ * closes the drawer instead of leaving the page: opening adds a history entry
+ * (keeping the current state, so routers see the same location), and back
+ * removes it. Closed any other way, the entry is removed too, but only if it's
+ * still the latest one, so a form that saves and then navigates isn't undone.
+ */
+function useCloseOnBack(active: boolean, onClose: () => void) {
+  const onCloseRef = React.useRef(onClose)
+  React.useEffect(() => {
+    onCloseRef.current = onClose
+  })
+  const token = React.useId()
+
+  React.useEffect(() => {
+    if (!active || typeof window === 'undefined') return
+    const pushEntry = () =>
+      window.history.pushState({ ...(window.history.state ?? {}), drawer: token }, '')
+    pushEntry()
+    let entryPresent = true
+    let disposed = false
+    const handlePop = () => {
+      if (window.history.state?.drawer === token) return
+      entryPresent = false
+      onCloseRef.current()
+      // onClose may step back within the drawer instead of closing it; if it's
+      // still open afterwards, take back its entry so the next back works too.
+      window.setTimeout(() => {
+        if (disposed) return
+        pushEntry()
+        entryPresent = true
+      }, 0)
+    }
+    window.addEventListener('popstate', handlePop)
+    return () => {
+      disposed = true
+      window.removeEventListener('popstate', handlePop)
+      if (entryPresent && window.history.state?.drawer === token) window.history.back()
+    }
+  }, [active, token])
+}

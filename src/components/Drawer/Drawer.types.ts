@@ -111,6 +111,22 @@ export interface DrawerProps {
    * Drawer description class
    */
   descriptionClass?: string
+
+  /**
+   * How the drawer shows on phones (below 768px). 'fullscreen' fills the
+   * screen with one bar (close, title, `headerAction`), moves the description
+   * into the scrolling content and drops the footer, so forms keep as much
+   * room as possible above the keyboard; the phone's back button closes it.
+   * Larger screens are unchanged. `titleClass` doesn't apply to that bar.
+   * @default 'default'
+   */
+  phoneLayout?: 'default' | 'fullscreen'
+
+  /**
+   * The main action (e.g. Save) for the phone full-screen bar. A submit
+   * button outside the form names it with `form`.
+   */
+  headerAction?: ReactNode
 }
 
 export type AlignmentMap = {
