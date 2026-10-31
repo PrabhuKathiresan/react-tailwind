@@ -136,4 +136,10 @@ describe('MobileHeader', () => {
       expect(screen.getByTestId('mobile-header-leading')).toBeInTheDocument()
     })
   })
+
+  it('uses 16px search text, so iOS does not zoom the page on focus', () => {
+    render(<MobileHeader title="Items" searchable searchValue="" onSearchChange={() => {}} />)
+    fireEvent.click(screen.getByTestId('mobile-header-search-toggle'))
+    expect(screen.getByTestId('mobile-header-search-input')).toHaveClass('text-base')
+  })
 })

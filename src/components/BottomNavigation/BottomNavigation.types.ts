@@ -66,4 +66,9 @@ export interface BottomNavigationProps {
    * @default false
    */
   hidden?: boolean
+  /**
+   * Rounds the bar's top corners, so it reads as a surface over the page.
+   * @default false
+   */
+  rounded?: boolean
 }

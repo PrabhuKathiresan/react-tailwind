@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "build": "rollup -c && tsc --emitDeclarationOnly",
+    "build:watch": "rollup -c -w && tsc --emitDeclarationOnly",
     "prepare": "husky",
     "format": "prettier --write .",
     "lint": "prettier --check .",

@@ -16,6 +16,7 @@ export function BottomNavigation({
   linkHrefProp = 'href',
   ariaLabel = 'Bottom Navigation',
   hidden = false,
+  rounded = false,
 }: BottomNavigationProps) {
   const handleTabClick = (item: BottomNavigationItem) => {
     if (item.disabled) return
@@ -41,6 +42,7 @@ export function BottomNavigation({
         fixed && 'fixed bottom-0 left-0 right-0 z-40',
         'pb-[env(safe-area-inset-bottom,6px)] px-2',
         themeStyles,
+        rounded && 'rounded-t-2xl border-x',
         containerClass,
       )}
       data-testid="bottom-navigation"
