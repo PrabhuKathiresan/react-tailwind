@@ -97,7 +97,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
             className={buildClassName(
               'inline-flex items-center justify-center gap-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
               SIZE_OPTION_CLASS[size],
-              fullWidth ? 'flex-1' : '',
+              // Full width splits the row equally, so the width comes from the
+              // row, not padding; tight side padding keeps labels on one line
+              // on narrow screens.
+              fullWidth ? 'min-w-0 flex-1 px-1.5' : '',
               isOptionDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
               isSelected
                 ? 'bg-white text-[var(--ui-primary)] dark:bg-gray-700 dark:text-blue-400 shadow-xs font-semibold'
@@ -115,7 +118,8 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
                 {option.icon}
               </span>
             )}
-            <span>{option.label}</span>
+            {/* A label never wraps; if there's truly no room it's cut off. */}
+            <span className="min-w-0 truncate">{option.label}</span>
           </button>
         )
       })}

@@ -43,4 +43,22 @@ describe('SegmentedControl', () => {
     fireEvent.keyDown(dayBtn, { key: 'ArrowRight' })
     expect(handleChange).toHaveBeenCalledWith('week')
   })
+
+  it('keeps labels on one line, with tight side padding when full width', () => {
+    render(
+      <SegmentedControl
+        options={[
+          { label: 'Due (27)', value: 'due' },
+          { label: 'Paid (31)', value: 'paid' },
+        ]}
+        value="due"
+        onChange={() => {}}
+        fullWidth
+      />,
+    )
+    const option = screen.getByTestId('segmented-option-due')
+    expect(option).toHaveClass('flex-1', 'min-w-0', 'px-1.5')
+    expect(option).not.toHaveClass('px-3')
+    expect(screen.getByText('Due (27)')).toHaveClass('truncate')
+  })
 })
