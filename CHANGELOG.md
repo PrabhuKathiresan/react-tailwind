@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## 1.13.0 (2026-10-31)
+
+* Merge pull request #24 from PrabhuKathiresan/fix/drawer-viewport-jitter ([17991e4c5fe380f12e869f9d61d4f433f379c84c](https://github.com/PrabhuKathiresan/react-tailwind/commit/17991e4c5fe380f12e869f9d61d4f433f379c84c)), closes [#24](https://github.com/PrabhuKathiresan/react-tailwind/issues/24)
+* feat(Drawer): full-screen phone layout with the main action in its bar ([6c8edc9b3665e753fc3da450c62d7173b0d12ae2](https://github.com/PrabhuKathiresan/react-tailwind/commit/6c8edc9b3665e753fc3da450c62d7173b0d12ae2))
+* fix(Drawer): follow the visible area's offset while the keyboard is open ([0ea0a47854ac0a54b082b791d99be8ff54d71027](https://github.com/PrabhuKathiresan/react-tailwind/commit/0ea0a47854ac0a54b082b791d99be8ff54d71027))
+* fix(Drawer): keep sticky header and footer steady as the URL bar moves ([29a3a7acb744f320ca37cd2ed2c2f5ef8015fa97](https://github.com/PrabhuKathiresan/react-tailwind/commit/29a3a7acb744f320ca37cd2ed2c2f5ef8015fa97))
+
 ## 1.12.0 (2026-10-31)
 
 * feat(MobileHeader,BottomNavigation): larger phone header, rounded bottom bar ([88c5a2ea5b546ef7f42d1b934b543fa27c253fa8](https://github.com/PrabhuKathiresan/react-tailwind/commit/88c5a2ea5b546ef7f42d1b934b543fa27c253fa8))
