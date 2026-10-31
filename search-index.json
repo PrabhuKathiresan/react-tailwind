@@ -764,6 +764,13 @@
         "required": false,
         "description": "Removes the bar from the tree (not just visually), e.g. while a full-screen task owns the bottom edge.",
         "defaultValue": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "required": false,
+        "description": "Rounds the bar's top corners, so it reads as a surface over the page.",
+        "defaultValue": "false"
       }
     ],
     "keywords": [
@@ -789,6 +796,7 @@
       "linkhrefprop",
       "arialabel",
       "hidden",
+      "rounded",
       "bottomnavigationitem",
       "bottomnavigationlabelvisibility",
       "bottomnavigationtheme",
@@ -840,7 +848,13 @@
       "screen",
       "task",
       "owns",
-      "edge"
+      "edge",
+      "rounds",
+      "corners",
+      "reads",
+      "surface",
+      "over",
+      "page"
     ],
     "url": "/bottom-navigation"
   },
