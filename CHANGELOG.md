@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.11.1 (2026-10-31)</small>
+
+* Merge pull request #21 from PrabhuKathiresan/fix/segmented-control-full-width ([bc87833684700ffeddcca6aa88592dafea5dd328](https://github.com/PrabhuKathiresan/react-tailwind/commit/bc87833684700ffeddcca6aa88592dafea5dd328)), closes [#21](https://github.com/PrabhuKathiresan/react-tailwind/issues/21)
+* fix(SegmentedControl): keep labels on one line in full-width controls ([14fe0abe13b72923e703da43a5ee88db5765c77b](https://github.com/PrabhuKathiresan/react-tailwind/commit/14fe0abe13b72923e703da43a5ee88db5765c77b))
+
 ## 1.11.0 (2026-10-30)
 
 * Merge pull request #20 from PrabhuKathiresan/feat/toast-responsive-placement ([ef5b439d702520e1c57475f3ae640dc9770ec921](https://github.com/PrabhuKathiresan/react-tailwind/commit/ef5b439d702520e1c57475f3ae640dc9770ec921)), closes [#20](https://github.com/PrabhuKathiresan/react-tailwind/issues/20)
