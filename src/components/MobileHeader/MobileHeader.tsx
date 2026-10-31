@@ -101,8 +101,9 @@ export function MobileHeader({
       )}
       data-testid="mobile-header"
     >
-      {/* Main Header Row */}
-      <div className="h-14 px-4 flex items-center justify-between gap-2 relative">
+      {/* Main Header Row: 64px, the height of a standard phone top bar, so a
+          title and a subtitle line both have room. */}
+      <div className="h-16 px-4 flex items-center justify-between gap-2 relative">
         {/* Search Mode Header View */}
         {searchable && isSearchActive ? (
           <div
@@ -119,7 +120,8 @@ export function MobileHeader({
                 onChange={handleSearchInput}
                 placeholder={searchPlaceholder}
                 autoFocus
-                className="w-full pl-9 pr-8 py-1.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-full border border-transparent focus:border-blue-500 focus:outline-hidden transition-all"
+                // 16px text: iOS zooms the page into any field with smaller text.
+                className="w-full pl-9 pr-8 py-2 text-base bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-full border border-transparent focus:border-blue-500 focus:outline-hidden transition-all"
                 data-testid="mobile-header-search-input"
               />
               {searchValue && (
@@ -189,7 +191,7 @@ export function MobileHeader({
             >
               {title && (
                 <div
-                  className="text-sm font-bold text-gray-900 dark:text-white truncate pointer-events-auto"
+                  className="text-lg leading-6 font-semibold text-gray-900 dark:text-white truncate pointer-events-auto"
                   data-testid="mobile-header-title"
                 >
                   {title}
@@ -197,7 +199,7 @@ export function MobileHeader({
               )}
               {subtitle && (
                 <div
-                  className="text-[11px] text-gray-500 dark:text-gray-400 truncate pointer-events-auto"
+                  className="text-[13px] leading-5 text-gray-500 dark:text-gray-400 truncate pointer-events-auto"
                   data-testid="mobile-header-subtitle"
                 >
                   {subtitle}

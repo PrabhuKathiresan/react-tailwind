@@ -119,4 +119,19 @@ describe('BottomNavigation', () => {
     rerender(<BottomNavigation items={items} activeId="home" onChange={jest.fn()} hidden />)
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
   })
+
+  it('rounds its top corners when asked', () => {
+    const { rerender } = render(
+      <BottomNavigation items={[{ id: 'home', label: 'Home', icon: <span /> }]} activeId="home" />,
+    )
+    expect(screen.getByTestId('bottom-navigation')).not.toHaveClass('rounded-t-2xl')
+    rerender(
+      <BottomNavigation
+        items={[{ id: 'home', label: 'Home', icon: <span /> }]}
+        activeId="home"
+        rounded
+      />,
+    )
+    expect(screen.getByTestId('bottom-navigation')).toHaveClass('rounded-t-2xl')
+  })
 })
