@@ -20,9 +20,11 @@ const panelAlignmentMap: AlignmentMap = {
   start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
   end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
   top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
-  // Bottom sheets clear the home indicator on notched phones (0 elsewhere).
+  // Bottom sheets clear the home indicator on notched phones (0 elsewhere). Never
+  // taller than the container: with the keyboard up it's shorter than 88dvh, and a
+  // bottom-anchored panel past its top is off screen and can't be scrolled to.
   bottom:
-    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[88vh] max-h-[88dvh] pb-[env(safe-area-inset-bottom,0px)]',
+    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[min(88dvh,100%)] pb-[env(safe-area-inset-bottom,0px)]',
 }
 
 const panelSizeMap: SizeMap = {

@@ -359,4 +359,13 @@ describe('Drawer Component', () => {
       mockViewport.restore()
     })
   })
+
+  it('keeps a bottom sheet within its container, so the keyboard cannot push it off screen', () => {
+    render(
+      <Drawer isOpen align="bottom" title="Custom item">
+        Fields
+      </Drawer>,
+    )
+    expect(screen.getByTestId('panel')).toHaveClass('max-h-[min(88dvh,100%)]')
+  })
 })
