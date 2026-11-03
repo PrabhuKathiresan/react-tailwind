@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.13.1 (2026-11-03)</small>
+
+* Merge pull request #25 from PrabhuKathiresan/fix/drawer-sheet-fits-container ([286d25cf0893290700948319f8f3ea1785105027](https://github.com/PrabhuKathiresan/react-tailwind/commit/286d25cf0893290700948319f8f3ea1785105027)), closes [#25](https://github.com/PrabhuKathiresan/react-tailwind/issues/25)
+* fix(Drawer): a drawer opening as another closes stays open ([cb8dab70476e6e78aefcdac6a50bb719a42b3da8](https://github.com/PrabhuKathiresan/react-tailwind/commit/cb8dab70476e6e78aefcdac6a50bb719a42b3da8))
+* fix(Drawer): keep a bottom sheet within its container above the keyboard ([2dff709098a963d75b25d94db40e82550e696f3f](https://github.com/PrabhuKathiresan/react-tailwind/commit/2dff709098a963d75b25d94db40e82550e696f3f))
+* fix(SelectBox): same 6px label gap as Input and QuantityStepper ([a68479dcc999751071a7ee5e64a63ac30555ffac](https://github.com/PrabhuKathiresan/react-tailwind/commit/a68479dcc999751071a7ee5e64a63ac30555ffac))
+
 ## 1.13.0 (2026-10-31)
 
 * Merge pull request #24 from PrabhuKathiresan/fix/drawer-viewport-jitter ([17991e4c5fe380f12e869f9d61d4f433f379c84c](https://github.com/PrabhuKathiresan/react-tailwind/commit/17991e4c5fe380f12e869f9d61d4f433f379c84c)), closes [#24](https://github.com/PrabhuKathiresan/react-tailwind/issues/24)
