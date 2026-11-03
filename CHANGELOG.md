@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.13.2 (2026-11-03)</small>
+
+* Merge pull request #27 from PrabhuKathiresan/fix/button-touch-contrast ([89c2bb3495f0a5421787e88ddeae7f84dd83663a](https://github.com/PrabhuKathiresan/react-tailwind/commit/89c2bb3495f0a5421787e88ddeae7f84dd83663a)), closes [#27](https://github.com/PrabhuKathiresan/react-tailwind/issues/27)
+* fix(Button): larger touch targets, readable colours, focus kept while loading ([90271db1b128ff36b049929c8a07e1372190d664](https://github.com/PrabhuKathiresan/react-tailwind/commit/90271db1b128ff36b049929c8a07e1372190d664))
+* fix(Button): make the secondary outlined button read as active ([e25d34809a8cf95b306e515bc0c8884e328b5d22](https://github.com/PrabhuKathiresan/react-tailwind/commit/e25d34809a8cf95b306e515bc0c8884e328b5d22))
+* fix(Button): tell secondary default and outlined apart ([7d9b90ace3e5e63c9b372cbac30e7edb536bf023](https://github.com/PrabhuKathiresan/react-tailwind/commit/7d9b90ace3e5e63c9b372cbac30e7edb536bf023))
+
 ## <small>1.13.1 (2026-11-03)</small>
 
 * Merge pull request #25 from PrabhuKathiresan/fix/drawer-sheet-fits-container ([286d25cf0893290700948319f8f3ea1785105027](https://github.com/PrabhuKathiresan/react-tailwind/commit/286d25cf0893290700948319f8f3ea1785105027)), closes [#25](https://github.com/PrabhuKathiresan/react-tailwind/issues/25)
