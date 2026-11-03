@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## 1.14.0 (2026-11-03)
+
+* Merge pull request #26 from PrabhuKathiresan/feat/export-close-on-back ([73855b067dbde3a1b16b4c20bc5e88534682434c](https://github.com/PrabhuKathiresan/react-tailwind/commit/73855b067dbde3a1b16b4c20bc5e88534682434c)), closes [#26](https://github.com/PrabhuKathiresan/react-tailwind/issues/26)
+* feat(hooks): export useCloseOnBack ([ebe732f7c9278e18de941a01ab3d98836d38ec0e](https://github.com/PrabhuKathiresan/react-tailwind/commit/ebe732f7c9278e18de941a01ab3d98836d38ec0e))
+
 ## <small>1.13.2 (2026-11-03)</small>
 
 * Merge pull request #27 from PrabhuKathiresan/fix/button-touch-contrast ([89c2bb3495f0a5421787e88ddeae7f84dd83663a](https://github.com/PrabhuKathiresan/react-tailwind/commit/89c2bb3495f0a5421787e88ddeae7f84dd83663a)), closes [#27](https://github.com/PrabhuKathiresan/react-tailwind/issues/27)
