@@ -20,9 +20,11 @@ const panelAlignmentMap: AlignmentMap = {
   start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
   end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
   top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
-  // Bottom sheets clear the home indicator on notched phones (0 elsewhere).
+  // Bottom sheets clear the home indicator on notched phones (0 elsewhere). Never
+  // taller than the container: with the keyboard up it's shorter than 88dvh, and a
+  // bottom-anchored panel past its top is off screen and can't be scrolled to.
   bottom:
-    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[88vh] max-h-[88dvh] pb-[env(safe-area-inset-bottom,0px)]',
+    'data-[closed]:translate-y-full rounded-t-2xl md:rounded-t-3xl max-h-[min(88dvh,100%)] pb-[env(safe-area-inset-bottom,0px)]',
 }
 
 const panelSizeMap: SizeMap = {
@@ -304,6 +306,32 @@ export const Drawer: React.FC<DrawerProps> = ({
 
 Drawer.displayName = 'Drawer'
 
+// history.back() lands later, so a drawer opening meanwhile (one replacing another,
+// or React re-running effects under StrictMode) would have its new entry removed
+// instead, and close at once. Removals are counted, and an opening drawer waits for them.
+let pendingBacks = 0
+const afterBacks: Array<() => void> = []
+
+function settleBack() {
+  pendingBacks = Math.max(0, pendingBacks - 1)
+  if (pendingBacks === 0) afterBacks.splice(0).forEach((run) => run())
+}
+
+function removeEntry() {
+  pendingBacks += 1
+  let settled = false
+  const settle = () => {
+    if (settled) return
+    settled = true
+    window.removeEventListener('popstate', settle)
+    settleBack()
+  }
+  window.addEventListener('popstate', settle)
+  // A back that never reports (nothing to go back to) mustn't hold others up.
+  window.setTimeout(settle, 500)
+  window.history.back()
+}
+
 /**
  * While `active`, the browser's back button (and Android's back gesture)
  * closes the drawer instead of leaving the page: opening adds a history entry
@@ -322,8 +350,7 @@ function useCloseOnBack(active: boolean, onClose: () => void) {
     if (!active || typeof window === 'undefined') return
     const pushEntry = () =>
       window.history.pushState({ ...(window.history.state ?? {}), drawer: token }, '')
-    pushEntry()
-    let entryPresent = true
+    let entryPresent = false
     let disposed = false
     const handlePop = () => {
       if (window.history.state?.drawer === token) return
@@ -337,11 +364,18 @@ function useCloseOnBack(active: boolean, onClose: () => void) {
         entryPresent = true
       }, 0)
     }
-    window.addEventListener('popstate', handlePop)
+    const start = () => {
+      if (disposed) return
+      pushEntry()
+      entryPresent = true
+      window.addEventListener('popstate', handlePop)
+    }
+    if (pendingBacks > 0) afterBacks.push(start)
+    else start()
     return () => {
       disposed = true
       window.removeEventListener('popstate', handlePop)
-      if (entryPresent && window.history.state?.drawer === token) window.history.back()
+      if (entryPresent && window.history.state?.drawer === token) removeEntry()
     }
   }, [active, token])
 }

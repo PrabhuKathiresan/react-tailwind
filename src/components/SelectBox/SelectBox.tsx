@@ -426,11 +426,16 @@ export const SelectBox = forwardRef(
 
     return (
       <div
-        className={buildClassName('group space-y-2', hasError && 'has-error', containerClass)}
+        className={buildClassName('group', hasError && 'has-error', containerClass)}
         ref={containerRef}
       >
         {label && (
-          <div className={buildClassName('flex items-center justify-between', labelWrapperClass)}>
+          <div
+            className={buildClassName(
+              'flex items-center justify-between mb-1.5',
+              labelWrapperClass,
+            )}
+          >
             <Label className={labelClass} htmlFor={id} aria-required={required}>
               {label}
             </Label>

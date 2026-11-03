@@ -113,7 +113,7 @@ export const QuantityStepper = forwardRef<HTMLInputElement, QuantityStepperProps
   const isAtMax = disabled || value >= max
 
   return (
-    <div className={buildClassName('flex flex-col gap-1 inline-flex', className)}>
+    <div className={buildClassName('flex flex-col gap-1.5 inline-flex', className)}>
       {/* Label Header Row matching Input */}
       {label && (
         <div className="flex items-center justify-between gap-2">

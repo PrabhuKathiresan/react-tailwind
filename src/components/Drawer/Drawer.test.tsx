@@ -346,6 +346,46 @@ describe('Drawer Component', () => {
 
       expect(back).toHaveBeenCalledTimes(1)
       back.mockRestore()
+      act(() => {
+        window.history.replaceState(null, '')
+        window.dispatchEvent(new PopStateEvent('popstate'))
+      })
+    })
+
+    it('waits for a closing drawer to finish, so one opening right after stays open', () => {
+      const back = jest.spyOn(window.history, 'back').mockImplementation(() => {})
+      const onCloseNext = jest.fn()
+      const { rerender } = render(
+        <>
+          <Drawer isOpen phoneLayout="fullscreen" title="Picker">
+            Search
+          </Drawer>
+          <Drawer isOpen={false} onClose={onCloseNext} phoneLayout="fullscreen" title="Form">
+            Fields
+          </Drawer>
+        </>,
+      )
+
+      // The picker closes and the form opens together; the picker's back lands afterwards.
+      rerender(
+        <>
+          <Drawer isOpen={false} phoneLayout="fullscreen" title="Picker">
+            Search
+          </Drawer>
+          <Drawer isOpen onClose={onCloseNext} phoneLayout="fullscreen" title="Form">
+            Fields
+          </Drawer>
+        </>,
+      )
+      expect(back).toHaveBeenCalledTimes(1)
+      act(() => {
+        window.history.replaceState(null, '')
+        window.dispatchEvent(new PopStateEvent('popstate'))
+      })
+
+      expect(onCloseNext).not.toHaveBeenCalled()
+      expect(window.history.state?.drawer).toBeTruthy()
+      back.mockRestore()
     })
 
     it('keeps the usual drawer, footer and all, on larger screens', () => {
@@ -358,5 +398,14 @@ describe('Drawer Component', () => {
       expect(window.history.state?.drawer).toBeUndefined()
       mockViewport.restore()
     })
+  })
+
+  it('keeps a bottom sheet within its container, so the keyboard cannot push it off screen', () => {
+    render(
+      <Drawer isOpen align="bottom" title="Custom item">
+        Fields
+      </Drawer>,
+    )
+    expect(screen.getByTestId('panel')).toHaveClass('max-h-[min(88dvh,100%)]')
   })
 })
