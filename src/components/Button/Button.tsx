@@ -32,7 +32,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
     default:
       'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:outline-[var(--ui-focus-ring)]',
     outlined:
-      'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 border border-gray-300 hover:bg-gray-900/5 active:bg-gray-900/10 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-white/10 dark:active:bg-white/15 focus-visible:outline-[var(--ui-focus-ring)]',
     plain:
       'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:outline-[var(--ui-focus-ring)]',
   },
