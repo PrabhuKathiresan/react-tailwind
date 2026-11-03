@@ -1,0 +1,1 @@
+const e="Loader",a="",s=[{name:"size",type:"enum",raw:"LoaderSize",enumValues:["xs","sm","md","lg"],required:!1,defaultValue:"md",description:""}],o={name:e,description:"",props:s};export{o as default,a as description,e as name,s as props};
