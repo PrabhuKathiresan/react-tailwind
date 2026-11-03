@@ -30,7 +30,7 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
   },
   secondary: {
     default:
-      'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 bg-gray-200 hover:bg-gray-300 active:bg-gray-300 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
     outlined:
       'text-gray-800 bg-white border border-gray-300 shadow-xs hover:bg-gray-100 active:bg-gray-200 dark:text-gray-100 dark:bg-transparent dark:border-gray-600 dark:shadow-none dark:hover:bg-white/10 dark:active:bg-white/15 focus-visible:outline-[var(--ui-focus-ring)]',
     plain:
@@ -228,7 +228,8 @@ export const Button = forwardRef(
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid',
           rounded && 'rounded-full',
           fullWidth && 'w-full',
-          variant === 'default' && 'shadow-xs hover:shadow-none',
+          // Secondary default is a flat grey fill; a shadow would bring back the outlined look.
+          variant === 'default' && theme !== 'secondary' && 'shadow-xs hover:shadow-none',
           active && 'ring-2 ring-current',
           className,
         ),

@@ -158,6 +158,21 @@ describe('Button Component', () => {
     expect(screen.getByRole('button')).toHaveClass('bg-white', 'border-gray-300')
   })
 
+  it('tells the secondary variants apart: a flat grey fill, and white with a border', () => {
+    const { unmount } = render(<Button theme="secondary">Cancel</Button>)
+    const filled = screen.getByRole('button')
+    expect(filled).toHaveClass('bg-gray-200')
+    expect(filled).not.toHaveClass('border')
+    expect(filled).not.toHaveClass('shadow-xs')
+    unmount()
+    render(
+      <Button theme="secondary" variant="outlined">
+        Edit
+      </Button>,
+    )
+    expect(screen.getByRole('button')).toHaveClass('bg-white', 'border', 'shadow-xs')
+  })
+
   it('forwards ref correctly', () => {
     const ref = React.createRef<HTMLButtonElement>()
     render(<Button ref={ref}>Ref Button</Button>)
