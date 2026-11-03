@@ -30,34 +30,43 @@ const THEMED_BTN_CLASS: ThemedButtonClass = {
   },
   secondary: {
     default:
-      'text-gray-700 bg-white border border-[var(--ui-border)] hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 bg-gray-200 hover:bg-gray-300 active:bg-gray-300 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
     outlined:
-      'text-gray-700 hover:text-white border border-[var(--ui-border)] hover:bg-gray-700 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 bg-white border border-gray-300 shadow-xs hover:bg-gray-100 active:bg-gray-200 dark:text-gray-100 dark:bg-transparent dark:border-gray-600 dark:shadow-none dark:hover:bg-white/10 dark:active:bg-white/15 focus-visible:outline-[var(--ui-focus-ring)]',
     plain:
       'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:outline-[var(--ui-focus-ring)]',
   },
   success: {
-    default: 'text-white bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-emerald-500',
+    default: 'text-white bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-emerald-500',
     outlined:
-      'text-emerald-700 hover:text-white border border-emerald-600 hover:bg-emerald-600 dark:text-emerald-400 dark:border-emerald-500 focus-visible:outline-emerald-500',
+      'text-emerald-700 hover:text-white border border-emerald-700 hover:bg-emerald-700 dark:text-emerald-400 dark:border-emerald-500 focus-visible:outline-emerald-500',
     plain:
       'text-emerald-700 hover:bg-current/10 active:bg-current/15 dark:text-emerald-400 focus-visible:outline-emerald-500',
   },
   warning: {
-    default: 'text-white bg-amber-500 hover:bg-amber-600 focus-visible:outline-amber-500',
+    default: 'text-gray-900 bg-amber-500 hover:bg-amber-400 focus-visible:outline-amber-500',
     outlined:
-      'text-amber-700 hover:text-white border border-amber-500 hover:bg-amber-500 dark:text-amber-400 dark:border-amber-500 focus-visible:outline-amber-500',
+      'text-amber-700 hover:text-gray-900 border border-amber-500 hover:bg-amber-500 dark:text-amber-400 dark:border-amber-500 focus-visible:outline-amber-500',
     plain:
       'text-amber-700 hover:bg-current/10 active:bg-current/15 dark:text-amber-400 focus-visible:outline-amber-500',
   },
 }
 
 const SIZE_CLASSES: Record<ButtonSize, { normal: string; iconOnly: string }> = {
-  xs: { normal: 'h-7 px-2.5 rounded-sm gap-1 text-xs', iconOnly: 'h-7 w-7 p-1 rounded-sm text-xs' },
-  sm: { normal: 'h-8 px-3 rounded gap-1.5 text-sm', iconOnly: 'h-8 w-8 p-1.5 rounded text-sm' },
-  md: { normal: 'h-9 px-4 rounded-md gap-2 text-sm', iconOnly: 'h-9 w-9 p-2 rounded-md text-sm' },
+  xs: {
+    normal: 'min-h-7 px-2.5 py-1 rounded-sm gap-1 text-xs',
+    iconOnly: 'h-7 w-7 p-1 rounded-sm text-xs',
+  },
+  sm: {
+    normal: 'min-h-8 px-3 py-1 rounded gap-1.5 text-sm',
+    iconOnly: 'h-8 w-8 p-1.5 rounded text-sm',
+  },
+  md: {
+    normal: 'min-h-9 px-4 py-1.5 rounded-md gap-2 text-sm',
+    iconOnly: 'h-9 w-9 p-2 rounded-md text-sm',
+  },
   lg: {
-    normal: 'h-10 px-5 rounded-lg gap-2 text-base',
+    normal: 'min-h-10 px-5 py-2 rounded-lg gap-2 text-base',
     iconOnly: 'h-10 w-10 p-2.5 rounded-lg text-base',
   },
 }
@@ -74,13 +83,19 @@ const LOADER_SIZE: Record<ButtonSize, 'xs' | 'sm'> = {
  *
  * Disabled styling is keyed off both the native `disabled` attribute and
  * `aria-disabled`, so non-button elements rendered via `as` look disabled too.
+ *
+ * On touch screens an invisible layer makes the tappable area at least 44px,
+ * whatever the button's size, without changing how it looks.
  */
 const BASE_BTN_CLASS =
-  'font-medium inline-flex items-center justify-center shrink-0 cursor-pointer select-none ' +
+  'relative font-medium inline-flex items-center justify-center text-center shrink-0 cursor-pointer select-none ' +
   'transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-150 ease-out ' +
   'active:scale-[0.98] focus:outline-none ' +
   'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ' +
-  'aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:shadow-none'
+  'aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:shadow-none ' +
+  'pointer-coarse:after:absolute pointer-coarse:after:top-1/2 pointer-coarse:after:left-1/2 ' +
+  'pointer-coarse:after:-translate-x-1/2 pointer-coarse:after:-translate-y-1/2 ' +
+  'pointer-coarse:after:w-full pointer-coarse:after:min-w-11 pointer-coarse:after:h-full pointer-coarse:after:min-h-11'
 
 export const Button = forwardRef(
   <C extends ElementType = 'button'>(
@@ -172,7 +187,10 @@ export const Button = forwardRef(
     const elementProps = isNativeButton
       ? {
           type: type ?? 'button',
-          disabled: resolvedDisabled,
+          // Not `disabled` while loading: that would drop keyboard focus from the
+          // button just pressed. handleClick ignores presses until it's done.
+          disabled: Boolean(disabled),
+          'aria-disabled': loading && !disabled ? true : undefined,
           role,
           tabIndex,
           onClick: handleClick,
@@ -210,7 +228,8 @@ export const Button = forwardRef(
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid',
           rounded && 'rounded-full',
           fullWidth && 'w-full',
-          variant === 'default' && 'shadow-xs hover:shadow-none',
+          // Secondary default is a flat grey fill; a shadow would bring back the outlined look.
+          variant === 'default' && theme !== 'secondary' && 'shadow-xs hover:shadow-none',
           active && 'ring-2 ring-current',
           className,
         ),

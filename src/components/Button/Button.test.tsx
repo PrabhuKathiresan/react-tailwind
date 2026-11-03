@@ -43,7 +43,7 @@ describe('Button Component', () => {
 
   it('applies success and warning theme classes', () => {
     const { rerender } = render(<Button theme="success">Success</Button>)
-    expect(screen.getByRole('button').className).toMatch(/bg-emerald-600/)
+    expect(screen.getByRole('button').className).toMatch(/bg-emerald-700/)
 
     rerender(<Button theme="warning">Warning</Button>)
     expect(screen.getByRole('button').className).toMatch(/bg-amber-500/)
@@ -88,9 +88,89 @@ describe('Button Component', () => {
     expect(screen.getByRole('button')).toBeDisabled()
   })
 
-  it('disables button when loading=true', () => {
-    render(<Button loading>Loading</Button>)
-    expect(screen.getByRole('button')).toBeDisabled()
+  it('ignores presses while loading, but keeps keyboard focus', () => {
+    const onClick = jest.fn()
+    render(
+      <Button loading onClick={onClick}>
+        Loading
+      </Button>,
+    )
+    const btn = screen.getByRole('button')
+    expect(btn).not.toBeDisabled()
+    expect(btn).toHaveAttribute('aria-disabled', 'true')
+    btn.focus()
+    expect(btn).toHaveFocus()
+    fireEvent.click(btn)
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('does not submit a form while loading', () => {
+    const onSubmit = jest.fn((event: React.FormEvent) => event.preventDefault())
+    render(
+      <form onSubmit={onSubmit}>
+        <Button type="submit" loading>
+          Save
+        </Button>
+      </form>,
+    )
+    fireEvent.click(screen.getByRole('button'))
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  it('reaches 44px to tap on touch screens, at every size', () => {
+    const sizes = ['xs', 'sm', 'md', 'lg'] as const
+    sizes.forEach((size) => {
+      const { unmount } = render(<Button size={size}>Tap</Button>)
+      expect(screen.getByRole('button')).toHaveClass(
+        'pointer-coarse:after:min-h-11',
+        'pointer-coarse:after:min-w-11',
+      )
+      unmount()
+    })
+  })
+
+  it('grows with a label that wraps instead of letting it spill out', () => {
+    render(<Button>A long label</Button>)
+    const btn = screen.getByRole('button')
+    expect(btn).toHaveClass('min-h-9', 'text-center')
+    expect(btn).not.toHaveClass('h-9')
+  })
+
+  it('keeps a fixed square for icon-only buttons', () => {
+    render(
+      <Button iconOnly aria-label="Close">
+        x
+      </Button>,
+    )
+    expect(screen.getByRole('button')).toHaveClass('h-9', 'w-9')
+  })
+
+  it('gives the warning button dark text and the outlined secondary a white fill', () => {
+    const { unmount } = render(<Button theme="warning">Warn</Button>)
+    expect(screen.getByRole('button')).toHaveClass('text-gray-900')
+    expect(screen.getByRole('button')).not.toHaveClass('text-white')
+    unmount()
+    render(
+      <Button theme="secondary" variant="outlined">
+        Edit
+      </Button>,
+    )
+    expect(screen.getByRole('button')).toHaveClass('bg-white', 'border-gray-300')
+  })
+
+  it('tells the secondary variants apart: a flat grey fill, and white with a border', () => {
+    const { unmount } = render(<Button theme="secondary">Cancel</Button>)
+    const filled = screen.getByRole('button')
+    expect(filled).toHaveClass('bg-gray-200')
+    expect(filled).not.toHaveClass('border')
+    expect(filled).not.toHaveClass('shadow-xs')
+    unmount()
+    render(
+      <Button theme="secondary" variant="outlined">
+        Edit
+      </Button>,
+    )
+    expect(screen.getByRole('button')).toHaveClass('bg-white', 'border', 'shadow-xs')
   })
 
   it('forwards ref correctly', () => {
