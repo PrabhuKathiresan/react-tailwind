@@ -16,7 +16,8 @@ export interface InputProps
   size?: InputSize
 
   /**
-   * Space for right icon / control
+   * Space for right icon / control. On a date, month, week or datetime-local
+   * field, this replaces the built-in calendar icon.
    */
   rightGroup?: ReactNode
 

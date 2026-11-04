@@ -133,6 +133,24 @@ const [text, setText] = useState('John Doe')
 />`,
     },
     {
+      title: 'Date & Time Fields',
+      description:
+        "Native date and time fields take the same height as a text field at every size, including on iOS, which otherwise sizes them by their value. Date, month, week and datetime-local fields show one calendar icon in place of the browser's own, except in Firefox, which always draws its own. Tapping anywhere on a phone opens the picker. A rightGroup you pass replaces the icon.",
+      render: (
+        <div className="max-w-md grid grid-cols-2 items-start gap-3">
+          <Input label="Purchase date" id="docs-date" type="date" defaultValue="2026-11-04" />
+          <Input label="Bill number" id="docs-bill" placeholder="e.g. PO-2026-001" />
+          <Input label="Month" id="docs-month" type="month" defaultValue="2026-11" />
+          <Input label="Time" id="docs-time" type="time" defaultValue="09:30" />
+        </div>
+      ),
+      code: `
+<Input label="Purchase date" id="purchase-date" type="date" />
+<Input label="Bill number" id="bill-number" placeholder="e.g. PO-2026-001" />
+<Input label="Month" id="month" type="month" />
+<Input label="Time" id="time" type="time" />`,
+    },
+    {
       title: 'Error & Helper Text',
       description: 'Display validation error styling or subtle guidance helper text.',
       render: (
@@ -164,7 +182,7 @@ const [text, setText] = useState('John Doe')
   return (
     <DocsPageLayout
       component="Input"
-      description="A flexible text input control supporting responsive size scales (sm/md/lg), 1-click clearable buttons, prefix/suffix addons, character counters, leading/trailing icons, and validation errors."
+      description="A flexible text input control supporting responsive size scales (sm/md/lg), 1-click clearable buttons, prefix/suffix addons, character counters, leading/trailing icons, native date and time fields, and validation errors."
       examples={examples}
     />
   )
