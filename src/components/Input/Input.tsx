@@ -33,6 +33,22 @@ const sizeClasses: Record<InputSize, { input: string; group: string; icon: strin
     },
   }
 
+// A native date or time field is its own control. iOS sizes it by its value rather
+// than by padding, so it comes out shorter than the fields beside it, and draws its own
+// arrow. These give it the height of a text field, and left-aligned text like one.
+const nativePickerClasses: Record<InputSize, string> = {
+  sm: 'min-h-8',
+  md: 'min-h-10',
+  lg: 'min-h-12',
+}
+const NATIVE_PICKER_BASE =
+  'relative appearance-none text-left [&::-webkit-date-and-time-value]:min-h-[1.5em] [&::-webkit-date-and-time-value]:text-left'
+// The browser's own icon is hidden but still opens the picker, under the calendar drawn here.
+const CALENDAR_INDICATOR =
+  '[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:end-0 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0'
+const NATIVE_PICKER_TYPES = ['date', 'month', 'week', 'datetime-local', 'time']
+const CALENDAR_TYPES = ['date', 'month', 'week', 'datetime-local']
+
 export function buildInputClass(
   className?: string,
   {
@@ -158,7 +174,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       </button>
     ) : null)
 
-  const hasRightGroup = actualRightGroup !== null && actualRightGroup !== undefined
+  const isNativePicker = NATIVE_PICKER_TYPES.includes(type ?? '')
+  // Only when nothing else is there; Firefox always draws its own, so ours steps aside.
+  const showCalendarIcon = CALENDAR_TYPES.includes(type ?? '') && !actualRightGroup
+
+  const hasRightGroup =
+    showCalendarIcon || (actualRightGroup !== null && actualRightGroup !== undefined)
   const hasLeftGroup = leftGroup != null && leftGroup !== undefined
 
   return (
@@ -218,6 +239,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               suffix ? '!rounded-r-none' : '',
               hasRightGroup ? (size === 'lg' ? 'pe-12' : size === 'sm' ? 'pe-8' : 'pe-10') : '',
               hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
+              isNativePicker ? [NATIVE_PICKER_BASE, nativePickerClasses[size]].join(' ') : '',
+              showCalendarIcon ? CALENDAR_INDICATOR : '',
             )}
           />
 
@@ -226,9 +249,28 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               className={buildClassName(
                 'absolute end-0 top-0 h-full flex items-center justify-center text-gray-400 dark:text-gray-500',
                 currentSize.group,
+                showCalendarIcon && 'pointer-events-none [@supports(-moz-appearance:none)]:hidden',
               )}
             >
-              {actualRightGroup}
+              {showCalendarIcon ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  data-testid="input-calendar-icon"
+                  className={currentSize.icon}
+                >
+                  <path d="M8 2v4M16 2v4M3 10h18" />
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                </svg>
+              ) : (
+                actualRightGroup
+              )}
             </span>
           )}
         </div>
