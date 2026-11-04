@@ -68,6 +68,26 @@ const bestPractices = (
       Use <code>active</code> only for toggle buttons. Any boolean value sets{' '}
       <code>aria-pressed</code>; leave it unset for regular buttons.
     </li>
+    <li>
+      Pick between the two secondary styles by weight. <code>outlined</code> is white with a border
+      and reads as a real action beside a primary button. <code>default</code> is a flat grey fill,
+      for lower-priority actions or a row of equal ones.
+    </li>
+    <li>
+      On touch screens every button has a tap area of at least 44×44px, without changing how it
+      looks or takes up space. The area extends past the button's edges, so give neighbouring
+      buttons a small gap, and don't put them in an <code>overflow-hidden</code> parent tighter than
+      44px, which cuts the area off.
+    </li>
+    <li>
+      A loading button stays focusable and announces <code>aria-disabled</code>, so keyboard and
+      screen reader users keep their place when it finishes. Clicks are ignored until then. Use{' '}
+      <code>disabled</code> when the action isn't available at all.
+    </li>
+    <li>
+      Label sizes set a minimum height, not a fixed one, so long labels wrap and stay centred rather
+      than overflowing on narrow screens.
+    </li>
   </ul>
 )
 
@@ -210,9 +230,38 @@ export default function ButtonDocsPage() {
 </Button>`,
     },
     {
+      title: 'Secondary: Outlined and Default',
+      description:
+        'Outlined is the stronger of the two, and sits well beside a primary button. Default is a flat grey fill with no shadow, for quieter actions.',
+      render: (
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3 flex-wrap">
+            <Button>Mark paid</Button>
+            <Button theme="secondary" variant="outlined">
+              Edit
+            </Button>
+            <Button theme="secondary" variant="outlined">
+              Print / PDF
+            </Button>
+          </div>
+          <div className="flex gap-3 flex-wrap">
+            <Button theme="secondary">Duplicate</Button>
+            <Button theme="secondary">Export</Button>
+          </div>
+        </div>
+      ),
+      code: `
+<Button>Mark paid</Button>
+<Button theme="secondary" variant="outlined">Edit</Button>
+<Button theme="secondary" variant="outlined">Print / PDF</Button>
+
+<Button theme="secondary">Duplicate</Button>
+<Button theme="secondary">Export</Button>`,
+    },
+    {
       title: 'Loading States',
       description:
-        'Set loading=true to automatically show a spinner loader and disable interaction.',
+        'Set loading=true to show a spinner and ignore clicks. The button keeps its focus while it loads, and is announced as disabled.',
       render: (
         <div className="flex gap-3 flex-wrap">
           <Button loading>Saving...</Button>
