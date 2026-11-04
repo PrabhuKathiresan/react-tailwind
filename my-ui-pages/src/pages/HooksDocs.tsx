@@ -4,7 +4,9 @@ import {
   HeadingText,
   BodyText,
   Badge,
+  Button,
   Input,
+  useCloseOnBack,
   useDebounce,
   useIsMobile,
   useIsTablet,
@@ -23,6 +25,9 @@ export default function HooksDocsPage() {
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
   const isTabletOrMobile = useIsTabletOrMobile()
+
+  const [selecting, setSelecting] = useState(false)
+  useCloseOnBack(selecting, () => setSelecting(false))
 
   return (
     <motion.div
@@ -60,7 +65,7 @@ export default function HooksDocsPage() {
           <code className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
             @pk-design/react-tailwind
           </code>{' '}
-          for responsive breakpoint media queries and state debouncing.
+          for responsive breakpoint media queries, state debouncing and closing on Back.
         </BodyText>
       </header>
 
@@ -233,6 +238,95 @@ function ResponsiveLayout() {
                 </Badge>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. useCloseOnBack */}
+      <section className="space-y-6 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 bg-white dark:bg-gray-900 shadow-xs">
+        <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800/80 pb-4">
+          <div className="space-y-2 min-w-0 flex-1">
+            <div className="flex items-center gap-3 flex-wrap">
+              <HeadingText
+                level={2}
+                size="2xl"
+                weight="bold"
+                className="text-gray-900 dark:text-gray-100"
+              >
+                useCloseOnBack
+              </HeadingText>
+              <code className="text-xs font-mono bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80 px-2 py-0.5 rounded-md font-semibold">
+                useCloseOnBack(active: boolean, onClose: () =&gt; void): void
+              </code>
+            </div>
+            <BodyText size="sm" muted className="leading-relaxed">
+              While <code>active</code>, the browser's back button and Android's back gesture call{' '}
+              <code>onClose</code> instead of leaving the page. Use it for temporary states people
+              expect Back to undo, like a selection mode or a custom panel. <code>Drawer</code>{' '}
+              already does this, so it doesn't need the hook.
+            </BodyText>
+          </div>
+          <Badge theme="info" size="sm" className="whitespace-nowrap shrink-0 self-start">
+            Navigation
+          </Badge>
+        </div>
+
+        <ul className="list-disc pl-6 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          <li>
+            Becoming active adds one history entry, keeping the current URL and state, so routers
+            see the same location.
+          </li>
+          <li>
+            Closed any other way, like a Cancel button, the entry is removed again, so the next Back
+            leaves the page as expected.
+          </li>
+          <li>
+            If the app has navigated on in the meantime, the entry is left alone, so a form that
+            saves and then navigates isn't undone.
+          </li>
+          <li>
+            Several can be active at once, such as a drawer opened during a selection. Back closes
+            the most recent first.
+          </li>
+          <li>
+            <code>onClose</code> must turn <code>active</code> off. If it's still on afterwards, the
+            entry is added back, which suits a state that steps back within itself first.
+          </li>
+        </ul>
+
+        <CodeBlock
+          code={`import { useState } from 'react'
+import { useCloseOnBack } from '@pk-design/react-tailwind'
+
+function CustomerList() {
+  const [selecting, setSelecting] = useState(false)
+
+  // Back ends selection and stays on the list.
+  useCloseOnBack(selecting, () => setSelecting(false))
+
+  return (
+    <button onClick={() => setSelecting(true)}>Select</button>
+  )
+}`}
+          language="tsx"
+        />
+
+        {/* Live Playground */}
+        <div className="p-4 bg-gray-50 dark:bg-gray-800/60 rounded-xl space-y-3 border border-gray-200/80 dark:border-gray-700">
+          <div className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            Live Back Button Test
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Button
+              theme="secondary"
+              variant="outlined"
+              onClick={() => setSelecting((current) => !current)}
+            >
+              {selecting ? 'Cancel' : 'Start selecting'}
+            </Button>
+            <Badge theme={selecting ? 'success' : 'secondary'} size="sm">
+              {selecting ? 'Selecting: press Back to end it' : 'Not selecting'}
+            </Badge>
           </div>
         </div>
       </section>
