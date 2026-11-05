@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.14.1 (2026-11-05)</small>
+
+* Merge pull request #28 from PrabhuKathiresan/fix/input-date-mobile ([35025264b51ff5bd1a9bde93161ddb74731aa10b](https://github.com/PrabhuKathiresan/react-tailwind/commit/35025264b51ff5bd1a9bde93161ddb74731aa10b)), closes [#28](https://github.com/PrabhuKathiresan/react-tailwind/issues/28)
+* docs(Button): touch targets, focus while loading, secondary variants ([9ea3e164c1f8c8a96c12afeeb4e665d62259cd0d](https://github.com/PrabhuKathiresan/react-tailwind/commit/9ea3e164c1f8c8a96c12afeeb4e665d62259cd0d))
+* docs(hooks): document useCloseOnBack with a live example ([4a83279e68350d6b2e50381533d060df80b4677c](https://github.com/PrabhuKathiresan/react-tailwind/commit/4a83279e68350d6b2e50381533d060df80b4677c))
+* docs(Input): native date and time fields ([15369f5a204a0883d3b96a76a3a59a9e1ec67f08](https://github.com/PrabhuKathiresan/react-tailwind/commit/15369f5a204a0883d3b96a76a3a59a9e1ec67f08))
+* fix(Input): date fields match text fields on iOS, with one calendar icon ([a198949b8ec291e3930bd67859a5f89b93486878](https://github.com/PrabhuKathiresan/react-tailwind/commit/a198949b8ec291e3930bd67859a5f89b93486878))
+
 ## 1.14.0 (2026-11-03)
 
 * Merge pull request #26 from PrabhuKathiresan/feat/export-close-on-back ([73855b067dbde3a1b16b4c20bc5e88534682434c](https://github.com/PrabhuKathiresan/react-tailwind/commit/73855b067dbde3a1b16b4c20bc5e88534682434c)), closes [#26](https://github.com/PrabhuKathiresan/react-tailwind/issues/26)
