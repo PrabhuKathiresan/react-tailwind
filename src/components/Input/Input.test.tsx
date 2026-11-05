@@ -132,13 +132,13 @@ describe('Input Component', () => {
     it('gives a date field the height of a text field, and its own calendar icon', () => {
       render(<Input label="Date" id="d" type="date" />)
       const input = screen.getByLabelText('Date')
-      expect(input).toHaveClass('min-h-10', 'appearance-none')
+      expect(input).toHaveClass('h-10', 'appearance-none')
       expect(screen.getByTestId('input-calendar-icon')).toBeInTheDocument()
     })
 
     it('matches the height to the size', () => {
       render(<Input label="Date" id="d" type="date" size="lg" />)
-      expect(screen.getByLabelText('Date')).toHaveClass('min-h-12')
+      expect(screen.getByLabelText('Date')).toHaveClass('h-12')
     })
 
     it('lets a tap on the icon reach the field', () => {
@@ -156,7 +156,7 @@ describe('Input Component', () => {
 
     it('draws no calendar on a time field', () => {
       render(<Input label="Time" id="t" type="time" />)
-      expect(screen.getByLabelText('Time')).toHaveClass('min-h-10')
+      expect(screen.getByLabelText('Time')).toHaveClass('h-10')
       expect(screen.queryByTestId('input-calendar-icon')).not.toBeInTheDocument()
     })
 

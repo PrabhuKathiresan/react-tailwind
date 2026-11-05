@@ -135,7 +135,7 @@ const [text, setText] = useState('John Doe')
     {
       title: 'Date & Time Fields',
       description:
-        "Native date and time fields take the same height as a text field at every size, including on iOS, which otherwise sizes them by their value. Date, month, week and datetime-local fields show one calendar icon in place of the browser's own, except in Firefox, which always draws its own. Tapping anywhere on a phone opens the picker. A rightGroup you pass replaces the icon.",
+        "Native date and time fields take the same height as a text field at every size, including in mobile browsers, which style them differently. Date, month, week and datetime-local fields show one calendar icon in place of the browser's own, except in Firefox, which always draws its own. Tapping anywhere on a phone opens the picker. A rightGroup you pass replaces the icon.",
       render: (
         <div className="max-w-md grid grid-cols-2 items-start gap-3">
           <Input label="Purchase date" id="docs-date" type="date" defaultValue="2026-11-04" />
