@@ -127,4 +127,43 @@ describe('Input Component', () => {
     expect(input).toHaveAttribute('aria-invalid', 'true')
     expect(input).toHaveAttribute('aria-describedby', 'test-input-error')
   })
+
+  describe('native date and time fields', () => {
+    it('gives a date field the height of a text field, and its own calendar icon', () => {
+      render(<Input label="Date" id="d" type="date" />)
+      const input = screen.getByLabelText('Date')
+      expect(input).toHaveClass('min-h-10', 'appearance-none')
+      expect(screen.getByTestId('input-calendar-icon')).toBeInTheDocument()
+    })
+
+    it('matches the height to the size', () => {
+      render(<Input label="Date" id="d" type="date" size="lg" />)
+      expect(screen.getByLabelText('Date')).toHaveClass('min-h-12')
+    })
+
+    it('lets a tap on the icon reach the field', () => {
+      render(<Input label="Date" id="d" type="date" />)
+      expect(screen.getByTestId('input-calendar-icon').parentElement).toHaveClass(
+        'pointer-events-none',
+      )
+    })
+
+    it('keeps a right group the caller passes', () => {
+      render(<Input label="Date" id="d" type="date" rightGroup={<span>Today</span>} />)
+      expect(screen.getByText('Today')).toBeInTheDocument()
+      expect(screen.queryByTestId('input-calendar-icon')).not.toBeInTheDocument()
+    })
+
+    it('draws no calendar on a time field', () => {
+      render(<Input label="Time" id="t" type="time" />)
+      expect(screen.getByLabelText('Time')).toHaveClass('min-h-10')
+      expect(screen.queryByTestId('input-calendar-icon')).not.toBeInTheDocument()
+    })
+
+    it('leaves a text field alone', () => {
+      render(<Input label="Name" id="n" />)
+      expect(screen.getByLabelText('Name')).not.toHaveClass('appearance-none')
+      expect(screen.queryByTestId('input-calendar-icon')).not.toBeInTheDocument()
+    })
+  })
 })
