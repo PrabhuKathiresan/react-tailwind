@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.14.2 (2026-11-05)</small>
+
+* Merge pull request #29 from PrabhuKathiresan/fix/input-date-android ([013425ea27811c2dbec90b1a53fa67ac1f3e573e](https://github.com/PrabhuKathiresan/react-tailwind/commit/013425ea27811c2dbec90b1a53fa67ac1f3e573e)), closes [#29](https://github.com/PrabhuKathiresan/react-tailwind/issues/29)
+* docs(Input): date fields differ across mobile browsers, not only iOS ([4bf547444d855caa9f48ebcb9547ec6db077f7b1](https://github.com/PrabhuKathiresan/react-tailwind/commit/4bf547444d855caa9f48ebcb9547ec6db077f7b1))
+* fix(Input): date fields are the same height as text fields on Android ([186f49b0782a1e88131cbeda050f78fae9b49820](https://github.com/PrabhuKathiresan/react-tailwind/commit/186f49b0782a1e88131cbeda050f78fae9b49820))
+
 ## <small>1.14.1 (2026-11-05)</small>
 
 * Merge pull request #28 from PrabhuKathiresan/fix/input-date-mobile ([35025264b51ff5bd1a9bde93161ddb74731aa10b](https://github.com/PrabhuKathiresan/react-tailwind/commit/35025264b51ff5bd1a9bde93161ddb74731aa10b)), closes [#28](https://github.com/PrabhuKathiresan/react-tailwind/issues/28)
