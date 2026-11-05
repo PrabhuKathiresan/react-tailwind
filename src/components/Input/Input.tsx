@@ -33,16 +33,17 @@ const sizeClasses: Record<InputSize, { input: string; group: string; icon: strin
     },
   }
 
-// A native date or time field is its own control. iOS sizes it by its value rather
-// than by padding, so it comes out shorter than the fields beside it, and draws its own
-// arrow. These give it the height of a text field, and left-aligned text like one.
+// A native date or time field is its own control, styled differently by each browser.
+// Android Chrome puts a margin around the value, making the field taller than the text
+// fields beside it and its text further in, and draws its own arrow. So these fix the
+// height, rather than setting a minimum, and clear what surrounds the value.
 const nativePickerClasses: Record<InputSize, string> = {
-  sm: 'min-h-8',
-  md: 'min-h-10',
-  lg: 'min-h-12',
+  sm: 'h-8',
+  md: 'h-10',
+  lg: 'h-12',
 }
 const NATIVE_PICKER_BASE =
-  'relative appearance-none text-left [&::-webkit-date-and-time-value]:min-h-[1.5em] [&::-webkit-date-and-time-value]:text-left'
+  'relative appearance-none text-left [&::-webkit-date-and-time-value]:m-0 [&::-webkit-date-and-time-value]:w-full [&::-webkit-date-and-time-value]:p-0 [&::-webkit-date-and-time-value]:text-left'
 // The browser's own icon is hidden but still opens the picker, under the calendar drawn here.
 const CALENDAR_INDICATOR =
   '[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:end-0 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0'
