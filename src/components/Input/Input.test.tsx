@@ -166,4 +166,15 @@ describe('Input Component', () => {
       expect(screen.queryByTestId('input-calendar-icon')).not.toBeInTheDocument()
     })
   })
+
+  it('names the field by its label even without an id or name', () => {
+    render(
+      <>
+        <Input label="Month" type="month" />
+        <Input label="Year" type="number" />
+      </>,
+    )
+    expect(screen.getByLabelText('Month')).toHaveAttribute('type', 'month')
+    expect(screen.getByLabelText('Year')).toHaveAttribute('type', 'number')
+  })
 })

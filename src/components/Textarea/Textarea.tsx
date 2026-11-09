@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useId,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -38,7 +39,7 @@ const resizeClasses: Record<TextareaResize, string> = {
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
   const {
     name,
-    id = name,
+    id: idProp,
     label = null,
     labelHint = null,
     className = '',
@@ -62,6 +63,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     'aria-describedby': ariaDescribedBy,
     ...inputProps
   } = props
+  // Without an id (or a name to use), the label still names the field.
+  const generatedId = useId()
+  const id = idProp ?? name ?? generatedId
 
   const innerRef = useRef<HTMLTextAreaElement>(null)
   useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement)

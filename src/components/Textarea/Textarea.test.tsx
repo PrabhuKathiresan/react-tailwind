@@ -97,4 +97,9 @@ describe('<Textarea />', () => {
     expect(textarea).toHaveAttribute('aria-invalid', 'true')
     expect(textarea).toHaveAttribute('aria-describedby', 'bio-field-error')
   })
+
+  test('names the field by its label even without an id or name', () => {
+    render(<Textarea label="Notes" />)
+    expect(screen.getByLabelText('Notes').tagName).toBe('TEXTAREA')
+  })
 })

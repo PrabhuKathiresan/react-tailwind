@@ -1,6 +1,7 @@
 import {
   useCallback,
   forwardRef,
+  useId,
   useImperativeHandle,
   useRef,
   useState,
@@ -82,7 +83,7 @@ export function buildInputClass(
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     name,
-    id = name,
+    id: idProp,
     type,
     label,
     labelHint,
@@ -109,6 +110,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     'aria-describedby': ariaDescribedBy,
     ...inputProps
   } = props
+  // Without an id (or a name to use), the label still names the field.
+  const generatedId = useId()
+  const id = idProp ?? name ?? generatedId
 
   const innerRef = useRef<HTMLInputElement>(null)
   useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
