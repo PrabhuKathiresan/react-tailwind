@@ -8,6 +8,7 @@ import {
   Input,
   useCloseOnBack,
   useDebounce,
+  useKeyboardInset,
   useIsMobile,
   useIsTablet,
   useIsTabletOrMobile,
@@ -27,6 +28,7 @@ export default function HooksDocsPage() {
   const isTabletOrMobile = useIsTabletOrMobile()
 
   const [selecting, setSelecting] = useState(false)
+  const keyboardInset = useKeyboardInset()
   useCloseOnBack(selecting, () => setSelecting(false))
 
   return (
@@ -65,7 +67,8 @@ export default function HooksDocsPage() {
           <code className="text-sm font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
             @pk-design/react-tailwind
           </code>{' '}
-          for responsive breakpoint media queries, state debouncing and closing on Back.
+          for responsive breakpoint media queries, state debouncing, closing on Back, keeping bars
+          above the keyboard and restoring a list's scroll position.
         </BodyText>
       </header>
 
@@ -329,6 +332,115 @@ function CustomerList() {
             </Badge>
           </div>
         </div>
+      </section>
+
+      {/* useKeyboardInset */}
+      <section className="space-y-6 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 bg-white dark:bg-gray-900 shadow-xs">
+        <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800/80 pb-4">
+          <div className="space-y-2 min-w-0 flex-1">
+            <div className="flex items-center gap-3 flex-wrap">
+              <HeadingText
+                level={2}
+                size="2xl"
+                weight="bold"
+                className="text-gray-900 dark:text-gray-100"
+              >
+                useKeyboardInset
+              </HeadingText>
+              <code className="text-xs font-mono bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80 px-2 py-0.5 rounded-md font-semibold">
+                useKeyboardInset(enabled?: boolean): number
+              </code>
+            </div>
+            <BodyText size="sm" muted className="leading-relaxed">
+              How far the on-screen keyboard reaches into the window, in pixels, so a bar pinned to
+              the bottom can sit just above it. <code>StickyActionBar</code>'s{' '}
+              <code>followKeyboard</code> uses it.
+            </BodyText>
+          </div>
+          <Badge theme="info" size="sm" className="whitespace-nowrap shrink-0 self-start">
+            Mobile
+          </Badge>
+        </div>
+
+        <ul className="list-disc pl-6 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          <li>
+            It's 0 on Android Chrome, which resizes the window for the keyboard (with{' '}
+            <code>interactive-widget=resizes-content</code>).
+          </li>
+          <li>
+            iOS Safari only shrinks the visible area, so without it a bottom bar stays behind the
+            keyboard.
+          </li>
+          <li>
+            Measured once per frame while the visible area resizes or scrolls; 0 when{' '}
+            <code>enabled</code> is false.
+          </li>
+        </ul>
+
+        <CodeBlock
+          code={`import { useKeyboardInset } from '@pk-design/react-tailwind'
+
+function SaveBar() {
+  const inset = useKeyboardInset()
+  return <div className="fixed inset-x-0" style={{ bottom: inset }}>…</div>
+}`}
+          language="tsx"
+        />
+        <div className="p-4 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200/80 dark:border-gray-700 text-sm">
+          Keyboard inset right now: <strong>{keyboardInset}px</strong> (open the keyboard on a phone
+          to see it change)
+        </div>
+      </section>
+
+      {/* useScrollRestoration */}
+      <section className="space-y-6 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 bg-white dark:bg-gray-900 shadow-xs">
+        <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800/80 pb-4">
+          <div className="space-y-2 min-w-0 flex-1">
+            <div className="flex items-center gap-3 flex-wrap">
+              <HeadingText
+                level={2}
+                size="2xl"
+                weight="bold"
+                className="text-gray-900 dark:text-gray-100"
+              >
+                useScrollRestoration
+              </HeadingText>
+              <code className="text-xs font-mono bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80 px-2 py-0.5 rounded-md font-semibold">
+                useScrollRestoration(ref, ready: boolean, enabled?: boolean): void
+              </code>
+            </div>
+            <BodyText size="sm" muted className="leading-relaxed">
+              Brings a list back to where it was scrolled when the user returns to it, for example
+              back from a record it links to. <code>ListView</code> uses it with Load more.
+            </BodyText>
+          </div>
+          <Badge theme="info" size="sm" className="whitespace-nowrap shrink-0 self-start">
+            Navigation
+          </Badge>
+        </div>
+
+        <ul className="list-disc pl-6 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          <li>
+            Positions are kept per history entry (the router's <code>history.state.key</code>, else
+            the path), so a fresh visit starts at the top.
+          </li>
+          <li>
+            <code>ready</code> is when the rows are on screen; the position is restored once, then.
+          </li>
+          <li>It scrolls the list's nearest scrolling ancestor, or the page.</li>
+        </ul>
+
+        <CodeBlock
+          code={`import { useRef } from 'react'
+import { useScrollRestoration } from '@pk-design/react-tailwind'
+
+function Feed({ items, isLoading }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useScrollRestoration(ref, !isLoading && items.length > 0)
+  return <div ref={ref}>…</div>
+}`}
+          language="tsx"
+        />
       </section>
     </motion.div>
   )
