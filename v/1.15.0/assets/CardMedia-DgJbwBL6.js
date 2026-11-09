@@ -1,0 +1,1 @@
+const e="CardMedia",d="",a=[{name:"aspectRatio",type:"enum",raw:'"auto" | "square" | "video" | "wide"',enumValues:["auto","square","video","wide"],required:!1,defaultValue:"video",description:""}],i={name:e,description:"",props:a};export{i as default,d as description,e as name,a as props};

@@ -1886,6 +1886,127 @@
     "url": "/checkbox-group"
   },
   {
+    "name": "ConfirmSheet",
+    "description": "Asks before an action that's hard to undo: a bottom sheet on phones, in\nthumb reach, with the buttons stacked full width; a centred dialog from\n768px. Use it instead of the browser's `confirm()`.",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": "Whether it's open.",
+        "defaultValue": null
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": true,
+        "description": "What happens, in plain words, e.g. what's lost or kept.",
+        "defaultValue": null
+      },
+      {
+        "name": "confirmLabel",
+        "type": "string",
+        "required": true,
+        "description": "The confirming action, named for what it does, e.g. \"Delete\".",
+        "defaultValue": null
+      },
+      {
+        "name": "cancelLabel",
+        "type": "string",
+        "required": false,
+        "description": "The way out.",
+        "defaultValue": "Cancel"
+      },
+      {
+        "name": "danger",
+        "type": "boolean",
+        "required": false,
+        "description": "The confirming action destroys or removes something: a red button.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "isPending",
+        "type": "boolean",
+        "required": false,
+        "description": "While the action runs: buttons off, and tapping outside doesn't close it.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "secondaryAction",
+        "type": "{ label: string; onClick: () => void; }",
+        "required": false,
+        "description": "An optional third choice, shown before the confirming button.",
+        "defaultValue": null
+      },
+      {
+        "name": "onConfirm",
+        "type": "() => void",
+        "required": true,
+        "description": "Confirms.",
+        "defaultValue": null
+      },
+      {
+        "name": "onCancel",
+        "type": "() => void",
+        "required": true,
+        "description": "Cancels (the button, tapping outside or Escape).",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "confirmsheet",
+      "confirm",
+      "confirmation",
+      "delete-dialog",
+      "are-you-sure",
+      "isopen",
+      "description",
+      "confirmlabel",
+      "cancellabel",
+      "danger",
+      "ispending",
+      "secondaryaction",
+      "onconfirm",
+      "oncancel",
+      "reactnode",
+      "label",
+      "onclick",
+      "whether",
+      "open",
+      "what",
+      "happens",
+      "plain",
+      "words",
+      "lost",
+      "kept",
+      "confirming",
+      "action",
+      "named",
+      "does",
+      "delete",
+      "destroys",
+      "removes",
+      "something",
+      "button",
+      "while",
+      "runs",
+      "buttons",
+      "tapping",
+      "outside",
+      "doesn",
+      "close",
+      "optional",
+      "third",
+      "choice",
+      "shown",
+      "before",
+      "confirms",
+      "cancels",
+      "escape"
+    ],
+    "url": "/confirm-sheet"
+  },
+  {
     "name": "DataList",
     "description": "DataList component",
     "props": [
@@ -3230,6 +3351,155 @@
     "url": "/empty-state"
   },
   {
+    "name": "FilterChips",
+    "description": "Filters in effect, each cleared in one tap, so a narrowed list never looks\nlike the whole list. FilterSheet shows them under its row; a page without\none can show them on their own.",
+    "props": [
+      {
+        "name": "chips",
+        "type": "FilterChip[]",
+        "required": true,
+        "description": "Filters in effect; nothing renders without any.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "filterchips",
+      "chips",
+      "filterchip",
+      "filters",
+      "effect",
+      "nothing",
+      "renders",
+      "without"
+    ],
+    "url": "/filter-chips"
+  },
+  {
+    "name": "FilterSheet",
+    "description": "A phone list's filters behind one button: \"Filters (N)\" with the result\ncount beside it, the filters in effect as removable chips under it, and\nthe fields in a bottom sheet, so the list shows straight away instead of\nunder a wall of dropdowns.",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the sheet is open.",
+        "defaultValue": null
+      },
+      {
+        "name": "onOpen",
+        "type": "() => void",
+        "required": true,
+        "description": "Opens the sheet (the Filters button).",
+        "defaultValue": null
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": true,
+        "description": "Closes the sheet (Done, the backdrop or Escape).",
+        "defaultValue": null
+      },
+      {
+        "name": "onClear",
+        "type": "() => void",
+        "required": true,
+        "description": "Resets every filter (Clear filters).",
+        "defaultValue": null
+      },
+      {
+        "name": "activeCount",
+        "type": "number",
+        "required": true,
+        "description": "Filters set to something other than their default, shown as \"Filters (N)\".",
+        "defaultValue": null
+      },
+      {
+        "name": "resultCount",
+        "type": "number",
+        "required": false,
+        "description": "Records matching, shown beside the button once known, e.g. \"12 invoices\".",
+        "defaultValue": null
+      },
+      {
+        "name": "resultLabel",
+        "type": "string",
+        "required": true,
+        "description": "Singular noun for the count, e.g. \"invoice\".",
+        "defaultValue": null
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Page actions shown beside the Filters button, e.g. an upload.",
+        "defaultValue": null
+      },
+      {
+        "name": "chips",
+        "type": "FilterChip[]",
+        "required": false,
+        "description": "Filters in effect, as removable chips under the row, so the count says\nwhat it counts and a filter can be cleared in one tap.",
+        "defaultValue": "[]"
+      }
+    ],
+    "keywords": [
+      "filtersheet",
+      "filters",
+      "filter-chips",
+      "bottom-sheet",
+      "filter-drawer",
+      "isopen",
+      "onopen",
+      "onclose",
+      "onclear",
+      "activecount",
+      "resultcount",
+      "resultlabel",
+      "actions",
+      "chips",
+      "reactnode",
+      "filterchip",
+      "whether",
+      "sheet",
+      "open",
+      "opens",
+      "button",
+      "closes",
+      "done",
+      "backdrop",
+      "escape",
+      "resets",
+      "every",
+      "filter",
+      "clear",
+      "something",
+      "other",
+      "than",
+      "their",
+      "shown",
+      "records",
+      "matching",
+      "beside",
+      "once",
+      "known",
+      "invoices",
+      "singular",
+      "noun",
+      "count",
+      "invoice",
+      "page",
+      "upload",
+      "effect",
+      "removable",
+      "under",
+      "says",
+      "what",
+      "counts",
+      "cleared"
+    ],
+    "url": "/filter-sheet"
+  },
+  {
     "name": "Flex.Item",
     "description": "Flex.Item component",
     "props": [
@@ -4278,6 +4548,317 @@
     "url": "/label"
   },
   {
+    "name": "ListRow",
+    "description": "One record in a phone list: a divided row, not a card. The content is a\nreal link (or, for records edited in place, a button); actions sit beside\nit, never inside, so no control is nested in another. Two lines, each with\nits own right side, so the second line gets the full width when there's\nnothing to its right.",
+    "props": [
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "Where the row goes. The whole content area is one link to it, so keyboard,\nscreen readers and \"open in new tab\" work.",
+        "defaultValue": null
+      },
+      {
+        "name": "renderLink",
+        "type": "(props: ListRowLinkProps) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": "Renders the link for `href`, e.g. a router's Link (`({ href, ...props }) =>\n<Link to={href} {...props} />`).",
+        "defaultValue": "({ href, className, children, ...rest }: ListRowLinkProps) => (\n  <a href={href} className={className} {...rest}>\n    {children}\n  </a>\n)"
+      },
+      {
+        "name": "onOpen",
+        "type": "() => void",
+        "required": false,
+        "description": "For records without a page of their own (e.g. edited in a sheet): the\ncontent area is one button doing this. Without `href` or `onOpen` the row\nis static.",
+        "defaultValue": null
+      },
+      {
+        "name": "titleAdornment",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Shown after the title, e.g. a status pill.",
+        "defaultValue": null
+      },
+      {
+        "name": "meta",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Second line, e.g. \"Customer · date\". Wraps to two lines rather than truncating.",
+        "defaultValue": null
+      },
+      {
+        "name": "trailing",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Right side of the first line, e.g. the amount.",
+        "defaultValue": null
+      },
+      {
+        "name": "trailingMeta",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Right side of the second line, e.g. \"Due ₹1,200\".",
+        "defaultValue": null
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Under the second line, across the row, e.g. a small bar.",
+        "defaultValue": null
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Row actions (e.g. a ⋮ button), beside the content, never inside it.",
+        "defaultValue": null
+      },
+      {
+        "name": "muted",
+        "type": "boolean",
+        "required": false,
+        "description": "A record that no longer counts (e.g. a void invoice): dimmed, with the\ntrailing value struck through. Say why in `titleAdornment` too, since\ndimming alone isn't announced.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "disclosure",
+        "type": "boolean",
+        "required": false,
+        "description": "A chevron after the content, for rows that open a setting or a form\n(a settings list) rather than a record in a list.",
+        "defaultValue": "false"
+      },
+      {
+        "name": "selection",
+        "type": "ListRowSelection",
+        "required": false,
+        "description": "Selection mode: a checkbox leads the row and tapping the row toggles it,\ninstead of opening the record. Actions are hidden meanwhile.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "listrow",
+      "row",
+      "list-item",
+      "cell",
+      "record-row",
+      "divided-row",
+      "href",
+      "renderlink",
+      "onopen",
+      "titleadornment",
+      "meta",
+      "trailing",
+      "trailingmeta",
+      "footer",
+      "actions",
+      "muted",
+      "disclosure",
+      "selection",
+      "listrowlinkprops",
+      "reactelement",
+      "jsxelementconstructor",
+      "reactnode",
+      "listrowselection",
+      "where",
+      "goes",
+      "whole",
+      "content",
+      "area",
+      "link",
+      "screen",
+      "readers",
+      "open",
+      "work",
+      "renders",
+      "router",
+      "records",
+      "without",
+      "page",
+      "their",
+      "edited",
+      "sheet",
+      "button",
+      "doing",
+      "this",
+      "static",
+      "shown",
+      "after",
+      "title",
+      "status",
+      "pill",
+      "second",
+      "line",
+      "customer",
+      "date",
+      "wraps",
+      "lines",
+      "rather",
+      "than",
+      "truncating",
+      "right",
+      "side",
+      "first",
+      "amount",
+      "under",
+      "across",
+      "small",
+      "beside",
+      "inside",
+      "record",
+      "that",
+      "longer",
+      "counts",
+      "invoice",
+      "dimmed",
+      "with",
+      "struck",
+      "through",
+      "since",
+      "dimming",
+      "alone",
+      "announced",
+      "chevron",
+      "rows",
+      "setting",
+      "form",
+      "settings",
+      "list",
+      "mode",
+      "checkbox",
+      "leads",
+      "tapping",
+      "toggles",
+      "instead",
+      "opening",
+      "hidden",
+      "meanwhile"
+    ],
+    "url": "/list-row"
+  },
+  {
+    "name": "ListView",
+    "description": "A phone list: loading, empty, or rows as one flat, divided surface running\nedge to edge, with \"Load more\" at the end. Pair with ListRow. Wider screens\nusually show a DataTable instead.",
+    "props": [
+      {
+        "name": "items",
+        "type": "T[]",
+        "required": true,
+        "description": "The records to show, in order.",
+        "defaultValue": null
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "required": true,
+        "description": "While the first page loads: a spinner instead of rows.",
+        "defaultValue": null
+      },
+      {
+        "name": "emptyTitle",
+        "type": "string",
+        "required": true,
+        "description": "Shown when there are no records, e.g. \"No invoices yet\" or \"No invoices found\".",
+        "defaultValue": null
+      },
+      {
+        "name": "emptyDescription",
+        "type": "string",
+        "required": false,
+        "description": "What to do about it, e.g. \"Create one to see it here.\"",
+        "defaultValue": null
+      },
+      {
+        "name": "renderItem",
+        "type": "(item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+        "required": true,
+        "description": "One row per record, usually a ListRow; it must carry its own `key`.",
+        "defaultValue": null
+      },
+      {
+        "name": "loadMore",
+        "type": "ListViewLoadMore",
+        "required": false,
+        "description": "Adds the next page under the rows already shown, with \"25 of 60 invoices\"\nand a \"Show 25 more\" button at the end, then \"End of list\". With it, the\nscroll position is also restored when the user comes back to the list.",
+        "defaultValue": null
+      },
+      {
+        "name": "bleed",
+        "type": "boolean",
+        "required": false,
+        "description": "The rows run edge to edge by cancelling the page's own side padding.\nTurn off when the list sits in a container without it.",
+        "defaultValue": "true"
+      }
+    ],
+    "keywords": [
+      "listview",
+      "list",
+      "load-more",
+      "mobile-list",
+      "divided-list",
+      "feed",
+      "items",
+      "isloading",
+      "emptytitle",
+      "emptydescription",
+      "renderitem",
+      "loadmore",
+      "bleed",
+      "item",
+      "reactelement",
+      "jsxelementconstructor",
+      "listviewloadmore",
+      "records",
+      "show",
+      "order",
+      "while",
+      "first",
+      "page",
+      "loads",
+      "spinner",
+      "instead",
+      "rows",
+      "shown",
+      "when",
+      "there",
+      "invoices",
+      "found",
+      "what",
+      "about",
+      "create",
+      "here",
+      "record",
+      "usually",
+      "listrow",
+      "must",
+      "carry",
+      "adds",
+      "next",
+      "under",
+      "already",
+      "with",
+      "more",
+      "button",
+      "then",
+      "scroll",
+      "position",
+      "also",
+      "restored",
+      "user",
+      "comes",
+      "back",
+      "edge",
+      "cancelling",
+      "side",
+      "padding",
+      "turn",
+      "sits",
+      "container",
+      "without"
+    ],
+    "url": "/list-view"
+  },
+  {
     "name": "Loader",
     "description": "Loader component",
     "props": [
@@ -4634,8 +5215,15 @@
         "name": "searchPlaceholder",
         "type": "string",
         "required": false,
-        "description": "Search input placeholder inside sheet",
+        "description": "Search input placeholder inside sheet; also names the field for screen readers.",
         "defaultValue": null
+      },
+      {
+        "name": "autoFocusSearch",
+        "type": "boolean",
+        "required": false,
+        "description": "Puts focus (and so, on phones, the keyboard) in the search field when the\nsheet opens. Turn off for a short list people pick from without typing.",
+        "defaultValue": "true"
       },
       {
         "name": "async",
@@ -4809,6 +5397,7 @@
       "confirmtext",
       "searchable",
       "searchplaceholder",
+      "autofocussearch",
       "async",
       "onsearch",
       "loading",
@@ -4875,6 +5464,21 @@
       "input",
       "inside",
       "bottom",
+      "also",
+      "names",
+      "screen",
+      "readers",
+      "puts",
+      "focus",
+      "phones",
+      "opens",
+      "turn",
+      "short",
+      "people",
+      "pick",
+      "from",
+      "without",
+      "typing",
       "server",
       "side",
       "callback",
@@ -4883,7 +5487,6 @@
       "state",
       "spinner",
       "before",
-      "typing",
       "filter",
       "predicate",
       "client",
@@ -6148,69 +6751,69 @@
   },
   {
     "name": "RadioSwitch",
-    "description": "RadioSwitch component",
+    "description": "A small set of mutually exclusive options as one pill, with a highlight that\nslides to the chosen one. A radio group for assistive tech: one Tab stop,\nthe arrow keys (and Home/End) choose and move focus together, and disabled\noptions are skipped.",
     "props": [
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Names the group for screen readers, e.g. \"Theme\". Use `aria-labelledby` instead when a visible heading names it.",
         "defaultValue": null
       },
       {
         "name": "selected",
         "type": "string",
         "required": true,
-        "description": "",
+        "description": "The chosen option's value. With none matching, the first option takes the Tab stop.",
         "defaultValue": null
       },
       {
         "name": "items",
-        "type": "RadioSwitchItem[]",
+        "type": "RadioSwitchItem<T>[]",
         "required": true,
-        "description": "",
+        "description": "The options, in order.",
         "defaultValue": null
       },
       {
         "name": "size",
         "type": "RadioSwitchSize",
         "required": false,
-        "description": "",
+        "description": "Option padding and text size.",
         "defaultValue": "md"
       },
       {
         "name": "theme",
         "type": "RadioSwitchTheme",
         "required": false,
-        "description": "",
+        "description": "The chosen option's highlight.",
         "defaultValue": "primary"
       },
       {
         "name": "switchClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Classes for the sliding highlight.",
         "defaultValue": null
       },
       {
         "name": "wrapperClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Classes for the group container, e.g. `w-full`.",
         "defaultValue": null
       },
       {
         "name": "contentClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Classes for each option's content.",
         "defaultValue": null
       },
       {
         "name": "descriptionClass",
         "type": "string",
         "required": false,
-        "description": "",
+        "description": "Classes for each option's description line.",
         "defaultValue": null
       }
     ],
@@ -6235,7 +6838,36 @@
       "descriptionclass",
       "radioswitchitem",
       "radioswitchsize",
-      "radioswitchtheme"
+      "radioswitchtheme",
+      "names",
+      "group",
+      "screen",
+      "readers",
+      "labelledby",
+      "instead",
+      "when",
+      "visible",
+      "heading",
+      "chosen",
+      "option",
+      "with",
+      "none",
+      "matching",
+      "first",
+      "takes",
+      "stop",
+      "options",
+      "order",
+      "padding",
+      "text",
+      "highlight",
+      "sliding",
+      "container",
+      "full",
+      "each",
+      "content",
+      "description",
+      "line"
     ],
     "url": "/radio-switch"
   },
@@ -6599,11 +7231,11 @@
   },
   {
     "name": "SegmentedControl",
-    "description": "SegmentedControl component",
+    "description": "Generic over the option values, so `onChange` gets the same union the\noptions use (e.g. `'percent' | 'amount'`) and can be passed a typed state\nsetter directly. forwardRef drops generics, hence the cast.",
     "props": [
       {
         "name": "options",
-        "type": "SegmentedControlOption<string>[]",
+        "type": "SegmentedControlOption<T>[]",
         "required": true,
         "description": "Options list to display in the control",
         "defaultValue": null
@@ -7116,6 +7748,87 @@
     "url": "/select-box"
   },
   {
+    "name": "SelectionBar",
+    "description": "Bulk actions on phones while a list is selecting: it takes the bottom\nbar's place with a labelled button per action, within thumb reach. Hidden\nfrom 768px, where the page shows its own bulk actions.",
+    "props": [
+      {
+        "name": "count",
+        "type": "number",
+        "required": true,
+        "description": "How many records are selected; the actions are off at 0.",
+        "defaultValue": null
+      },
+      {
+        "name": "actions",
+        "type": "SelectionBarAction[]",
+        "required": true,
+        "description": "One labelled button each, in equal columns.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "selectionbar",
+      "bulk-actions",
+      "multi-select",
+      "selection-toolbar",
+      "count",
+      "actions",
+      "selectionbaraction",
+      "many",
+      "records",
+      "selected",
+      "labelled",
+      "button",
+      "each",
+      "equal",
+      "columns"
+    ],
+    "url": "/selection-bar"
+  },
+  {
+    "name": "SettingsGroup",
+    "description": "One group of a phone settings page: a heading in the page gutter, then its\nrows as one flat, divided surface running edge to edge, rather than a card\nper group.",
+    "props": [
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": "One line under the heading, e.g. what these settings affect.",
+        "defaultValue": null
+      },
+      {
+        "name": "bleed",
+        "type": "boolean",
+        "required": false,
+        "description": "The rows run edge to edge by cancelling the page's own side padding.",
+        "defaultValue": "true"
+      }
+    ],
+    "keywords": [
+      "settingsgroup",
+      "settings",
+      "preferences",
+      "grouped-list",
+      "ios-settings",
+      "description",
+      "bleed",
+      "reactnode",
+      "line",
+      "under",
+      "heading",
+      "what",
+      "these",
+      "affect",
+      "rows",
+      "edge",
+      "cancelling",
+      "page",
+      "side",
+      "padding"
+    ],
+    "url": "/settings-group"
+  },
+  {
     "name": "Skeleton",
     "description": "Skeleton component",
     "props": [
@@ -7310,6 +8023,13 @@
         "required": false,
         "description": "Distance from the viewport bottom for `fixed`/`sticky` bars, as a CSS length or variable,\ne.g. `var(--app-bottom-inset)` to sit above an app's bottom navigation.",
         "defaultValue": "'0px'"
+      },
+      {
+        "name": "followKeyboard",
+        "type": "boolean",
+        "required": false,
+        "description": "Keeps a `fixed` bar just above the on-screen keyboard while typing, so its\naction stays in reach (iOS Safari leaves a bottom bar behind the keyboard).\nReplaces `bottomOffset` while the keyboard is up.",
+        "defaultValue": "false"
       }
     ],
     "keywords": [
@@ -7326,6 +8046,7 @@
       "containermaxwidth",
       "safearea",
       "bottomoffset",
+      "followkeyboard",
       "reactnode",
       "fixed",
       "sticky",
@@ -7378,7 +8099,18 @@
       "bars",
       "length",
       "variable",
-      "above"
+      "above",
+      "keeps",
+      "just",
+      "screen",
+      "while",
+      "typing",
+      "stays",
+      "reach",
+      "safari",
+      "leaves",
+      "behind",
+      "replaces"
     ],
     "url": "/sticky-action-bar"
   },
@@ -8993,105 +9725,5 @@
       "item"
     ],
     "url": "/wheel-picker"
-  },
-  {
-    "name": "Dialog",
-    "description": "Dialog component",
-    "props": [
-      {
-        "name": "open",
-        "type": "boolean",
-        "required": true,
-        "description": "Controls the visibility of the dialog.",
-        "defaultValue": null
-      },
-      {
-        "name": "onClose",
-        "type": "() => void",
-        "required": false,
-        "description": "Called when clicking overlay or pressing the ESC key.",
-        "defaultValue": null
-      },
-      {
-        "name": "position",
-        "type": "DialogPosition",
-        "required": false,
-        "description": "Dialog position on the screen.",
-        "defaultValue": "center"
-      },
-      {
-        "name": "size",
-        "type": "DialogSize",
-        "required": false,
-        "description": "Controls dialog width for center/top/bottom modes.",
-        "defaultValue": "md"
-      },
-      {
-        "name": "overlayClass",
-        "type": "string",
-        "required": false,
-        "description": "Custom classes for overlay.",
-        "defaultValue": null
-      },
-      {
-        "name": "panelClass",
-        "type": "string",
-        "required": false,
-        "description": "Custom classes for the panel.",
-        "defaultValue": null
-      },
-      {
-        "name": "backdrop",
-        "type": "boolean",
-        "required": false,
-        "description": "Controls if Dialog should have a backdrop",
-        "defaultValue": "true"
-      },
-      {
-        "name": "closeOnEscape",
-        "type": "boolean",
-        "required": false,
-        "description": "Controls if Dialog should close on ESC key press",
-        "defaultValue": "true"
-      }
-    ],
-    "keywords": [
-      "dialog",
-      "feedback",
-      "overlay",
-      "overlays",
-      "modal",
-      "popup",
-      "alert-dialog",
-      "window",
-      "lightbox",
-      "open",
-      "onclose",
-      "position",
-      "size",
-      "overlayclass",
-      "panelclass",
-      "backdrop",
-      "closeonescape",
-      "dialogposition",
-      "dialogsize",
-      "controls",
-      "visibility",
-      "called",
-      "when",
-      "clicking",
-      "pressing",
-      "screen",
-      "width",
-      "center",
-      "bottom",
-      "modes",
-      "panel",
-      "should",
-      "have",
-      "close",
-      "press"
-    ],
-    "url": "/dialog"
   }
 ]
