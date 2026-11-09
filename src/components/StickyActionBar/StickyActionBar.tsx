@@ -70,10 +70,14 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
                   type="button"
                   onClick={() => setIsDrawerOpen(true)}
                   className="flex items-center gap-2 text-left transition-opacity hover:opacity-80 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)] rounded-lg p-1 -m-1"
-                  aria-label="Expand summary details"
+                  // Named by what it shows (e.g. the total), plus what tapping does;
+                  // an aria-label here would hide the summary from screen readers.
+                  aria-haspopup="dialog"
+                  aria-expanded={isDrawerOpen}
                   data-testid="summary-trigger"
                 >
                   <div>{summaryContent}</div>
+                  <span className="sr-only">{`, show ${drawerTitle}`}</span>
                   <ChevronUpIcon className="size-4 text-[var(--ui-primary)] dark:text-blue-400 shrink-0" />
                 </button>
               ) : (

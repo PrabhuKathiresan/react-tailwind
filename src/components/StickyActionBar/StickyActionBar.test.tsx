@@ -54,4 +54,17 @@ describe('StickyActionBar', () => {
     )
     expect(screen.getByTestId('sticky-action-bar')).not.toHaveStyle({ bottom: '64px' })
   })
+
+  it('names the summary trigger by its summary, so the figure is read out', () => {
+    render(
+      <StickyActionBar
+        summaryContent={<span>Total ₹1,200.00</span>}
+        drawerContent={<p>Breakdown</p>}
+        drawerTitle="Invoice total"
+      />,
+    )
+    const trigger = screen.getByRole('button', { name: /Total ₹1,200\.00.*show Invoice total/ })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(trigger).toHaveAttribute('aria-haspopup', 'dialog')
+  })
 })
