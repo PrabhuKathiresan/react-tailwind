@@ -7,6 +7,7 @@ export default function SegmentedControlDocsPage() {
   const [view, setView] = useState('grid')
   const [timeframe, setTimeframe] = useState('month')
   const [sizeVal, setSizeVal] = useState('md')
+  const [discount, setDiscount] = useState<'percent' | 'amount'>('percent')
 
   const examples = [
     {
@@ -105,6 +106,33 @@ const [view, setView] = useState('grid')
   ]}
   value={timeframe}
   onChange={setTimeframe}
+/>`,
+    },
+    {
+      title: 'Typed Values',
+      description:
+        'The control is generic over its option values, so `onChange` receives the same union your options use and a typed state setter can be passed directly, with no casts.',
+      render: (
+        <SegmentedControl<'percent' | 'amount'>
+          options={[
+            { label: '%', value: 'percent' },
+            { label: '₹ Flat', value: 'amount' },
+          ]}
+          value={discount}
+          onChange={setDiscount}
+        />
+      ),
+      code: `
+type Discount = 'percent' | 'amount'
+const [discount, setDiscount] = useState<Discount>('percent')
+
+<SegmentedControl<Discount>
+  options={[
+    { label: '%', value: 'percent' },
+    { label: '₹ Flat', value: 'amount' },
+  ]}
+  value={discount}
+  onChange={setDiscount} // receives Discount, not string
 />`,
     },
   ]
