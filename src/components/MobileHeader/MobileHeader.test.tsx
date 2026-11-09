@@ -155,4 +155,11 @@ describe('MobileHeader', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
     expect(screen.getByRole('button', { name: 'Search' })).toHaveFocus()
   })
+
+  it('clips the subtitle sideways only, so a control in it keeps a tap area taller than the line', () => {
+    render(<MobileHeader title="Invoices" subtitle={<button type="button">Acme Corp</button>} />)
+    const subtitle = screen.getByTestId('mobile-header-subtitle')
+    expect(subtitle).toHaveClass('overflow-x-clip', 'text-ellipsis', 'whitespace-nowrap')
+    expect(subtitle).not.toHaveClass('truncate')
+  })
 })
