@@ -363,4 +363,16 @@ describe('SelectBox', () => {
 
     expect(screen.getByText('Type to create a tag...')).toBeInTheDocument()
   })
+
+  it('names the field by its label even without an id or name', () => {
+    render(
+      <SelectBox
+        label="Quarter"
+        options={[{ label: 'April – June', value: '1' }]}
+        selected={null}
+        onChange={() => {}}
+      />,
+    )
+    expect(screen.getByLabelText('Quarter')).toBeInTheDocument()
+  })
 })

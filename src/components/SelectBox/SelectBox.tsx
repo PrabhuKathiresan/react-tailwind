@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useId,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -71,7 +72,7 @@ export const SelectBox = forwardRef(
       labelKey = 'label',
       valueKey = 'value',
       name,
-      id = name,
+      id: idProp,
       options = EMPTY_ARRAY,
       groups,
       selected: selectedProp,
@@ -107,6 +108,9 @@ export const SelectBox = forwardRef(
       modalDropdown = false,
       noOptionsText = 'No options available',
     } = props
+    // Without an id (or a name to use), the label still names the field.
+    const generatedId = useId()
+    const id = idProp ?? name ?? generatedId
 
     // Uncontrolled when `selected` is not passed: keep the selection internally.
     const isControlled = selectedProp !== undefined
