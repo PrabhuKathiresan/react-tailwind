@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { SelectBox } from './SelectBox'
 
 // --- SAFE MOCK: HeadlessUI Transition only ---
@@ -374,5 +375,35 @@ describe('SelectBox', () => {
       />,
     )
     expect(screen.getByLabelText('Quarter')).toBeInTheDocument()
+  })
+
+  it('opens again on the next tap after choosing, while the field still has focus', async () => {
+    const user = userEvent.setup()
+    const Controlled = () => {
+      const [value, setValue] = React.useState<{ label: string; value: string } | null>(null)
+      return (
+        <SelectBox
+          id="footer"
+          label="Footer style"
+          searchable={false}
+          options={[
+            { label: 'Extended', value: 'extended' },
+            { label: 'Auto', value: 'auto' },
+          ]}
+          selected={value}
+          onChange={(option) => setValue(option as { label: string; value: string } | null)}
+        />
+      )
+    }
+    render(<Controlled />)
+    const field = screen.getByLabelText('Footer style')
+
+    await user.click(field)
+    await user.click(await screen.findByRole('option', { name: 'Auto' }))
+    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument())
+    expect(field).toHaveFocus()
+
+    await user.click(field)
+    expect(await screen.findByRole('listbox')).toBeInTheDocument()
   })
 })

@@ -164,6 +164,21 @@ export const SelectBox = forwardRef(
     )
 
     const inputRef = useRef<HTMLInputElement>(null)
+    const toggleRef = useRef<HTMLButtonElement>(null)
+    // The list opens when the field gains focus (immediate). After choosing,
+    // focus stays on the field, so the next tap brought no new focus and the
+    // list stayed shut. A tap on a field that already had focus opens it.
+    const hadFocusOnPress = useRef(false)
+    const openOnTap = {
+      onPointerDown: () => {
+        hadFocusOnPress.current = document.activeElement === inputRef.current
+      },
+      onClick: () => {
+        const closed = inputRef.current?.getAttribute('aria-expanded') !== 'true'
+        if (hadFocusOnPress.current && closed && !disabled) toggleRef.current?.click()
+        hadFocusOnPress.current = false
+      },
+    }
     const containerRef = useRef<HTMLDivElement>(null)
 
     useImperativeHandle(forwardedRef, () => inputRef.current!, [inputRef])
@@ -512,6 +527,7 @@ export const SelectBox = forwardRef(
                 }}
                 id={id}
                 ref={inputRef}
+                {...openOnTap}
                 onKeyDown={(e) => {
                   if (allowFreeText && (e.key === 'Enter' || e.key === ',') && query.trim()) {
                     e.preventDefault()
@@ -531,6 +547,7 @@ export const SelectBox = forwardRef(
               />
 
               <ComboboxButton
+                ref={toggleRef}
                 className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
                 data-testid="combobox-button"
               >
@@ -580,6 +597,7 @@ export const SelectBox = forwardRef(
                 id={id}
                 readOnly={!searchable}
                 ref={inputRef}
+                {...openOnTap}
                 data-testid="combobox-input"
               />
 
@@ -600,6 +618,7 @@ export const SelectBox = forwardRef(
               )}
 
               <ComboboxButton
+                ref={toggleRef}
                 className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
                 data-testid="combobox-button"
               >
