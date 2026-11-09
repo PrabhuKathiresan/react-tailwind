@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { RadioSwitch } from './RadioSwitch'
 
 // Mock getBoundingClientRect because it is used to compute highlight position
@@ -70,12 +71,15 @@ describe('RadioSwitch', () => {
     mockRect(buttons[1] as HTMLElement, { left: 120, top: 0 })
 
     // highlight element (first child)
-    const highlight = container.querySelector('div')
+    const highlight = container.querySelector('div[aria-hidden="true"]')
+    expect(highlight?.className).not.toContain('duration-300')
 
     // Now switch selected → should reposition highlight
     rerender(<RadioSwitch selected="b" onChange={() => {}} items={['a', 'b']} />)
 
-    expect(highlight).toHaveStyle(`transform: translate(120px, 0px)`)
+    expect(highlight).toHaveStyle(`transform: translate3d(120px, 0px, 0)`)
+    // Changing the choice slides; placing it the first time didn't.
+    expect(highlight?.className).toContain('duration-300')
   })
 
   test('keyboard select works (ArrowRight)', () => {
@@ -102,5 +106,80 @@ describe('RadioSwitch', () => {
     )
 
     expect(screen.getByRole('radiogroup')).toHaveAttribute('aria-label', 'Payment Method')
+  })
+
+  describe('keyboard and focus', () => {
+    const Controlled = ({
+      items = ['light', 'dark', 'system'] as (
+        | string
+        | { label: string; value: string; disabled?: boolean }
+      )[],
+    }) => {
+      const [value, setValue] = React.useState('light')
+      return (
+        <>
+          <button type="button">before</button>
+          <RadioSwitch label="Theme" selected={value} onChange={setValue} items={items} />
+          <button type="button">after</button>
+        </>
+      )
+    }
+
+    test('is one Tab stop: the chosen option', async () => {
+      const user = userEvent.setup()
+      render(<Controlled />)
+      screen.getByText('before').focus()
+      await user.tab()
+      expect(screen.getByRole('radio', { name: 'light' })).toHaveFocus()
+      await user.tab()
+      expect(screen.getByText('after')).toHaveFocus()
+    })
+
+    test('the arrows choose and move focus together, so Space keeps the choice', async () => {
+      const user = userEvent.setup()
+      render(<Controlled />)
+      screen.getByRole('radio', { name: 'light' }).focus()
+      await user.keyboard('{ArrowRight}')
+      const dark = screen.getByRole('radio', { name: 'dark' })
+      expect(dark).toHaveAttribute('aria-checked', 'true')
+      expect(dark).toHaveFocus()
+      await user.keyboard(' ')
+      expect(dark).toHaveAttribute('aria-checked', 'true')
+      await user.keyboard('{End}')
+      expect(screen.getByRole('radio', { name: 'system' })).toHaveFocus()
+    })
+
+    test('skips disabled options', async () => {
+      const user = userEvent.setup()
+      render(
+        <Controlled
+          items={['light', { label: 'dark', value: 'dark', disabled: true }, 'system']}
+        />,
+      )
+      screen.getByRole('radio', { name: 'light' }).focus()
+      await user.keyboard('{ArrowRight}')
+      expect(screen.getByRole('radio', { name: 'system' })).toHaveFocus()
+    })
+  })
+
+  test('submits the chosen value with a form under its name', () => {
+    const { container } = render(
+      <RadioSwitch name="theme" selected="dark" onChange={() => {}} items={['light', 'dark']} />,
+    )
+    expect(container.querySelector('input[type="hidden"][name="theme"]')).toHaveValue('dark')
+  })
+
+  test('passes typed values to onChange', () => {
+    type Theme = 'light' | 'dark'
+    const changes: Theme[] = []
+    render(
+      <RadioSwitch<Theme>
+        selected="light"
+        onChange={(value) => changes.push(value)}
+        items={['light', 'dark']}
+      />,
+    )
+    fireEvent.click(screen.getByRole('radio', { name: 'dark' }))
+    expect(changes).toEqual(['dark'])
   })
 })

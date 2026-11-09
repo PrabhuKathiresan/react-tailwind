@@ -5,6 +5,7 @@ import { DocsPageLayout } from '../../components/DocsPageLayout'
 export default function RadioSwitchDocsPage() {
   const [basic, setBasic] = useState('Option A')
   const [plan, setPlan] = useState('basic')
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   const examples = [
     {
@@ -72,12 +73,46 @@ const [selected, setSelected] = useState("Option A")
   ]}
 />`,
     },
+    {
+      title: 'Typed Values, Labelling and Forms',
+      description:
+        'The switch is generic over its option values, so `onChange` receives your own union and a typed setter fits directly. Name it with `label`, or with `aria-labelledby` when a visible heading names it; give it a `name` to submit the choice with a form.',
+      render: (
+        <div className="space-y-2">
+          <div id="theme-heading" className="text-sm font-semibold">
+            Appearance
+          </div>
+          <RadioSwitch<'light' | 'dark'>
+            aria-labelledby="theme-heading"
+            name="theme"
+            selected={theme}
+            onChange={setTheme}
+            items={[
+              { label: 'Light', value: 'light' },
+              { label: 'Dark', value: 'dark' },
+            ]}
+          />
+        </div>
+      ),
+      code: `
+type Theme = 'light' | 'dark'
+const [theme, setTheme] = useState<Theme>('light')
+
+<div id="theme-heading">Appearance</div>
+<RadioSwitch<Theme>
+  aria-labelledby="theme-heading"
+  name="theme"
+  selected={theme}
+  onChange={setTheme} // receives Theme, not string
+  items={[{ label: 'Light', value: 'light' }, { label: 'Dark', value: 'dark' }]}
+/>`,
+    },
   ]
 
   return (
     <DocsPageLayout
       component="RadioSwitch"
-      description="A GPU-accelerated segmented control with smooth sliding selection highlight. Supports size variants, color themes, subtext descriptions, and disabled items."
+      description="A small set of mutually exclusive options as one pill, with a highlight that slides to the chosen option (and stays put on first paint and resize; no motion with reduced motion). Supports size variants, color themes, subtext descriptions, and disabled items. A radio group for assistive tech: one Tab stop, the arrow keys, Home and End choose and move focus together, and disabled options are skipped."
       examples={examples}
     />
   )
