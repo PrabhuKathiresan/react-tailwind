@@ -440,7 +440,7 @@ const [country, setCountry] = useState('United States')
   return (
     <DocsPageLayout
       component="MobilePicker"
-      description="A mobile-optimized bottom sheet picker component for touch devices. Prevents virtual keyboard clutter by opening options inside a slide-up bottom sheet with large 48px touch targets, sticky headers, live search, and single/multi-select modes."
+      description="A mobile-optimized bottom sheet picker component for touch devices. Prevents virtual keyboard clutter by opening options inside a slide-up bottom sheet with large 48px touch targets, sticky headers, live search, and single/multi-select modes. When searchable, focus starts in the search field as the sheet opens (turn off with `autoFocusSearch={false}` for a short list); the field uses 16px text so iOS does not zoom into it."
       playground={{
         render: (props) => <MobilePickerPlayground {...props} />,
         initialProps: {

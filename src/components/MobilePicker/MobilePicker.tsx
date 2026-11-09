@@ -72,6 +72,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
     confirmText = 'Apply Selection',
     searchable = true,
     searchPlaceholder = 'Search options...',
+    autoFocusSearch = true,
     async = false,
     onSearch,
     loading = false,
@@ -559,7 +560,13 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
                       }
                     }}
                     placeholder={searchPlaceholder}
-                    className="w-full pl-9 pr-10 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label={searchPlaceholder || 'Search'}
+                    // The sheet's dialog focuses this when it opens, instead of
+                    // its first button (Close).
+                    data-autofocus={autoFocusSearch || undefined}
+                    enterKeyHint="search"
+                    // 16px text: iOS zooms the page into any field with smaller text.
+                    className="w-full pl-9 pr-10 py-2 text-base bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     data-testid="mobile-picker-search-input"
                   />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
@@ -570,6 +577,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
                         <button
                           type="button"
                           onClick={() => setQuery('')}
+                          aria-label="Clear search"
                           className="p-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                         >
                           <XIcon className="size-3.5" />

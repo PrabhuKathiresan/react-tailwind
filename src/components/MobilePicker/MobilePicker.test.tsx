@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MobilePicker } from './MobilePicker'
 import '@testing-library/jest-dom'
 
@@ -138,5 +138,26 @@ describe('MobilePicker', () => {
     fireEvent.click(trigger)
 
     expect(screen.queryByTestId('mobile-picker-sheet')).not.toBeInTheDocument()
+  })
+
+  test('puts focus in the search field when the sheet opens, named for screen readers', async () => {
+    render(
+      <MobilePicker
+        label="Select Fruit"
+        options={defaultOptions}
+        searchPlaceholder="Search fruit"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('mobile-picker-trigger'))
+    const search = screen.getByRole('textbox', { name: 'Search fruit' })
+    await waitFor(() => expect(search).toHaveFocus())
+  })
+
+  test('leaves focus off the search field with autoFocusSearch off', async () => {
+    render(<MobilePicker label="Select Fruit" options={defaultOptions} autoFocusSearch={false} />)
+    fireEvent.click(screen.getByTestId('mobile-picker-trigger'))
+    await screen.findByTestId('mobile-picker-sheet')
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(screen.getByTestId('mobile-picker-search-input')).not.toHaveFocus()
   })
 })
