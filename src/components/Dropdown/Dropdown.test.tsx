@@ -26,8 +26,10 @@ jest.mock('@headlessui/react', () => ({
     </ul>
   ),
 
-  MenuItem: ({ children, disabled }: any) => (
-    <li data-testid="dropdown-item">{children({ active: false, disabled })}</li>
+  MenuItem: ({ children, disabled, onClick }: any) => (
+    <li data-testid="dropdown-item" onClick={onClick}>
+      {children({ active: false, disabled })}
+    </li>
   ),
 }))
 
