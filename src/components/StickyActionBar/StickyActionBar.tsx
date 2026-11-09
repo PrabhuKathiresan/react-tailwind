@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { Drawer } from '../Drawer'
+import { useKeyboardInset } from '../../hooks/use-keyboard-inset'
 import type { StickyActionBarProps } from './StickyActionBar.types'
 
 const ChevronUpIcon = ({ className }: { className?: string }) => (
@@ -28,12 +29,15 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
     containerMaxWidth = 'max-w-5xl',
     safeArea = true,
     bottomOffset,
+    followKeyboard = false,
     className,
     style,
     ...restProps
   } = props
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const keyboardInset = useKeyboardInset(followKeyboard && position === 'fixed')
+  const bottom = keyboardInset ? `${keyboardInset}px` : bottomOffset
 
   const positionClass =
     position === 'fixed'
@@ -52,7 +56,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
           safeArea && 'pb-[calc(0.875rem+env(safe-area-inset-bottom,0px))]',
           className,
         )}
-        style={bottomOffset && position !== 'relative' ? { bottom: bottomOffset, ...style } : style}
+        style={bottom && position !== 'relative' ? { bottom, ...style } : style}
         data-testid="sticky-action-bar"
         {...restProps}
       >
