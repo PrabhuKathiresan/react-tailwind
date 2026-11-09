@@ -12,16 +12,18 @@ import { buildClassName } from '../../utils/build-classname'
 import type { InputProps, InputSize } from './Input.types'
 import { TextContent } from '../TextContent'
 
+// Typed text is 16px below 768px: iOS Safari zooms the page into any field
+// with smaller text when it's focused. From md the size steps down as designed.
 const sizeClasses: Record<InputSize, { input: string; group: string; icon: string; text: string }> =
   {
     sm: {
-      input: 'px-2.5 py-1.5 text-xs leading-5',
+      input: 'px-2.5 py-1.5 text-base md:text-xs leading-5',
       group: 'w-8 text-xs',
       icon: 'size-3.5',
       text: 'text-xs',
     },
     md: {
-      input: 'px-3.5 py-2 text-sm leading-6',
+      input: 'px-3.5 py-2 text-base md:text-sm leading-6',
       group: 'w-10 text-sm',
       icon: 'size-4',
       text: 'text-sm',

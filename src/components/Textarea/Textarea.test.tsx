@@ -17,7 +17,7 @@ describe('<Textarea />', () => {
   test('supports size scales (sm, md, lg)', () => {
     render(<Textarea name="desc" size="sm" />)
     const textarea = screen.getByRole('textbox')
-    expect(textarea.className).toMatch(/px-2.5 py-1.5 text-xs/)
+    expect(textarea.className).toMatch(/px-2.5 py-1.5 text-base md:text-xs/)
   })
 
   test('renders character count when showCount=true', () => {

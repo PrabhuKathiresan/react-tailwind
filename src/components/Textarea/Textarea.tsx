@@ -14,13 +14,15 @@ import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
 import type { TextareaProps, TextareaResize, TextareaSize } from './Textarea.types'
 
+// Typed text is 16px below 768px: iOS Safari zooms the page into any field
+// with smaller text when it's focused. From md the size steps down as designed.
 const sizeClasses: Record<TextareaSize, { textarea: string; text: string }> = {
   sm: {
-    textarea: 'px-2.5 py-1.5 text-xs leading-5 min-h-[60px]',
+    textarea: 'px-2.5 py-1.5 text-base md:text-xs leading-5 min-h-[60px]',
     text: 'text-xs',
   },
   md: {
-    textarea: 'px-3.5 py-2 text-sm leading-6 min-h-[80px]',
+    textarea: 'px-3.5 py-2 text-base md:text-sm leading-6 min-h-[80px]',
     text: 'text-sm',
   },
   lg: {

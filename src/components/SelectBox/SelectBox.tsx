@@ -44,13 +44,13 @@ const sizeClasses: Record<
   { input: string; group: string; icon: string; badgeSize: 'sm' | 'md' }
 > = {
   sm: {
-    input: 'px-2.5 py-1.5 text-xs leading-5 min-h-[32px]',
+    input: 'px-2.5 py-1.5 text-base md:text-xs leading-5 min-h-[32px]',
     group: 'w-8 text-xs',
     icon: 'size-3.5',
     badgeSize: 'sm',
   },
   md: {
-    input: 'px-3.5 py-2 text-sm leading-6 min-h-[38px]',
+    input: 'px-3.5 py-2 text-base md:text-sm leading-6 min-h-[38px]',
     group: 'w-10 text-sm',
     icon: 'size-4',
     badgeSize: 'md',

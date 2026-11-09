@@ -29,7 +29,7 @@ describe('SelectBox', () => {
   test('supports size scales (sm, md, lg)', () => {
     render(<SelectBox options={options} size="sm" />)
     const input = screen.getByTestId('combobox-input')
-    expect(input.className).toMatch(/px-2.5 py-1.5 text-xs/)
+    expect(input.className).toMatch(/px-2.5 py-1.5 text-base md:text-xs/)
   })
 
   test('renders leftGroup icon and helperText', () => {
