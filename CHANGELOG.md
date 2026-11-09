@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.15.1 (2026-11-09)</small>
+
+* Merge pull request #32 from PrabhuKathiresan/fix/phone-field-text ([4c6dd2de8124eb3a7e6b45c191f56fca5a724b74](https://github.com/PrabhuKathiresan/react-tailwind/commit/4c6dd2de8124eb3a7e6b45c191f56fca5a724b74)), closes [#32](https://github.com/PrabhuKathiresan/react-tailwind/issues/32)
+* fix(fields): typed text is 16px on phones, so iOS doesn't zoom into fields ([7fd09a0b17d0ab10d378a64efa79ec8c5fbf42d7](https://github.com/PrabhuKathiresan/react-tailwind/commit/7fd09a0b17d0ab10d378a64efa79ec8c5fbf42d7))
+
 ## 1.15.0 (2026-11-09)
 
 * Merge pull request #31 from PrabhuKathiresan/feat/mobile-patterns ([33b1be0305800bfc5bd26dc2f3eb6f126f26e2dd](https://github.com/PrabhuKathiresan/react-tailwind/commit/33b1be0305800bfc5bd26dc2f3eb6f126f26e2dd)), closes [#31](https://github.com/PrabhuKathiresan/react-tailwind/issues/31)
