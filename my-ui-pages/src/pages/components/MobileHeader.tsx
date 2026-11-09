@@ -235,7 +235,7 @@ export default function MobileHeaderDocsPage() {
   return (
     <DocsPageLayout
       component="MobileHeader"
-      description="A mobile-native top app bar header component for page navigation, back buttons, titles, header action icons with badges, and inline mobile search inputs."
+      description="A mobile-native top app bar header component for page navigation, back buttons, titles, header action icons with badges, and inline mobile search inputs. The search field is named by its placeholder; Escape or Cancel leaves search and puts focus back on the search button."
       playground={{
         render: (props) => <MobileHeaderPlayground {...props} />,
         initialProps: {

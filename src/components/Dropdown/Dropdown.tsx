@@ -84,15 +84,20 @@ export const Dropdown: React.FC<DropdownProps> = ({
               </li>
             )}
             {!item.divider && (
-              <MenuItem as="li" disabled={item.disabled}>
+              <MenuItem
+                as="li"
+                disabled={item.disabled}
+                // On the item itself: Enter and Space choose an item by clicking
+                // this element, so a handler on an inner element never ran.
+                onClick={() => {
+                  if (!item.disabled) {
+                    item.onClick?.(item)
+                    onMenuClick?.(item, idx)
+                  }
+                }}
+              >
                 {({ disabled, active }) => (
                   <div
-                    onClick={() => {
-                      if (!disabled) {
-                        item.onClick?.(item)
-                        onMenuClick?.(item, idx)
-                      }
-                    }}
                     className={buildClassName(
                       'flex items-center justify-between gap-3 w-full px-2.5 py-1.5 rounded-lg text-sm transition-colors cursor-pointer select-none',
                       item.danger

@@ -80,7 +80,7 @@ export default function StickyActionBarDocsPage() {
     {
       title: 'Expandable Summary Drawer',
       description:
-        'Pass `drawerContent` to allow users to click the left summary trigger to expand a detailed bottom drawer breakdown.',
+        'Pass `drawerContent` to allow users to click the left summary trigger to expand a detailed bottom drawer breakdown. Screen readers hear the summary itself (e.g. the total) plus "show <drawerTitle>", and the trigger reports whether the drawer is open.',
       render: (
         <div className="relative h-80 overflow-y-auto border border-gray-200/80 dark:border-gray-700/80 rounded-xl bg-gray-50/60 dark:bg-gray-800/30 p-4 space-y-4">
           <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
@@ -143,6 +143,29 @@ export default function StickyActionBarDocsPage() {
   drawerTitle="Order Summary Breakdown"
   drawerContent={<BreakdownContent />}
   actionsContent={<Button theme="primary">Confirm Order</Button>}
+/>`,
+    },
+    {
+      title: 'Above the Keyboard (followKeyboard)',
+      description:
+        "On a form, `followKeyboard` keeps a fixed bar just above the on-screen keyboard while typing, so its action stays in reach. Android Chrome already shrinks the page for the keyboard; iOS Safari doesn't, and a bottom bar would otherwise sit behind it. Open this page on a phone and focus the field to see it. Built on the exported `useKeyboardInset` hook.",
+      render: (
+        <div className="max-w-sm space-y-2">
+          <label className="block text-sm font-medium" htmlFor="sticky-bar-note">
+            Note
+          </label>
+          <input
+            id="sticky-bar-note"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-base dark:border-gray-600 dark:bg-gray-800"
+            placeholder="Tap to open the keyboard"
+          />
+        </div>
+      ),
+      code: `
+<StickyActionBar
+  followKeyboard
+  summaryContent={<div>Total ₹1,200.00</div>}
+  actionsContent={<Button theme="primary">Save</Button>}
 />`,
     },
   ]

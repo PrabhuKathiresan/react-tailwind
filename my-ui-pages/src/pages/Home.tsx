@@ -122,7 +122,7 @@ const componentCategories = [
     count: '6 Components',
     links: [
       { name: 'Toast', path: '/toast' },
-      { name: 'Dialog', path: '/dialog' },
+      { name: 'ConfirmSheet', path: '/confirm-sheet' },
       { name: 'Drawer', path: '/drawer' },
       { name: 'Alert', path: '/alert' },
       { name: 'Banner', path: '/banner' },

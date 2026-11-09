@@ -68,8 +68,15 @@ export interface MobilePickerProps<T extends BaseOption | string = BaseOption> {
   /** Enables search input bar inside the bottom sheet */
   searchable?: boolean
 
-  /** Search input placeholder inside sheet */
+  /** Search input placeholder inside sheet; also names the field for screen readers. */
   searchPlaceholder?: string
+
+  /**
+   * Puts focus (and so, on phones, the keyboard) in the search field when the
+   * sheet opens. Turn off for a short list people pick from without typing.
+   * @default true
+   */
+  autoFocusSearch?: boolean
 
   /** Enables async search mode (server-side search) */
   async?: boolean

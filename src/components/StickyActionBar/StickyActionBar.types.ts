@@ -40,4 +40,11 @@ export interface StickyActionBarProps extends HTMLAttributes<HTMLDivElement> {
    * @default '0px'
    */
   bottomOffset?: string
+  /**
+   * Keeps a `fixed` bar just above the on-screen keyboard while typing, so its
+   * action stays in reach (iOS Safari leaves a bottom bar behind the keyboard).
+   * Replaces `bottomOffset` while the keyboard is up.
+   * @default false
+   */
+  followKeyboard?: boolean
 }

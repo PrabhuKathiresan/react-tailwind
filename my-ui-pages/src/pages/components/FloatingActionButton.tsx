@@ -169,7 +169,7 @@ export default function FloatingActionButtonDocsPage() {
       )}
       <DocsPageLayout
         component="FloatingActionButton"
-        description="A mobile-native floating action button that provides primary screen actions with support for circular or extended pill layouts, theme variants, and expandable Speed Dial action menus."
+        description="A mobile-native floating action button that provides primary screen actions with support for circular or extended pill layouts, theme variants, and expandable Speed Dial action menus. A speed dial's actions are out of the tab order and hidden from screen readers while closed; opening it moves focus to the first action, and Escape closes it with focus back on the button."
         playground={{
           render: (props) => <FABPlayground {...props} />,
           initialProps: {

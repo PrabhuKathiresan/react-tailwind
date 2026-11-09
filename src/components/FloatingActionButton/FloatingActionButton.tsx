@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import type { FloatingActionButtonProps, FABSpeedDialAction } from './FloatingActionButton.types'
 import { buildClassName } from '../../utils/build-classname'
 
@@ -22,12 +22,30 @@ export function FloatingActionButton({
 
   const isSpeedDial = Array.isArray(speedDialActions) && speedDialActions.length > 0
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen
+  const mainRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const menuId = useId()
 
-  const toggleOpen = () => {
-    const nextState = !isOpen
-    setInternalIsOpen(nextState)
-    onToggle?.(nextState)
+  const setOpen = (next: boolean) => {
+    setInternalIsOpen(next)
+    onToggle?.(next)
   }
+  const toggleOpen = () => setOpen(!isOpen)
+
+  // Open: focus goes to the first action, and Escape closes the menu with
+  // focus back on the button that opened it.
+  useEffect(() => {
+    if (!isSpeedDial || !isOpen) return
+    menuRef.current?.querySelector<HTMLButtonElement>('button:not([disabled])')?.focus()
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setInternalIsOpen(false)
+      onToggle?.(false)
+      mainRef.current?.focus()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [isSpeedDial, isOpen, onToggle])
 
   const handleMainClick = () => {
     if (disabled) return
@@ -41,8 +59,7 @@ export function FloatingActionButton({
   const handleSubActionClick = (action: FABSpeedDialAction) => {
     if (action.disabled) return
     action.onClick?.()
-    setInternalIsOpen(false)
-    onToggle?.(false)
+    setOpen(false)
   }
 
   const positionClasses = {
@@ -81,6 +98,11 @@ export function FloatingActionButton({
       {/* Speed Dial Sub-Actions List */}
       {isSpeedDial && (
         <div
+          ref={menuRef}
+          id={menuId}
+          // Closed, the actions are only faded out, so hide them from Tab and
+          // screen readers too.
+          aria-hidden={!isOpen || undefined}
           className={buildClassName(
             'absolute bottom-full mb-3 flex flex-col gap-2.5 z-40 transition-all duration-200 origin-bottom',
             position === 'bottom-left'
@@ -103,6 +125,7 @@ export function FloatingActionButton({
                 key={action.id}
                 type="button"
                 disabled={action.disabled}
+                tabIndex={isOpen ? undefined : -1}
                 onClick={() => handleSubActionClick(action)}
                 className={buildClassName(
                   'flex items-center gap-2.5 py-2 px-3.5 rounded-full text-xs font-semibold shadow-md transition-all duration-150 cursor-pointer group',
@@ -130,7 +153,9 @@ export function FloatingActionButton({
         disabled={disabled}
         onClick={handleMainClick}
         aria-label={ariaLabel || (typeof label === 'string' ? label : 'Floating action')}
+        ref={mainRef}
         aria-expanded={isSpeedDial ? isOpen : undefined}
+        aria-controls={isSpeedDial ? menuId : undefined}
         className={buildClassName(
           'inline-flex items-center justify-center font-semibold transition-all duration-200 cursor-pointer select-none z-40 active:scale-95',
           disabled && 'opacity-50 cursor-not-allowed pointer-events-none shadow-none',

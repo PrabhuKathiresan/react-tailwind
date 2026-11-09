@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import type {
   RadioSwitchItem,
@@ -31,10 +31,19 @@ const THEME_SWITCH_CLASS: Record<RadioSwitchTheme, string> = {
   dark: 'bg-gray-900 dark:bg-black text-white shadow-xs',
 }
 
-export const RadioSwitch: React.FC<RadioSwitchProps> = ({
+/**
+ * A small set of mutually exclusive options as one pill, with a highlight that
+ * slides to the chosen one. A radio group for assistive tech: one Tab stop,
+ * the arrow keys (and Home/End) choose and move focus together, and disabled
+ * options are skipped.
+ */
+export const RadioSwitch = <T extends string = string>({
   label,
+  'aria-labelledby': labelledBy,
+  id,
   items,
   selected,
+  name,
   size = 'md',
   theme = 'primary',
   disabled = false,
@@ -43,18 +52,38 @@ export const RadioSwitch: React.FC<RadioSwitchProps> = ({
   switchClass,
   contentClass,
   descriptionClass,
-}) => {
+}: RadioSwitchProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [style, setStyle] = useState({ left: 0, top: 0, width: 0, height: 0, ready: false })
+  const [style, setStyle] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    ready: false,
+    animate: false,
+  })
+  // The highlight slides only when the choice changes; placing it the first
+  // time, or after a resize, is instant rather than sweeping in from a corner.
+  const placedFor = useRef<T | null>(null)
+  // Set by an arrow key, so focus follows the choice once it re-renders.
+  const focusChosen = useRef(false)
 
-  const getLabel = (i: RadioSwitchItem) => (typeof i === 'string' ? i : i.label)
-  const getValue = (i: RadioSwitchItem) => (typeof i === 'string' ? i : i.value)
-  const getDescription = (i: RadioSwitchItem) =>
+  const getLabel = (i: RadioSwitchItem<T>) => (typeof i === 'string' ? i : i.label)
+  const getValue = (i: RadioSwitchItem<T>): T => (typeof i === 'string' ? i : i.value)
+  const getDescription = (i: RadioSwitchItem<T>) =>
     typeof i === 'string' ? '' : (i.description ?? '')
-  const isItemDisabled = (i: RadioSwitchItem) =>
+  const isItemDisabled = (i: RadioSwitchItem<T>) =>
     disabled || (typeof i === 'string' ? false : Boolean(i.disabled))
 
   const hasDescription = items.some((i) => typeof i !== 'string' && Boolean(i.description))
+  const enabledItems = items.filter((it) => !isItemDisabled(it))
+  // The one Tab stop: the chosen option, or the first that can be chosen.
+  const chosenEnabled = enabledItems.some((it) => getValue(it) === selected)
+  const tabStop = chosenEnabled
+    ? selected
+    : enabledItems[0] !== undefined
+      ? getValue(enabledItems[0])
+      : undefined
 
   // Position calculation for GPU sliding highlight
   useLayoutEffect(() => {
@@ -62,94 +91,102 @@ export const RadioSwitch: React.FC<RadioSwitchProps> = ({
 
     const updatePosition = () => {
       if (!containerRef.current) return
-
       const activeEl = containerRef.current.querySelector(
         '[data-selected="true"]',
       ) as HTMLElement | null
-
-      if (!activeEl) return
-
+      if (!activeEl) {
+        placedFor.current = null
+        setStyle((current) => (current.ready ? { ...current, ready: false } : current))
+        return
+      }
       const parentRect = containerRef.current.getBoundingClientRect()
       const rect = activeEl.getBoundingClientRect()
-
-      const left = activeEl.offsetLeft || rect.left - parentRect.left
-      const top = activeEl.offsetTop || rect.top - parentRect.top
-      const width = activeEl.offsetWidth || rect.width
-      const height = activeEl.offsetHeight || rect.height
-
+      const animate = placedFor.current !== null && placedFor.current !== selected
+      placedFor.current = selected
       setStyle({
-        left,
-        top,
-        width,
-        height,
+        left: activeEl.offsetLeft || rect.left - parentRect.left,
+        top: activeEl.offsetTop || rect.top - parentRect.top,
+        width: activeEl.offsetWidth || rect.width,
+        height: activeEl.offsetHeight || rect.height,
         ready: true,
+        animate,
       })
     }
 
     updatePosition()
-
-    const resizeObserver = new ResizeObserver(updatePosition)
+    const resizeObserver = new ResizeObserver(() => {
+      // A resize re-places the highlight under the same choice, without a slide.
+      placedFor.current = selected
+      updatePosition()
+    })
     resizeObserver.observe(containerRef.current)
-
     return () => resizeObserver.disconnect()
   }, [selected, items, size])
 
-  // ARIA Keyboard navigation handler
-  const handleGroupKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-    const enabledItems = items.filter((it) => !isItemDisabled(it))
+  useEffect(() => {
+    if (!focusChosen.current) return
+    focusChosen.current = false
+    containerRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]')?.focus()
+  }, [selected])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (enabledItems.length === 0) return
-
-    const currentVal = selected
-    const currentEnabledIndex = enabledItems.findIndex((it) => getValue(it) === currentVal)
-
-    let nextItem: RadioSwitchItem | null = null
+    const currentIndex = enabledItems.findIndex((it) => getValue(it) === selected)
+    let next: RadioSwitchItem<T> | undefined
 
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault()
-      const nextIdx = (currentEnabledIndex + 1) % enabledItems.length
-      nextItem = enabledItems[nextIdx]
+      next = enabledItems[(currentIndex + 1) % enabledItems.length]
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault()
-      const prevIdx = (currentEnabledIndex - 1 + enabledItems.length) % enabledItems.length
-      nextItem = enabledItems[prevIdx]
+      next =
+        enabledItems[(Math.max(currentIndex, 0) - 1 + enabledItems.length) % enabledItems.length]
     } else if (e.key === 'Home') {
-      e.preventDefault()
-      nextItem = enabledItems[0]
+      next = enabledItems[0]
     } else if (e.key === 'End') {
-      e.preventDefault()
-      nextItem = enabledItems[enabledItems.length - 1]
+      next = enabledItems[enabledItems.length - 1]
     }
+    if (next === undefined) return
 
-    if (nextItem) {
-      onChange(getValue(nextItem))
-    }
+    e.preventDefault()
+    const value = getValue(next)
+    if (value === selected) return
+    focusChosen.current = true
+    onChange(value)
   }
 
   return (
     <div
       ref={containerRef}
+      id={id}
       role="radiogroup"
-      tabIndex={0}
-      aria-label={label}
-      onKeyDown={handleGroupKeyDown}
+      aria-label={labelledBy ? undefined : label}
+      aria-labelledby={labelledBy}
+      aria-disabled={disabled || undefined}
+      onKeyDown={handleKeyDown}
       className={buildClassName(
-        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80 border border-[var(--ui-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
+        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80 border border-[var(--ui-border)]',
         SIZE_CONTAINER_CLASS[size],
-        disabled && 'opacity-60 pointer-events-none',
+        disabled && 'opacity-60',
         wrapperClass,
       )}
     >
+      {name && <input type="hidden" name={name} value={selected} />}
+
       {/* GPU Sliding highlight background */}
       <div
+        aria-hidden="true"
         className={buildClassName(
-          'absolute transition-all duration-200 ease-[cubic-bezier(.25,.8,.25,1)] pointer-events-none',
+          'absolute left-0 top-0 pointer-events-none will-change-transform',
+          // One curve and length for the highlight and the labels' colour, so
+          // a label turns light as the highlight arrives under it, not before.
+          style.animate &&
+            'transition-[transform,width,height] duration-300 ease-[cubic-bezier(.32,.72,0,1)] motion-reduce:transition-none',
           THEME_SWITCH_CLASS[theme],
           size === 'sm' ? 'rounded-md' : 'rounded-lg',
           style.ready ? 'opacity-100' : 'opacity-0',
           switchClass,
         )}
         style={{
-          transform: `translate(${style.left}px, ${style.top}px)`,
+          transform: `translate3d(${style.left}px, ${style.top}px, 0)`,
           width: style.width,
           height: style.height,
         }}
@@ -167,21 +204,27 @@ export const RadioSwitch: React.FC<RadioSwitchProps> = ({
             type="button"
             role="radio"
             aria-checked={isSelected}
-            aria-disabled={disabledState}
-            tabIndex={isSelected && !disabledState ? 0 : -1}
+            tabIndex={itemVal === tabStop ? 0 : -1}
             disabled={disabledState}
             data-radio-item
             data-value={itemVal}
             data-selected={isSelected ? 'true' : undefined}
             onClick={() => {
-              if (!disabledState) {
-                onChange(itemVal)
-              }
+              if (!disabledState && !isSelected) onChange(itemVal)
             }}
             className={buildClassName(
-              'relative z-10 appearance-none m-0 select-none group transition-colors flex flex-col items-center justify-center w-full text-center font-semibold focus:outline-none',
+              'relative z-10 appearance-none m-0 select-none group flex flex-col items-center justify-center w-full text-center font-semibold',
+              'transition-[color,background-color,transform] duration-300 ease-[cubic-bezier(.32,.72,0,1)] motion-reduce:transition-none',
+              // A light press, so a tap registers before the highlight lands.
+              !disabledState && 'active:scale-[0.97]',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
+              size === 'sm' ? 'rounded-md' : 'rounded-lg',
               hasDescription ? SIZE_ITEM_DESC_CLASS[size] : SIZE_ITEM_CLASS[size],
               disabledState ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+              // Until the highlight has measured itself (first paint, or no
+              // layout), the chosen option carries its colour, so its text
+              // never sits unreadable on the track.
+              isSelected && !style.ready && THEME_SWITCH_CLASS[theme],
               isSelected
                 ? theme === 'secondary'
                   ? 'text-gray-900 dark:text-white'

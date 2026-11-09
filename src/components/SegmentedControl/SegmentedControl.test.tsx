@@ -61,4 +61,22 @@ describe('SegmentedControl', () => {
     expect(option).not.toHaveClass('px-3')
     expect(screen.getByText('Due (27)')).toHaveClass('truncate')
   })
+
+  it('passes the option values through with their own type', () => {
+    type Discount = 'percent' | 'amount'
+    const changes: Discount[] = []
+    const record = (value: Discount) => changes.push(value)
+    render(
+      <SegmentedControl<Discount>
+        options={[
+          { label: '%', value: 'percent' },
+          { label: '₹', value: 'amount' },
+        ]}
+        value="percent"
+        onChange={record}
+      />,
+    )
+    fireEvent.click(screen.getByText('₹'))
+    expect(changes).toEqual(['amount'])
+  })
 })

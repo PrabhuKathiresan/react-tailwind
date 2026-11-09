@@ -33,6 +33,12 @@ import WheelPickerDocsPage from './pages/components/WheelPicker'
 import MobileHeaderDocsPage from './pages/components/MobileHeader'
 import MobileStepperDocsPage from './pages/components/MobileStepper'
 import DataListDocsPage from './pages/components/DataList'
+import ConfirmSheetDocsPage from './pages/components/ConfirmSheet'
+import FilterSheetDocsPage from './pages/components/FilterSheet'
+import ListRowDocsPage from './pages/components/ListRow'
+import ListViewDocsPage from './pages/components/ListView'
+import SelectionBarDocsPage from './pages/components/SelectionBar'
+import SettingsGroupDocsPage from './pages/components/SettingsGroup'
 import SwipeableRowDocsPage from './pages/components/SwipeableRow'
 import SwipeableTabsDocsPage from './pages/components/SwipeableTabs'
 import SelectBoxDocsPage from './pages/components/SelectBox'
@@ -104,6 +110,12 @@ export default function App() {
           <Route path="mobile-header" element={<MobileHeaderDocsPage />} />
           <Route path="mobile-stepper" element={<MobileStepperDocsPage />} />
           <Route path="data-list" element={<DataListDocsPage />} />
+          <Route path="confirm-sheet" element={<ConfirmSheetDocsPage />} />
+          <Route path="filter-sheet" element={<FilterSheetDocsPage />} />
+          <Route path="list-row" element={<ListRowDocsPage />} />
+          <Route path="list-view" element={<ListViewDocsPage />} />
+          <Route path="selection-bar" element={<SelectionBarDocsPage />} />
+          <Route path="settings-group" element={<SettingsGroupDocsPage />} />
           <Route path="swipeable-row" element={<SwipeableRowDocsPage />} />
           <Route path="swipeable-tabs" element={<SwipeableTabsDocsPage />} />
           <Route path="skeleton" element={<SkeletonDocsPage />} />

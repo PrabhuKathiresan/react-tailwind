@@ -50,7 +50,7 @@ const DropdownDocPage = () => {
   return (
     <DocsPageLayout
       component="Dropdown"
-      description="A contextual action menu anchored to any custom trigger element. Supports grouped section titles, item icons, keyboard shortcuts, 2-line descriptions, destructive items, and configurable placement options."
+      description="A contextual action menu anchored to any custom trigger element. Supports grouped section titles, item icons, keyboard shortcuts, 2-line descriptions, destructive items, and configurable placement options. From the keyboard: Enter, Space or ↓ opens it, the arrows, Home and End move between items (skipping disabled ones), typing jumps to an item, Enter or Space chooses it, and Escape closes the menu, returning focus to the trigger."
       examples={[
         {
           title: 'Rich Menu Items (Icons, Shortcuts & Group Titles)',

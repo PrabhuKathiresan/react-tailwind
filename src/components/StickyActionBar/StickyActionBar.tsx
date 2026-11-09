@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { Drawer } from '../Drawer'
+import { useKeyboardInset } from '../../hooks/use-keyboard-inset'
 import type { StickyActionBarProps } from './StickyActionBar.types'
 
 const ChevronUpIcon = ({ className }: { className?: string }) => (
@@ -28,12 +29,15 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
     containerMaxWidth = 'max-w-5xl',
     safeArea = true,
     bottomOffset,
+    followKeyboard = false,
     className,
     style,
     ...restProps
   } = props
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const keyboardInset = useKeyboardInset(followKeyboard && position === 'fixed')
+  const bottom = keyboardInset ? `${keyboardInset}px` : bottomOffset
 
   const positionClass =
     position === 'fixed'
@@ -52,7 +56,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
           safeArea && 'pb-[calc(0.875rem+env(safe-area-inset-bottom,0px))]',
           className,
         )}
-        style={bottomOffset && position !== 'relative' ? { bottom: bottomOffset, ...style } : style}
+        style={bottom && position !== 'relative' ? { bottom, ...style } : style}
         data-testid="sticky-action-bar"
         {...restProps}
       >
@@ -70,10 +74,14 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
                   type="button"
                   onClick={() => setIsDrawerOpen(true)}
                   className="flex items-center gap-2 text-left transition-opacity hover:opacity-80 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)] rounded-lg p-1 -m-1"
-                  aria-label="Expand summary details"
+                  // Named by what it shows (e.g. the total), plus what tapping does;
+                  // an aria-label here would hide the summary from screen readers.
+                  aria-haspopup="dialog"
+                  aria-expanded={isDrawerOpen}
                   data-testid="summary-trigger"
                 >
                   <div>{summaryContent}</div>
+                  <span className="sr-only">{`, show ${drawerTitle}`}</span>
                   <ChevronUpIcon className="size-4 text-[var(--ui-primary)] dark:text-blue-400 shrink-0" />
                 </button>
               ) : (

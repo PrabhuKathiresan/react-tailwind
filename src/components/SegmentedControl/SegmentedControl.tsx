@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, type ReactElement, type RefAttributes } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import type { SegmentedControlProps } from './SegmentedControl.types'
 
@@ -20,7 +20,7 @@ const SIZE_ICON_CLASS = {
   lg: 'size-5',
 }
 
-export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>((props, ref) => {
+const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((props, ref) => {
   const {
     options,
     value,
@@ -127,4 +127,13 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   )
 })
 
-SegmentedControl.displayName = 'SegmentedControl'
+SegmentedControlBase.displayName = 'SegmentedControl'
+
+/**
+ * Generic over the option values, so `onChange` gets the same union the
+ * options use (e.g. `'percent' | 'amount'`) and can be passed a typed state
+ * setter directly. forwardRef drops generics, hence the cast.
+ */
+export const SegmentedControl = SegmentedControlBase as (<T extends string = string>(
+  props: SegmentedControlProps<T> & RefAttributes<HTMLDivElement>,
+) => ReactElement | null) & { displayName?: string }
