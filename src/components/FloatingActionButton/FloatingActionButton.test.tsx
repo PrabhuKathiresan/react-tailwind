@@ -70,4 +70,31 @@ describe('FloatingActionButton', () => {
 
     expect(onClickMock).not.toHaveBeenCalled()
   })
+
+  test('speed dial: hidden actions are out of the tab order; opening focuses the first; Escape closes back to the button', () => {
+    const actions: FABSpeedDialAction[] = [
+      { id: 'scan', label: 'Scan QR', icon: <span>S</span> },
+      { id: 'upload', label: 'Upload File', icon: <span>U</span> },
+    ]
+    render(
+      <FloatingActionButton
+        icon={<span>+</span>}
+        aria-label="Add"
+        speedDialActions={actions}
+        position="inline"
+      />,
+    )
+
+    expect(screen.getByTestId('fab-action-scan')).toHaveAttribute('tabindex', '-1')
+    expect(screen.getByTestId('fab-speed-dial-menu')).toHaveAttribute('aria-hidden', 'true')
+
+    const fabButton = screen.getByTestId('fab-button')
+    fireEvent.click(fabButton)
+    expect(screen.getByTestId('fab-action-scan')).toHaveFocus()
+    expect(screen.getByTestId('fab-speed-dial-menu')).not.toHaveAttribute('aria-hidden')
+
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(fabButton).toHaveAttribute('aria-expanded', 'false')
+    expect(fabButton).toHaveFocus()
+  })
 })
