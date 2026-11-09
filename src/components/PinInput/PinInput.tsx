@@ -93,7 +93,7 @@ export function PinInput({
   }
 
   const sizeClasses = {
-    sm: 'size-9 text-sm rounded-lg',
+    sm: 'size-9 text-base md:text-sm rounded-lg',
     md: 'size-11 text-base rounded-xl',
     lg: 'size-14 text-lg rounded-2xl',
   }[size]

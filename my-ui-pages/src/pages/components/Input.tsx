@@ -182,7 +182,7 @@ const [text, setText] = useState('John Doe')
   return (
     <DocsPageLayout
       component="Input"
-      description="A flexible text input control supporting responsive size scales (sm/md/lg), 1-click clearable buttons, prefix/suffix addons, character counters, leading/trailing icons, native date and time fields, and validation errors."
+      description="A flexible text input control supporting responsive size scales (sm/md/lg), 1-click clearable buttons, prefix/suffix addons, character counters, leading/trailing icons, native date and time fields, and validation errors. Below 768px typed text is 16px at every size, since iOS Safari zooms the page into a smaller field when it is focused; Textarea, SelectBox, QuantityStepper and PinInput follow the same rule."
       examples={examples}
     />
   )

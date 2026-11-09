@@ -53,9 +53,11 @@ const ICON_SIZE_CLASS: Record<QuantityStepperSize, string> = {
   lg: 'size-4.5',
 }
 
+// Typed text is 16px below 768px: iOS Safari zooms the page into any field
+// with smaller text when it's focused. From md the size steps down as designed.
 const INPUT_TEXT_CLASS: Record<QuantityStepperSize, string> = {
-  sm: 'w-12 text-xs',
-  md: 'w-16 text-sm',
+  sm: 'w-12 text-base md:text-xs',
+  md: 'w-16 text-base md:text-sm',
   lg: 'w-20 text-base',
 }
 
