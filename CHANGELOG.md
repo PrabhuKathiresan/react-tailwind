@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.14.3 (2026-11-09)</small>
+
+* Merge pull request #30 from PrabhuKathiresan/fix/field-label-ids ([a01edac2cc2e7f278cb584a0431e0cb4891edf4e](https://github.com/PrabhuKathiresan/react-tailwind/commit/a01edac2cc2e7f278cb584a0431e0cb4891edf4e)), closes [#30](https://github.com/PrabhuKathiresan/react-tailwind/issues/30)
+* fix(input): label names the field when no id or name is passed ([98bfb4fa54010c0fba96a9be113aa124e6d81d9f](https://github.com/PrabhuKathiresan/react-tailwind/commit/98bfb4fa54010c0fba96a9be113aa124e6d81d9f))
+
 ## <small>1.14.2 (2026-11-05)</small>
 
 * Merge pull request #29 from PrabhuKathiresan/fix/input-date-android ([013425ea27811c2dbec90b1a53fa67ac1f3e573e](https://github.com/PrabhuKathiresan/react-tailwind/commit/013425ea27811c2dbec90b1a53fa67ac1f3e573e)), closes [#29](https://github.com/PrabhuKathiresan/react-tailwind/issues/29)
