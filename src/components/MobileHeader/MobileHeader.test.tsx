@@ -142,4 +142,17 @@ describe('MobileHeader', () => {
     fireEvent.click(screen.getByTestId('mobile-header-search-toggle'))
     expect(screen.getByTestId('mobile-header-search-input')).toHaveClass('text-base')
   })
+
+  it('names the search field, and Escape or Cancel leaves search with focus back on the search button', () => {
+    render(<MobileHeader title="Invoices" searchable searchPlaceholder="Search invoices" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+    const field = screen.getByRole('textbox', { name: 'Search invoices' })
+    fireEvent.keyDown(field, { key: 'Escape' })
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Search' })).toHaveFocus()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
+    expect(screen.getByRole('button', { name: 'Search' })).toHaveFocus()
+  })
 })

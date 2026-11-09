@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { MobileHeaderProps, MobileHeaderAction } from './MobileHeader.types'
 import { buildClassName } from '../../utils/build-classname'
 import { ActionSheet } from '../ActionSheet'
@@ -63,6 +63,20 @@ export function MobileHeader({
   className = '',
 }: MobileHeaderProps) {
   const [isSearchActive, setIsSearchActive] = useState(false)
+  const searchToggleRef = useRef<HTMLButtonElement>(null)
+  // Leaving search puts focus back on the search button, rather than losing
+  // it to the page when the search field goes away.
+  const closingSearch = useRef(false)
+  const closeSearch = () => {
+    closingSearch.current = true
+    setIsSearchActive(false)
+  }
+  useEffect(() => {
+    if (!isSearchActive && closingSearch.current) {
+      closingSearch.current = false
+      searchToggleRef.current?.focus()
+    }
+  }, [isSearchActive])
   const [internalSearchValue, setInternalSearchValue] = useState('')
   const [isOverflowOpen, setIsOverflowOpen] = useState(false)
   const hasLeadingSlot = Boolean(onBack || leading) || titleAlign === 'center'
@@ -119,6 +133,11 @@ export function MobileHeader({
                 value={searchValue}
                 onChange={handleSearchInput}
                 placeholder={searchPlaceholder}
+                aria-label={searchPlaceholder || 'Search'}
+                enterKeyHint="search"
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') closeSearch()
+                }}
                 autoFocus
                 // 16px text: iOS zooms the page into any field with smaller text.
                 className="w-full pl-9 pr-8 py-2 text-base bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-full border border-transparent focus:border-blue-500 focus:outline-hidden transition-all"
@@ -137,7 +156,7 @@ export function MobileHeader({
             </div>
             <button
               type="button"
-              onClick={() => setIsSearchActive(false)}
+              onClick={closeSearch}
               className="text-xs font-semibold text-blue-600 dark:text-blue-400 px-2 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer"
             >
               Cancel
@@ -212,6 +231,7 @@ export function MobileHeader({
               {searchable && (
                 <button
                   type="button"
+                  ref={searchToggleRef}
                   onClick={() => setIsSearchActive(true)}
                   aria-label="Search"
                   className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
