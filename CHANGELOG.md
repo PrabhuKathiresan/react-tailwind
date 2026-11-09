@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented here.
 
+## 1.15.0 (2026-11-09)
+
+* Merge pull request #31 from PrabhuKathiresan/feat/mobile-patterns ([33b1be0305800bfc5bd26dc2f3eb6f126f26e2dd](https://github.com/PrabhuKathiresan/react-tailwind/commit/33b1be0305800bfc5bd26dc2f3eb6f126f26e2dd)), closes [#31](https://github.com/PrabhuKathiresan/react-tailwind/issues/31)
+* fix(dropdown): the keyboard can choose the focused item ([baedb7054869c9a8bcb9c07236abb90e6777c215](https://github.com/PrabhuKathiresan/react-tailwind/commit/baedb7054869c9a8bcb9c07236abb90e6777c215))
+* fix(floating-action-button): speed dial focus and Escape ([321ca4925fb3b999c228e26b6eaf01f600373fd3](https://github.com/PrabhuKathiresan/react-tailwind/commit/321ca4925fb3b999c228e26b6eaf01f600373fd3))
+* fix(mobile-header): search field is named and gives focus back on close ([887fb553812ccdd52accb1bedd45ec8677de1085](https://github.com/PrabhuKathiresan/react-tailwind/commit/887fb553812ccdd52accb1bedd45ec8677de1085))
+* fix(mobile-picker): focus starts in the search field when the sheet opens ([5b9b6b3dade72152eabe1a6ef0479a1d94a6af40](https://github.com/PrabhuKathiresan/react-tailwind/commit/5b9b6b3dade72152eabe1a6ef0479a1d94a6af40))
+* fix(segmented-control): onChange gets the options' own value type ([d0ef0c56611471d4d3cf74a176ff0461abf7c2e3](https://github.com/PrabhuKathiresan/react-tailwind/commit/d0ef0c56611471d4d3cf74a176ff0461abf7c2e3))
+* fix(sticky-action-bar): summary trigger is named by its summary ([39ab674b1aacd55686e0114edbfcd1933f466e2b](https://github.com/PrabhuKathiresan/react-tailwind/commit/39ab674b1aacd55686e0114edbfcd1933f466e2b))
+* feat(confirm-sheet): ask before an action that's hard to undo ([737ef923c6c0a22f9909d8bad8b10eef20041205](https://github.com/PrabhuKathiresan/react-tailwind/commit/737ef923c6c0a22f9909d8bad8b10eef20041205))
+* feat(filter-sheet): filters behind one button, in a bottom sheet ([e19bbae5dcc440115401eff9f35aed1de570c203](https://github.com/PrabhuKathiresan/react-tailwind/commit/e19bbae5dcc440115401eff9f35aed1de570c203))
+* feat(list-row): divided row for phone lists ([c41e288ebc495b76ee0553199765d50d100eb9dc](https://github.com/PrabhuKathiresan/react-tailwind/commit/c41e288ebc495b76ee0553199765d50d100eb9dc))
+* feat(list-view): phone list with Load more ([1ebcee3cf831532cd2937060ffc75ddf13deb31b](https://github.com/PrabhuKathiresan/react-tailwind/commit/1ebcee3cf831532cd2937060ffc75ddf13deb31b))
+* feat(radio-switch): one Tab stop, focus follows the arrows, typed values, a calmer slide ([3f4fdae65f6e51352bd301516e639fac9577b227](https://github.com/PrabhuKathiresan/react-tailwind/commit/3f4fdae65f6e51352bd301516e639fac9577b227))
+* feat(selection-bar): bulk actions in the bottom bar's place ([ad3fb9e558278783ea687717f92dd68b3e84a916](https://github.com/PrabhuKathiresan/react-tailwind/commit/ad3fb9e558278783ea687717f92dd68b3e84a916))
+* feat(settings-group): grouped rows for phone settings pages ([621ca438d2b5e70e7f0f7db0725d924aa2a8ee38](https://github.com/PrabhuKathiresan/react-tailwind/commit/621ca438d2b5e70e7f0f7db0725d924aa2a8ee38))
+* feat(sticky-action-bar): followKeyboard keeps the bar above the keyboard ([5bc9472fee04cba46714fd97a86543929d6b291d](https://github.com/PrabhuKathiresan/react-tailwind/commit/5bc9472fee04cba46714fd97a86543929d6b291d))
+* docs(site): keyboard behaviour, followKeyboard and typed segmented values ([d6efed52abf5b7d83b589e3f7d74310c5fc1233a](https://github.com/PrabhuKathiresan/react-tailwind/commit/d6efed52abf5b7d83b589e3f7d74310c5fc1233a))
+* docs(site): pages and search for the phone list components and hooks ([bac6ceb18f52ae82ddc5de761808ad0f2d49f722](https://github.com/PrabhuKathiresan/react-tailwind/commit/bac6ceb18f52ae82ddc5de761808ad0f2d49f722))
+* chore(dialog): remove the unused _Dialog ([4c9013f85c603962626c642f105074d1b7cff861](https://github.com/PrabhuKathiresan/react-tailwind/commit/4c9013f85c603962626c642f105074d1b7cff861))
+
 ## <small>1.14.3 (2026-11-09)</small>
 
 * Merge pull request #30 from PrabhuKathiresan/fix/field-label-ids ([a01edac2cc2e7f278cb584a0431e0cb4891edf4e](https://github.com/PrabhuKathiresan/react-tailwind/commit/a01edac2cc2e7f278cb584a0431e0cb4891edf4e)), closes [#30](https://github.com/PrabhuKathiresan/react-tailwind/issues/30)
