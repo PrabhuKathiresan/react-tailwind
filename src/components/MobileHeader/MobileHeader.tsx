@@ -218,7 +218,9 @@ export function MobileHeader({
               )}
               {subtitle && (
                 <div
-                  className="text-[13px] leading-5 text-gray-500 dark:text-gray-400 truncate pointer-events-auto"
+                  // Clipped sideways only (still ending in …), so a control in the
+                  // subtitle, like a switcher, can have a tap area taller than the line.
+                  className="text-[13px] leading-5 text-gray-500 dark:text-gray-400 whitespace-nowrap text-ellipsis overflow-x-clip pointer-events-auto"
                   data-testid="mobile-header-subtitle"
                 >
                   {subtitle}
