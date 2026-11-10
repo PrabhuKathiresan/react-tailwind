@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.15.3 (2026-11-10)</small>
+
+* Merge pull request #34 from PrabhuKathiresan/fix/header-tap-targets ([86707eb2c4eec2ee4077d89fb5bce60a8702b421](https://github.com/PrabhuKathiresan/react-tailwind/commit/86707eb2c4eec2ee4077d89fb5bce60a8702b421)), closes [#34](https://github.com/PrabhuKathiresan/react-tailwind/issues/34)
+* fix(mobile-header): icon buttons get a 44px tap area on touch screens ([11dde55c24b1d4ff28fc2cdc2f98e4bd6be88ac0](https://github.com/PrabhuKathiresan/react-tailwind/commit/11dde55c24b1d4ff28fc2cdc2f98e4bd6be88ac0))
+
 ## <small>1.15.2 (2026-11-10)</small>
 
 * Merge pull request #33 from PrabhuKathiresan/fix/phone-taps ([7d37c3d3729dfe413a8e99657b77dbf6a874f0cf](https://github.com/PrabhuKathiresan/react-tailwind/commit/7d37c3d3729dfe413a8e99657b77dbf6a874f0cf)), closes [#33](https://github.com/PrabhuKathiresan/react-tailwind/issues/33)
