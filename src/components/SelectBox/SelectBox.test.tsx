@@ -406,4 +406,22 @@ describe('SelectBox', () => {
     await user.click(field)
     expect(await screen.findByRole('listbox')).toBeInTheDocument()
   })
+
+  test("async: searches as you type, then with '' once the query is cleared", async () => {
+    const onSearch = jest.fn(async () => {})
+    render(<SelectBox options={options} async onSearch={onSearch} searchable />)
+    const input = screen.getByTestId('combobox-input')
+
+    // Opening alone doesn't search: the owner's options are already the unfiltered ones.
+    fireEvent.click(input)
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    expect(onSearch).not.toHaveBeenCalled()
+
+    fireEvent.change(input, { target: { value: 'al' } })
+    await waitFor(() => expect(onSearch).toHaveBeenLastCalledWith('al'), { timeout: 1500 })
+
+    fireEvent.change(input, { target: { value: '' } })
+    await waitFor(() => expect(onSearch).toHaveBeenLastCalledWith(''), { timeout: 1500 })
+    expect(onSearch).toHaveBeenCalledTimes(2)
+  })
 })

@@ -142,13 +142,15 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   /**
    * Enables async search mode:
    * - Component will not filter options locally
-   * - Calls onSearch(query) when user types
+   * - Calls onSearch(query) when user types, and onSearch('') when the
+   *   query empties again (cleared, an option picked, or closed)
    */
   async?: boolean
 
   /**
    * Async search callback.
-   * Should update the `options` prop externally after fetching.
+   * Should update the `options` prop externally after fetching. An empty
+   * query asks for the options shown before any search.
    */
   onSearch?: (query: string) => Promise<void>
 

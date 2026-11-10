@@ -356,8 +356,14 @@ export const SelectBox = forwardRef(
       }
     }, [])
 
+    // Async: search for each pause in typing, and once more with '' when the
+    // query empties (cleared, picked or closed), so the owner can bring back
+    // its unfiltered options instead of leaving the last matches up.
+    const searchedFor = useRef('')
     useEffect(() => {
-      if (async && debouncedQuery) handleSearch(debouncedQuery)
+      if (!async || debouncedQuery === searchedFor.current) return
+      searchedFor.current = debouncedQuery
+      handleSearch(debouncedQuery)
     }, [debouncedQuery, async, handleSearch])
 
     const normalizedSelected = useMemo(() => {
