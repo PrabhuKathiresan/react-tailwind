@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.15.2 (2026-11-10)</small>
+
+* Merge pull request #33 from PrabhuKathiresan/fix/phone-taps ([7d37c3d3729dfe413a8e99657b77dbf6a874f0cf](https://github.com/PrabhuKathiresan/react-tailwind/commit/7d37c3d3729dfe413a8e99657b77dbf6a874f0cf)), closes [#33](https://github.com/PrabhuKathiresan/react-tailwind/issues/33)
+* fix(mobile-header): a control in the subtitle keeps its full tap area ([8243b4283005e6c0bbcb40d4ae7c0e9293f82c3d](https://github.com/PrabhuKathiresan/react-tailwind/commit/8243b4283005e6c0bbcb40d4ae7c0e9293f82c3d))
+* fix(select-box): the next tap after choosing opens the list again ([9dc4b4d2d3737acf79c594c42a1659bf72ead337](https://github.com/PrabhuKathiresan/react-tailwind/commit/9dc4b4d2d3737acf79c594c42a1659bf72ead337))
+
 ## <small>1.15.1 (2026-11-09)</small>
 
 * Merge pull request #32 from PrabhuKathiresan/fix/phone-field-text ([4c6dd2de8124eb3a7e6b45c191f56fca5a724b74](https://github.com/PrabhuKathiresan/react-tailwind/commit/4c6dd2de8124eb3a7e6b45c191f56fca5a724b74)), closes [#32](https://github.com/PrabhuKathiresan/react-tailwind/issues/32)
