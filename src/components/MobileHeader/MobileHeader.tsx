@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { MobileHeaderProps, MobileHeaderAction } from './MobileHeader.types'
 import { buildClassName } from '../../utils/build-classname'
+import { TOUCH_TARGET_CLASS } from '../../utils/touch-target'
 import { ActionSheet } from '../ActionSheet'
 
 function ChevronLeftIcon() {
@@ -236,7 +237,10 @@ export function MobileHeader({
                   ref={searchToggleRef}
                   onClick={() => setIsSearchActive(true)}
                   aria-label="Search"
-                  className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
+                  className={buildClassName(
+                    'relative p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer',
+                    TOUCH_TARGET_CLASS,
+                  )}
                   data-testid="mobile-header-search-toggle"
                 >
                   <SearchIcon />
@@ -259,6 +263,7 @@ export function MobileHeader({
                     aria-label={action.label}
                     className={buildClassName(
                       'p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors relative cursor-pointer',
+                      TOUCH_TARGET_CLASS,
                       action.disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
                     )}
                     data-testid={`mobile-header-action-${action.id}`}
@@ -286,7 +291,10 @@ export function MobileHeader({
                   aria-label={overflowLabel}
                   aria-haspopup="dialog"
                   aria-expanded={isOverflowOpen}
-                  className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
+                  className={buildClassName(
+                    'relative p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer',
+                    TOUCH_TARGET_CLASS,
+                  )}
                   data-testid="mobile-header-overflow"
                 >
                   <MoreIcon />

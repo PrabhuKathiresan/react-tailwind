@@ -162,4 +162,23 @@ describe('MobileHeader', () => {
     expect(subtitle).toHaveClass('overflow-x-clip', 'text-ellipsis', 'whitespace-nowrap')
     expect(subtitle).not.toHaveClass('truncate')
   })
+
+  it('gives its icon buttons a 44px tap area on touch screens, without changing their look', () => {
+    render(
+      <MobileHeader
+        title="Invoices"
+        searchable
+        actions={[{ id: 'edit', label: 'Edit', icon: <span>E</span>, onClick: jest.fn() }]}
+      />,
+    )
+    for (const name of ['Search', 'Edit']) {
+      const button = screen.getByRole('button', { name })
+      expect(button).toHaveClass(
+        'relative',
+        'p-2',
+        'pointer-coarse:after:min-h-11',
+        'pointer-coarse:after:min-w-11',
+      )
+    }
+  })
 })
