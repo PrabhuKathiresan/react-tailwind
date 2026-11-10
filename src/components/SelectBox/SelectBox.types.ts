@@ -144,6 +144,7 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
    * - Component will not filter options locally
    * - Calls onSearch(query) when user types, and onSearch('') when the
    *   query empties again (cleared, an option picked, or closed)
+   * - Shows a loader, not the last query's options, until that search resolves
    */
   async?: boolean
 

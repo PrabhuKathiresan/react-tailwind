@@ -424,4 +424,28 @@ describe('SelectBox', () => {
     await waitFor(() => expect(onSearch).toHaveBeenLastCalledWith(''), { timeout: 1500 })
     expect(onSearch).toHaveBeenCalledTimes(2)
   })
+
+  test("async: doesn't offer the last query's options until the new search resolves", async () => {
+    let finish: () => void = () => {}
+    const onSearch = jest.fn(() => new Promise<void>((resolve) => (finish = resolve)))
+    const onChange = jest.fn()
+    render(<SelectBox options={options} async onSearch={onSearch} onChange={onChange} searchable />)
+    const input = screen.getByTestId('combobox-input')
+
+    fireEvent.click(input)
+    fireEvent.change(input, { target: { value: 'al' } })
+    expect(screen.getByTestId('options-loading')).toBeInTheDocument()
+    expect(screen.queryByText('Beta')).not.toBeInTheDocument()
+
+    await waitFor(() => expect(onSearch).toHaveBeenCalledWith('al'), { timeout: 1500 })
+    await act(async () => finish())
+    expect(await screen.findByText('Beta')).toBeInTheDocument()
+
+    // A scanner types its code and Enter at once: the matches for 'al' aren't
+    // this code's, so Enter picks nothing.
+    fireEvent.change(input, { target: { value: '8901' } })
+    expect(screen.queryByText('Beta')).not.toBeInTheDocument()
+    fireEvent.keyDown(input, { key: 'Enter' })
+    expect(onChange).not.toHaveBeenCalled()
+  })
 })

@@ -345,6 +345,12 @@ export const SelectBox = forwardRef(
     const onSearchRef = useRef(props.onSearch)
     onSearchRef.current = props.onSearch
 
+    // The query the options on show were searched for. Until it catches up
+    // with what's typed, the options are another query's: they aren't offered,
+    // so Enter (a barcode scanner's, say) can't pick one of them.
+    const [settledQuery, setSettledQuery] = useState('')
+    const searchPending = async && query !== settledQuery
+
     const handleSearch = useCallback(async (searchString: string) => {
       try {
         setOptionsLoading(true)
@@ -353,6 +359,7 @@ export const SelectBox = forwardRef(
         console.error('Error loading options:', err)
       } finally {
         setOptionsLoading(false)
+        setSettledQuery(searchString)
       }
     }, [])
 
@@ -665,7 +672,7 @@ export const SelectBox = forwardRef(
               </div>
             )}
 
-            {optionsLoading ? (
+            {optionsLoading || searchPending ? (
               <BodyText
                 data-testid="options-loading"
                 className="flex items-center justify-center py-2 px-3 select-none"

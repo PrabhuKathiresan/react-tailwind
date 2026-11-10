@@ -5,6 +5,40 @@ import { Globe } from 'lucide-react'
 
 const PLAYGROUND_OPTIONS = ['Apple', 'Banana', 'Orange', 'Grapes', 'Mango']
 
+const CATALOGUE = [
+  'Basmati rice 25 kg',
+  'Copper wire 90 m',
+  'LED panel 18 W',
+  'Steel almirah',
+  'Sunflower oil 15 L',
+]
+
+// Stands in for a server: answers a search after a short wait.
+const searchCatalogue = (query: string) =>
+  new Promise<string[]>((resolve) =>
+    setTimeout(
+      () => resolve(CATALOGUE.filter((name) => name.toLowerCase().includes(query.toLowerCase()))),
+      400,
+    ),
+  )
+
+function AsyncSearchDemo() {
+  const [options, setOptions] = useState(CATALOGUE)
+  const [selected, setSelected] = useState<string | null>(null)
+  return (
+    <SelectBox
+      options={options}
+      selected={selected}
+      onChange={(value) => setSelected(value as string | null)}
+      async
+      onSearch={async (query) => setOptions(await searchCatalogue(query))}
+      searchable
+      label="Item"
+      placeholder="Search items"
+    />
+  )
+}
+
 function SelectBoxPlayground(props: any) {
   const [val, setVal] = useState<any>(props.multiple ? ['Apple'] : 'Apple')
 
@@ -417,6 +451,25 @@ const [tags, setTags] = useState(['React', 'Tailwind', 'Design System'])
   allowAdd
   onAdd={(value) => setOptions((prev) => [...prev, value])}
   onChange={setSelected}
+/>`,
+    },
+    {
+      title: 'Async (Server) Search',
+      description:
+        "With async, the options aren't filtered locally: onSearch(query) runs after a pause in typing, and onSearch('') once the field empties again, so the owner can bring back its first page. Until a search resolves, a loader shows instead of the last query's options, so Enter (a barcode scanner's, say) never picks a match for something else.",
+      render: (
+        <div className="max-w-md">
+          <AsyncSearchDemo />
+        </div>
+      ),
+      code: `
+<SelectBox
+  options={options}
+  async
+  onSearch={async (query) => setOptions(await searchItems(query))}
+  searchable
+  onChange={setSelected}
+  selected={selected}
 />`,
     },
     {
