@@ -1,5 +1,6 @@
 import React, { ElementType, forwardRef, useEffect, useMemo } from 'react'
 import { buildClassName } from '../../utils/build-classname'
+import { TOUCH_TARGET_CLASS } from '../../utils/touch-target'
 import { Loader } from '../Loader'
 import { TextContent } from '../TextContent'
 import type { ButtonComponent, ButtonProps, ButtonSize, ThemedButtonClass } from './Button.types'
@@ -93,9 +94,7 @@ const BASE_BTN_CLASS =
   'active:scale-[0.98] focus:outline-none ' +
   'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ' +
   'aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:shadow-none ' +
-  'pointer-coarse:after:absolute pointer-coarse:after:top-1/2 pointer-coarse:after:left-1/2 ' +
-  'pointer-coarse:after:-translate-x-1/2 pointer-coarse:after:-translate-y-1/2 ' +
-  'pointer-coarse:after:w-full pointer-coarse:after:min-w-11 pointer-coarse:after:h-full pointer-coarse:after:min-h-11'
+  TOUCH_TARGET_CLASS
 
 export const Button = forwardRef(
   <C extends ElementType = 'button'>(
