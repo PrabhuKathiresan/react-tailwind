@@ -1,0 +1,3 @@
+const e="SettingsGroup",n=`One group of a phone settings page: a heading in the page gutter, then its
+rows as one flat, divided surface running edge to edge, rather than a card
+per group.`,t=[{name:"description",type:"ReactNode",raw:"ReactNode",enumValues:null,required:!1,defaultValue:null,description:"One line under the heading, e.g. what these settings affect."},{name:"bleed",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"true",description:"The rows run edge to edge by cancelling the page's own side padding."}],a={name:e,description:n,props:t};export{a as default,n as description,e as name,t as props};

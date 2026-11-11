@@ -1,6 +1,11 @@
 {
-  "latest": "1.15.3",
+  "latest": "1.16.0",
   "versions": [
+    {
+      "version": "1.16.0",
+      "date": "2026-11-11",
+      "path": "/react-tailwind/v/1.16.0/"
+    },
     {
       "version": "1.15.0",
       "date": "2026-11-09",
