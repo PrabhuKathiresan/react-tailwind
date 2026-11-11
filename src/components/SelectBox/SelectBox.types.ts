@@ -12,6 +12,9 @@ export type BaseOption = {
   /** Whether the option is disabled and non-selectable */
   disabled?: boolean
 
+  /** A muted second line under the label, e.g. to tell apart options with the same label */
+  description?: string
+
   /** Additional metadata fields allowed on the option */
   [k: string]: any
 }
@@ -142,13 +145,16 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   /**
    * Enables async search mode:
    * - Component will not filter options locally
-   * - Calls onSearch(query) when user types
+   * - Calls onSearch(query) when user types, and onSearch('') when the
+   *   query empties again (cleared, an option picked, or closed)
+   * - Shows a loader, not the last query's options, until that search resolves
    */
   async?: boolean
 
   /**
    * Async search callback.
-   * Should update the `options` prop externally after fetching.
+   * Should update the `options` prop externally after fetching. An empty
+   * query asks for the options shown before any search.
    */
   onSearch?: (query: string) => Promise<void>
 

@@ -406,4 +406,64 @@ describe('SelectBox', () => {
     await user.click(field)
     expect(await screen.findByRole('listbox')).toBeInTheDocument()
   })
+
+  test("async: searches as you type, then with '' once the query is cleared", async () => {
+    const onSearch = jest.fn(async () => {})
+    render(<SelectBox options={options} async onSearch={onSearch} searchable />)
+    const input = screen.getByTestId('combobox-input')
+
+    // Opening alone doesn't search: the owner's options are already the unfiltered ones.
+    fireEvent.click(input)
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    expect(onSearch).not.toHaveBeenCalled()
+
+    fireEvent.change(input, { target: { value: 'al' } })
+    await waitFor(() => expect(onSearch).toHaveBeenLastCalledWith('al'), { timeout: 1500 })
+
+    fireEvent.change(input, { target: { value: '' } })
+    await waitFor(() => expect(onSearch).toHaveBeenLastCalledWith(''), { timeout: 1500 })
+    expect(onSearch).toHaveBeenCalledTimes(2)
+  })
+
+  test("async: doesn't offer the last query's options until the new search resolves", async () => {
+    let finish: () => void = () => {}
+    const onSearch = jest.fn(() => new Promise<void>((resolve) => (finish = resolve)))
+    const onChange = jest.fn()
+    render(<SelectBox options={options} async onSearch={onSearch} onChange={onChange} searchable />)
+    const input = screen.getByTestId('combobox-input')
+
+    fireEvent.click(input)
+    fireEvent.change(input, { target: { value: 'al' } })
+    expect(screen.getByTestId('options-loading')).toBeInTheDocument()
+    expect(screen.queryByText('Beta')).not.toBeInTheDocument()
+
+    await waitFor(() => expect(onSearch).toHaveBeenCalledWith('al'), { timeout: 1500 })
+    await act(async () => finish())
+    expect(await screen.findByText('Beta')).toBeInTheDocument()
+
+    // A scanner types its code and Enter at once: the matches for 'al' aren't
+    // this code's, so Enter picks nothing.
+    fireEvent.change(input, { target: { value: '8901' } })
+    expect(screen.queryByText('Beta')).not.toBeInTheDocument()
+    fireEvent.keyDown(input, { key: 'Enter' })
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  test("shows an option's description under its label, telling apart options with the same label", async () => {
+    render(
+      <SelectBox
+        options={[
+          { value: 'c1', label: 'Anita Desai', description: '29ABCDE1234F1Z5 · Bengaluru' },
+          { value: 'c2', label: 'Anita Desai', description: '+91 98450 12345 · Pune' },
+        ]}
+      />,
+    )
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    const [first, second] = screen.getAllByRole('option')
+    expect(first).toHaveTextContent('Anita Desai29ABCDE1234F1Z5 · Bengaluru')
+    expect(second).toHaveTextContent('Anita Desai+91 98450 12345 · Pune')
+  })
 })
