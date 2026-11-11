@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## 1.16.0 (2026-11-11)
+
+* Merge pull request #35 from PrabhuKathiresan/feat/select-box-async-search ([c49355f9651c65b070a9d0d4b9337fcfa1ca43e7](https://github.com/PrabhuKathiresan/react-tailwind/commit/c49355f9651c65b070a9d0d4b9337fcfa1ca43e7)), closes [#35](https://github.com/PrabhuKathiresan/react-tailwind/issues/35)
+* feat(select-box): an option's description shows as a second line under its label ([c55eec60d82c393308c622573ba476b543e0b0a0](https://github.com/PrabhuKathiresan/react-tailwind/commit/c55eec60d82c393308c622573ba476b543e0b0a0))
+* fix(select-box): async search asks again with '' when the query empties ([d00a8ab57f992dd313806363ec5960b0258a8b33](https://github.com/PrabhuKathiresan/react-tailwind/commit/d00a8ab57f992dd313806363ec5960b0258a8b33))
+* fix(select-box): async search hides the last query's options until the new one resolves ([2eb7a45ba2622b44bc75ed9af9f02d2feb72c419](https://github.com/PrabhuKathiresan/react-tailwind/commit/2eb7a45ba2622b44bc75ed9af9f02d2feb72c419))
+
 ## <small>1.15.3 (2026-11-10)</small>
 
 * Merge pull request #34 from PrabhuKathiresan/fix/header-tap-targets ([86707eb2c4eec2ee4077d89fb5bce60a8702b421](https://github.com/PrabhuKathiresan/react-tailwind/commit/86707eb2c4eec2ee4077d89fb5bce60a8702b421)), closes [#34](https://github.com/PrabhuKathiresan/react-tailwind/issues/34)
