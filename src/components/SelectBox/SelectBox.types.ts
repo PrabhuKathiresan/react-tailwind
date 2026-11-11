@@ -12,6 +12,9 @@ export type BaseOption = {
   /** Whether the option is disabled and non-selectable */
   disabled?: boolean
 
+  /** A muted second line under the label, e.g. to tell apart options with the same label */
+  description?: string
+
   /** Additional metadata fields allowed on the option */
   [k: string]: any
 }

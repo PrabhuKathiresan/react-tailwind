@@ -63,6 +63,13 @@ const sizeClasses: Record<
   },
 }
 
+// A second line under the label, telling apart options that share one (two
+// customers with the same name). Same fields MobilePicker reads.
+const optionDescription = (option: unknown): string | undefined =>
+  typeof option === 'object' && option !== null
+    ? (option as BaseOption).description || (option as BaseOption).subtitle || undefined
+    : undefined
+
 export const SelectBox = forwardRef(
   <T extends BaseOption | string = BaseOption>(
     props: SelectBoxProps<T>,
@@ -448,8 +455,15 @@ export const SelectBox = forwardRef(
             renderOption(option, Boolean(isOptSelected))
           ) : (
             <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
-              <span className="text-sm/6">{getDisplayValue(option)}</span>
-              <CheckIcon className="invisible size-5 dark:stroke-gray-300 group-data-[selected]:visible" />
+              <div className="min-w-0">
+                <span className="block text-sm/6 truncate">{getDisplayValue(option)}</span>
+                {optionDescription(option) && (
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 truncate">
+                    {optionDescription(option)}
+                  </span>
+                )}
+              </div>
+              <CheckIcon className="invisible size-5 shrink-0 dark:stroke-gray-300 group-data-[selected]:visible" />
             </div>
           )}
         </ComboboxOption>

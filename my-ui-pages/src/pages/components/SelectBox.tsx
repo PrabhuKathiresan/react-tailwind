@@ -454,6 +454,32 @@ const [tags, setTags] = useState(['React', 'Tailwind', 'Design System'])
 />`,
     },
     {
+      title: 'Option Descriptions',
+      description:
+        'Give an option a description to show a muted second line under its label, so options with the same label can be told apart (two customers with the same name, say).',
+      render: (
+        <div className="max-w-md">
+          <SelectBox
+            label="Customer"
+            placeholder="Choose a customer"
+            options={[
+              { value: 'c1', label: 'Anita Desai', description: '29ABCDE1234F1Z5 · Bengaluru' },
+              { value: 'c2', label: 'Anita Desai', description: '+91 98450 12345 · Pune' },
+              { value: 'c3', label: 'Ravi Kumar', description: 'Chennai' },
+            ]}
+            searchable
+          />
+        </div>
+      ),
+      code: `
+<SelectBox
+  options={[
+    { value: 'c1', label: 'Anita Desai', description: '29ABCDE1234F1Z5 · Bengaluru' },
+    { value: 'c2', label: 'Anita Desai', description: '+91 98450 12345 · Pune' },
+  ]}
+/>`,
+    },
+    {
       title: 'Async (Server) Search',
       description:
         "With async, the options aren't filtered locally: onSearch(query) runs after a pause in typing, and onSearch('') once the field empties again, so the owner can bring back its first page. Until a search resolves, a loader shows instead of the last query's options, so Enter (a barcode scanner's, say) never picks a match for something else.",

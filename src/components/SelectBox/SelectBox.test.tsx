@@ -448,4 +448,22 @@ describe('SelectBox', () => {
     fireEvent.keyDown(input, { key: 'Enter' })
     expect(onChange).not.toHaveBeenCalled()
   })
+
+  test("shows an option's description under its label, telling apart options with the same label", async () => {
+    render(
+      <SelectBox
+        options={[
+          { value: 'c1', label: 'Anita Desai', description: '29ABCDE1234F1Z5 · Bengaluru' },
+          { value: 'c2', label: 'Anita Desai', description: '+91 98450 12345 · Pune' },
+        ]}
+      />,
+    )
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    const [first, second] = screen.getAllByRole('option')
+    expect(first).toHaveTextContent('Anita Desai29ABCDE1234F1Z5 · Bengaluru')
+    expect(second).toHaveTextContent('Anita Desai+91 98450 12345 · Pune')
+  })
 })
