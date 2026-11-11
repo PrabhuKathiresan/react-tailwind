@@ -466,4 +466,18 @@ describe('SelectBox', () => {
     expect(first).toHaveTextContent('Anita Desai29ABCDE1234F1Z5 · Bengaluru')
     expect(second).toHaveTextContent('Anita Desai+91 98450 12345 · Pune')
   })
+
+  test('wraps a long option label and description rather than clipping them', async () => {
+    const long = 'Aerated soft drink 24 x 300 ml (variant 2)'
+    render(
+      <SelectBox options={[{ value: 'a', label: long, description: 'HSN 22021010 · ₹720.00' }]} />,
+    )
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+
+    const label = screen.getByText(long)
+    expect(label.className).not.toMatch(/truncate/)
+    expect(screen.getByText('HSN 22021010 · ₹720.00').className).not.toMatch(/truncate/)
+  })
 })

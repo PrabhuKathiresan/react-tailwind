@@ -456,9 +456,9 @@ export const SelectBox = forwardRef(
           ) : (
             <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
               <div className="min-w-0">
-                <span className="block text-sm/6 truncate">{getDisplayValue(option)}</span>
+                <span className="block text-sm/6 break-words">{getDisplayValue(option)}</span>
                 {optionDescription(option) && (
-                  <span className="block text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 break-words">
                     {optionDescription(option)}
                   </span>
                 )}
