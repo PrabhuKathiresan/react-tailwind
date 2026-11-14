@@ -13,9 +13,9 @@ export interface MobileStepperProps {
   onBack?: () => void
   /** Next button click handler */
   onNext?: () => void
-  /** Custom Back button label (default: "Back") */
+  /** Back button label, also its accessible name (default: "Back") */
   backLabel?: ReactNode
-  /** Custom Next button label (default: "Next") */
+  /** Next button label, also its accessible name, e.g. "Create account" on the last step (default: "Next") */
   nextLabel?: ReactNode
   /** Current step title text (e.g. "Payment Details") */
   stepTitle?: ReactNode

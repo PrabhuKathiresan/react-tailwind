@@ -24,6 +24,13 @@ describe('MobileStepper', () => {
     expect(onBackMock).toHaveBeenCalled()
   })
 
+  test('names the buttons by their visible labels', () => {
+    render(<MobileStepper steps={3} activeStep={2} backLabel="Back" nextLabel="Create account" />)
+
+    expect(screen.getByRole('button', { name: 'Create account' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
+  })
+
   test('disables back button on first step', () => {
     render(<MobileStepper steps={4} activeStep={0} />)
 
