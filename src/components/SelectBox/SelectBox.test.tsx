@@ -205,6 +205,48 @@ describe('SelectBox', () => {
     expect(handleChange).toHaveBeenCalledWith([options[0]])
   })
 
+  test('multiple mode: the menu spans the whole field, not just the input after the chips', async () => {
+    const original = globalThis.ResizeObserver
+    globalThis.ResizeObserver = class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver
+    const rect = (left: number, width: number) =>
+      ({
+        left,
+        width,
+        right: left + width,
+        top: 0,
+        bottom: 40,
+        height: 40,
+        x: left,
+        y: 0,
+        toJSON() {},
+      }) as DOMRect
+    const spy = jest
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        // The field is 400px wide; the chips leave the input its last 150px.
+        return this.getAttribute('data-testid') === 'combobox-input' ? rect(250, 150) : rect(0, 400)
+      })
+
+    try {
+      render(<SelectBox options={options} multiple selected={[options[0]]} onChange={jest.fn()} />)
+
+      await act(async () => {
+        fireEvent.click(screen.getByTestId('combobox-button'))
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId('combobox-options')).toHaveStyle({ width: '400px' })
+      })
+    } finally {
+      spy.mockRestore()
+      globalThis.ResizeObserver = original
+    }
+  })
+
   test('clears selection when allowClear=true', async () => {
     const handleChange = jest.fn()
 
