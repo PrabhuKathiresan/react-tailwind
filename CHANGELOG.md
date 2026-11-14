@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.16.1 (2026-11-14)</small>
+
+* Merge pull request #36 from PrabhuKathiresan/fix/mobile-stepper-next-label ([c0036545b280aed243aed6a9f5dbe236bbd1082a](https://github.com/PrabhuKathiresan/react-tailwind/commit/c0036545b280aed243aed6a9f5dbe236bbd1082a)), closes [#36](https://github.com/PrabhuKathiresan/react-tailwind/issues/36)
+* fix(mobile-stepper): name the buttons by their visible labels ([164394458921247abd50238d211cd6fb99c47a11](https://github.com/PrabhuKathiresan/react-tailwind/commit/164394458921247abd50238d211cd6fb99c47a11))
+
 ## 1.16.0 (2026-11-11)
 
 * Merge pull request #35 from PrabhuKathiresan/feat/select-box-async-search ([c49355f9651c65b070a9d0d4b9337fcfa1ca43e7](https://github.com/PrabhuKathiresan/react-tailwind/commit/c49355f9651c65b070a9d0d4b9337fcfa1ca43e7)), closes [#35](https://github.com/PrabhuKathiresan/react-tailwind/issues/35)
