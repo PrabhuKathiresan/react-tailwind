@@ -70,7 +70,6 @@ export function MobileStepper({
           theme="secondary"
           disabled={disabledBack(isFirstStep, backDisabled)}
           onClick={onBack}
-          aria-label="Previous step"
           leftIcon={<ChevronLeftIcon />}
           data-testid="mobile-stepper-back-btn"
         >
@@ -136,7 +135,6 @@ export function MobileStepper({
           disabled={nextDisabled}
           loading={nextLoading}
           onClick={onNext}
-          aria-label="Next step"
           rightIcon={!isLastStep ? <ChevronRightIcon /> : undefined}
           data-testid="mobile-stepper-next-btn"
         >
