@@ -5568,14 +5568,14 @@
         "name": "backLabel",
         "type": "ReactNode",
         "required": false,
-        "description": "Custom Back button label (default: \"Back\")",
+        "description": "Back button label, also its accessible name (default: \"Back\")",
         "defaultValue": "Back"
       },
       {
         "name": "nextLabel",
         "type": "ReactNode",
         "required": false,
-        "description": "Custom Next button label (default: \"Next\")",
+        "description": "Next button label, also its accessible name, e.g. \"Create account\" on the last step (default: \"Next\")",
         "defaultValue": "Next"
       },
       {
@@ -5645,6 +5645,12 @@
       "handler",
       "next",
       "label",
+      "also",
+      "accessible",
+      "name",
+      "create",
+      "account",
+      "last",
       "current",
       "title",
       "payment",
