@@ -1,0 +1,3 @@
+const e="SelectionBar",t=`Bulk actions on phones while a list is selecting: it takes the bottom
+bar's place with a labelled button per action, within thumb reach. Hidden
+from 768px, where the page shows its own bulk actions.`,n=[{name:"count",type:"number",raw:"number",enumValues:null,required:!0,defaultValue:null,description:"How many records are selected; the actions are off at 0."},{name:"actions",type:"SelectionBarAction[]",raw:"SelectionBarAction[]",enumValues:null,required:!0,defaultValue:null,description:"One labelled button each, in equal columns."}],a={name:e,description:t,props:n};export{a as default,t as description,e as name,n as props};
