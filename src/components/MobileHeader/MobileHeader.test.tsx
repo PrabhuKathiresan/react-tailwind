@@ -4,6 +4,15 @@ import { MobileHeader } from './MobileHeader'
 import { MobileHeaderAction } from './MobileHeader.types'
 
 describe('MobileHeader', () => {
+  test('titleAs makes the title the page heading; a div by default', () => {
+    const { rerender } = render(<MobileHeader title="Invoices" />)
+    expect(screen.getByTestId('mobile-header-title').tagName).toBe('DIV')
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+
+    rerender(<MobileHeader title="Invoices" titleAs="h1" />)
+    expect(screen.getByRole('heading', { level: 1, name: 'Invoices' })).toBeInTheDocument()
+  })
+
   test('renders title and subtitle correctly', () => {
     render(<MobileHeader title="Order Details" subtitle="Order #ORD-901" />)
 
