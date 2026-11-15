@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -189,6 +190,31 @@ export const SelectBox = forwardRef(
     const containerRef = useRef<HTMLDivElement>(null)
 
     useImperativeHandle(forwardedRef, () => inputRef.current!, [inputRef])
+
+    // Headless UI anchors the menu to the <input>. With chips (multiple) that is only the
+    // space after them, so the menu would start mid-field and be as narrow as that gap.
+    // Size and offset it to the whole field instead.
+    const fieldRef = useRef<HTMLDivElement>(null)
+    const [fieldAnchor, setFieldAnchor] = useState<{ width: number; offset: number } | null>(null)
+    useLayoutEffect(() => {
+      const field = fieldRef.current
+      const input = inputRef.current
+      if (!multiple || !field || !input || typeof ResizeObserver === 'undefined') return
+      const measure = () => {
+        const fieldBox = field.getBoundingClientRect()
+        const inputBox = input.getBoundingClientRect()
+        const next = { width: fieldBox.width, offset: fieldBox.left - inputBox.left }
+        setFieldAnchor((prev) =>
+          prev && prev.width === next.width && prev.offset === next.offset ? prev : next,
+        )
+      }
+      measure()
+      // The input moves and shrinks as chips are added or wrap; the field resizes with its container.
+      const observer = new ResizeObserver(measure)
+      observer.observe(field)
+      observer.observe(input)
+      return () => observer.disconnect()
+    }, [multiple])
 
     const filteredOptions = useMemo(() => {
       if (query === '' || async) return allOptions
@@ -456,9 +482,9 @@ export const SelectBox = forwardRef(
           ) : (
             <div className="flex items-center justify-between gap-2 text-gray-900 dark:text-white group-data-[selected]:text-blue-600">
               <div className="min-w-0">
-                <span className="block text-sm/6 truncate">{getDisplayValue(option)}</span>
+                <span className="block text-sm/6 break-words">{getDisplayValue(option)}</span>
                 {optionDescription(option) && (
-                  <span className="block text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 break-words">
                     {optionDescription(option)}
                   </span>
                 )}
@@ -507,7 +533,7 @@ export const SelectBox = forwardRef(
                 rightPaddingClass,
                 hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
               )}
-              ref={forwardedRef as any}
+              ref={fieldRef}
             >
               {hasLeftGroup && (
                 <span
@@ -655,11 +681,14 @@ export const SelectBox = forwardRef(
           )}
 
           <ComboboxOptions
-            anchor={{ to: 'bottom start', gap: 5, padding: 8 }}
+            anchor={{ to: 'bottom start', gap: 5, padding: 8, offset: fieldAnchor?.offset ?? 0 }}
             as="div"
             modal={modalDropdown}
-            // Matches the input width by default; min-width lets the panel grow wider than a narrow input.
-            style={dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined}
+            // Matches the field width by default; min-width lets the panel grow wider than a narrow field.
+            style={{
+              ...(fieldAnchor ? { width: fieldAnchor.width } : undefined),
+              ...(dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined),
+            }}
             className={buildClassName(
               'w-[var(--input-width)] rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
               '[--anchor-max-height:20rem]',

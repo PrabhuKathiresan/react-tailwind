@@ -45,6 +45,7 @@ function ClearIcon() {
 
 export function MobileHeader({
   title,
+  titleAs: TitleElement = 'div',
   subtitle,
   titleAlign = 'center',
   onBack,
@@ -210,12 +211,12 @@ export function MobileHeader({
               )}
             >
               {title && (
-                <div
-                  className="text-lg leading-6 font-semibold text-gray-900 dark:text-white truncate pointer-events-auto"
+                <TitleElement
+                  className="m-0 text-lg leading-6 font-semibold text-gray-900 dark:text-white truncate pointer-events-auto"
                   data-testid="mobile-header-title"
                 >
                   {title}
-                </div>
+                </TitleElement>
               )}
               {subtitle && (
                 <div

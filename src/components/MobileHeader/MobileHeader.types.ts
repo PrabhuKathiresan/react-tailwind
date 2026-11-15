@@ -20,6 +20,12 @@ export interface MobileHeaderAction {
 export interface MobileHeaderProps {
   /** Main header title text or ReactNode */
   title?: ReactNode
+  /**
+   * The title's element. Pass `'h1'` when the header's title is the page's heading
+   * (on phones a page often shows its title only here), so it is announced as one.
+   * @default 'div'
+   */
+  titleAs?: 'div' | 'h1' | 'h2'
   /** Secondary subtitle text or sub-heading */
   subtitle?: ReactNode
   /** Title text alignment ('center' | 'left', default: 'center') */
