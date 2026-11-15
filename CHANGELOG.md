@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## 1.17.0 (2026-11-15)
+
+* Merge pull request #37 from PrabhuKathiresan/fix/selectbox-multiple-menu-width ([32c6b37847422a65845301d56bb4de1d80e004e8](https://github.com/PrabhuKathiresan/react-tailwind/commit/32c6b37847422a65845301d56bb4de1d80e004e8)), closes [#37](https://github.com/PrabhuKathiresan/react-tailwind/issues/37)
+* feat(mobile-header): titleAs renders the title as a heading ([4bd39695c5d94623dc6c7bb3aa3c714993332c2e](https://github.com/PrabhuKathiresan/react-tailwind/commit/4bd39695c5d94623dc6c7bb3aa3c714993332c2e))
+* fix(select-box): in multiple mode the menu spans the whole field ([e3e799a1e9dab6146c4b490907febdc545215221](https://github.com/PrabhuKathiresan/react-tailwind/commit/e3e799a1e9dab6146c4b490907febdc545215221))
+* fix(select-box): long option labels and descriptions wrap instead of clipping ([aa56aa261bac25edc7eb095905df95af6fd32756](https://github.com/PrabhuKathiresan/react-tailwind/commit/aa56aa261bac25edc7eb095905df95af6fd32756))
+
 ## <small>1.16.1 (2026-11-14)</small>
 
 * Merge pull request #36 from PrabhuKathiresan/fix/mobile-stepper-next-label ([c0036545b280aed243aed6a9f5dbe236bbd1082a](https://github.com/PrabhuKathiresan/react-tailwind/commit/c0036545b280aed243aed6a9f5dbe236bbd1082a)), closes [#36](https://github.com/PrabhuKathiresan/react-tailwind/issues/36)
