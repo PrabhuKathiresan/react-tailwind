@@ -1,32 +1,11 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-  useRef,
-  useCallback,
-  useMemo,
-} from 'react'
+import React, { useEffect, useState, type ReactNode, useRef, useCallback, useMemo } from 'react'
 import { Toast } from './Toast'
-import type {
-  IToast,
-  ToastContextType,
-  ToastOptions,
-  ToastPlacement,
-  ToastProviderProps,
-} from './Toast.types'
+import type { IToast, ToastOptions, ToastPlacement, ToastProviderProps } from './Toast.types'
 import { buildClassName } from '../../utils/build-classname'
 import { useResponsiveValue } from '../../hooks/use-breakpoint'
+import { ToastContext } from './use-toast'
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined)
 let toastCounter = 0
-
-export const useToast = (): ToastContextType => {
-  const context = useContext(ToastContext)
-  if (!context) throw new Error('useToast must be used within ToastProvider')
-  return context
-}
 
 const placementClass: Record<ToastPlacement, string> = {
   'top-right': 'top-20 right-6 items-end',

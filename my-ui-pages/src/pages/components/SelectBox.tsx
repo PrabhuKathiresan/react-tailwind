@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { SelectBox } from '@pk-design/react-tailwind'
 import { Globe } from 'lucide-react'
@@ -45,7 +45,10 @@ function SelectBoxPlayground(props: any) {
   const effectiveOptions =
     Array.isArray(props.options) && props.options.length > 0 ? props.options : PLAYGROUND_OPTIONS
 
-  useEffect(() => {
+  // When the playground flips "multiple", reshape the value to match, while rendering.
+  const [prevMultiple, setPrevMultiple] = useState(props.multiple)
+  if (props.multiple !== prevMultiple) {
+    setPrevMultiple(props.multiple)
     if (props.multiple) {
       if (!Array.isArray(val)) {
         setVal(val ? [val] : ['Apple'])
@@ -55,13 +58,14 @@ function SelectBoxPlayground(props: any) {
         setVal(val.length > 0 ? val[0] : 'Apple')
       }
     }
-  }, [props.multiple])
+  }
 
-  useEffect(() => {
-    if (props.selected !== undefined) {
-      setVal(props.selected)
-    }
-  }, [props.selected])
+  // Follow the playground's selected when it changes, while rendering.
+  const [prevSelected, setPrevSelected] = useState(props.selected)
+  if (props.selected !== prevSelected) {
+    setPrevSelected(props.selected)
+    if (props.selected !== undefined) setVal(props.selected)
+  }
 
   return (
     <div className="w-full max-w-md">

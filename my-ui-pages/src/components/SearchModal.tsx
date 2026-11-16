@@ -73,11 +73,6 @@ export function SearchModal({ open, onClose }: { open: boolean; onClose: () => v
 
   const activeResults = query.trim().length > 0 ? results : POPULAR_COMPONENTS
 
-  // Reset selectedIndex on query change
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [query])
-
   // Scroll active item into view when navigating via arrow keys
   useEffect(() => {
     const el = itemRefs.current[selectedIndex]
@@ -132,13 +127,19 @@ export function SearchModal({ open, onClose }: { open: boolean; onClose: () => v
             ref={inputRef}
             autoFocus
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setSelectedIndex(0)
+            }}
             placeholder="Search 50+ components, props, or features..."
             className="flex-1 bg-transparent outline-none text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 font-medium"
           />
           {query.length > 0 ? (
             <button
-              onClick={() => setQuery('')}
+              onClick={() => {
+                setQuery('')
+                setSelectedIndex(0)
+              }}
               className="p-1 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
             >
               <X className="size-4" />

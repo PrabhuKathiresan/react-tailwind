@@ -1,7 +1,7 @@
 import { forwardRef, useState, type ReactNode } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import { HeadingText } from '../HeadingText'
-import type { Detail, DetailedInformationProps } from './DetailedInformation.types'
+import type { DetailedInformationProps } from './DetailedInformation.types'
 
 const COLUMN_GRID_CLASS: Record<number, string> = {
   1: 'grid-cols-1',

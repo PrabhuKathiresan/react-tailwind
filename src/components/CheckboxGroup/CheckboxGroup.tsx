@@ -42,7 +42,10 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
   const [internalValue, setInternalValue] = useState<T[]>(defaultValue || [])
 
   const isControlled = controlledValue !== undefined
-  const currentValue = isControlled ? controlledValue || [] : internalValue
+  const currentValue = useMemo(
+    () => (isControlled ? controlledValue || [] : internalValue),
+    [isControlled, controlledValue, internalValue],
+  )
 
   const items = useMemo(
     () =>

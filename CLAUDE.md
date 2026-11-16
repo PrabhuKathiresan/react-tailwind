@@ -19,8 +19,9 @@ Always run commands from the correct directory: library commands from repo root,
 pnpm run build          # rollup -c && tsc --emitDeclarationOnly -> dist/
 pnpm run test           # jest --watch
 pnpm run test:ci        # jest --runInBand --ci (single run, used in CI and pre-push hook)
-pnpm run lint           # prettier --check .
+pnpm run lint           # eslint . (errors fail; no-explicit-any and SelectBox's hooks warn for now)
 pnpm run format         # prettier --write .
+pnpm run format:check   # prettier --check . (CI)
 ```
 
 Run a single test file: `pnpm exec jest src/components/Button/Button.test.tsx`

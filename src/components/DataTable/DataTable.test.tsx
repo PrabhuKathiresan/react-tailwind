@@ -503,7 +503,7 @@ describe('DataTable', () => {
         items={rows}
         columns={columns}
         onRowClick={handleRowClick}
-        rowHoverActions={(item) => [
+        rowHoverActions={() => [
           {
             id: 'edit',
             label: 'Edit',

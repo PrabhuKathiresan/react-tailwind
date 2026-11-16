@@ -1,7 +1,7 @@
-import { forwardRef, useState, type ReactNode } from 'react'
+import { forwardRef, useState } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import SlashIcon from '../Icons/Slash.svg'
-import type { BreadcrumbItem, BreadcrumbProps } from './Breadcrumb.types'
+import type { BreadcrumbProps } from './Breadcrumb.types'
 
 const SIZE_CONTAINER_CLASS: Record<string, string> = {
   sm: 'text-xs gap-1.5',
@@ -97,16 +97,7 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>((props, ref) 
   const count = items.length
   const shouldTruncate = maxItems !== undefined && maxItems > 1 && count > maxItems && !expanded
 
-  const getVisibleItems = () => {
-    if (!shouldTruncate) return items
-    // Always keep 1st item and last 1-2 items
-    const firstItem = items[0]
-    const lastItems = items.slice(count - (maxItems - 1))
-    return [firstItem, ...lastItems]
-  }
-
   const hiddenItems = shouldTruncate ? items.slice(1, count - (maxItems - 1)) : []
-  const visibleItems = getVisibleItems()
 
   return (
     <nav

@@ -1,6 +1,7 @@
 import React, { createRef } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { PasswordInput, evaluatePasswordStrength } from './PasswordInput'
+import { PasswordInput } from './PasswordInput'
+import { evaluatePasswordStrength } from './password-strength'
 
 describe('PasswordInput', () => {
   test('evaluates password strength correctly', () => {

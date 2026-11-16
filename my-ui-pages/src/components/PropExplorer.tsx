@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useEffectEvent, useState, useMemo } from 'react'
 import { buildClassName } from '@pk-design/react-tailwind'
 import { CodeBlock } from './CodeBlock'
 
@@ -198,10 +198,13 @@ function ArrayControl({
 }) {
   const toText = (v: any) => (Array.isArray(v) ? v.join(', ') : String(v ?? ''))
   const [text, setText] = useState(toText(value))
-
-  useEffect(() => {
+  // A new value from outside replaces the text being edited, compared by content.
+  const valueKey = JSON.stringify(value)
+  const [prevValueKey, setPrevValueKey] = useState(valueKey)
+  if (valueKey !== prevValueKey) {
+    setPrevValueKey(valueKey)
     setText(toText(value))
-  }, [JSON.stringify(value)])
+  }
 
   return (
     <input
@@ -279,23 +282,25 @@ export function PropExplorer({
 
   const customNames = useMemo(() => new Set(Object.keys(controls)), [controls])
 
+  // Reads the latest controls and initial props without reloading when they change.
+  const applyMeta = useEffectEvent((all: PropMeta[]) => {
+    const controllable = all.filter((p) => isControllable(p, customNames))
+    setPropsMeta(controllable)
+    const defaults: Record<string, any> = {}
+    controllable.forEach((p) => {
+      defaults[p.name] = parseDefault(p)
+    })
+    setValues((prev) => ({ ...defaults, ...initialProps, ...prev }))
+  })
+
   useEffect(() => {
     const key = Object.keys(docModules).find((k) =>
       k.includes(`/components/${componentName}/${componentName}.json`),
     )
     if (!key) return
-    ;(docModules[key] as () => Promise<any>)().then((mod) => {
-      const controllable: PropMeta[] = (mod.default.props as PropMeta[]).filter((p) =>
-        isControllable(p, customNames),
-      )
-      setPropsMeta(controllable)
-
-      const defaults: Record<string, any> = {}
-      controllable.forEach((p) => {
-        defaults[p.name] = parseDefault(p)
-      })
-      setValues((prev) => ({ ...defaults, ...initialProps, ...prev }))
-    })
+    ;(docModules[key] as () => Promise<any>)().then((mod) =>
+      applyMeta(mod.default.props as PropMeta[]),
+    )
   }, [componentName])
 
   const defaults = useMemo(() => {

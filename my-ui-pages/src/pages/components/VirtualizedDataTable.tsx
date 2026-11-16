@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import {
   VirtualizedDataTable,
@@ -8,6 +8,13 @@ import {
   updateSortQuery,
   get,
 } from '@pk-design/react-tailwind'
+
+const VIRTUAL_ROWS = Array.from({ length: 1000 }).map((_, i) => ({
+  id: i + 1,
+  name: ['Prabhu', 'Arun', 'Kumar'][i % 3] + ' ' + (i + 1),
+  age: 20 + (i % 30),
+  role: ['Admin', 'User', 'Manager'][i % 3],
+}))
 
 const LARGE_ITEMS = Array.from({ length: 2000 }).map((_, i) => ({
   id: i + 1,
@@ -40,27 +47,18 @@ function SortingExample() {
     { name: 'role', label: 'Role' },
   ]
 
-  const original = Array.from({ length: 1000 }).map((_, i) => ({
-    id: i + 1,
-    name: ['Prabhu', 'Arun', 'Kumar'][i % 3] + ' ' + (i + 1),
-    age: 20 + (i % 30),
-    role: ['Admin', 'User', 'Manager'][i % 3],
-  }))
-
   const [sortQuery, setSortQuery] = useState<SortQuery>({})
-  const [data, setData] = useState(original)
 
   const handleSort = (column: DataTableColumn) => {
     setSortQuery((prev) => updateSortQuery(prev, column.name, column.type))
   }
 
-  useEffect(() => {
+  const data = useMemo(() => {
     const [key, direction] = Object.entries(sortQuery)[0] ?? []
     if (!key || !direction) {
-      setData(original)
-      return
+      return VIRTUAL_ROWS
     }
-    const sorted = [...original].sort((a, b) => {
+    const sorted = [...VIRTUAL_ROWS].sort((a, b) => {
       const A = get(a, key)
       const B = get(b, key)
       if (typeof A === 'number' && typeof B === 'number') {
@@ -72,7 +70,7 @@ function SortingExample() {
       if (sA > sB) return direction === 'asc' ? 1 : -1
       return 0
     })
-    setData(sorted)
+    return sorted
   }, [sortQuery])
 
   return (
@@ -121,15 +119,20 @@ function RowClickExample() {
 /* --------------------------------------------------
  * Example: Row & Cell Styling
  * -------------------------------------------------- */
-function StylingExample() {
-  type Row = { id: number; product: string; amount: number; status: string }
+type StylingRow = { id: number; product: string; amount: number; status: string }
 
-  const items: Row[] = Array.from({ length: 500 }).map((_, i) => ({
-    id: i + 1,
-    product: `Product ${i + 1}`,
-    amount: Math.floor(Math.random() * 500) + 50,
-    status: ['paid', 'pending', 'failed'][i % 3],
-  }))
+// Fixed amounts (not random), so the rows don't change from one render to the next.
+const STYLING_ROWS: StylingRow[] = Array.from({ length: 500 }).map((_, i) => ({
+  id: i + 1,
+  product: `Product ${i + 1}`,
+  amount: ((i * 137) % 500) + 50,
+  status: ['paid', 'pending', 'failed'][i % 3],
+}))
+
+function StylingExample() {
+  type Row = StylingRow
+
+  const items: Row[] = STYLING_ROWS
 
   const statusColor: Record<string, string> = {
     paid: 'text-green-600 dark:text-green-400 font-medium',
@@ -223,7 +226,6 @@ function LoadingExample() {
   const [items, setItems] = useState<any[]>([])
 
   useEffect(() => {
-    setLoading(true)
     const t = setTimeout(() => {
       setItems(LARGE_ITEMS)
       setLoading(false)

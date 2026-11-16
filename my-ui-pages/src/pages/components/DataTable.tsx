@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import {
   Badge,
@@ -12,6 +12,12 @@ import {
 } from '@pk-design/react-tailwind'
 import { Archive, Trash2, MailOpen, Clock } from 'lucide-react'
 import Users from '../../data/Sample/users.json'
+
+const SORT_ROWS = [
+  { id: 1, name: 'Prabhu', age: 32, role: 'Admin' },
+  { id: 2, name: 'Arun', age: 28, role: 'User' },
+  { id: 3, name: 'Kumar', age: 40, role: 'Manager' },
+]
 
 /* --------------------------------------------------
  * Example: Basic
@@ -41,26 +47,19 @@ function SortingExample() {
     { name: 'role', label: 'Role' },
   ]
 
-  const original = [
-    { id: 1, name: 'Prabhu', age: 32, role: 'Admin' },
-    { id: 2, name: 'Arun', age: 28, role: 'User' },
-    { id: 3, name: 'Kumar', age: 40, role: 'Manager' },
-  ]
   const [sortQuery, setSortQuery] = useState<SortQuery>({})
-  const [data, setData] = useState(original)
 
   const handleSort = (column: DataTableColumn) => {
     setSortQuery((prev) => updateSortQuery(prev, column.name, column.type))
   }
 
-  useEffect(() => {
+  const data = useMemo(() => {
     const [key, direction] = Object.entries(sortQuery)[0] ?? []
     if (!key || !direction) {
-      setData(original)
-      return
+      return SORT_ROWS
     }
 
-    const sorted = [...original].sort((a, b) => {
+    const sorted = [...SORT_ROWS].sort((a, b) => {
       const A = get(a, key)
       const B = get(b, key)
 
@@ -75,7 +74,7 @@ function SortingExample() {
       if (sA > sB) return direction === 'asc' ? 1 : -1
       return 0
     })
-    setData(sorted)
+    return sorted
   }, [sortQuery])
 
   return <DataTable items={data} columns={columns} sorting={sortQuery} onSort={handleSort} />
@@ -103,7 +102,7 @@ function PaginationExample() {
       id: (page - 1) * limit + i + 1,
       title: `Item ${(page - 1) * limit + i + 1}`,
     }))
-  }, [pagination.limit, pagination.page, pagination.total])
+  }, [pagination.limit, pagination.page])
 
   return (
     <DataTable

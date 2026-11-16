@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import { isEmpty } from '../../utils/is-empty'
@@ -54,12 +54,16 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
   const [activeThumbState, setActiveThumbState] = useState<'min' | 'max' | null>(null)
   const [hoveringThumb, setHoveringThumb] = useState<'min' | 'max' | null>(null)
 
+  // The latest values for the pointer handlers, which outlive a render; updated after each
+  // render (refs mustn't be written while rendering).
   const valueMinRef = useRef(valueMin)
   const valueMaxRef = useRef(valueMax)
   const onChangeRef = useRef(onChange)
-  valueMinRef.current = valueMin
-  valueMaxRef.current = valueMax
-  onChangeRef.current = onChange
+  useLayoutEffect(() => {
+    valueMinRef.current = valueMin
+    valueMaxRef.current = valueMax
+    onChangeRef.current = onChange
+  })
 
   const hasError = !isEmpty(error)
   const currentSize = sizeClasses[size] || sizeClasses.md

@@ -10,31 +10,8 @@ import {
 import { Label } from '../Label'
 import { buildClassName } from '../../utils/build-classname'
 import type { InputProps, InputSize } from './Input.types'
+import { buildInputClass, sizeClasses } from './input-class'
 import { TextContent } from '../TextContent'
-
-// Typed text is 16px below 768px: iOS Safari zooms the page into any field
-// with smaller text when it's focused. From md the size steps down as designed.
-const sizeClasses: Record<InputSize, { input: string; group: string; icon: string; text: string }> =
-  {
-    sm: {
-      input: 'px-2.5 py-1.5 text-base md:text-xs leading-5',
-      group: 'w-8 text-xs',
-      icon: 'size-3.5',
-      text: 'text-xs',
-    },
-    md: {
-      input: 'px-3.5 py-2 text-base md:text-sm leading-6',
-      group: 'w-10 text-sm',
-      icon: 'size-4',
-      text: 'text-sm',
-    },
-    lg: {
-      input: 'px-4 py-2.5 text-base leading-7',
-      group: 'w-12 text-base',
-      icon: 'size-5',
-      text: 'text-base',
-    },
-  }
 
 // A native date or time field is its own control, styled differently by each browser.
 // Android Chrome puts a margin around the value, making the field taller than the text
@@ -52,35 +29,6 @@ const CALENDAR_INDICATOR =
   '[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:end-0 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0'
 const NATIVE_PICKER_TYPES = ['date', 'month', 'week', 'datetime-local', 'time']
 const CALENDAR_TYPES = ['date', 'month', 'week', 'datetime-local']
-
-export function buildInputClass(
-  className?: string,
-  {
-    isFocusWithin = false,
-    disabled = false,
-    hasError = false,
-    size = 'md',
-  }: { isFocusWithin?: boolean; disabled?: boolean; hasError?: boolean; size?: InputSize } = {},
-) {
-  const currentSize = sizeClasses[size] || sizeClasses.md
-
-  return buildClassName(
-    'transition-all duration-150',
-    'block w-full rounded-lg bg-white',
-    currentSize.input,
-    'text-gray-900 outline outline-1 -outline-offset-1',
-    hasError
-      ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-      : 'outline-[var(--ui-border)]',
-    disabled
-      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-[var(--ui-border-muted)]'
-      : 'bg-white dark:bg-gray-700 dark:text-white outline-[var(--ui-border)] dark:placeholder-gray-400 placeholder-gray-400',
-    isFocusWithin
-      ? 'focus-within:outline-[var(--ui-focus-ring)] focus-within:outline-2 focus-within:-outline-offset-2'
-      : 'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
-    className,
-  )
-}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {

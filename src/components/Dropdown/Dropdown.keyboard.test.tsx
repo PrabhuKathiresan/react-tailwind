@@ -24,7 +24,9 @@ describe('Dropdown from the keyboard', () => {
   it('moves with the arrows, skipping disabled items, and chooses with Enter', async () => {
     const user = userEvent.setup()
     const { edit, archive } = renderMenu()
-    screen.getByRole('button', { name: 'Actions' }).focus()
+    // Reach the button the way a keyboard user does (inside act, unlike a bare .focus()).
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Actions' })).toHaveFocus()
     await user.keyboard('{Enter}')
     await screen.findByRole('menu')
     await user.keyboard('{ArrowDown}{Enter}')
@@ -37,7 +39,9 @@ describe('Dropdown from the keyboard', () => {
   it('chooses with Space too, and closes on Escape without choosing', async () => {
     const user = userEvent.setup()
     const { edit } = renderMenu()
-    screen.getByRole('button', { name: 'Actions' }).focus()
+    // Reach the button the way a keyboard user does (inside act, unlike a bare .focus()).
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Actions' })).toHaveFocus()
     await user.keyboard('{Enter}')
     await screen.findByRole('menu')
     await user.keyboard('{Escape}')
