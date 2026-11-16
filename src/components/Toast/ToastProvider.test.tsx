@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent, act } from '@testing-library/react'
-import { ToastProvider, useToast } from './ToastProvider'
+import { ToastProvider } from './ToastProvider'
+import { useToast } from './use-toast'
 import type { ToastPlacement } from './Toast.types'
 import { mockViewport } from '../../test-utils/mock-viewport'
 
