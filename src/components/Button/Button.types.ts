@@ -41,7 +41,7 @@ export type ThemedButtonClass = {
   }
 }
 
-export type PolymorphicButtonProps<C extends ElementType, Props = {}> = Props & {
+export type PolymorphicButtonProps<C extends ElementType, Props = object> = Props & {
   /**
    * The element or component to render.
    * @default "button"

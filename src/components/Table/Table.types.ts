@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode, TdHTMLAttributes } from 'react'
 
 /**
  * Root <Table /> props.

@@ -29,7 +29,7 @@ export interface SkeletonBaseProps {
   borderRadius?: number | string
 }
 
-export type PolymorphicSkeletonProps<C extends ElementType, Props = {}> = Props & {
+export type PolymorphicSkeletonProps<C extends ElementType, Props = object> = Props & {
   as?: C
 } & Omit<ComponentPropsWithoutRef<C>, keyof Props | 'as'>
 

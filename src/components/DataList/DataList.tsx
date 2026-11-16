@@ -103,7 +103,8 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
   const searchQuery = externalSearchQuery !== undefined ? externalSearchQuery : internalSearchQuery
 
   const handleSearchInput = (query: string) => {
-    onSearchChange ? onSearchChange(query) : setInternalSearchQuery(query)
+    if (onSearchChange) onSearchChange(query)
+    else setInternalSearchQuery(query)
   }
 
   // Internal Filter State
@@ -309,7 +310,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
     }
   }
 
-  const toggleItemSelect = (key: string | number, item: T) => {
+  const toggleItemSelect = (key: string | number) => {
     const nextKeys = isSelected(key)
       ? selectedKeys.filter((k) => k !== key)
       : [...selectedKeys, key]
@@ -403,7 +404,8 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
                 theme="primary"
                 size="md"
                 onClick={() => {
-                  onFilterChange ? onFilterChange(draftFilters) : setInternalFilters(draftFilters)
+                  if (onFilterChange) onFilterChange(draftFilters)
+                  else setInternalFilters(draftFilters)
                   setIsFilterSheetOpen(false)
                 }}
                 className="flex-1 text-xs font-semibold"
@@ -553,7 +555,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
                     {selectable ? (
                       <Checkbox
                         checked={selected}
-                        onChange={() => toggleItemSelect(key, item)}
+                        onChange={() => toggleItemSelect(key)}
                         aria-label={`Select item ${key}`}
                         label={
                           <span className="font-bold text-sm text-gray-900 dark:text-white truncate block">

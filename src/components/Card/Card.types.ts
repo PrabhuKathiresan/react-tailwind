@@ -91,7 +91,7 @@ export type CardBaseProps = {
   showChevron?: boolean
 }
 
-export type PolymorphicCardProps<C extends ElementType, Props = {}> = Props & {
+export type PolymorphicCardProps<C extends ElementType, Props = object> = Props & {
   /**
    * The element or component to render.
    * @default "div"
