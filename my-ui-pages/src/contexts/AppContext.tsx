@@ -1,30 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type ReactNode,
-} from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router'
-
-type UiModes = 'light' | 'dark'
-type AppContextType = {
-  uiMode: UiModes
-  toggleUiMode: () => void
-  expanded: boolean
-  setExpanded: Dispatch<React.SetStateAction<boolean>>
-}
-
-const AppContext = createContext<AppContextType>({
-  uiMode: 'light',
-  toggleUiMode: () => {},
-  expanded: false,
-  setExpanded: () => {},
-})
-
-export const useAppContext = () => useContext(AppContext)
+import { AppContext, type UiModes } from './app-context'
 
 const getUiModeFromLocal = (): UiModes => {
   const mode = localStorage.getItem('react-tailwind-ui-mode')
@@ -41,11 +17,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const location = useLocation()
   const pathName = useRef(location.pathname)
 
+  // A new page closes the menu (while rendering) and scrolls to the top (an effect).
+  const [prevPathname, setPrevPathname] = useState(location.pathname)
+  if (location.pathname !== prevPathname) {
+    setPrevPathname(location.pathname)
+    setExpanded(false)
+  }
+
   useEffect(() => {
     if (pathName.current !== location.pathname) {
-      setExpanded(false)
       pathName.current = location.pathname
-
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [location.pathname])

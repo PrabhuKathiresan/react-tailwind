@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Fuse from 'fuse.js'
 
 export interface SearchItem {
@@ -64,7 +64,6 @@ const CATEGORY_MAP: Record<string, string> = {
 }
 
 export function useSearch(query: string) {
-  const [results, setResults] = useState<SearchItem[]>([])
   const [fuse, setFuse] = useState<Fuse<SearchItem> | null>(null)
 
   useEffect(() => {
@@ -110,10 +109,10 @@ export function useSearch(query: string) {
       .catch(() => {})
   }, [])
 
-  useEffect(() => {
+  // The results follow from the query and the index, so they're computed, not stored.
+  return useMemo(() => {
     if (!query || !fuse) {
-      setResults([])
-      return
+      return []
     }
 
     const cleanQuery = query.trim()
@@ -158,8 +157,6 @@ export function useSearch(query: string) {
       matches = fuse.search(cleanQuery).map((x) => x.item)
     }
 
-    setResults(matches)
+    return matches
   }, [query, fuse])
-
-  return results
 }

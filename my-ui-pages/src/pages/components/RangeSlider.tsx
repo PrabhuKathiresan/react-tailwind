@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { RangeSlider } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 
@@ -6,13 +6,19 @@ function RangeSliderPlayground(props: any) {
   const [minVal, setMinVal] = useState(props.valueMin ?? 20)
   const [maxVal, setMaxVal] = useState(props.valueMax ?? 80)
 
-  useEffect(() => {
+  // Follow the playground's valueMin when it changes, while rendering.
+  const [prevValueMin, setPrevValueMin] = useState(props.valueMin)
+  if (props.valueMin !== prevValueMin) {
+    setPrevValueMin(props.valueMin)
     if (props.valueMin !== undefined) setMinVal(props.valueMin)
-  }, [props.valueMin])
+  }
 
-  useEffect(() => {
+  // Follow the playground's valueMax when it changes, while rendering.
+  const [prevValueMax, setPrevValueMax] = useState(props.valueMax)
+  if (props.valueMax !== prevValueMax) {
+    setPrevValueMax(props.valueMax)
     if (props.valueMax !== undefined) setMaxVal(props.valueMax)
-  }, [props.valueMax])
+  }
 
   return (
     <div className="w-full max-w-md">

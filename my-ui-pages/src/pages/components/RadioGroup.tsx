@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { RadioGroup } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { Shield, Zap, Sparkles } from 'lucide-react'
@@ -6,9 +6,12 @@ import { Shield, Zap, Sparkles } from 'lucide-react'
 function RadioGroupPlayground(props: any) {
   const [val, setVal] = useState(props.value || 'Apple')
 
-  useEffect(() => {
+  // Follow the playground's value when it changes, while rendering.
+  const [prevValue, setPrevValue] = useState(props.value)
+  if (props.value !== prevValue) {
+    setPrevValue(props.value)
     if (props.value !== undefined) setVal(props.value)
-  }, [props.value])
+  }
 
   return (
     <RadioGroup
