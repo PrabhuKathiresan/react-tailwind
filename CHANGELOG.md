@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.18.2 (2026-11-16)</small>
+
+* Merge pull request #40 from PrabhuKathiresan/chore/lint-and-test-warnings ([0a8541bf12b1223341f82b1d3a19e5a6655ad2c2](https://github.com/PrabhuKathiresan/react-tailwind/commit/0a8541bf12b1223341f82b1d3a19e5a6655ad2c2)), closes [#40](https://github.com/PrabhuKathiresan/react-tailwind/issues/40)
+* build(eslint): run eslint in lint and on pull requests ([d51464be83370c47d8223b48672f439435e7e350](https://github.com/PrabhuKathiresan/react-tailwind/commit/d51464be83370c47d8223b48672f439435e7e350))
+* build(scripts): lint runs eslint; prettier's check moves to format:check ([381ff3eebb89890502a6294f108a3b7e47a99bce](https://github.com/PrabhuKathiresan/react-tailwind/commit/381ff3eebb89890502a6294f108a3b7e47a99bce))
+* chore: prettier skips lockfiles and the docs site's generated data ([2fcc86a4c9c583dc7ce025451905a32dd00bf7a2](https://github.com/PrabhuKathiresan/react-tailwind/commit/2fcc86a4c9c583dc7ce025451905a32dd00bf7a2))
+* chore(docs): follow React's guidance in the docs site's hooks ([8d6d65c890b826ff8ea9288e536875c632fe4b11](https://github.com/PrabhuKathiresan/react-tailwind/commit/8d6d65c890b826ff8ea9288e536875c632fe4b11))
+* refactor: clear the remaining eslint errors in the library source ([2a0908e2ce870307d9e4c5ab97ae4d7806c3d44e](https://github.com/PrabhuKathiresan/react-tailwind/commit/2a0908e2ce870307d9e4c5ab97ae4d7806c3d44e))
+* refactor(input): move buildInputClass to its own module ([39381a5a45f06cd7c7a264688f2dee144f031aac](https://github.com/PrabhuKathiresan/react-tailwind/commit/39381a5a45f06cd7c7a264688f2dee144f031aac))
+* refactor(password-input): move the strength helpers to their own module ([9e7cc067fd937fabb42d317892c8707045a16156](https://github.com/PrabhuKathiresan/react-tailwind/commit/9e7cc067fd937fabb42d317892c8707045a16156))
+* refactor(toast): move the toast context and useToast to their own module ([1c18f9d2d5b523ec51ffb22505002de9ba017d2c](https://github.com/PrabhuKathiresan/react-tailwind/commit/1c18f9d2d5b523ec51ffb22505002de9ba017d2c))
+* fix(range-slider): update the latest-value refs after render, not during it ([fa21f17ff700c1c4da6bb02a08409b3f5d44e8ec](https://github.com/PrabhuKathiresan/react-tailwind/commit/fa21f17ff700c1c4da6bb02a08409b3f5d44e8ec))
+* test(dropdown): reach the menu button with Tab, not a bare focus() ([476287491a40a59f3294c49276518e41c41a7d4b](https://github.com/PrabhuKathiresan/react-tailwind/commit/476287491a40a59f3294c49276518e41c41a7d4b))
+* test(mobile-picker): wait inside act so the sheet's transition settles ([ba6a18ca6b909da48c9b168b991b12d195b8dfe9](https://github.com/PrabhuKathiresan/react-tailwind/commit/ba6a18ca6b909da48c9b168b991b12d195b8dfe9))
+
 ## <small>1.18.1 (2026-11-16)</small>
 
 * Merge pull request #39 from PrabhuKathiresan/perf/esm-entry-per-module ([c79977dbfd770dbd3fa8a2a3aa4dc6a19ce84980](https://github.com/PrabhuKathiresan/react-tailwind/commit/c79977dbfd770dbd3fa8a2a3aa4dc6a19ce84980)), closes [#39](https://github.com/PrabhuKathiresan/react-tailwind/issues/39)
