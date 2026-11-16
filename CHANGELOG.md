@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## 1.18.0 (2026-11-16)
+
+* Merge pull request #38 from PrabhuKathiresan/feat/data-table-header-case-hide-below ([1e81a01c6995d577ab240cb989b75cc6577be7e8](https://github.com/PrabhuKathiresan/react-tailwind/commit/1e81a01c6995d577ab240cb989b75cc6577be7e8)), closes [#38](https://github.com/PrabhuKathiresan/react-tailwind/issues/38)
+* feat(chip): add Chip and ChipGroup for one-click choices ([ba88c8d66c9ce3a276865e57384e6ae12202b185](https://github.com/PrabhuKathiresan/react-tailwind/commit/ba88c8d66c9ce3a276865e57384e6ae12202b185))
+* feat(data-table): headerCase and a column's hideBelow ([1350e8066efcc576cd21e1e6c3d6a66e7ba2894c](https://github.com/PrabhuKathiresan/react-tailwind/commit/1350e8066efcc576cd21e1e6c3d6a66e7ba2894c))
+* feat(data-table): reveal row content on hover with DataTableHoverReveal ([2fbaa78e52625d7cc8f3924a83fddad326ac320f](https://github.com/PrabhuKathiresan/react-tailwind/commit/2fbaa78e52625d7cc8f3924a83fddad326ac320f))
+
 ## 1.17.0 (2026-11-15)
 
 * Merge pull request #37 from PrabhuKathiresan/fix/selectbox-multiple-menu-width ([32c6b37847422a65845301d56bb4de1d80e004e8](https://github.com/PrabhuKathiresan/react-tailwind/commit/32c6b37847422a65845301d56bb4de1d80e004e8)), closes [#37](https://github.com/PrabhuKathiresan/react-tailwind/issues/37)
