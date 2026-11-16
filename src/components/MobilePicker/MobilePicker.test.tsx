@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MobilePicker } from './MobilePicker'
 import '@testing-library/jest-dom'
 
@@ -157,7 +157,8 @@ describe('MobilePicker', () => {
     render(<MobilePicker label="Select Fruit" options={defaultOptions} autoFocusSearch={false} />)
     fireEvent.click(screen.getByTestId('mobile-picker-trigger'))
     await screen.findByTestId('mobile-picker-sheet')
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    // Give a deferred focus time to land, inside act so the sheet's transition settles with it.
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)))
     expect(screen.getByTestId('mobile-picker-search-input')).not.toHaveFocus()
   })
 })
