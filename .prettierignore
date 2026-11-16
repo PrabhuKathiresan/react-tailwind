@@ -1,3 +1,11 @@
 dist
 node_modules
 CHANGELOG.md
+
+# Lockfiles are written by pnpm.
+pnpm-lock.yaml
+
+# The docs site's build output and generated data (see my-ui-pages/.gitignore).
+my-ui-pages/dist
+my-ui-pages/src/data/components
+my-ui-pages/public/search-index.json
