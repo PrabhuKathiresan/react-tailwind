@@ -1,0 +1,1 @@
+const e="CardFooter",a="",o=[{name:"bordered",type:"boolean",raw:"boolean",enumValues:null,required:!1,defaultValue:"false",description:""}],r={name:e,description:"",props:o};export{r as default,a as description,e as name,o as props};

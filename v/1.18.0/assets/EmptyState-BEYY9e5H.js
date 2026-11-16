@@ -1,0 +1,1 @@
+const e="EmptyState",n="",t=[{name:"description",type:"string",raw:"string",enumValues:null,required:!1,defaultValue:null,description:""},{name:"action",type:"ReactNode",raw:"ReactNode",enumValues:null,required:!1,defaultValue:"null",description:""}],a={name:e,description:"",props:t};export{a as default,n as description,e as name,t as props};

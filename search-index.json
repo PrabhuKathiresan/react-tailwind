@@ -1886,6 +1886,95 @@
     "url": "/checkbox-group"
   },
   {
+    "name": "Chip",
+    "description": "A pill-shaped choice: one click picks it. Use several in a `ChipGroup` for quick\npresets (a due date in 7, 15 or 30 days) or quick filters. Selected chips show in the\ninfo colours and are announced as pressed toggles.",
+    "props": [
+      {
+        "name": "selected",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the chip is chosen. Announced as a pressed toggle (`aria-pressed`).",
+        "defaultValue": "false"
+      },
+      {
+        "name": "size",
+        "type": "ChipSize",
+        "required": false,
+        "description": "Size variant controlling height, padding and text size.",
+        "defaultValue": "\"sm\""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional icon rendered before the label.",
+        "defaultValue": null
+      }
+    ],
+    "keywords": [
+      "chip",
+      "selected",
+      "size",
+      "icon",
+      "chipsize",
+      "reactnode",
+      "whether",
+      "chosen",
+      "announced",
+      "pressed",
+      "toggle",
+      "variant",
+      "controlling",
+      "height",
+      "padding",
+      "text",
+      "optional",
+      "rendered",
+      "before",
+      "label"
+    ],
+    "url": "/chip"
+  },
+  {
+    "name": "ChipGroup",
+    "description": "A row of chips, named for screen readers. Stays on one line unless `wrap`.",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": "Names the group for screen readers (or pass `aria-labelledby`).",
+        "defaultValue": null
+      },
+      {
+        "name": "wrap",
+        "type": "boolean",
+        "required": false,
+        "description": "Lets the chips wrap onto more lines instead of staying on one.",
+        "defaultValue": "false"
+      }
+    ],
+    "keywords": [
+      "chipgroup",
+      "label",
+      "wrap",
+      "names",
+      "group",
+      "screen",
+      "readers",
+      "pass",
+      "labelledby",
+      "lets",
+      "chips",
+      "onto",
+      "more",
+      "lines",
+      "instead",
+      "staying"
+    ],
+    "url": "/chip-group"
+  },
+  {
     "name": "ConfirmSheet",
     "description": "Asks before an action that's hard to undo: a bottom sheet on phones, in\nthumb reach, with the buttons stacked full width; a centred dialog from\n768px. Use it instead of the browser's `confirm()`.",
     "props": [
@@ -2422,6 +2511,13 @@
         "defaultValue": "default"
       },
       {
+        "name": "headerCase",
+        "type": "\"upper\" | \"sentence\"",
+        "required": false,
+        "description": "Header text case: `upper` (small capitals) or `sentence` (as written).",
+        "defaultValue": "upper"
+      },
+      {
         "name": "striped",
         "type": "boolean",
         "required": false,
@@ -2587,6 +2683,7 @@
       "onrowclick",
       "rowclass",
       "density",
+      "headercase",
       "striped",
       "footerrow",
       "containerclass",
@@ -2618,6 +2715,8 @@
       "item",
       "index",
       "datatabledensity",
+      "upper",
+      "sentence",
       "selecteditems",
       "datatablerowaction",
       "overlay",
@@ -2676,6 +2775,11 @@
       "cell",
       "padding",
       "preset",
+      "text",
+      "case",
+      "small",
+      "capitals",
+      "written",
       "applies",
       "alternating",
       "background",
@@ -2740,6 +2844,15 @@
       "passed"
     ],
     "url": "/data-table"
+  },
+  {
+    "name": "DataTableHoverReveal",
+    "description": "Content in a DataTable cell that shows while its row is hovered or holds keyboard focus,\non devices that can hover. Touch screens, which can't, always show it. Use it for row\nactions that would otherwise repeat down every row; keep one control (a ⋮ menu, say)\noutside it so each row still shows it has actions. It keeps its space while hidden, so\ncolumns don't shift.",
+    "props": [],
+    "keywords": [
+      "datatablehoverreveal"
+    ],
+    "url": "/data-table-hover-reveal"
   },
   {
     "name": "getSortIcon",
@@ -9379,6 +9492,13 @@
         "defaultValue": "default"
       },
       {
+        "name": "headerCase",
+        "type": "\"upper\" | \"sentence\"",
+        "required": false,
+        "description": "Header text case: `upper` (small capitals) or `sentence` (as written).",
+        "defaultValue": "'upper'"
+      },
+      {
         "name": "striped",
         "type": "boolean",
         "required": false,
@@ -9526,6 +9646,7 @@
       "onrowclick",
       "rowclass",
       "density",
+      "headercase",
       "striped",
       "containerclass",
       "wrapperclass",
@@ -9550,6 +9671,8 @@
       "item",
       "index",
       "datatabledensity",
+      "upper",
+      "sentence",
       "selecteditems",
       "datatablerowaction",
       "overlay",
@@ -9635,6 +9758,11 @@
       "cell",
       "padding",
       "preset",
+      "text",
+      "case",
+      "small",
+      "capitals",
+      "written",
       "applies",
       "alternating",
       "background",
