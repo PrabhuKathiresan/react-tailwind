@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.18.1 (2026-11-16)</small>
+
+* Merge pull request #39 from PrabhuKathiresan/perf/esm-entry-per-module ([c79977dbfd770dbd3fa8a2a3aa4dc6a19ce84980](https://github.com/PrabhuKathiresan/react-tailwind/commit/c79977dbfd770dbd3fa8a2a3aa4dc6a19ce84980)), closes [#39](https://github.com/PrabhuKathiresan/react-tailwind/issues/39)
+* perf(package): resolve the ESM entry to the per-module build ([5f96a357609b8b766c4bb1911e4f20441cb6a213](https://github.com/PrabhuKathiresan/react-tailwind/commit/5f96a357609b8b766c4bb1911e4f20441cb6a213))
+
 ## 1.18.0 (2026-11-16)
 
 * Merge pull request #38 from PrabhuKathiresan/feat/data-table-header-case-hide-below ([1e81a01c6995d577ab240cb989b75cc6577be7e8](https://github.com/PrabhuKathiresan/react-tailwind/commit/1e81a01c6995d577ab240cb989b75cc6577be7e8)), closes [#38](https://github.com/PrabhuKathiresan/react-tailwind/issues/38)
