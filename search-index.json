@@ -6136,15 +6136,6 @@
     "url": "/password-input"
   },
   {
-    "name": "evaluatePasswordStrength",
-    "description": "evaluatePasswordStrength component",
-    "props": [],
-    "keywords": [
-      "evaluatepasswordstrength"
-    ],
-    "url": "/evaluate-password-strength"
-  },
-  {
     "name": "PinInput",
     "description": "PinInput component",
     "props": [
