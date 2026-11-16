@@ -29,6 +29,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      # Prettier, then ESLint (errors fail; the warnings are a baseline being paid down).
+      - name: Lint
+        run: pnpm run lint
+
       - name: Run Tests
         run: pnpm run test:ci
 
