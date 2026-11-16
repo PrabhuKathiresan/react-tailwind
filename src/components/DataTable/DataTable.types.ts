@@ -23,6 +23,8 @@ export type SortQuery = Record<string, Sorting>
  */
 export type DataTableDensity = 'compact' | 'default' | 'spacious'
 
+export type DataTableBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+
 /**
  * Single row hover action item definition.
  */
@@ -78,6 +80,12 @@ export interface DataTableColumn<T = any> {
 
   /** Sticks cell to the given side on horizontal scroll */
   sticky?: 'left' | 'right'
+
+  /**
+   * Hides the column below this breakpoint (`sm` 640, `md` 768, `lg` 1024, `xl` 1280,
+   * `2xl` 1536px), so a narrow screen keeps the columns that matter most.
+   */
+  hideBelow?: DataTableBreakpoint
 
   /** Extra classes applied to the header cell (`<th>`) for this column */
   headerClass?: string
@@ -159,6 +167,12 @@ export interface DataTableProps<T = any> {
    * @default 'default'
    */
   density?: DataTableDensity
+
+  /**
+   * Header text case: `upper` (small capitals) or `sentence` (as written).
+   * @default 'upper'
+   */
+  headerCase?: 'upper' | 'sentence'
 
   /**
    * Applies an alternating background to odd-indexed rows.

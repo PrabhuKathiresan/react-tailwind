@@ -6,6 +6,7 @@ import AccordionDocsPage from './pages/components/Accordion'
 import ActionSheetDocsPage from './pages/components/ActionSheet'
 import AlertDocsPage from './pages/components/Alert'
 import BadgeDocsPage from './pages/components/Badge'
+import ChipDocsPage from './pages/components/Chip'
 import ButtonDocsPage from './pages/components/Button'
 import ButtonGroupDocsPage from './pages/components/ButtonGroup'
 import BannerDocsPage from './pages/components/Banner'
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="action-sheet" element={<ActionSheetDocsPage />} />
           <Route path="alert" element={<AlertDocsPage />} />
           <Route path="badge" element={<BadgeDocsPage />} />
+          <Route path="chip" element={<ChipDocsPage />} />
           <Route path="banner" element={<BannerDocsPage />} />
           <Route path="body-text" element={<BodyTextDocsPage />} />
           <Route path="bottom-navigation" element={<BottomNavigationDocsPage />} />

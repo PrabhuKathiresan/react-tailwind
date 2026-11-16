@@ -13,6 +13,7 @@ import { buildClassName } from '../../utils/build-classname'
 import type {
   DataTableProps,
   DataTableColumn,
+  DataTableBreakpoint,
   DataTableDensity,
   Sorting,
   SortQuery,
@@ -27,6 +28,15 @@ import { getSortIcon } from './DataTable.icons'
 
 const OVERFLOW_REGEX = /\boverflow-(x-|y-)?(auto|hidden|scroll|visible|clip)\b/
 const NOOP = () => {}
+
+// Literal class names, so Tailwind finds them.
+const HIDE_BELOW_CLASS: Record<DataTableBreakpoint, string> = {
+  sm: 'hidden sm:table-cell',
+  md: 'hidden md:table-cell',
+  lg: 'hidden lg:table-cell',
+  xl: 'hidden xl:table-cell',
+  '2xl': 'hidden 2xl:table-cell',
+}
 
 const DENSITY_CELL_CLASS: Record<DataTableDensity, string> = {
   compact: 'px-2 py-1.5',
@@ -78,6 +88,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
   onRowClick,
   rowClass,
   density = 'default',
+  headerCase = 'upper',
   striped = false,
   layout = 'auto',
   selectable = false,
@@ -139,7 +150,10 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
 
   const getCellClass = useCallback(
     (column: DataTableColumn<T>, item: T): string =>
-      typeof column.cellClass === 'function' ? column.cellClass(item) : column.cellClass || '',
+      buildClassName(
+        column.hideBelow && HIDE_BELOW_CLASS[column.hideBelow],
+        typeof column.cellClass === 'function' ? column.cellClass(item) : column.cellClass,
+      ),
     [],
   )
 
@@ -210,7 +224,9 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
           className={buildClassName('relative w-full max-w-full h-fit', tableClass)}
           layout={layout}
         >
-          <TableHead className={headClass}>
+          <TableHead
+            className={buildClassName(headerCase === 'sentence' && 'normal-case', headClass)}
+          >
             {selectable && (
               <TableHeaderCell
                 className={buildClassName(
@@ -253,6 +269,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                       'sticky left-0 z-30 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
                     column.sticky === 'right' &&
                       'sticky right-0 z-30 shadow-[-2px_0_6px_rgba(0,0,0,0.06)]',
+                    column.hideBelow && HIDE_BELOW_CLASS[column.hideBelow],
                     column.headerClass,
                   )}
                 >

@@ -80,6 +80,7 @@ export const navSections: NavSection[] = [
       { path: '/banner', label: 'Banner' },
       { path: '/breadcrumb', label: 'Breadcrumb' },
       { path: '/button', label: 'Button' },
+      { path: '/chip', label: 'Chip' },
       { path: '/button-group', label: 'ButtonGroup' },
       { path: '/dropdown', label: 'Dropdown' },
       { path: '/pagination', label: 'Pagination' },

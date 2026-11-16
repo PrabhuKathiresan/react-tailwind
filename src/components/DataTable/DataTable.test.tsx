@@ -86,6 +86,26 @@ describe('DataTable', () => {
     { name: 'age', label: 'Age' },
   ]
 
+  test('headers are small capitals by default, and as written with headerCase="sentence"', () => {
+    const { container, rerender } = render(<DataTable items={rows} columns={columns} />)
+    expect(container.querySelector('thead')?.className ?? '').not.toContain('normal-case')
+
+    rerender(<DataTable items={rows} columns={columns} headerCase="sentence" />)
+    expect(container.querySelector('thead')).toHaveClass('normal-case')
+  })
+
+  test('hideBelow hides a column, header and cells, below its breakpoint', () => {
+    render(
+      <DataTable
+        items={rows}
+        columns={[...columns.slice(0, 2), { name: 'age', label: 'Age', hideBelow: 'xl' as const }]}
+      />,
+    )
+    expect(screen.getByText('Age').closest('th')).toHaveClass('hidden', 'xl:table-cell')
+    expect(screen.getByText('30').closest('td')).toHaveClass('hidden', 'xl:table-cell')
+    expect(screen.getByText('Charlie').closest('td')).not.toHaveClass('hidden')
+  })
+
   // ── existing behaviour ────────────────────────────────────────────────
 
   it('renders headers and rows', () => {
