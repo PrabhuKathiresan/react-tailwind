@@ -44,7 +44,8 @@ export function buildInputClass(
 
   return buildClassName(
     'transition-all duration-150',
-    'block w-full rounded-lg bg-white',
+    // A faint shadow lifts every field off the page the same way (Input, SelectBox, ...).
+    'block w-full rounded-lg bg-white shadow-2xs',
     currentSize.input,
     'text-gray-900 outline outline-1 -outline-offset-1',
     hasError

@@ -168,10 +168,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         </div>
       )}
 
-      <div className="flex rounded-lg shadow-2xs">
+      <div className="flex rounded-lg">
         {/* Static Prefix Addon */}
         {prefix && (
-          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
+          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {prefix}
           </span>
         )}
@@ -266,7 +266,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
         {/* Static Suffix Addon */}
         {suffix && (
-          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0">
+          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {suffix}
           </span>
         )}
