@@ -522,4 +522,20 @@ describe('SelectBox', () => {
     expect(label.className).not.toMatch(/truncate/)
     expect(screen.getByText('HSN 22021010 · ₹720.00').className).not.toMatch(/truncate/)
   })
+
+  test('shows no text caret when not searchable: it is picked from, not typed into', () => {
+    render(
+      <SelectBox
+        label="Rate"
+        searchable={false}
+        options={[
+          { label: '5%', value: '5' },
+          { label: '18%', value: '18' },
+        ]}
+        selected={null}
+        onChange={jest.fn()}
+      />,
+    )
+    expect(screen.getByTestId('combobox-input')).toHaveClass('caret-transparent')
+  })
 })
