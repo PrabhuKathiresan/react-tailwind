@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented here.
 
+## 1.19.0 (2026-11-17)
+
+* Merge pull request #41 from PrabhuKathiresan/feat/inline-controls-and-keyboard ([b4debd54b87559f97e291839a00047c84d57bcc3](https://github.com/PrabhuKathiresan/react-tailwind/commit/b4debd54b87559f97e291839a00047c84d57bcc3)), closes [#41](https://github.com/PrabhuKathiresan/react-tailwind/issues/41)
+* fix(accordion): closed panels are inert ([89ea5100397c2dee9bf4440a8ba529aa3e088c34](https://github.com/PrabhuKathiresan/react-tailwind/commit/89ea5100397c2dee9bf4440a8ba529aa3e088c34))
+* fix(input): every field has the same shadow ([3627f2006f5329007eb2708e16220547a448fa5b](https://github.com/PrabhuKathiresan/react-tailwind/commit/3627f2006f5329007eb2708e16220547a448fa5b))
+* fix(segmented-control): arrow keys move focus with the choice ([bce18b55e12d600af19a4afafffcc92066f72cf8](https://github.com/PrabhuKathiresan/react-tailwind/commit/bce18b55e12d600af19a4afafffcc92066f72cf8))
+* fix(select-box): no text caret when not searchable ([3e2d5cb85ab3b415e644664dd0389d733423dfec](https://github.com/PrabhuKathiresan/react-tailwind/commit/3e2d5cb85ab3b415e644664dd0389d733423dfec))
+* feat(input): endAdornment, a control inside the field at its end ([d586076c5455d9c55389f086cbb5ba2baec5f99a](https://github.com/PrabhuKathiresan/react-tailwind/commit/d586076c5455d9c55389f086cbb5ba2baec5f99a))
+* feat(radio-switch): tinted theme, the choice in the info colours ([f58243056ea53b40d3423a61f744163512127ae9](https://github.com/PrabhuKathiresan/react-tailwind/commit/f58243056ea53b40d3423a61f744163512127ae9))
+* feat(radio-switch): xs size and a bordered option, to sit inside a field ([0c59daa8c1253690029593481f5d61b6184a8162](https://github.com/PrabhuKathiresan/react-tailwind/commit/0c59daa8c1253690029593481f5d61b6184a8162))
+* docs(input): control inside the field (endAdornment) example; RadioSwitch sizes note ([2d1dca48d7bf576a7b18c0f6c15993ebe0902308](https://github.com/PrabhuKathiresan/react-tailwind/commit/2d1dca48d7bf576a7b18c0f6c15993ebe0902308))
+
 ## <small>1.18.2 (2026-11-16)</small>
 
 * Merge pull request #40 from PrabhuKathiresan/chore/lint-and-test-warnings ([0a8541bf12b1223341f82b1d3a19e5a6655ad2c2](https://github.com/PrabhuKathiresan/react-tailwind/commit/0a8541bf12b1223341f82b1d3a19e5a6655ad2c2)), closes [#40](https://github.com/PrabhuKathiresan/react-tailwind/issues/40)
