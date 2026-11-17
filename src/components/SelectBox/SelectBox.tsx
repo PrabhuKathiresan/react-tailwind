@@ -94,7 +94,9 @@ export const SelectBox = forwardRef(
       containerClass = '',
       onChange: onChangeProp = NOOP,
       placeholder,
-      dropdownContainerClass = 'z-20',
+      // No default: one here (it was z-20) would win over the list's own z-50 when the classes
+      // merge, putting the list under sticky table columns and headers.
+      dropdownContainerClass,
       dropdownMinWidth,
       multiple = false,
       maxSelection,

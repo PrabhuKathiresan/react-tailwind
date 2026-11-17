@@ -538,4 +538,14 @@ describe('SelectBox', () => {
     )
     expect(screen.getByTestId('combobox-input')).toHaveClass('caret-transparent')
   })
+
+  test('opens its list above sticky table columns and headers (z-50)', async () => {
+    render(<SelectBox options={options} />)
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('combobox-button'))
+    })
+    const panel = screen.getByTestId('combobox-options')
+    expect(panel).toHaveClass('z-50')
+    expect(panel).not.toHaveClass('z-20')
+  })
 })
