@@ -8,21 +8,33 @@ import type {
 } from './RadioSwitch.types'
 
 const SIZE_CONTAINER_CLASS: Record<RadioSwitchSize, string> = {
-  sm: 'p-1.5 gap-1 rounded-lg text-xs',
+  // Compact, to sit inside a field (e.g. an Input's endAdornment).
+  xs: 'p-0.5 gap-0.5 rounded-md text-xs',
+  // As tall as a md field (40px), to stand beside one.
+  sm: 'p-1 gap-1 rounded-lg text-xs',
   md: 'p-2 gap-1.5 rounded-xl text-sm',
   lg: 'p-2 gap-2 rounded-2xl text-base',
 }
 
 const SIZE_ITEM_CLASS: Record<RadioSwitchSize, string> = {
-  sm: 'px-4 py-2 text-xs rounded-md min-w-[64px]',
+  xs: 'px-2.5 py-1 text-xs rounded',
+  sm: 'px-4 py-[7px] text-xs rounded-md min-w-[64px]',
   md: 'px-5 py-2.5 text-sm rounded-lg min-w-[76px]',
   lg: 'px-7 py-3 text-base rounded-xl min-w-[92px]',
 }
 
 const SIZE_ITEM_DESC_CLASS: Record<RadioSwitchSize, string> = {
+  xs: 'px-2.5 py-1 text-xs rounded',
   sm: 'px-4 py-2.5 text-xs rounded-md min-w-[80px]',
   md: 'px-5 py-3 text-sm rounded-lg min-w-[96px]',
   lg: 'px-7 py-3.5 text-base rounded-xl min-w-[112px]',
+}
+
+const SIZE_RADIUS_CLASS: Record<RadioSwitchSize, string> = {
+  xs: 'rounded',
+  sm: 'rounded-md',
+  md: 'rounded-lg',
+  lg: 'rounded-lg',
 }
 
 const THEME_SWITCH_CLASS: Record<RadioSwitchTheme, string> = {
@@ -47,6 +59,7 @@ export const RadioSwitch = <T extends string = string>({
   size = 'md',
   theme = 'primary',
   disabled = false,
+  bordered = true,
   onChange,
   wrapperClass,
   switchClass,
@@ -163,7 +176,8 @@ export const RadioSwitch = <T extends string = string>({
       aria-disabled={disabled || undefined}
       onKeyDown={handleKeyDown}
       className={buildClassName(
-        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80 border border-[var(--ui-border)]',
+        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80',
+        bordered && 'border border-[var(--ui-border)]',
         SIZE_CONTAINER_CLASS[size],
         disabled && 'opacity-60',
         wrapperClass,
@@ -181,7 +195,7 @@ export const RadioSwitch = <T extends string = string>({
           style.animate &&
             'transition-[transform,width,height] duration-300 ease-[cubic-bezier(.32,.72,0,1)] motion-reduce:transition-none',
           THEME_SWITCH_CLASS[theme],
-          size === 'sm' ? 'rounded-md' : 'rounded-lg',
+          SIZE_RADIUS_CLASS[size],
           style.ready ? 'opacity-100' : 'opacity-0',
           switchClass,
         )}
@@ -218,7 +232,7 @@ export const RadioSwitch = <T extends string = string>({
               // A light press, so a tap registers before the highlight lands.
               !disabledState && 'active:scale-[0.97]',
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
-              size === 'sm' ? 'rounded-md' : 'rounded-lg',
+              SIZE_RADIUS_CLASS[size],
               hasDescription ? SIZE_ITEM_DESC_CLASS[size] : SIZE_ITEM_CLASS[size],
               disabledState ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
               // Until the highlight has measured itself (first paint, or no

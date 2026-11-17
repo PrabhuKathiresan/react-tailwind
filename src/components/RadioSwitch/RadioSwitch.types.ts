@@ -1,4 +1,4 @@
-export type RadioSwitchSize = 'sm' | 'md' | 'lg'
+export type RadioSwitchSize = 'xs' | 'sm' | 'md' | 'lg'
 export type RadioSwitchTheme = 'primary' | 'secondary' | 'dark'
 
 /** An option: its value alone (shown as the label), or with a label, a description and a disabled state. */
@@ -46,6 +46,12 @@ export interface RadioSwitchProps<T extends string = string> {
    * Turns every option off.
    * @default false
    */
+  /**
+   * Draws the track's border. Off for a switch inside another bordered control (an Input's
+   * endAdornment), which already has one.
+   * @default true
+   */
+  bordered?: boolean
   disabled?: boolean
   /** Classes for the sliding highlight. */
   switchClass?: string

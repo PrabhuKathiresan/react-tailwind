@@ -182,4 +182,27 @@ describe('RadioSwitch', () => {
     fireEvent.click(screen.getByRole('radio', { name: 'dark' }))
     expect(changes).toEqual(['dark'])
   })
+
+  test('has a compact xs size, and draws no border when bordered is off', () => {
+    const items = [
+      { label: 'Goods', value: 'good' },
+      { label: 'Services', value: 'service' },
+    ]
+    const { rerender } = render(
+      <RadioSwitch label="Type" size="xs" items={items} selected="good" onChange={jest.fn()} />,
+    )
+    expect(screen.getByRole('radiogroup')).toHaveClass('p-0.5', 'border')
+    expect(screen.getByRole('radio', { name: 'Goods' })).toHaveClass('px-2.5', 'py-1')
+    rerender(
+      <RadioSwitch
+        label="Type"
+        size="xs"
+        bordered={false}
+        items={items}
+        selected="good"
+        onChange={jest.fn()}
+      />,
+    )
+    expect(screen.getByRole('radiogroup')).not.toHaveClass('border')
+  })
 })
