@@ -205,4 +205,25 @@ describe('RadioSwitch', () => {
     )
     expect(screen.getByRole('radiogroup')).not.toHaveClass('border')
   })
+
+  test('a tinted theme marks the choice in the info colours', () => {
+    render(
+      <RadioSwitch
+        label="Type"
+        theme="tinted"
+        items={[
+          { label: 'Goods', value: 'good' },
+          { label: 'Services', value: 'service' },
+        ]}
+        selected="service"
+        onChange={jest.fn()}
+      />,
+    )
+    expect(screen.getByRole('radio', { name: 'Services' })).toHaveClass(
+      'text-[var(--ui-info-text)]',
+    )
+    expect(screen.getByRole('radio', { name: 'Goods' })).not.toHaveClass(
+      'text-[var(--ui-info-text)]',
+    )
+  })
 })

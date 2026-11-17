@@ -66,7 +66,7 @@ const [text, setText] = useState('John Doe')
               <RadioSwitch
                 label="Price is"
                 size="xs"
-                theme="secondary"
+                theme="tinted"
                 bordered={false}
                 items={[
                   { label: 'Before GST', value: 'before' },
@@ -87,7 +87,7 @@ const [text, setText] = useState('John Doe')
     <RadioSwitch
       label="Price is"
       size="xs"
-      theme="secondary"
+      theme="tinted"
       bordered={false}
       items={[{ label: 'Before GST', value: 'before' }, { label: 'Incl. GST', value: 'incl' }]}
       selected={basis}

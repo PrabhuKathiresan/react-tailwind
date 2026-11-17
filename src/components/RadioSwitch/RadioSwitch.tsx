@@ -41,6 +41,8 @@ const THEME_SWITCH_CLASS: Record<RadioSwitchTheme, string> = {
   primary: 'bg-[var(--ui-primary)] text-white shadow-xs',
   secondary: 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs',
   dark: 'bg-gray-900 dark:bg-black text-white shadow-xs',
+  // The info colours, as a selected Chip: clear on a white field without a solid fill.
+  tinted: 'bg-[var(--ui-info-light)] ring-1 ring-inset ring-[var(--ui-info-ring-subtle)]',
 }
 
 /**
@@ -242,7 +244,9 @@ export const RadioSwitch = <T extends string = string>({
               isSelected
                 ? theme === 'secondary'
                   ? 'text-gray-900 dark:text-white'
-                  : 'text-white'
+                  : theme === 'tinted'
+                    ? 'text-[var(--ui-info-text)]'
+                    : 'text-white'
                 : buildClassName(
                     'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white',
                     !disabledState && 'hover:bg-black/[0.04] dark:hover:bg-white/[0.06]',

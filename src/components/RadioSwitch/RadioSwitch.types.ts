@@ -1,5 +1,5 @@
 export type RadioSwitchSize = 'xs' | 'sm' | 'md' | 'lg'
-export type RadioSwitchTheme = 'primary' | 'secondary' | 'dark'
+export type RadioSwitchTheme = 'primary' | 'secondary' | 'dark' | 'tinted'
 
 /** An option: its value alone (shown as the label), or with a label, a description and a disabled state. */
 export type RadioSwitchItem<T extends string = string> =
