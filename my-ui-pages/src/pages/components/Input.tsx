@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Input } from '@pk-design/react-tailwind'
+import { Input, RadioSwitch } from '@pk-design/react-tailwind'
 import { DocsPageLayout } from '../../components/DocsPageLayout'
 import { Search, Mail } from 'lucide-react'
 
 export default function InputDocsPage() {
   const [clearableText, setClearableText] = useState('John Doe')
+  const [priceBasis, setPriceBasis] = useState('before')
 
   const examples = [
     {
@@ -48,6 +49,51 @@ const [text, setText] = useState('John Doe')
   value={text}
   onChange={(e) => setText(e.target.value)}
   onClear={() => setText('')}
+/>`,
+    },
+    {
+      title: 'Control Inside the Field (endAdornment)',
+      description:
+        'A control inside the field, at its end after a divider: here a compact RadioSwitch choosing how the price is read. It sizes to its content and the text stops short of it.',
+      render: (
+        <div className="max-w-sm">
+          <Input
+            id="docs-price"
+            label="Price"
+            type="number"
+            placeholder="0.00"
+            endAdornment={
+              <RadioSwitch
+                label="Price is"
+                size="xs"
+                theme="tinted"
+                bordered={false}
+                items={[
+                  { label: 'Before GST', value: 'before' },
+                  { label: 'Incl. GST', value: 'incl' },
+                ]}
+                selected={priceBasis}
+                onChange={setPriceBasis}
+              />
+            }
+          />
+        </div>
+      ),
+      code: `
+<Input
+  label="Price"
+  type="number"
+  endAdornment={
+    <RadioSwitch
+      label="Price is"
+      size="xs"
+      theme="tinted"
+      bordered={false}
+      items={[{ label: 'Before GST', value: 'before' }, { label: 'Incl. GST', value: 'incl' }]}
+      selected={basis}
+      onChange={setBasis}
+    />
+  }
 />`,
     },
     {

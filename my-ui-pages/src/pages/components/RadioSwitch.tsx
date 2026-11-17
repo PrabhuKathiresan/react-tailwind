@@ -30,7 +30,8 @@ const [selected, setSelected] = useState("Option A")
 
     {
       title: 'Size Variants (sm, md, lg)',
-      description: 'RadioSwitch supports 3 size variants.',
+      description:
+        "RadioSwitch supports 3 size variants; sm is as tall as a md field (40px). An xs size, with `bordered={false}`, fits inside a field: see Input's endAdornment.",
       render: <ExampleSizeSwitchGroup />,
       code: `
 <RadioSwitch size="sm" selected={selectedSm} onChange={setSelectedSm} items={['Small', 'Medium', 'Large']} />

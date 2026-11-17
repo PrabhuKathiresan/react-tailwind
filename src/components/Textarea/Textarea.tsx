@@ -138,7 +138,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
           aria-describedby={describedBy}
           className={buildClassName(
             'transition-all duration-150',
-            'block w-full rounded-lg bg-white',
+            'block w-full rounded-lg bg-white shadow-2xs',
             currentSize.textarea,
             autoSize ? 'resize-none overflow-hidden' : resizeClasses[resize],
             'text-gray-900 outline outline-1 -outline-offset-1',

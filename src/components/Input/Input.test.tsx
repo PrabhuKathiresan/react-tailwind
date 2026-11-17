@@ -177,4 +177,20 @@ describe('Input Component', () => {
     expect(screen.getByLabelText('Month')).toHaveAttribute('type', 'month')
     expect(screen.getByLabelText('Year')).toHaveAttribute('type', 'number')
   })
+
+  test('puts an end adornment inside the field, in place of the right group', () => {
+    render(
+      <Input
+        label="Price"
+        id="price"
+        rightGroup={<span data-testid="right">R</span>}
+        endAdornment={<button type="button">Incl. GST</button>}
+      />,
+    )
+    const adornment = screen.getByTestId('input-end-adornment')
+    expect(adornment).toContainElement(screen.getByRole('button', { name: 'Incl. GST' }))
+    expect(screen.queryByTestId('right')).not.toBeInTheDocument()
+    // The text stops short of the adornment.
+    expect(screen.getByLabelText('Price').style.paddingInlineEnd).not.toBe('')
+  })
 })

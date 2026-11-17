@@ -37,6 +37,14 @@ export interface InputProps
   suffix?: ReactNode
 
   /**
+   * A control inside the field's border, at its end after a thin divider: a compact
+   * RadioSwitch, say, choosing how the value is read ("Before GST | Incl. GST"). It sizes to
+   * its content and the text stops short of it. Takes the place of `rightGroup` and the
+   * clear button.
+   */
+  endAdornment?: ReactNode
+
+  /**
    * Renders a 1-Click clear `✕` button when text is present.
    */
   clearable?: boolean

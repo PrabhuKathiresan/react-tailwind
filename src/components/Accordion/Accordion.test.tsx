@@ -158,4 +158,14 @@ describe('<Accordion />', () => {
 
     expect(screen.getAllByTestId('state-icon')[0]).toHaveTextContent('-')
   })
+
+  test('keeps a closed panel out of reach (inert), and opens it to reach', async () => {
+    render(
+      <Accordion items={[{ title: 'More', content: <input aria-label="Notes" />, id: 'more' }]} />,
+    )
+    const panel = screen.getByLabelText('Notes').closest('[role="region"]') as HTMLElement
+    expect(panel).toHaveAttribute('inert')
+    await userEvent.click(screen.getByRole('button', { name: 'More' }))
+    expect(panel).not.toHaveAttribute('inert')
+  })
 })

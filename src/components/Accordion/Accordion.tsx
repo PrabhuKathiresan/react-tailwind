@@ -115,6 +115,12 @@ export const Accordion: React.FC<AccordionProps> = ({
               id={panelId}
               role="region"
               aria-labelledby={headerId}
+              // Closed, it's only squeezed to no height: inert keeps Tab and screen readers out
+              // of what can't be seen. Set on the element, since React 18 and 19 treat the
+              // inert prop differently.
+              ref={(element) => {
+                element?.toggleAttribute('inert', !isOpen)
+              }}
               className={buildClassName(
                 'grid transition-[grid-template-rows] duration-200 ease-in-out',
                 isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',

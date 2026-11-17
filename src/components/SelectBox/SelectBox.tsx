@@ -643,6 +643,8 @@ export const SelectBox = forwardRef(
                 className={buildClassName(
                   baseInputClass,
                   'text-ellipsis',
+                  // Not searchable: picked from the list, not typed into, so no text caret.
+                  !searchable && 'cursor-pointer caret-transparent',
                   rightPaddingClass,
                   hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
                 )}
