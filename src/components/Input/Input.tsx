@@ -3,6 +3,7 @@ import {
   forwardRef,
   useId,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
   type ChangeEvent,
@@ -47,6 +48,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     leftGroup,
     prefix,
     suffix,
+    endAdornment,
     clearable = false,
     onClear,
     showCount = false,
@@ -107,27 +109,43 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   const showClearButton = clearable && charLength > 0 && !inputProps.disabled
 
-  const actualRightGroup =
-    rightGroup ??
-    (showClearButton ? (
-      <button
-        type="button"
-        onClick={handleClear}
-        className="p-1 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-        aria-label="Clear input text"
-        title="Clear text"
-        tabIndex={-1}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className={currentSize.icon}
+  // An end adornment's width, so the text stops short of it.
+  const adornmentRef = useRef<HTMLDivElement>(null)
+  const [adornmentWidth, setAdornmentWidth] = useState(0)
+  const hasAdornment = endAdornment != null && endAdornment !== false
+  useLayoutEffect(() => {
+    const element = adornmentRef.current
+    if (!hasAdornment || !element) return
+    const measure = () => setAdornmentWidth(element.offsetWidth)
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(measure)
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [hasAdornment])
+
+  const actualRightGroup = hasAdornment
+    ? null
+    : (rightGroup ??
+      (showClearButton ? (
+        <button
+          type="button"
+          onClick={handleClear}
+          className="p-1 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+          aria-label="Clear input text"
+          title="Clear text"
+          tabIndex={-1}
         >
-          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-        </svg>
-      </button>
-    ) : null)
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className={currentSize.icon}
+          >
+            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+          </svg>
+        </button>
+      ) : null))
 
   const isNativePicker = NATIVE_PICKER_TYPES.includes(type ?? '')
   // Only when nothing else is there; Firefox always draws its own, so ours steps aside.
@@ -184,6 +202,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             required={required}
             aria-invalid={hasError ? true : undefined}
             aria-describedby={describedBy}
+            style={
+              hasAdornment
+                ? { ...inputProps.style, paddingInlineEnd: adornmentWidth + 8 }
+                : inputProps.style
+            }
             className={buildClassName(
               buildInputClass(className, {
                 disabled: inputProps.disabled,
@@ -198,6 +221,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               showCalendarIcon ? CALENDAR_INDICATOR : '',
             )}
           />
+
+          {hasAdornment && (
+            <div
+              ref={adornmentRef}
+              data-testid="input-end-adornment"
+              className="absolute inset-y-0 end-0 flex items-center gap-1.5 pe-1"
+            >
+              <span aria-hidden="true" className="h-5 w-px bg-[var(--ui-border)]" />
+              {endAdornment}
+            </div>
+          )}
 
           {hasRightGroup && (
             <span
