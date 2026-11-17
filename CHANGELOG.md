@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.19.1 (2026-11-17)</small>
+
+* Merge pull request #42 from PrabhuKathiresan/fix/select-box-dropdown-layer ([34e9fca64e62549c4c28a3bab85b7d6e43d43b1f](https://github.com/PrabhuKathiresan/react-tailwind/commit/34e9fca64e62549c4c28a3bab85b7d6e43d43b1f)), closes [#42](https://github.com/PrabhuKathiresan/react-tailwind/issues/42)
+* fix(select-box): the list opens above sticky table columns ([d7c36a6cf6fff6c705777f03d95f14e821691ee7](https://github.com/PrabhuKathiresan/react-tailwind/commit/d7c36a6cf6fff6c705777f03d95f14e821691ee7))
+
 ## 1.19.0 (2026-11-17)
 
 * Merge pull request #41 from PrabhuKathiresan/feat/inline-controls-and-keyboard ([b4debd54b87559f97e291839a00047c84d57bcc3](https://github.com/PrabhuKathiresan/react-tailwind/commit/b4debd54b87559f97e291839a00047c84d57bcc3)), closes [#41](https://github.com/PrabhuKathiresan/react-tailwind/issues/41)
