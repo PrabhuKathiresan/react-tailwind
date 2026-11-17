@@ -1,4 +1,4 @@
-import React, { forwardRef, type ReactElement, type RefAttributes } from 'react'
+import React, { forwardRef, useRef, type ReactElement, type RefAttributes } from 'react'
 import { buildClassName } from '../../utils/build-classname'
 import type { SegmentedControlProps } from './SegmentedControl.types'
 
@@ -32,31 +32,26 @@ const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((
     ...restProps
   } = props
 
+  // One Tab stop (the chosen option); the arrow keys, Home and End choose another and move
+  // focus to it, as a tab list does. Without moving focus, the next key would start again
+  // from the option just left.
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([])
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
     const enabledOptions = options.filter((opt) => !opt.disabled && !disabled)
     if (enabledOptions.length === 0) return
-
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault()
-      const currentPos = enabledOptions.findIndex(
-        (opt) => opt.value === options[currentIndex].value,
-      )
-      const nextPos = (currentPos + 1) % enabledOptions.length
-      onChange(enabledOptions[nextPos].value)
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault()
-      const currentPos = enabledOptions.findIndex(
-        (opt) => opt.value === options[currentIndex].value,
-      )
-      const prevPos = (currentPos - 1 + enabledOptions.length) % enabledOptions.length
-      onChange(enabledOptions[prevPos].value)
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      onChange(enabledOptions[0].value)
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      onChange(enabledOptions[enabledOptions.length - 1].value)
-    }
+    const currentPos = enabledOptions.findIndex((opt) => opt.value === options[currentIndex].value)
+    let nextPos: number
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown')
+      nextPos = (currentPos + 1) % enabledOptions.length
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp')
+      nextPos = (currentPos - 1 + enabledOptions.length) % enabledOptions.length
+    else if (e.key === 'Home') nextPos = 0
+    else if (e.key === 'End') nextPos = enabledOptions.length - 1
+    else return
+    e.preventDefault()
+    const next = enabledOptions[nextPos]
+    onChange(next.value)
+    optionRefs.current[options.findIndex((opt) => opt.value === next.value)]?.focus()
   }
 
   return (
@@ -81,6 +76,9 @@ const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((
         return (
           <button
             key={option.value}
+            ref={(element) => {
+              optionRefs.current[index] = element
+            }}
             type="button"
             role="tab"
             aria-selected={isSelected}

@@ -79,4 +79,29 @@ describe('SegmentedControl', () => {
     fireEvent.click(screen.getByText('₹'))
     expect(changes).toEqual(['amount'])
   })
+
+  it('moves focus with the choice, so the next arrow key goes on from there', () => {
+    function Controlled() {
+      const [value, setValue] = React.useState('a')
+      return (
+        <SegmentedControl
+          options={[
+            { label: 'A', value: 'a' },
+            { label: 'B', value: 'b' },
+            { label: 'C', value: 'c' },
+          ]}
+          value={value}
+          onChange={setValue}
+        />
+      )
+    }
+    render(<Controlled />)
+    const a = screen.getByRole('tab', { name: 'A' })
+    a.focus()
+    fireEvent.keyDown(a, { key: 'ArrowRight' })
+    expect(screen.getByRole('tab', { name: 'B' })).toHaveFocus()
+    fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowRight' })
+    expect(screen.getByRole('tab', { name: 'C' })).toHaveFocus()
+    expect(screen.getByRole('tab', { name: 'C' })).toHaveAttribute('aria-selected', 'true')
+  })
 })
