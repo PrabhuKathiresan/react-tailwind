@@ -52,7 +52,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
         ref={ref}
         className={buildClassName(
           positionClass,
-          'border-t border-[var(--ui-border)] bg-white/90 p-3.5 backdrop-blur-md shadow-lg dark:bg-gray-900/90 transition-all',
+          'border-t border-line bg-white/90 p-3.5 backdrop-blur-md shadow-lg dark:bg-gray-900/90 transition-all',
           safeArea && 'pb-[calc(0.875rem+env(safe-area-inset-bottom,0px))]',
           className,
         )}
@@ -73,7 +73,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
                 <button
                   type="button"
                   onClick={() => setIsDrawerOpen(true)}
-                  className="flex items-center gap-2 text-left transition-opacity hover:opacity-80 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)] rounded-lg p-1 -m-1"
+                  className="flex items-center gap-2 text-left transition-opacity hover:opacity-80 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring rounded-lg p-1 -m-1"
                   // Named by what it shows (e.g. the total), plus what tapping does;
                   // an aria-label here would hide the summary from screen readers.
                   aria-haspopup="dialog"
@@ -82,7 +82,7 @@ export const StickyActionBar = forwardRef<HTMLDivElement, StickyActionBarProps>(
                 >
                   <div>{summaryContent}</div>
                   <span className="sr-only">{`, show ${drawerTitle}`}</span>
-                  <ChevronUpIcon className="size-4 text-[var(--ui-primary)] dark:text-blue-400 shrink-0" />
+                  <ChevronUpIcon className="size-4 text-primary dark:text-blue-400 shrink-0" />
                 </button>
               ) : (
                 <div>{summaryContent}</div>

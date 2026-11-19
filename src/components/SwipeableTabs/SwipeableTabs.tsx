@@ -93,7 +93,7 @@ export function SwipeableTabs({
       {/* Header Tabs Navigation Bar */}
       <div
         className={buildClassName(
-          'w-full flex items-center gap-1 border-b border-[var(--ui-border)] overflow-x-auto no-scrollbar select-none',
+          'w-full flex items-center gap-1 border-b border-line overflow-x-auto no-scrollbar select-none',
           headerVariant === 'segmented' &&
             'p-1 bg-gray-100 dark:bg-gray-800/80 rounded-2xl border-none gap-0',
           headerClass,

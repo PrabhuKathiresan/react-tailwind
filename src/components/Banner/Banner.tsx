@@ -24,13 +24,10 @@ const IconMap = {
 }
 
 const TypeClassMap = {
-  info: 'bg-[var(--ui-info-light)] ring-[var(--ui-info-ring-subtle)] text-[var(--ui-info-text)]',
-  error:
-    'bg-[var(--ui-danger-light)] ring-[var(--ui-danger-ring-subtle)] text-[var(--ui-danger-text)]',
-  success:
-    'bg-[var(--ui-success-light)] ring-[var(--ui-success-ring-subtle)] text-[var(--ui-success-text)]',
-  warning:
-    'bg-[var(--ui-warning-light)] ring-[var(--ui-warning-ring-subtle)] text-[var(--ui-warning-text)]',
+  info: 'bg-info-subtle ring-info-ring-subtle text-info-fg',
+  error: 'bg-danger-subtle ring-danger-ring-subtle text-danger-fg',
+  success: 'bg-success-subtle ring-success-ring-subtle text-success-fg',
+  warning: 'bg-warning-subtle ring-warning-ring-subtle text-warning-fg',
 }
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>((props, ref) => {

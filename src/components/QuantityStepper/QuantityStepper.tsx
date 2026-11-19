@@ -134,11 +134,11 @@ export const QuantityStepper = forwardRef<HTMLInputElement, QuantityStepperProps
           CONTAINER_SIZE_CLASS[size],
           hasError
             ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-            : 'outline-[var(--ui-border)]',
+            : 'outline-line',
           disabled
-            ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 outline-[var(--ui-border-muted)]'
+            ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 outline-line-muted'
             : 'bg-white dark:bg-gray-700',
-          'focus-within:outline-[var(--ui-focus-ring)] focus-within:outline-2 focus-within:-outline-offset-2',
+          'focus-within:outline-focus-ring focus-within:outline-2 focus-within:-outline-offset-2',
         )}
         data-testid="quantity-stepper"
       >

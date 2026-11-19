@@ -16,10 +16,10 @@ import type { ToastProps, ToastType, ToastVariant } from './Toast.types'
  * Icons for each toast type
  */
 const iconMap: Record<ToastType, React.ReactNode> = {
-  success: <CheckCircle className="size-5 text-[var(--ui-success)]" />,
-  error: <AlertCircle className="size-5 text-[var(--ui-danger)]" />,
-  info: <Info className="size-5 text-[var(--ui-info)]" />,
-  warning: <AlertTriangle className="size-5 text-[var(--ui-warning)]" />,
+  success: <CheckCircle className="size-5 text-success" />,
+  error: <AlertCircle className="size-5 text-danger" />,
+  info: <Info className="size-5 text-info" />,
+  warning: <AlertTriangle className="size-5 text-warning" />,
 }
 
 const filledIconMap: Record<ToastType, React.ReactNode> = {
@@ -30,43 +30,43 @@ const filledIconMap: Record<ToastType, React.ReactNode> = {
 }
 
 const textColorMap: Record<ToastType, string> = {
-  success: 'text-[var(--ui-success-text)]',
-  error: 'text-[var(--ui-danger-text)]',
-  info: 'text-[var(--ui-info-text)]',
-  warning: 'text-[var(--ui-warning-text)]',
+  success: 'text-success-fg',
+  error: 'text-danger-fg',
+  info: 'text-info-fg',
+  warning: 'text-warning-fg',
 }
 
 const progressBarColorMap: Record<ToastType, string> = {
-  success: 'bg-[var(--ui-success)]',
-  error: 'bg-[var(--ui-danger)]',
-  info: 'bg-[var(--ui-info)]',
-  warning: 'bg-[var(--ui-warning)]',
+  success: 'bg-success',
+  error: 'bg-danger',
+  info: 'bg-info',
+  warning: 'bg-warning',
 }
 
 const variantStyleMap: Record<ToastVariant, Record<ToastType, string>> = {
   accent: {
     success:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-success)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
+      'bg-white dark:bg-gray-900 border-l-4 border-success text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
     error:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-danger)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
-    info: 'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-info)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
+      'bg-white dark:bg-gray-900 border-l-4 border-danger text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
+    info: 'bg-white dark:bg-gray-900 border-l-4 border-info text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
     warning:
-      'bg-white dark:bg-gray-900 border-l-4 border-[var(--ui-warning)] text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-[var(--ui-border)]',
+      'bg-white dark:bg-gray-900 border-l-4 border-warning text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
   },
   filled: {
-    success: 'bg-[var(--ui-success)] text-white shadow-lg',
-    error: 'bg-[var(--ui-danger)] text-white shadow-lg',
-    info: 'bg-[var(--ui-info)] text-white shadow-lg',
-    warning: 'bg-[var(--ui-warning)] text-white shadow-lg',
+    success: 'bg-success text-white shadow-lg',
+    error: 'bg-danger text-white shadow-lg',
+    info: 'bg-info text-white shadow-lg',
+    warning: 'bg-warning text-white shadow-lg',
   },
   outlined: {
     success:
-      'bg-white dark:bg-gray-900 border-2 border-[var(--ui-success)] text-gray-900 dark:text-gray-100 shadow-md',
+      'bg-white dark:bg-gray-900 border-2 border-success text-gray-900 dark:text-gray-100 shadow-md',
     error:
-      'bg-white dark:bg-gray-900 border-2 border-[var(--ui-danger)] text-gray-900 dark:text-gray-100 shadow-md',
-    info: 'bg-white dark:bg-gray-900 border-2 border-[var(--ui-info)] text-gray-900 dark:text-gray-100 shadow-md',
+      'bg-white dark:bg-gray-900 border-2 border-danger text-gray-900 dark:text-gray-100 shadow-md',
+    info: 'bg-white dark:bg-gray-900 border-2 border-info text-gray-900 dark:text-gray-100 shadow-md',
     warning:
-      'bg-white dark:bg-gray-900 border-2 border-[var(--ui-warning)] text-gray-900 dark:text-gray-100 shadow-md',
+      'bg-white dark:bg-gray-900 border-2 border-warning text-gray-900 dark:text-gray-100 shadow-md',
   },
   glass: {
     success:
@@ -181,7 +181,7 @@ export const Toast: React.FC<ToastProps & { isTop?: boolean }> = ({
                   'text-xs font-semibold underline underline-offset-2 transition-opacity focus:outline-none',
                   variant === 'filled'
                     ? 'text-white hover:opacity-85'
-                    : 'text-[var(--ui-primary)] hover:opacity-80',
+                    : 'text-primary hover:opacity-80',
                 )}
               >
                 {action.label}

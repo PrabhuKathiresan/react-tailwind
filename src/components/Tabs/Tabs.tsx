@@ -102,13 +102,13 @@ function buildTabClass({
         ? buildClassName(
             'px-3 py-2 w-full text-left border-l-2',
             selected
-              ? 'border-[var(--ui-primary)] text-gray-900 dark:text-white'
-              : 'border-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-[var(--ui-border)]',
+              ? 'border-primary text-gray-900 dark:text-white'
+              : 'border-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-line',
           )
         : buildClassName(
             'px-3 py-1.5 relative text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white',
             selected &&
-              'text-gray-900 dark:text-white after:absolute after:z-10 after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-[var(--ui-primary)]',
+              'text-gray-900 dark:text-white after:absolute after:z-10 after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-primary',
           )
       break
 
@@ -116,7 +116,7 @@ function buildTabClass({
       variantClass = buildClassName(
         'px-3 py-1.5 rounded-lg',
         selected
-          ? 'bg-[var(--ui-primary)] text-white'
+          ? 'bg-primary text-white'
           : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
       )
       break

@@ -91,12 +91,12 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
         className={buildClassName(
           isCard
             ? compact
-              ? 'p-3 sm:p-4 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-[var(--ui-border)]'
-              : 'p-4 sm:p-6 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-[var(--ui-border)]'
+              ? 'p-3 sm:p-4 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-line'
+              : 'p-4 sm:p-6 bg-gray-50/60 dark:bg-gray-800/40 rounded-2xl border border-line'
             : isBordered
               ? compact
-                ? 'p-3 sm:p-4 border border-[var(--ui-border)] rounded-2xl'
-                : 'p-4 sm:p-6 border border-[var(--ui-border)] rounded-2xl'
+                ? 'p-3 sm:p-4 border border-line rounded-2xl'
+                : 'p-4 sm:p-6 border border-line rounded-2xl'
               : compact
                 ? 'p-2 md:p-3'
                 : 'p-3 md:p-4',
@@ -125,7 +125,7 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
         {filteredDetails.length ? (
           <div
             className={buildClassName(
-              'border-[var(--ui-border-muted)]',
+              'border-line-muted',
               hasTitles && !isMultiColumn && 'border-t pt-2',
               detailsClass,
             )}
@@ -133,7 +133,7 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
             <dl
               className={buildClassName(
                 COLUMN_GRID_CLASS[columns] || COLUMN_GRID_CLASS[1],
-                !isMultiColumn && divider && 'divide-y divide-[var(--ui-border-muted)]',
+                !isMultiColumn && divider && 'divide-y divide-line-muted',
               )}
             >
               {filteredDetails.map((detail, index) => {
@@ -154,8 +154,8 @@ export const DetailedInformation = forwardRef<HTMLDivElement, DetailedInformatio
                     className={buildClassName(
                       isMultiColumn && isCard
                         ? compact
-                          ? 'p-3 bg-white dark:bg-gray-900 rounded-xl border border-[var(--ui-border)] shadow-2xs flex flex-col gap-1'
-                          : 'p-4 bg-white dark:bg-gray-900 rounded-xl border border-[var(--ui-border)] shadow-2xs flex flex-col gap-1'
+                          ? 'p-3 bg-white dark:bg-gray-900 rounded-xl border border-line shadow-2xs flex flex-col gap-1'
+                          : 'p-4 bg-white dark:bg-gray-900 rounded-xl border border-line shadow-2xs flex flex-col gap-1'
                         : isVertical
                           ? 'flex flex-col gap-1 py-2 px-1'
                           : 'grid grid-cols-3 gap-4 items-center py-2.5 px-1',

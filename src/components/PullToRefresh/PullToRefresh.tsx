@@ -216,7 +216,7 @@ export function PullToRefresh({
           aria-hidden="true"
           data-testid="pull-to-refresh-indicator"
         >
-          <div className="grid size-10 place-items-center rounded-full bg-[var(--ui-primary)] text-white shadow-lg">
+          <div className="grid size-10 place-items-center rounded-full bg-primary text-white shadow-lg">
             {isRefreshing
               ? (refreshingContent ?? <Loader size="xs" className="text-white" />)
               : (pullingContent ?? <PullArrowIcon progress={progress} className="size-4" />)}
@@ -230,7 +230,7 @@ export function PullToRefresh({
           aria-hidden="true"
           data-testid="pull-to-refresh-indicator"
         >
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-[var(--ui-border)] shadow-md text-xs font-semibold text-gray-700 dark:text-gray-200">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-line shadow-md text-xs font-semibold text-gray-700 dark:text-gray-200">
             {isRefreshing
               ? (refreshingContent ?? (
                   <>
@@ -242,7 +242,7 @@ export function PullToRefresh({
                   <>
                     <PullArrowIcon
                       progress={progress}
-                      className="size-4 text-[var(--ui-primary)] dark:text-blue-400"
+                      className="size-4 text-primary dark:text-blue-400"
                     />
                     <span>{isReady ? releaseLabel : pullLabel}</span>
                   </>

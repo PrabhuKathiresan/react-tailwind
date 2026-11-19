@@ -16,13 +16,10 @@ const AlertTypeIconMap = {
 }
 
 const TypeClassMap = {
-  success:
-    'bg-[var(--ui-success-light)] ring-[var(--ui-success-ring-subtle)] text-[var(--ui-success-text)]',
-  danger:
-    'bg-[var(--ui-danger-light)] ring-[var(--ui-danger-ring-subtle)] text-[var(--ui-danger-text)]',
-  warning:
-    'bg-[var(--ui-warning-light)] ring-[var(--ui-warning-ring-subtle)] text-[var(--ui-warning-text)]',
-  info: 'bg-[var(--ui-info-light)] ring-[var(--ui-info-ring-subtle)] text-[var(--ui-info-text)]',
+  success: 'bg-success-subtle ring-success-ring-subtle text-success-fg',
+  danger: 'bg-danger-subtle ring-danger-ring-subtle text-danger-fg',
+  warning: 'bg-warning-subtle ring-warning-ring-subtle text-warning-fg',
+  info: 'bg-info-subtle ring-info-ring-subtle text-info-fg',
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => {

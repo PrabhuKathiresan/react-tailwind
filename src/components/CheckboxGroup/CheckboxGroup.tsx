@@ -150,7 +150,7 @@ export const CheckboxGroup = <T,>(props: CheckboxGroupProps<T>) => {
 
       {/* Select All Checkbox Header */}
       {showSelectAll && items.length > 0 && (
-        <div className="pb-1 border-b border-[var(--ui-border)]">
+        <div className="pb-1 border-b border-line">
           <Checkbox
             id={`${groupId}-select-all`}
             label={selectAllLabel}

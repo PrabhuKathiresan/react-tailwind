@@ -41,7 +41,7 @@ export function MobileStepper({
   return (
     <div
       className={buildClassName(
-        'w-full flex flex-col gap-2 p-3 bg-white dark:bg-gray-900 border border-[var(--ui-border)] rounded-2xl shadow-xs select-none',
+        'w-full flex flex-col gap-2 p-3 bg-white dark:bg-gray-900 border border-line rounded-2xl shadow-xs select-none',
         className,
       )}
       data-testid="mobile-stepper"

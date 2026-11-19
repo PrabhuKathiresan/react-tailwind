@@ -219,12 +219,8 @@ describe('RadioSwitch', () => {
         onChange={jest.fn()}
       />,
     )
-    expect(screen.getByRole('radio', { name: 'Services' })).toHaveClass(
-      'text-[var(--ui-info-text)]',
-    )
-    expect(screen.getByRole('radio', { name: 'Goods' })).not.toHaveClass(
-      'text-[var(--ui-info-text)]',
-    )
+    expect(screen.getByRole('radio', { name: 'Services' })).toHaveClass('text-info-fg')
+    expect(screen.getByRole('radio', { name: 'Goods' })).not.toHaveClass('text-info-fg')
   })
 
   test('keeps its layering to itself (isolate), so it never paints over a sticky header', () => {

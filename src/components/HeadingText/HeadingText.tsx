@@ -72,20 +72,20 @@ const HeadingTextComponent = forwardRef<HTMLHeadingElement, HeadingTextProps>((p
   const tag = `h${Math.min(6, Math.max(1, level))}` as keyof React.JSX.IntrinsicElements
 
   const colorClass = error
-    ? 'text-[var(--ui-text-danger)]'
+    ? 'text-error'
     : success
-      ? 'text-[var(--ui-success-text)]'
+      ? 'text-success-fg'
       : warning
-        ? 'text-[var(--ui-warning-text)]'
+        ? 'text-warning-fg'
         : info
-          ? 'text-[var(--ui-info-text)]'
+          ? 'text-info-fg'
           : muted
             ? invert
               ? 'text-gray-300 dark:text-gray-600'
-              : 'text-[var(--ui-text-muted)]'
+              : 'text-muted'
             : invert
               ? 'text-white dark:text-black'
-              : 'text-[var(--ui-text)]'
+              : 'text-fg'
 
   return React.createElement(tag, {
     ref,

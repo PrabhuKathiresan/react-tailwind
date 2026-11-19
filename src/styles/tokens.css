@@ -138,17 +138,21 @@
   --color-fg: var(--ui-text);
   --color-subtle: var(--ui-text-subtle);
   --color-muted: var(--ui-text-muted);
+  --color-error: var(--ui-text-danger);
   --color-primary-fg: var(--ui-primary-text);
   --color-danger-fg: var(--ui-danger-text);
   --color-warning-fg: var(--ui-warning-text);
   --color-success-fg: var(--ui-success-text);
   --color-info-fg: var(--ui-info-text);
 
-  /* Fills, and their tints */
+  /* Fills, their states and tints */
   --color-primary: var(--ui-primary);
   --color-primary-hover: var(--ui-primary-hover);
+  --color-primary-disabled: var(--ui-primary-disabled);
   --color-primary-subtle: var(--ui-primary-light);
   --color-danger: var(--ui-danger);
+  --color-danger-hover: var(--ui-danger-hover);
+  --color-danger-disabled: var(--ui-danger-disabled);
   --color-danger-subtle: var(--ui-danger-light);
   --color-warning: var(--ui-warning);
   --color-warning-subtle: var(--ui-warning-light);
@@ -156,6 +160,19 @@
   --color-success-subtle: var(--ui-success-light);
   --color-info: var(--ui-info);
   --color-info-subtle: var(--ui-info-light);
+
+  /* Rings and focus */
+  --color-focus-ring: var(--ui-focus-ring);
+  --color-primary-ring: var(--ui-primary-ring);
+  --color-danger-ring: var(--ui-danger-ring);
+  --color-warning-ring: var(--ui-warning-ring);
+  --color-success-ring: var(--ui-success-ring);
+  --color-info-ring: var(--ui-info-ring);
+  --color-danger-ring-subtle: var(--ui-danger-ring-subtle);
+  --color-warning-ring-subtle: var(--ui-warning-ring-subtle);
+  --color-success-ring-subtle: var(--ui-success-ring-subtle);
+  --color-info-ring-subtle: var(--ui-info-ring-subtle);
+  --color-secondary-ring-subtle: var(--ui-secondary-ring-subtle);
 
   /* Structure */
   --color-line: var(--ui-border);

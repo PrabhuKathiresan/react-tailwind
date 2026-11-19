@@ -59,7 +59,7 @@ describe('<Toast />', () => {
     expect(screen.getByRole('status')).toHaveClass('border-l-4')
 
     rerender(<Toast {...baseProps} type="error" variant="filled" />)
-    expect(screen.getByRole('status')).toHaveClass('bg-[var(--ui-danger)]')
+    expect(screen.getByRole('status')).toHaveClass('bg-danger')
 
     rerender(<Toast {...baseProps} type="error" variant="outlined" />)
     expect(screen.getByRole('status')).toHaveClass('border-2')

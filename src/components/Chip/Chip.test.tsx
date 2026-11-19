@@ -20,8 +20,8 @@ describe('Chip', () => {
         <Chip>Off</Chip>
       </>,
     )
-    expect(screen.getByRole('button', { name: 'On' }).className).toContain('--ui-info-light')
-    expect(screen.getByRole('button', { name: 'Off' }).className).not.toContain('--ui-info-light')
+    expect(screen.getByRole('button', { name: 'On' }).className).toContain('bg-info-subtle')
+    expect(screen.getByRole('button', { name: 'Off' }).className).not.toContain('bg-info-subtle')
   })
 
   test('calls onClick, and not when disabled', () => {

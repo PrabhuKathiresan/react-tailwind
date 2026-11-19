@@ -43,7 +43,7 @@ export function ActionSheet({
       <div className={buildClassName('space-y-4 py-1', containerClass)} data-testid="action-sheet">
         {/* Header Title & Description */}
         {(title || description) && (
-          <div className="text-center px-4 pb-2 border-b border-[var(--ui-border-muted)]">
+          <div className="text-center px-4 pb-2 border-b border-line-muted">
             {title && (
               <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate">{title}</h3>
             )}
@@ -56,7 +56,7 @@ export function ActionSheet({
         )}
 
         {/* Action Items Group */}
-        <div className="space-y-1 bg-gray-50 dark:bg-gray-800/60 p-1.5 rounded-2xl border border-[var(--ui-border-muted)]">
+        <div className="space-y-1 bg-gray-50 dark:bg-gray-800/60 p-1.5 rounded-2xl border border-line-muted">
           {actions.map((action) => {
             const isDanger = action.theme === 'danger'
             const isPrimary = action.theme === 'primary'

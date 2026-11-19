@@ -699,7 +699,7 @@ export const SelectBox = forwardRef(
               ...(dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined),
             }}
             className={buildClassName(
-              'w-[var(--input-width)] rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
+              'w-[var(--input-width)] rounded-lg border border-line bg-white dark:bg-gray-800 p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
               '[--anchor-max-height:20rem]',
               'origin-top border transition duration-200 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)] data-[closed]:translate-y-[-15%] data-[closed]:opacity-0',
               dropdownContainerClass,
@@ -709,7 +709,7 @@ export const SelectBox = forwardRef(
           >
             {/* Multi-Select "Select All" Action Bar */}
             {multiple && showSelectAll && allOptions.length > 0 && (
-              <div className="pb-1 mb-1 border-b border-[var(--ui-border-muted)] px-3 pt-1 flex items-center justify-between">
+              <div className="pb-1 mb-1 border-b border-line-muted px-3 pt-1 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={handleToggleSelectAll}

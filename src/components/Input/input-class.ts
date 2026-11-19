@@ -48,15 +48,13 @@ export function buildInputClass(
     'block w-full rounded-lg bg-white shadow-2xs',
     currentSize.input,
     'text-gray-900 outline outline-1 -outline-offset-1',
-    hasError
-      ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-      : 'outline-[var(--ui-border)]',
+    hasError ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500' : 'outline-line',
     disabled
-      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-[var(--ui-border-muted)]'
-      : 'bg-white dark:bg-gray-700 dark:text-white outline-[var(--ui-border)] dark:placeholder-gray-400 placeholder-gray-400',
+      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-line-muted'
+      : 'bg-white dark:bg-gray-700 dark:text-white outline-line dark:placeholder-gray-400 placeholder-gray-400',
     isFocusWithin
-      ? 'focus-within:outline-[var(--ui-focus-ring)] focus-within:outline-2 focus-within:-outline-offset-2'
-      : 'focus:outline-[var(--ui-focus-ring)] focus:outline-2 focus:-outline-offset-2',
+      ? 'focus-within:outline-focus-ring focus-within:outline-2 focus-within:-outline-offset-2'
+      : 'focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2',
     className,
   )
 }

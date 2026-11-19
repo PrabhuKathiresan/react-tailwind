@@ -110,8 +110,8 @@ export function MobileHeader({
         'w-full transition-colors select-none z-30',
         sticky && 'sticky top-0',
         transparent
-          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-[var(--ui-border-muted)]'
-          : 'bg-white dark:bg-gray-900 border-b border-[var(--ui-border)] shadow-xs',
+          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-line-muted'
+          : 'bg-white dark:bg-gray-900 border-b border-line shadow-xs',
         'pt-[env(safe-area-inset-top,0px)]',
         className,
       )}
@@ -325,7 +325,7 @@ export function MobileHeader({
       {/* Optional Bottom Sub-Header Slot (e.g. Category tabs or filter bar) */}
       {bottomSlot && (
         <div
-          className="px-3 py-2 border-t border-[var(--ui-border-muted)]"
+          className="px-3 py-2 border-t border-line-muted"
           data-testid="mobile-header-bottom-slot"
         >
           {bottomSlot}

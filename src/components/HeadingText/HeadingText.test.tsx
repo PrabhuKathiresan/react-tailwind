@@ -43,16 +43,16 @@ describe('HeadingText Component', () => {
 
   it('applies color intent props (error, success, warning, info)', () => {
     const { rerender } = render(<HeadingText error>Error Heading</HeadingText>)
-    expect(screen.getByText('Error Heading')).toHaveClass('text-[var(--ui-text-danger)]')
+    expect(screen.getByText('Error Heading')).toHaveClass('text-error')
 
     rerender(<HeadingText success>Success Heading</HeadingText>)
-    expect(screen.getByText('Success Heading')).toHaveClass('text-[var(--ui-success-text)]')
+    expect(screen.getByText('Success Heading')).toHaveClass('text-success-fg')
 
     rerender(<HeadingText warning>Warning Heading</HeadingText>)
-    expect(screen.getByText('Warning Heading')).toHaveClass('text-[var(--ui-warning-text)]')
+    expect(screen.getByText('Warning Heading')).toHaveClass('text-warning-fg')
 
     rerender(<HeadingText info>Info Heading</HeadingText>)
-    expect(screen.getByText('Info Heading')).toHaveClass('text-[var(--ui-info-text)]')
+    expect(screen.getByText('Info Heading')).toHaveClass('text-info-fg')
   })
 
   it('renders static sub-components correctly', () => {
