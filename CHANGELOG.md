@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.19.2 (2026-11-19)</small>
+
+* Merge pull request #43 from PrabhuKathiresan/fix/radio-switch-isolate ([64a3200baf03904d2d579cb5fa5815b5137a8c64](https://github.com/PrabhuKathiresan/react-tailwind/commit/64a3200baf03904d2d579cb5fa5815b5137a8c64)), closes [#43](https://github.com/PrabhuKathiresan/react-tailwind/issues/43)
+* fix(radio-switch): keep its layering inside (isolate) ([42002bdb548dd46c263600c5a2210bbeea314265](https://github.com/PrabhuKathiresan/react-tailwind/commit/42002bdb548dd46c263600c5a2210bbeea314265))
+
 ## <small>1.19.1 (2026-11-17)</small>
 
 * Merge pull request #42 from PrabhuKathiresan/fix/select-box-dropdown-layer ([34e9fca64e62549c4c28a3bab85b7d6e43d43b1f](https://github.com/PrabhuKathiresan/react-tailwind/commit/34e9fca64e62549c4c28a3bab85b7d6e43d43b1f)), closes [#42](https://github.com/PrabhuKathiresan/react-tailwind/issues/42)
