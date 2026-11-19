@@ -46,13 +46,13 @@ describe('HeadingText Component', () => {
     expect(screen.getByText('Error Heading')).toHaveClass('text-[var(--ui-text-danger)]')
 
     rerender(<HeadingText success>Success Heading</HeadingText>)
-    expect(screen.getByText('Success Heading')).toHaveClass('text-[var(--ui-success)]')
+    expect(screen.getByText('Success Heading')).toHaveClass('text-[var(--ui-success-text)]')
 
     rerender(<HeadingText warning>Warning Heading</HeadingText>)
-    expect(screen.getByText('Warning Heading')).toHaveClass('text-[var(--ui-warning)]')
+    expect(screen.getByText('Warning Heading')).toHaveClass('text-[var(--ui-warning-text)]')
 
     rerender(<HeadingText info>Info Heading</HeadingText>)
-    expect(screen.getByText('Info Heading')).toHaveClass('text-[var(--ui-info)]')
+    expect(screen.getByText('Info Heading')).toHaveClass('text-[var(--ui-info-text)]')
   })
 
   it('renders static sub-components correctly', () => {

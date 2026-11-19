@@ -63,7 +63,7 @@
   --ui-text: #111827; /* gray-900 */
   --ui-text-muted: #6b7280; /* gray-500 */
   --ui-text-subtle: #4b5563; /* gray-600: secondary text, between text and muted */
-  --ui-text-danger: #ef4444; /* red-500 */
+  --ui-text-danger: #b91c1c; /* red-700: 4.5:1 and more on white, as text needs (red-500 was 3.8:1) */
 
   /* Neutral structural borders (containers, dividers — not interactive form controls) */
   --ui-border: #e5e7eb; /* gray-200 */

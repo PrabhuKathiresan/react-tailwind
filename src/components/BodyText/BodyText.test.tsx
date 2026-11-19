@@ -53,13 +53,13 @@ describe('BodyText Component', () => {
     expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-text-danger)]')
 
     rerender(<BodyText success>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-success)]')
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-success-text)]')
 
     rerender(<BodyText warning>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-warning)]')
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-warning-text)]')
 
     rerender(<BodyText info>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-info)]')
+    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-info-text)]')
   })
 
   it('applies align and line-clamp properties', () => {

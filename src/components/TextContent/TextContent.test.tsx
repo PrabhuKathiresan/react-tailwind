@@ -50,7 +50,7 @@ describe('<TextContent />', () => {
     expect(screen.getByText('Error Msg')).toHaveClass('text-[var(--ui-text-danger)]')
 
     rerender(<TextContent success>Success Msg</TextContent>)
-    expect(screen.getByText('Success Msg')).toHaveClass('text-[var(--ui-success)]')
+    expect(screen.getByText('Success Msg')).toHaveClass('text-[var(--ui-success-text)]')
   })
 
   test('forwards native span HTML attributes', () => {

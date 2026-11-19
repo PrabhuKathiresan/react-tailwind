@@ -74,11 +74,11 @@ const HeadingTextComponent = forwardRef<HTMLHeadingElement, HeadingTextProps>((p
   const colorClass = error
     ? 'text-[var(--ui-text-danger)]'
     : success
-      ? 'text-[var(--ui-success)]'
+      ? 'text-[var(--ui-success-text)]'
       : warning
-        ? 'text-[var(--ui-warning)]'
+        ? 'text-[var(--ui-warning-text)]'
         : info
-          ? 'text-[var(--ui-info)]'
+          ? 'text-[var(--ui-info-text)]'
           : muted
             ? invert
               ? 'text-gray-300 dark:text-gray-600'
