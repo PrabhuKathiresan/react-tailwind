@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## 1.20.0 (2026-11-19)
+
+* Merge pull request #44 from PrabhuKathiresan/feat/theme-colors-and-selectbox-button-name ([e7b5ecd4e7b3adf014544ef3c48a72f8aaa0c232](https://github.com/PrabhuKathiresan/react-tailwind/commit/e7b5ecd4e7b3adf014544ef3c48a72f8aaa0c232)), closes [#44](https://github.com/PrabhuKathiresan/react-tailwind/issues/44)
+* refactor(theme): components use the theme colours, not arbitrary token values ([117e405e22d69b5c7a36ece78d0ef29eaaaff89d](https://github.com/PrabhuKathiresan/react-tailwind/commit/117e405e22d69b5c7a36ece78d0ef29eaaaff89d))
+* fix(theme): text props and danger text meet 4.5:1 ([4727fe90c8e7ac8199dcf8e38a69fb2a94c2f635](https://github.com/PrabhuKathiresan/react-tailwind/commit/4727fe90c8e7ac8199dcf8e38a69fb2a94c2f635))
+* feat(theme): a secondary text token, --ui-text-subtle (text-subtle) ([17fb8754eeadc0e239a9172e2582ec66ed815100](https://github.com/PrabhuKathiresan/react-tailwind/commit/17fb8754eeadc0e239a9172e2582ec66ed815100))
+* feat(theme): the tokens as Tailwind theme colours; name the SelectBox toggle ([530cd845455436fb215e35720edeed9d0be5f597](https://github.com/PrabhuKathiresan/react-tailwind/commit/530cd845455436fb215e35720edeed9d0be5f597))
+
 ## <small>1.19.2 (2026-11-19)</small>
 
 * Merge pull request #43 from PrabhuKathiresan/fix/radio-switch-isolate ([64a3200baf03904d2d579cb5fa5815b5137a8c64](https://github.com/PrabhuKathiresan/react-tailwind/commit/64a3200baf03904d2d579cb5fa5815b5137a8c64)), closes [#43](https://github.com/PrabhuKathiresan/react-tailwind/issues/43)
