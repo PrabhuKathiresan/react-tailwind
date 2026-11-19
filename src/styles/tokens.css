@@ -62,6 +62,7 @@
   /* Neutral text (used by BodyText, TextContent, HeadingText) */
   --ui-text: #111827; /* gray-900 */
   --ui-text-muted: #6b7280; /* gray-500 */
+  --ui-text-subtle: #4b5563; /* gray-600: secondary text, between text and muted */
   --ui-text-danger: #ef4444; /* red-500 */
 
   /* Neutral structural borders (containers, dividers — not interactive form controls) */
@@ -118,6 +119,7 @@
 
   --ui-text: #f3f4f6; /* gray-100 */
   --ui-text-muted: #9ca3af; /* gray-400 */
+  --ui-text-subtle: #d1d5db; /* gray-300 */
   --ui-text-danger: #f87171; /* red-400 */
 
   --ui-border: #374151; /* gray-700 */
@@ -126,7 +128,7 @@
 
 /*
  * The tokens as Tailwind theme colours, so apps style with them rather than raw shades:
- * text-fg, text-muted, bg-primary, text-danger-fg, bg-warning-subtle, border-line … Each reads
+ * text-fg, text-subtle, text-muted, bg-primary, text-danger-fg, bg-warning-subtle, border-line … Each reads
  * its variable, so it follows dark mode and any override above without a dark: variant.
  * Import this file into a Tailwind v4 build (it's in react-tailwind.css); elsewhere the rule
  * is ignored.
@@ -134,6 +136,7 @@
 @theme inline {
   /* Text */
   --color-fg: var(--ui-text);
+  --color-subtle: var(--ui-text-subtle);
   --color-muted: var(--ui-text-muted);
   --color-primary-fg: var(--ui-primary-text);
   --color-danger-fg: var(--ui-danger-text);
