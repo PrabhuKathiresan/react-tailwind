@@ -226,4 +226,9 @@ describe('RadioSwitch', () => {
       'text-[var(--ui-info-text)]',
     )
   })
+
+  test('keeps its layering to itself (isolate), so it never paints over a sticky header', () => {
+    render(<RadioSwitch label="Type" items={['A', 'B']} selected="A" onChange={jest.fn()} />)
+    expect(screen.getByRole('radiogroup')).toHaveClass('isolate')
+  })
 })
