@@ -61,6 +61,13 @@ export type DropdownItem = {
   /** Marks item as destructive action (renders in red styling). */
   danger?: boolean
 
+  /**
+   * The current choice in a menu of options (the business in use, a sort order): the row is
+   * highlighted, its label in the primary colour with a check after it, and it's announced as
+   * checked (`menuitemradio`).
+   */
+  selected?: boolean
+
   /** Group or section title header displayed above this item. */
   groupTitle?: string
 

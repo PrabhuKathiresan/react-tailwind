@@ -40,6 +40,7 @@ export const ListRow = ({
   href,
   renderLink = defaultLink,
   onOpen,
+  openLabel,
   title,
   titleAdornment,
   meta,
@@ -140,6 +141,7 @@ export const ListRow = ({
     <button
       type="button"
       onClick={onOpen}
+      aria-label={openLabel}
       className={buildClassName(contentClass, 'pl-4 text-left', pressable)}
       data-muted={muted || undefined}
     >

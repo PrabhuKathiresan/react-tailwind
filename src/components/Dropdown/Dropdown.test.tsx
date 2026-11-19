@@ -26,8 +26,8 @@ jest.mock('@headlessui/react', () => ({
     </ul>
   ),
 
-  MenuItem: ({ children, disabled, onClick }: any) => (
-    <li data-testid="dropdown-item" onClick={onClick}>
+  MenuItem: ({ children, disabled, onClick, as: _as, ...rest }: any) => (
+    <li data-testid="dropdown-item" onClick={onClick} {...rest}>
       {children({ active: false, disabled })}
     </li>
   ),
@@ -141,5 +141,32 @@ describe('Dropdown Component', () => {
     const rendered = screen.getByTestId('dropdown-item-1')
     fireEvent.click(rendered)
     expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('marks the selected item: highlighted, checked for screen readers, with a check', async () => {
+    render(
+      <Dropdown
+        triggerButton={<span>Business</span>}
+        items={[
+          { id: 'a', label: 'Acme', selected: true, icon: <span data-testid="icon-a" /> },
+          { id: 'c', label: 'Gamma', icon: <span data-testid="icon-c" /> },
+          { id: 'b', label: 'Beta', selected: false },
+        ]}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('menu-button'))
+    const acme = await screen.findByRole('menuitemradio', { name: /Acme/ })
+    expect(acme).toHaveAttribute('aria-checked', 'true')
+    expect(screen.getByRole('menuitemradio', { name: /Beta/ })).toHaveAttribute(
+      'aria-checked',
+      'false',
+    )
+    expect(screen.getByTestId('dropdown-item-a')).toHaveClass(
+      'bg-primary-subtle',
+      'text-primary-fg',
+    )
+    // Its icon takes the row's colour too; another item's stays grey.
+    expect(screen.getByTestId('icon-a').parentElement).toHaveClass('text-primary-fg')
+    expect(screen.getByTestId('icon-c').parentElement).toHaveClass('text-gray-400')
   })
 })

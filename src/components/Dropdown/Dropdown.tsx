@@ -1,5 +1,6 @@
 import React, { Fragment, cloneElement, isValidElement } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import CheckIcon from '../Icons/Check.svg'
 import { buildClassName } from '../../utils/build-classname'
 import type { DropdownItem, DropdownProps } from './Dropdown.types'
 
@@ -62,7 +63,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         transition={transition}
         anchor={anchor}
         className={buildClassName(
-          'origin-top-right rounded-xl shadow-lg p-1.5 text-sm transition duration-100 ease-out z-50',
+          // A small gap between items, so a hovered row's highlight never touches the selected one's.
+          'flex flex-col gap-0.5 origin-top-right rounded-xl shadow-lg p-1.5 text-sm transition duration-100 ease-out z-50',
           'border border-line bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200',
           'focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0',
           '[--anchor-gap:--spacing(1)]',
@@ -87,6 +89,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
               <MenuItem
                 as="li"
                 disabled={item.disabled}
+                {...(item.selected !== undefined && {
+                  role: 'menuitemradio',
+                  'aria-checked': item.selected,
+                })}
                 // On the item itself: Enter and Space choose an item by clicking
                 // this element, so a handler on an inner element never ran.
                 onClick={() => {
@@ -107,12 +113,17 @@ export const Dropdown: React.FC<DropdownProps> = ({
                               ? 'bg-rose-50 dark:bg-rose-950/40'
                               : 'hover:bg-rose-50 dark:hover:bg-rose-950/40',
                           )
-                        : buildClassName(
-                            'text-gray-700 dark:text-gray-200',
-                            active
-                              ? 'bg-gray-100 dark:bg-gray-700/80'
-                              : 'hover:bg-gray-100/80 dark:hover:bg-gray-700/80',
-                          ),
+                        : item.selected
+                          ? buildClassName(
+                              'bg-primary-subtle text-primary-fg font-medium',
+                              active && 'ring-1 ring-inset ring-primary-ring',
+                            )
+                          : buildClassName(
+                              'text-gray-700 dark:text-gray-200',
+                              active
+                                ? 'bg-gray-100 dark:bg-gray-700/80'
+                                : 'hover:bg-gray-100/80 dark:hover:bg-gray-700/80',
+                            ),
                       disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
                       menuItemClass,
                     )}
@@ -127,7 +138,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
                             <span
                               className={buildClassName(
                                 'shrink-0',
-                                item.danger ? 'text-rose-500' : 'text-gray-400 dark:text-gray-500',
+                                item.danger
+                                  ? 'text-rose-500'
+                                  : item.selected
+                                    ? 'text-primary-fg'
+                                    : 'text-gray-400 dark:text-gray-500',
                               )}
                             >
                               {item.icon}
@@ -144,6 +159,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
                             )}
                           </div>
                         </div>
+                        {item.selected && (
+                          <CheckIcon className="size-4 shrink-0" aria-hidden="true" />
+                        )}
                         {item.shortcut && (
                           <kbd className="shrink-0 text-[10px] font-medium font-mono px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700/80 border border-line-muted text-gray-400 dark:text-gray-400">
                             {item.shortcut}

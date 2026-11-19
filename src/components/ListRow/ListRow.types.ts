@@ -35,6 +35,11 @@ export interface ListRowProps {
    * is static.
    */
   onOpen?: () => void
+  /**
+   * The open button's accessible name, when the row's text alone doesn't say what opening does
+   * ("Edit Freight" for a row reading "Freight GST 18% ₹500"). Without it the name is the row's text.
+   */
+  openLabel?: string
   /** Main line, e.g. the document number. */
   title: ReactNode
   /** Shown after the title, e.g. a status pill. */

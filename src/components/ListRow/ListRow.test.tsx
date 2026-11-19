@@ -63,4 +63,19 @@ describe('ListRow', () => {
     expect(onToggle).toHaveBeenCalledTimes(1)
     expect(screen.getByRole('checkbox', { name: 'Select invoice 0057' })).not.toBeChecked()
   })
+
+  test('names the open button with openLabel when given', () => {
+    const onOpen = jest.fn()
+    render(
+      <ListRow
+        title="Freight"
+        meta="GST 18%"
+        trailing="₹500"
+        onOpen={onOpen}
+        openLabel="Edit Freight"
+      />,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Edit Freight' }))
+    expect(onOpen).toHaveBeenCalled()
+  })
 })
