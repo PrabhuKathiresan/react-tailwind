@@ -162,6 +162,9 @@ export const SelectBox = forwardRef(
       [disabled, hasError, size],
     )
 
+    // The arrow that opens the list is a button of its own, so it needs a name: the field's
+    // label when it's text, else its name, else a generic one.
+    const toggleLabel = `Show ${typeof label === 'string' && label ? `${label} ` : typeof name === 'string' && name ? `${name} ` : ''}options`
     const chevronIconClass = useMemo(
       () =>
         buildClassName(
@@ -603,6 +606,7 @@ export const SelectBox = forwardRef(
 
               <ComboboxButton
                 ref={toggleRef}
+                aria-label={toggleLabel}
                 className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
                 data-testid="combobox-button"
               >
@@ -676,6 +680,7 @@ export const SelectBox = forwardRef(
 
               <ComboboxButton
                 ref={toggleRef}
+                aria-label={toggleLabel}
                 className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
                 data-testid="combobox-button"
               >

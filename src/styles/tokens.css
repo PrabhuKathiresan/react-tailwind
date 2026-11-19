@@ -123,3 +123,38 @@
   --ui-border: #374151; /* gray-700 */
   --ui-border-muted: #374151; /* gray-700 */
 }
+
+/*
+ * The tokens as Tailwind theme colours, so apps style with them rather than raw shades:
+ * text-fg, text-muted, bg-primary, text-danger-fg, bg-warning-subtle, border-line … Each reads
+ * its variable, so it follows dark mode and any override above without a dark: variant.
+ * Import this file into a Tailwind v4 build (it's in react-tailwind.css); elsewhere the rule
+ * is ignored.
+ */
+@theme inline {
+  /* Text */
+  --color-fg: var(--ui-text);
+  --color-muted: var(--ui-text-muted);
+  --color-primary-fg: var(--ui-primary-text);
+  --color-danger-fg: var(--ui-danger-text);
+  --color-warning-fg: var(--ui-warning-text);
+  --color-success-fg: var(--ui-success-text);
+  --color-info-fg: var(--ui-info-text);
+
+  /* Fills, and their tints */
+  --color-primary: var(--ui-primary);
+  --color-primary-hover: var(--ui-primary-hover);
+  --color-primary-subtle: var(--ui-primary-light);
+  --color-danger: var(--ui-danger);
+  --color-danger-subtle: var(--ui-danger-light);
+  --color-warning: var(--ui-warning);
+  --color-warning-subtle: var(--ui-warning-light);
+  --color-success: var(--ui-success);
+  --color-success-subtle: var(--ui-success-light);
+  --color-info: var(--ui-info);
+  --color-info-subtle: var(--ui-info-light);
+
+  /* Structure */
+  --color-line: var(--ui-border);
+  --color-line-muted: var(--ui-border-muted);
+}
