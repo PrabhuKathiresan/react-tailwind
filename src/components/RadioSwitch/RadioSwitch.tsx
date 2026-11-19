@@ -178,7 +178,9 @@ export const RadioSwitch = <T extends string = string>({
       aria-disabled={disabled || undefined}
       onKeyDown={handleKeyDown}
       className={buildClassName(
-        'relative inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80',
+        // isolate: its options' z-10 (above the sliding highlight) stays inside the switch, so it
+        // never paints over a sticky header or a menu it sits under.
+        'relative isolate inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80',
         bordered && 'border border-[var(--ui-border)]',
         SIZE_CONTAINER_CLASS[size],
         disabled && 'opacity-60',
