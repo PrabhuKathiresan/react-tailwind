@@ -215,7 +215,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
       <div
         className={buildClassName(
           !wrapperHasOverflow && 'overflow-x-auto',
-          'rounded-lg border border-[var(--ui-border)]',
+          'rounded-lg border border-line',
           wrapperClass,
           pagination && 'rounded-b-none border-b-0',
         )}
@@ -442,7 +442,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               {...pagination}
               {...paginationProps}
               className={buildClassName(
-                'rounded-t-none rounded-b-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800',
+                'rounded-t-none rounded-b-lg border border-line bg-white dark:bg-gray-800',
                 paginationClass,
                 paginationProps?.className,
               )}

@@ -50,16 +50,16 @@ describe('BodyText Component', () => {
 
   it('applies color intent classes (muted, error, success, warning, info)', () => {
     const { rerender } = render(<BodyText error>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-text-danger)]')
+    expect(screen.getByText('Text')).toHaveClass('text-error')
 
     rerender(<BodyText success>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-success)]')
+    expect(screen.getByText('Text')).toHaveClass('text-success-fg')
 
     rerender(<BodyText warning>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-warning)]')
+    expect(screen.getByText('Text')).toHaveClass('text-warning-fg')
 
     rerender(<BodyText info>Text</BodyText>)
-    expect(screen.getByText('Text')).toHaveClass('text-[var(--ui-info)]')
+    expect(screen.getByText('Text')).toHaveClass('text-info-fg')
   })
 
   it('applies align and line-clamp properties', () => {

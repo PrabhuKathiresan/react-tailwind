@@ -5,22 +5,21 @@ import type { AccordionItem, AccordionProps, AccordionVariant } from './Accordio
 
 const CONTAINER_CLASS: Record<AccordionVariant, string> = {
   bordered:
-    'rounded-lg border border-[var(--ui-border)] divide-y divide-[var(--ui-border)] bg-white dark:bg-gray-800 overflow-hidden',
+    'rounded-lg border border-line divide-y divide-line bg-white dark:bg-gray-800 overflow-hidden',
   separated: 'space-y-2',
-  plain: 'divide-y divide-[var(--ui-border)]',
+  plain: 'divide-y divide-line',
 }
 
 const ITEM_CLASS: Record<AccordionVariant, string> = {
   bordered: '',
-  separated:
-    'rounded-lg border border-[var(--ui-border)] bg-white dark:bg-gray-800 overflow-hidden',
+  separated: 'rounded-lg border border-line bg-white dark:bg-gray-800 overflow-hidden',
   plain: '',
 }
 
 const HEADER_CLASS =
   'flex w-full items-center justify-between gap-2 py-3 px-4 text-left text-sm font-medium ' +
   'text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 ' +
-  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--ui-focus-ring)] ' +
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-focus-ring ' +
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ' +
   'transition-colors duration-150 cursor-pointer'
 

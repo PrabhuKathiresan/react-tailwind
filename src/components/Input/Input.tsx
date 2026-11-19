@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <div className="flex rounded-lg">
         {/* Static Prefix Addon */}
         {prefix && (
-          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
+          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-line bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {prefix}
           </span>
         )}
@@ -228,7 +228,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               data-testid="input-end-adornment"
               className="absolute inset-y-0 end-0 flex items-center gap-1.5 pe-1"
             >
-              <span aria-hidden="true" className="h-5 w-px bg-[var(--ui-border)]" />
+              <span aria-hidden="true" className="h-5 w-px bg-line" />
               {endAdornment}
             </div>
           )}
@@ -266,7 +266,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
         {/* Static Suffix Addon */}
         {suffix && (
-          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-[var(--ui-border)] bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
+          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-line bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {suffix}
           </span>
         )}

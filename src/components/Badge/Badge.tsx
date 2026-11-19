@@ -5,16 +5,13 @@ import { BadgeProps } from './Badge.types'
 import { TextContent } from '../TextContent'
 
 const ThemeClassMap: Record<string, string> = {
-  success:
-    'bg-[var(--ui-success-light)] text-[var(--ui-success-text)] ring-[var(--ui-success-ring-subtle)]',
-  danger:
-    'bg-[var(--ui-danger-light)] text-[var(--ui-danger-text)] ring-[var(--ui-danger-ring-subtle)]',
-  warning:
-    'bg-[var(--ui-warning-light)] text-[var(--ui-warning-text)] ring-[var(--ui-warning-ring-subtle)]',
-  info: 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)]',
-  primary: 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)]',
+  success: 'bg-success-subtle text-success-fg ring-success-ring-subtle',
+  danger: 'bg-danger-subtle text-danger-fg ring-danger-ring-subtle',
+  warning: 'bg-warning-subtle text-warning-fg ring-warning-ring-subtle',
+  info: 'bg-info-subtle text-info-fg ring-info-ring-subtle',
+  primary: 'bg-info-subtle text-info-fg ring-info-ring-subtle',
   secondary:
-    'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 ring-[var(--ui-secondary-ring-subtle)]',
+    'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 ring-secondary-ring-subtle',
 }
 
 const SIZE_CLASS = {

@@ -45,7 +45,7 @@ describe('Card Component', () => {
     render(<Card selected>Selected Card</Card>)
     const el = screen.getByText('Selected Card')
     expect(el.className).toMatch(/ring-2/)
-    expect(el.className).toMatch(/ring-\[var\(--ui-primary\)\]/)
+    expect(el.className).toMatch(/ring-primary(\s|$)/)
   })
 
   it('applies surface variants', () => {
@@ -67,7 +67,7 @@ describe('Card Component', () => {
   it('applies bordered styles when variant=outlined', () => {
     render(<Card bordered>Border Card</Card>)
     const el = screen.getByText('Border Card')
-    expect(el.className).toMatch(/border-\[var\(--ui-border\)\]/)
+    expect(el.className).toMatch(/border-line(\s|$)/)
   })
 
   it('applies padding by default', () => {

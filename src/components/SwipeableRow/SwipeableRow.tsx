@@ -225,7 +225,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({
     <div
       ref={containerRef}
       className={buildClassName(
-        'relative overflow-hidden rounded-xl border border-[var(--ui-border-muted)] bg-white dark:bg-gray-800 select-none touch-pan-y',
+        'relative overflow-hidden rounded-xl border border-line-muted bg-white dark:bg-gray-800 select-none touch-pan-y',
         className,
       )}
       data-testid="swipeable-row"

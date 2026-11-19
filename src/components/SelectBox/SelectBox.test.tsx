@@ -20,6 +20,21 @@ const options = [
 ]
 
 describe('SelectBox', () => {
+  test('names the button that opens the list after the field, so screen readers can tell it apart', () => {
+    const { rerender } = render(<SelectBox label="Category" options={options} />)
+    expect(screen.getByTestId('combobox-button')).toHaveAttribute(
+      'aria-label',
+      'Show Category options',
+    )
+    rerender(<SelectBox name="Paid by" options={options} />)
+    expect(screen.getByTestId('combobox-button')).toHaveAttribute(
+      'aria-label',
+      'Show Paid by options',
+    )
+    rerender(<SelectBox options={options} />)
+    expect(screen.getByTestId('combobox-button')).toHaveAttribute('aria-label', 'Show options')
+  })
+
   test('renders label and input', () => {
     render(<SelectBox label="Pick one" options={options} />)
 

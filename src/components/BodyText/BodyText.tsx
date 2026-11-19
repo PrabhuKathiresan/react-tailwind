@@ -55,20 +55,20 @@ export const BodyText = forwardRef<HTMLParagraphElement, BodyTextProps>((props, 
   } = props
 
   const textColorClass = error
-    ? 'text-[var(--ui-text-danger)]'
+    ? 'text-error'
     : success
-      ? 'text-[var(--ui-success)]'
+      ? 'text-success-fg'
       : warning
-        ? 'text-[var(--ui-warning)]'
+        ? 'text-warning-fg'
         : info
-          ? 'text-[var(--ui-info)]'
+          ? 'text-info-fg'
           : muted
             ? invert
               ? 'text-gray-300 dark:text-gray-600'
-              : 'text-[var(--ui-text-muted)]'
+              : 'text-muted'
             : invert
               ? 'text-white dark:text-black'
-              : 'text-[var(--ui-text)]'
+              : 'text-fg'
 
   return React.createElement(as, {
     ref,

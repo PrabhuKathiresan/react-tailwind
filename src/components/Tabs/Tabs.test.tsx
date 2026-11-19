@@ -72,13 +72,13 @@ describe('<Tabs />', () => {
     test('underline variant applies indicator on selected tab', () => {
       render(<Tabs tabs={tabs} variant="underline" />)
       const selected = screen.getAllByRole('tab')[0]
-      expect(selected.className).toMatch(/after:bg-\[var\(--ui-primary\)\]/)
+      expect(selected.className).toMatch(/after:bg-primary(\s|$)/)
     })
 
     test('segmented variant applies filled background on selected tab', () => {
       render(<Tabs tabs={tabs} variant="segmented" />)
       const selected = screen.getAllByRole('tab')[0]
-      expect(selected.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
+      expect(selected.className).toMatch(/bg-primary(\s|$)/)
       expect(selected.className).toMatch(/text-white/)
     })
 
@@ -93,11 +93,11 @@ describe('<Tabs />', () => {
       render(<Tabs tabs={tabs} variant="segmented" />)
 
       const [tab1, tab2] = screen.getAllByRole('tab')
-      expect(tab1.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
+      expect(tab1.className).toMatch(/bg-primary(\s|$)/)
 
       await user.click(tab2)
-      expect(tab2.className).toMatch(/bg-\[var\(--ui-primary\)\]/)
-      expect(tab1.className).not.toMatch(/bg-\[var\(--ui-primary\)\]/)
+      expect(tab2.className).toMatch(/bg-primary(\s|$)/)
+      expect(tab1.className).not.toMatch(/bg-primary(\s|$)/)
     })
   })
 
@@ -144,7 +144,7 @@ describe('<Tabs />', () => {
     test('vertical underline variant uses border-l indicator', () => {
       render(<Tabs tabs={tabs} orientation="vertical" variant="underline" />)
       const selected = screen.getAllByRole('tab')[0]
-      expect(selected.className).toMatch(/border-\[var\(--ui-primary\)\]/)
+      expect(selected.className).toMatch(/border-primary(\s|$)/)
     })
   })
 

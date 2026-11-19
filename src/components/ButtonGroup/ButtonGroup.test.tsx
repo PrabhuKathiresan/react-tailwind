@@ -31,7 +31,7 @@ describe('ButtonGroup Component', () => {
       </ButtonGroup>,
     )
     const btn = screen.getByRole('button')
-    expect(btn.className).toMatch(/border-\[var\(--ui-danger\)\]/)
+    expect(btn.className).toMatch(/border-danger(\s|$)/)
     expect(btn.className).toMatch(/text-base/)
   })
 

@@ -99,10 +99,10 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                 htmlFor={radioItemId}
                 className={buildClassName(
                   'relative flex items-start gap-3 p-4 rounded-xl border transition-all cursor-pointer select-none min-w-[200px] flex-1',
-                  'focus-within:ring-2 focus-within:ring-[var(--ui-primary-ring)] focus-within:border-[var(--ui-primary)]',
+                  'focus-within:ring-2 focus-within:ring-primary-ring focus-within:border-primary',
                   isSelected
-                    ? 'border-[var(--ui-primary)] bg-blue-50/40 dark:bg-blue-950/30 ring-2 ring-[var(--ui-primary-ring)]/30'
-                    : 'border-[var(--ui-border)] bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
+                    ? 'border-primary bg-blue-50/40 dark:bg-blue-950/30 ring-2 ring-primary-ring/30'
+                    : 'border-line bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
                   isItemDisabled &&
                     'opacity-50 cursor-not-allowed pointer-events-none bg-gray-50 dark:bg-gray-800/50',
                 )}

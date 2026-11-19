@@ -11,11 +11,9 @@ const SIZE_MAP: Record<RadioSize, string> = {
 }
 
 const THEME_MAP: Record<RadioTheme, string> = {
-  primary:
-    'checked:border-[var(--ui-primary)] checked:hover:border-[var(--ui-primary)] focus:ring-[var(--ui-primary-ring)]',
+  primary: 'checked:border-primary checked:hover:border-primary focus:ring-primary-ring',
   success: 'checked:border-emerald-600 checked:hover:border-emerald-600 focus:ring-emerald-500',
-  danger:
-    'checked:border-[var(--ui-danger)] checked:hover:border-[var(--ui-danger)] focus:ring-[var(--ui-danger-ring)]',
+  danger: 'checked:border-danger checked:hover:border-danger focus:ring-danger-ring',
 }
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
@@ -70,8 +68,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
               SIZE_MAP[size],
               THEME_MAP[theme],
               disabled
-                ? 'border-[var(--ui-border-muted)] bg-gray-100 dark:bg-gray-800 pointer-events-none'
-                : 'bg-white dark:bg-gray-700 border-[var(--ui-border)] hover:border-gray-400 dark:hover:border-gray-500 cursor-pointer',
+                ? 'border-line-muted bg-gray-100 dark:bg-gray-800 pointer-events-none'
+                : 'bg-white dark:bg-gray-700 border-line hover:border-gray-400 dark:hover:border-gray-500 cursor-pointer',
               className,
             )}
           />

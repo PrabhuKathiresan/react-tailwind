@@ -24,11 +24,11 @@ export const Chip = forwardRef<HTMLButtonElement, ChipProps>((props, ref) => {
       className={buildClassName(
         'relative inline-flex shrink-0 items-center justify-center rounded-full font-medium whitespace-nowrap ring-1 ring-inset select-none cursor-pointer',
         'transition-[color,background-color,box-shadow] duration-150 ease-out',
-        'focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ui-primary-ring)]',
+        'focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-ring',
         'disabled:pointer-events-none disabled:opacity-50',
         SIZE_CLASS[size],
         selected
-          ? 'bg-[var(--ui-info-light)] text-[var(--ui-info-text)] ring-[var(--ui-info-ring-subtle)] font-semibold'
+          ? 'bg-info-subtle text-info-fg ring-info-ring-subtle font-semibold'
           : 'bg-gray-100 text-gray-700 ring-transparent hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700',
         TOUCH_TARGET_CLASS,
         className,

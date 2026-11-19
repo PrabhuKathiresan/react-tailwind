@@ -346,7 +346,7 @@ describe('Button Component', () => {
   it('uses an outline (not a box-shadow ring) for focus so the offset gap is transparent', () => {
     render(<Button theme="danger">Focus</Button>)
     const btn = screen.getByRole('button')
-    expect(btn).toHaveClass('focus-visible:outline-[var(--ui-danger-ring)]')
+    expect(btn).toHaveClass('focus-visible:outline-danger-ring')
     expect(btn.className).not.toMatch(/focus-visible:ring-/)
   })
 

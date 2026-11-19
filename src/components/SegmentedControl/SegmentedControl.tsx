@@ -60,7 +60,7 @@ const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((
       role="tablist"
       aria-orientation="horizontal"
       className={buildClassName(
-        'inline-flex items-center border border-[var(--ui-border)] bg-gray-100/80 dark:bg-gray-800/80',
+        'inline-flex items-center border border-line bg-gray-100/80 dark:bg-gray-800/80',
         SIZE_CONTAINER_CLASS[size],
         fullWidth ? 'w-full flex' : '',
         disabled ? 'opacity-60 cursor-not-allowed' : '',
@@ -93,7 +93,7 @@ const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((
             }}
             onKeyDown={(e) => handleKeyDown(e, index)}
             className={buildClassName(
-              'inline-flex items-center justify-center gap-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
+              'inline-flex items-center justify-center gap-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring',
               SIZE_OPTION_CLASS[size],
               // Full width splits the row equally, so the width comes from the
               // row, not padding; tight side padding keeps labels on one line
@@ -101,7 +101,7 @@ const SegmentedControlBase = forwardRef<HTMLDivElement, SegmentedControlProps>((
               fullWidth ? 'min-w-0 flex-1 px-1.5' : '',
               isOptionDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
               isSelected
-                ? 'bg-white text-[var(--ui-primary)] dark:bg-gray-700 dark:text-blue-400 shadow-xs font-semibold'
+                ? 'bg-white text-primary dark:bg-gray-700 dark:text-blue-400 shadow-xs font-semibold'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100',
             )}
             data-testid={`segmented-option-${option.value}`}

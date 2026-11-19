@@ -327,7 +327,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
     <div className={buildClassName('w-full space-y-3', containerClass)} data-testid="data-list">
       {/* Top Search, Filter, Sort Toolbar */}
       {(searchable || (filterFields && filterFields.length > 0) || sortableColumns.length > 0) && (
-        <div className="p-3 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-[var(--ui-border)] space-y-3">
+        <div className="p-3 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-line space-y-3">
           {searchable && (
             <Input
               value={searchQuery}
@@ -430,7 +430,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
                   <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-1">
                     {field.label}
                   </h4>
-                  <div className="space-y-1.5 bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-[var(--ui-border-muted)]">
+                  <div className="space-y-1.5 bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-line-muted">
                     {field.options.map((opt) => {
                       const checked = selectedArray.includes(opt.value)
                       return (
@@ -505,7 +505,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
 
       {/* Select All Toolbar */}
       {selectable && processedItems.length > 0 && (
-        <div className="p-3 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-[var(--ui-border)] flex items-center justify-between text-xs">
+        <div className="p-3 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-line flex items-center justify-between text-xs">
           <label className="flex items-center gap-2 font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
             <Checkbox
               checked={processedItems.length > 0 && selectedKeys.length === processedItems.length}
@@ -522,11 +522,11 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
       {/* Items List */}
       <div className="space-y-3">
         {loading ? (
-          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-[var(--ui-border)]">
+          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-line">
             Loading items...
           </div>
         ) : processedItems.length === 0 ? (
-          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-[var(--ui-border)]">
+          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-line">
             {emptyMessage}
           </div>
         ) : (
@@ -542,7 +542,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
               <div
                 onClick={() => onItemClick?.(item, idx)}
                 className={buildClassName(
-                  'p-4 bg-white dark:bg-gray-800 rounded-xl border border-[var(--ui-border)] shadow-xs space-y-3 transition-colors',
+                  'p-4 bg-white dark:bg-gray-800 rounded-xl border border-line shadow-xs space-y-3 transition-colors',
                   onItemClick && 'cursor-pointer hover:border-blue-500/50',
                   selected && 'ring-2 ring-blue-500/50 bg-blue-50/20 dark:bg-blue-950/20',
                   customClass,
@@ -550,7 +550,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
                 data-testid={`data-list-item-${key}`}
               >
                 {/* Card Header Row */}
-                <div className="flex items-center justify-between gap-3 border-b border-[var(--ui-border-muted)] pb-2.5">
+                <div className="flex items-center justify-between gap-3 border-b border-line-muted pb-2.5">
                   <div className="flex items-center gap-2.5 min-w-0 flex-1">
                     {selectable ? (
                       <Checkbox

@@ -42,7 +42,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
       <div
         data-testid="pagination-container"
         className={buildClassName(
-          'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 rounded-xl border border-[var(--ui-border-muted)] w-full',
+          'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 rounded-xl border border-line-muted w-full',
           className,
         )}
       >
@@ -82,7 +82,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
     <div
       data-testid="pagination-container"
       className={buildClassName(
-        'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 rounded-xl border border-[var(--ui-border-muted)] w-full',
+        'flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 rounded-xl border border-line-muted w-full',
         className,
       )}
     >

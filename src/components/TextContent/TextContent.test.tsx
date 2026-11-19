@@ -47,10 +47,10 @@ describe('<TextContent />', () => {
 
   test('applies color intent classes (muted, error, success, warning, info)', () => {
     const { rerender } = render(<TextContent error>Error Msg</TextContent>)
-    expect(screen.getByText('Error Msg')).toHaveClass('text-[var(--ui-text-danger)]')
+    expect(screen.getByText('Error Msg')).toHaveClass('text-error')
 
     rerender(<TextContent success>Success Msg</TextContent>)
-    expect(screen.getByText('Success Msg')).toHaveClass('text-[var(--ui-success)]')
+    expect(screen.getByText('Success Msg')).toHaveClass('text-success-fg')
   })
 
   test('forwards native span HTML attributes', () => {

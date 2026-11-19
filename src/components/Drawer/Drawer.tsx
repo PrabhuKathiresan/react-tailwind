@@ -180,7 +180,7 @@ export const Drawer: React.FC<DrawerProps> = ({
 
             {/* Phone full-screen bar: the only fixed part, so the fields keep the room. */}
             {fullscreen && (
-              <div className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-1 border-b border-[var(--ui-border)] bg-white pl-1 pr-3 pt-[env(safe-area-inset-top,0px)] box-content dark:bg-gray-800">
+              <div className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-1 border-b border-line bg-white pl-1 pr-3 pt-[env(safe-area-inset-top,0px)] box-content dark:bg-gray-800">
                 <Button
                   iconOnly
                   aria-label="Close"
@@ -207,7 +207,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             {!fullscreen && showTitleSection && (
               <div
                 className={buildClassName(
-                  'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-[var(--ui-border)] shrink-0',
+                  'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-line shrink-0',
                   titleSticky && 'sticky top-0 bg-white dark:bg-gray-800 z-10',
                 )}
               >
@@ -291,7 +291,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             {!fullscreen && footer && (
               <div
                 className={buildClassName(
-                  'p-4 border-t border-[var(--ui-border-muted)] bg-white dark:bg-gray-800 shrink-0 min-w-0',
+                  'p-4 border-t border-line-muted bg-white dark:bg-gray-800 shrink-0 min-w-0',
                   footerSticky && 'sticky bottom-0 z-10',
                 )}
               >

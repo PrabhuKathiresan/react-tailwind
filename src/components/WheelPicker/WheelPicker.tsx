@@ -132,7 +132,7 @@ export function WheelPicker({
   return (
     <div
       className={buildClassName(
-        'w-full bg-white dark:bg-gray-900 border border-[var(--ui-border)] rounded-2xl relative overflow-hidden flex items-center shadow-xs select-none',
+        'w-full bg-white dark:bg-gray-900 border border-line rounded-2xl relative overflow-hidden flex items-center shadow-xs select-none',
         containerClass,
       )}
       style={{ height: `${height}px` }}

@@ -516,7 +516,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
             <div className="w-12 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mx-auto my-2.5 shrink-0" />
 
             {/* Sheet Header */}
-            <div className="px-4 pb-3 border-b border-[var(--ui-border-muted)] flex items-center justify-between gap-3 shrink-0">
+            <div className="px-4 pb-3 border-b border-line-muted flex items-center justify-between gap-3 shrink-0">
               <div className="min-w-0 flex-1">
                 <DialogTitle
                   as="h3"
@@ -546,7 +546,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Optional Search Bar */}
             {searchable && (
-              <div className="p-3 border-b border-[var(--ui-border-muted)] bg-gray-50 dark:bg-gray-800/50 shrink-0">
+              <div className="p-3 border-b border-line-muted bg-gray-50 dark:bg-gray-800/50 shrink-0">
                 <div className="relative">
                   <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
                   <input
@@ -591,7 +591,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Quick Choice Chips Row */}
             {quickOptions && quickOptions.length > 0 && (
-              <div className="px-3 py-2 bg-gray-50/60 dark:bg-gray-800/40 border-b border-[var(--ui-border-muted)] shrink-0">
+              <div className="px-3 py-2 bg-gray-50/60 dark:bg-gray-800/40 border-b border-line-muted shrink-0">
                 <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5 px-1">
                   {quickOptionsTitle}
                 </div>
@@ -620,7 +620,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Multi-Select Select All Toolbar */}
             {multiple && showSelectAll && allOptions.length > 0 && (
-              <div className="px-4 py-2 bg-gray-50/80 dark:bg-gray-800/80 border-b border-[var(--ui-border-muted)] flex items-center justify-between text-xs shrink-0">
+              <div className="px-4 py-2 bg-gray-50/80 dark:bg-gray-800/80 border-b border-line-muted flex items-center justify-between text-xs shrink-0">
                 <button
                   type="button"
                   onClick={handleToggleSelectAll}
@@ -791,7 +791,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Sticky Footer for Multi-Select Confirmation */}
             {multiple && (
-              <div className="p-4 border-t border-[var(--ui-border-muted)] bg-white dark:bg-gray-900 shrink-0">
+              <div className="p-4 border-t border-line-muted bg-white dark:bg-gray-900 shrink-0">
                 <Button
                   fullWidth
                   theme="primary"

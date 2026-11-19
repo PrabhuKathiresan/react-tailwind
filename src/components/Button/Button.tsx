@@ -14,28 +14,26 @@ import type { PolymorphicRef } from '../common-type'
  */
 const THEMED_BTN_CLASS: ThemedButtonClass = {
   primary: {
-    default:
-      'text-white bg-[var(--ui-primary)] hover:bg-[var(--ui-primary-hover)] focus-visible:outline-[var(--ui-primary-ring)]',
+    default: 'text-white bg-primary hover:bg-primary-hover focus-visible:outline-primary-ring',
     outlined:
-      'text-[var(--ui-primary-text)] hover:text-white border border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] focus-visible:outline-[var(--ui-primary-ring)]',
+      'text-primary-fg hover:text-white border border-primary hover:bg-primary focus-visible:outline-primary-ring',
     plain:
-      'text-[var(--ui-primary-text)] hover:bg-current/10 active:bg-current/15 focus-visible:outline-[var(--ui-primary-ring)]',
+      'text-primary-fg hover:bg-current/10 active:bg-current/15 focus-visible:outline-primary-ring',
   },
   danger: {
-    default:
-      'text-white bg-[var(--ui-danger)] hover:bg-[var(--ui-danger-hover)] focus-visible:outline-[var(--ui-danger-ring)]',
+    default: 'text-white bg-danger hover:bg-danger-hover focus-visible:outline-danger-ring',
     outlined:
-      'text-[var(--ui-danger-text)] hover:text-white border border-[var(--ui-danger)] hover:bg-[var(--ui-danger)] focus-visible:outline-[var(--ui-danger-ring)]',
+      'text-danger-fg hover:text-white border border-danger hover:bg-danger focus-visible:outline-danger-ring',
     plain:
-      'text-[var(--ui-danger-text)] hover:bg-current/10 active:bg-current/15 focus-visible:outline-[var(--ui-danger-ring)]',
+      'text-danger-fg hover:bg-current/10 active:bg-current/15 focus-visible:outline-danger-ring',
   },
   secondary: {
     default:
-      'text-gray-800 bg-gray-200 hover:bg-gray-300 active:bg-gray-300 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-600 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 bg-gray-200 hover:bg-gray-300 active:bg-gray-300 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-600 focus-visible:outline-focus-ring',
     outlined:
-      'text-gray-800 bg-white border border-gray-300 shadow-xs hover:bg-gray-100 active:bg-gray-200 dark:text-gray-100 dark:bg-transparent dark:border-gray-600 dark:shadow-none dark:hover:bg-white/10 dark:active:bg-white/15 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-800 bg-white border border-gray-300 shadow-xs hover:bg-gray-100 active:bg-gray-200 dark:text-gray-100 dark:bg-transparent dark:border-gray-600 dark:shadow-none dark:hover:bg-white/10 dark:active:bg-white/15 focus-visible:outline-focus-ring',
     plain:
-      'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:outline-[var(--ui-focus-ring)]',
+      'text-gray-700 hover:bg-current/10 active:bg-current/15 dark:text-gray-200 focus-visible:outline-focus-ring',
   },
   success: {
     default: 'text-white bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-emerald-500',

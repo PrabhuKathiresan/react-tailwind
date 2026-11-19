@@ -53,7 +53,7 @@ export const Table: React.FC<TableProps> = ({
 }) => (
   <table
     className={buildClassName(
-      'border-collapse w-full divide-y divide-[var(--ui-border)]',
+      'border-collapse w-full divide-y divide-line',
       TABLE_LAYOUT[layout],
       className,
     )}
@@ -93,7 +93,7 @@ export const TableBody: React.FC<TableBodyProps> = ({
 }) => (
   <tbody
     className={buildClassName(
-      'text-sm text-gray-700 dark:text-white divide-y divide-[var(--ui-border)]',
+      'text-sm text-gray-700 dark:text-white divide-y divide-line',
       className,
     )}
   >
@@ -121,11 +121,7 @@ export const TableRow: React.FC<TableRowProps> = ({
 }) => (
   <tr
     {...props}
-    className={buildClassName(
-      'last:border-b border-[var(--ui-border)]',
-      hoverable && 'group',
-      className,
-    )}
+    className={buildClassName('last:border-b border-line', hoverable && 'group', className)}
   >
     {children}
   </tr>

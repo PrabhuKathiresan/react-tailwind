@@ -62,7 +62,8 @@
   /* Neutral text (used by BodyText, TextContent, HeadingText) */
   --ui-text: #111827; /* gray-900 */
   --ui-text-muted: #6b7280; /* gray-500 */
-  --ui-text-danger: #ef4444; /* red-500 */
+  --ui-text-subtle: #4b5563; /* gray-600: secondary text, between text and muted */
+  --ui-text-danger: #b91c1c; /* red-700: 4.5:1 and more on white, as text needs (red-500 was 3.8:1) */
 
   /* Neutral structural borders (containers, dividers — not interactive form controls) */
   --ui-border: #e5e7eb; /* gray-200 */
@@ -118,8 +119,62 @@
 
   --ui-text: #f3f4f6; /* gray-100 */
   --ui-text-muted: #9ca3af; /* gray-400 */
+  --ui-text-subtle: #d1d5db; /* gray-300 */
   --ui-text-danger: #f87171; /* red-400 */
 
   --ui-border: #374151; /* gray-700 */
   --ui-border-muted: #374151; /* gray-700 */
+}
+
+/*
+ * The tokens as Tailwind theme colours, so apps style with them rather than raw shades:
+ * text-fg, text-subtle, text-muted, bg-primary, text-danger-fg, bg-warning-subtle, border-line … Each reads
+ * its variable, so it follows dark mode and any override above without a dark: variant.
+ * Import this file into a Tailwind v4 build (it's in react-tailwind.css); elsewhere the rule
+ * is ignored.
+ */
+@theme inline {
+  /* Text */
+  --color-fg: var(--ui-text);
+  --color-subtle: var(--ui-text-subtle);
+  --color-muted: var(--ui-text-muted);
+  --color-error: var(--ui-text-danger);
+  --color-primary-fg: var(--ui-primary-text);
+  --color-danger-fg: var(--ui-danger-text);
+  --color-warning-fg: var(--ui-warning-text);
+  --color-success-fg: var(--ui-success-text);
+  --color-info-fg: var(--ui-info-text);
+
+  /* Fills, their states and tints */
+  --color-primary: var(--ui-primary);
+  --color-primary-hover: var(--ui-primary-hover);
+  --color-primary-disabled: var(--ui-primary-disabled);
+  --color-primary-subtle: var(--ui-primary-light);
+  --color-danger: var(--ui-danger);
+  --color-danger-hover: var(--ui-danger-hover);
+  --color-danger-disabled: var(--ui-danger-disabled);
+  --color-danger-subtle: var(--ui-danger-light);
+  --color-warning: var(--ui-warning);
+  --color-warning-subtle: var(--ui-warning-light);
+  --color-success: var(--ui-success);
+  --color-success-subtle: var(--ui-success-light);
+  --color-info: var(--ui-info);
+  --color-info-subtle: var(--ui-info-light);
+
+  /* Rings and focus */
+  --color-focus-ring: var(--ui-focus-ring);
+  --color-primary-ring: var(--ui-primary-ring);
+  --color-danger-ring: var(--ui-danger-ring);
+  --color-warning-ring: var(--ui-warning-ring);
+  --color-success-ring: var(--ui-success-ring);
+  --color-info-ring: var(--ui-info-ring);
+  --color-danger-ring-subtle: var(--ui-danger-ring-subtle);
+  --color-warning-ring-subtle: var(--ui-warning-ring-subtle);
+  --color-success-ring-subtle: var(--ui-success-ring-subtle);
+  --color-info-ring-subtle: var(--ui-info-ring-subtle);
+  --color-secondary-ring-subtle: var(--ui-secondary-ring-subtle);
+
+  /* Structure */
+  --color-line: var(--ui-border);
+  --color-line-muted: var(--ui-border-muted);
 }

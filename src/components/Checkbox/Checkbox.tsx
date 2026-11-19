@@ -83,10 +83,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
             : 'flex items-center',
           isCard &&
             (disabled
-              ? 'border-[var(--ui-border-muted)] bg-gray-50/50 dark:bg-gray-900/40 opacity-70'
+              ? 'border-line-muted bg-gray-50/50 dark:bg-gray-900/40 opacity-70'
               : checked || indeterminate
                 ? 'border-blue-500/80 bg-blue-50/30 dark:bg-blue-950/20 dark:border-blue-500/60 shadow-xs'
-                : 'border-[var(--ui-border)] bg-white dark:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 shadow-2xs'),
+                : 'border-line bg-white dark:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 shadow-2xs'),
           containerClass,
         )}
       >
@@ -119,10 +119,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
                 currentSize.box,
                 'border focus:ring-2 focus:ring-offset-2',
                 'checked:bg-blue-600 checked:border-blue-600 dark:checked:bg-blue-600 dark:checked:border-blue-600',
-                'focus:ring-[var(--ui-focus-ring)] dark:focus:ring-offset-gray-900',
+                'focus:ring-focus-ring dark:focus:ring-offset-gray-900',
                 disabled
-                  ? 'border-[var(--ui-border-muted)] bg-gray-100 dark:bg-gray-800 pointer-events-none'
-                  : 'bg-white dark:bg-gray-700 border-[var(--ui-border)] hover:border-gray-400 dark:hover:border-gray-500',
+                  ? 'border-line-muted bg-gray-100 dark:bg-gray-800 pointer-events-none'
+                  : 'bg-white dark:bg-gray-700 border-line hover:border-gray-400 dark:hover:border-gray-500',
                 indeterminate &&
                   '!bg-blue-600 !border-blue-600 dark:!bg-blue-600 dark:!border-blue-600',
                 className,

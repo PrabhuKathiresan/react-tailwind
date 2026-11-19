@@ -38,11 +38,11 @@ const SIZE_RADIUS_CLASS: Record<RadioSwitchSize, string> = {
 }
 
 const THEME_SWITCH_CLASS: Record<RadioSwitchTheme, string> = {
-  primary: 'bg-[var(--ui-primary)] text-white shadow-xs',
+  primary: 'bg-primary text-white shadow-xs',
   secondary: 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs',
   dark: 'bg-gray-900 dark:bg-black text-white shadow-xs',
   // The info colours, as a selected Chip: clear on a white field without a solid fill.
-  tinted: 'bg-[var(--ui-info-light)] ring-1 ring-inset ring-[var(--ui-info-ring-subtle)]',
+  tinted: 'bg-info-subtle ring-1 ring-inset ring-info-ring-subtle',
 }
 
 /**
@@ -181,7 +181,7 @@ export const RadioSwitch = <T extends string = string>({
         // isolate: its options' z-10 (above the sliding highlight) stays inside the switch, so it
         // never paints over a sticky header or a menu it sits under.
         'relative isolate inline-grid grid-flow-col auto-cols-fr items-stretch bg-gray-100 dark:bg-gray-800/80',
-        bordered && 'border border-[var(--ui-border)]',
+        bordered && 'border border-line',
         SIZE_CONTAINER_CLASS[size],
         disabled && 'opacity-60',
         wrapperClass,
@@ -235,7 +235,7 @@ export const RadioSwitch = <T extends string = string>({
               'transition-[color,background-color,transform] duration-300 ease-[cubic-bezier(.32,.72,0,1)] motion-reduce:transition-none',
               // A light press, so a tap registers before the highlight lands.
               !disabledState && 'active:scale-[0.97]',
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ui-primary-ring)]',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring',
               SIZE_RADIUS_CLASS[size],
               hasDescription ? SIZE_ITEM_DESC_CLASS[size] : SIZE_ITEM_CLASS[size],
               disabledState ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
@@ -247,7 +247,7 @@ export const RadioSwitch = <T extends string = string>({
                 ? theme === 'secondary'
                   ? 'text-gray-900 dark:text-white'
                   : theme === 'tinted'
-                    ? 'text-[var(--ui-info-text)]'
+                    ? 'text-info-fg'
                     : 'text-white'
                 : buildClassName(
                     'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white',

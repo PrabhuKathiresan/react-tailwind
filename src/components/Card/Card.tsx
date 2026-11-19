@@ -73,9 +73,9 @@ export const Card = forwardRef(
       zeroPadding ? '' : compact ? 'p-3 sm:p-4' : 'p-5 sm:p-6',
 
       // Surface variants
-      isOutlined && 'bg-white dark:bg-gray-900 border border-[var(--ui-border)]',
+      isOutlined && 'bg-white dark:bg-gray-900 border border-line',
       isElevated &&
-        'bg-white dark:bg-gray-900 border border-[var(--ui-border)] shadow-md shadow-gray-200/50 dark:shadow-none',
+        'bg-white dark:bg-gray-900 border border-line shadow-md shadow-gray-200/50 dark:shadow-none',
       isFilled && 'bg-gray-50/80 dark:bg-gray-800/60 border border-transparent',
       isGhost && 'bg-transparent border border-transparent',
 
@@ -83,7 +83,7 @@ export const Card = forwardRef(
       hoverable && 'hover:bg-gray-100/80 dark:hover:bg-gray-800/80',
       isClickable &&
         'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.99] active:bg-gray-100 dark:active:bg-gray-800/90',
-      selected && 'ring-2 ring-[var(--ui-primary)] border-[var(--ui-primary)]',
+      selected && 'ring-2 ring-primary border-primary',
 
       className,
     )
@@ -135,7 +135,7 @@ export const CardHeader = ({
   <div
     className={buildClassName(
       'flex items-center justify-between gap-4 mb-4',
-      bordered && 'pb-4 border-b border-[var(--ui-border)]',
+      bordered && 'pb-4 border-b border-line',
       className,
     )}
     {...props}
@@ -188,7 +188,7 @@ export const CardFooter = ({
   <div
     className={buildClassName(
       'flex items-center justify-end gap-3 mt-4',
-      bordered && 'pt-4 border-t border-[var(--ui-border)]',
+      bordered && 'pt-4 border-t border-line',
       className,
     )}
     {...props}
