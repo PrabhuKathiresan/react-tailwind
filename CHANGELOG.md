@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.21.1 (2026-11-20)</small>
+
+* Merge pull request #46 from PrabhuKathiresan/fix/quantity-stepper-fill ([55ca098b0f1c9c02039f674492d4df5224ef7371](https://github.com/PrabhuKathiresan/react-tailwind/commit/55ca098b0f1c9c02039f674492d4df5224ef7371)), closes [#46](https://github.com/PrabhuKathiresan/react-tailwind/issues/46)
+* fix(quantity-stepper): the number field fills a stretched stepper ([840bd4ea0a91245f9968ae128c62b5c6df4297ab](https://github.com/PrabhuKathiresan/react-tailwind/commit/840bd4ea0a91245f9968ae128c62b5c6df4297ab))
+
 ## 1.21.0 (2026-11-20)
 
 * Merge pull request #45 from PrabhuKathiresan/feat/dropdown-selected-listrow-open-label ([ad1fe3b2780c9a5f3290b595a6608463bc0f6507](https://github.com/PrabhuKathiresan/react-tailwind/commit/ad1fe3b2780c9a5f3290b595a6608463bc0f6507)), closes [#45](https://github.com/PrabhuKathiresan/react-tailwind/issues/45)
