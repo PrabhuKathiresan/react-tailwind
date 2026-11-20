@@ -153,7 +153,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
                               <span className="font-medium truncate">{item.label}</span>
                             )}
                             {item.description && (
-                              <span className="text-xs text-gray-400 dark:text-gray-500 font-normal truncate">
+                              <span
+                                className={buildClassName(
+                                  'text-xs font-normal truncate',
+                                  // On a selected row's tint, its colour softened; grey there is unreadable.
+                                  item.selected
+                                    ? 'text-primary-fg/75'
+                                    : 'text-gray-400 dark:text-gray-500',
+                                )}
+                              >
                                 {item.description}
                               </span>
                             )}
