@@ -148,7 +148,13 @@ describe('Dropdown Component', () => {
       <Dropdown
         triggerButton={<span>Business</span>}
         items={[
-          { id: 'a', label: 'Acme', selected: true, icon: <span data-testid="icon-a" /> },
+          {
+            id: 'a',
+            label: 'Acme',
+            description: 'Primary',
+            selected: true,
+            icon: <span data-testid="icon-a" />,
+          },
           { id: 'c', label: 'Gamma', icon: <span data-testid="icon-c" /> },
           { id: 'b', label: 'Beta', selected: false },
         ]}
@@ -167,6 +173,8 @@ describe('Dropdown Component', () => {
     )
     // Its icon takes the row's colour too; another item's stays grey.
     expect(screen.getByTestId('icon-a').parentElement).toHaveClass('text-primary-fg')
+    // Its description too, softened, not the grey that's unreadable on the tint.
+    expect(screen.getByText('Primary')).toHaveClass('text-primary-fg/75')
     expect(screen.getByTestId('icon-c').parentElement).toHaveClass('text-gray-400')
   })
 })
