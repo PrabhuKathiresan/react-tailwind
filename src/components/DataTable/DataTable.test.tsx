@@ -343,9 +343,9 @@ describe('DataTable', () => {
     render(<DataTable items={rows} columns={columns} striped />)
     const dataRows = screen.getAllByRole('row').slice(1)
     // index 1 (second row) should be striped
-    expect(dataRows[1].className).toMatch(/bg-gray-50/)
+    expect(dataRows[1].className).toMatch(/bg-surface-muted/)
     // index 0 (first row) should not
-    expect(dataRows[0].className).not.toMatch(/bg-gray-50/)
+    expect(dataRows[0].className).not.toMatch(/bg-surface-muted/)
   })
 
   // ── footerRow ─────────────────────────────────────────────────────────

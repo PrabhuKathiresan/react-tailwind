@@ -65,7 +65,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         className={buildClassName(
           // A small gap between items, so a hovered row's highlight never touches the selected one's.
           'flex flex-col gap-0.5 origin-top-right rounded-xl shadow-lg p-1.5 text-sm transition duration-100 ease-out z-50',
-          'border border-line bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200',
+          'border border-line bg-surface-raised text-gray-800 dark:text-gray-200',
           'focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0',
           '[--anchor-gap:--spacing(1)]',
           widthClass,

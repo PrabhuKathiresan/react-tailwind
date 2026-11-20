@@ -13,6 +13,7 @@ import { isEmpty } from '../../utils/is-empty'
 import { buildClassName } from '../../utils/build-classname'
 import { TextContent } from '../TextContent'
 import type { TextareaProps, TextareaResize, TextareaSize } from './Textarea.types'
+import { fieldStateClass } from '../Input/input-class'
 
 // Typed text is 16px below 768px: iOS Safari zooms the page into any field
 // with smaller text when it's focused. From md the size steps down as designed.
@@ -138,17 +139,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
           aria-describedby={describedBy}
           className={buildClassName(
             'transition-all duration-150',
-            'block w-full rounded-lg bg-white shadow-2xs',
+            'block w-full rounded-lg shadow-2xs',
             currentSize.textarea,
             autoSize ? 'resize-none overflow-hidden' : resizeClasses[resize],
-            'text-gray-900 outline outline-1 -outline-offset-1',
-            hasError
-              ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
-              : 'outline-line',
+            'outline outline-1 -outline-offset-1',
+            fieldStateClass({ disabled: inputProps.disabled, readOnly: inputProps.readOnly }),
+            hasError && '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500',
             'focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2',
-            'dark:bg-gray-700 dark:placeholder-gray-400 placeholder:text-gray-400 dark:text-white',
-            'disabled:pointer-events-none disabled:bg-gray-100 disabled:outline-line-muted',
-            'dark:disabled:bg-gray-800 dark:disabled:text-gray-600 dark:disabled:placeholder-gray-600 dark:disabled:outline-line-muted',
             hasRightGroup ? 'pe-10' : '',
             hasLeftGroup ? 'ps-10' : '',
             className,

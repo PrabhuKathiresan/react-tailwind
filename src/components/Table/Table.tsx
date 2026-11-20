@@ -73,7 +73,7 @@ export const Table: React.FC<TableProps> = ({
 export const TableHead: React.FC<TableHeadProps> = ({ children, className = '' }) => (
   <thead
     className={buildClassName(
-      'text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-300',
+      'text-xs text-gray-700 uppercase bg-surface-muted dark:text-gray-300',
       className,
     )}
   >
@@ -139,7 +139,7 @@ export const TableCell: React.FC<TableCellProps> = ({
   <td
     {...props}
     className={buildClassName(
-      'px-3 py-3 first:pl-4 last:pr-4 bg-white dark:bg-gray-900 group-hover:bg-gray-50 group-hover:dark:bg-gray-800',
+      'px-3 py-3 first:pl-4 last:pr-4 bg-surface group-hover:bg-gray-50 group-hover:dark:bg-gray-800',
       TEXT_ALIGN[align],
       className,
     )}
@@ -174,7 +174,7 @@ export const EmptyTableRow: React.FC<EmptyTableRowProps> = ({
   colSpan = 1,
   contentClass,
 }) => (
-  <tr className="bg-white dark:bg-gray-900">
+  <tr className="bg-surface">
     <td colSpan={colSpan} className="px-4 py-8">
       <div
         className={buildClassName(

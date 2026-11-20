@@ -244,8 +244,8 @@ describe('VirtualizedDataTable', () => {
   test('applies striped class to odd-indexed rows and their cells', () => {
     render(<VirtualizedDataTable items={items} columns={columns} striped />)
     const rows = screen.getAllByRole('row')
-    expect(rows[1].className).toMatch(/bg-gray-50/)
-    expect(rows[0].className).not.toMatch(/bg-gray-50/)
+    expect(rows[1].className).toMatch(/bg-surface-muted/)
+    expect(rows[0].className).not.toMatch(/bg-surface-muted/)
   })
 
   // ── selectable rows ──────────────────────────────────────────────────

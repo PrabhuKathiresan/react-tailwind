@@ -28,6 +28,21 @@ export const sizeClasses: Record<
 }
 
 /**
+ * A field's background, text and outline by state. Editable: the field colour. Disabled: sunken
+ * and muted, dimmed but still readable. Read-only: muted, with the value at full strength, so it
+ * reads as a value rather than an input while staying focusable and selectable.
+ */
+export function fieldStateClass({
+  disabled = false,
+  readOnly = false,
+}: { disabled?: boolean; readOnly?: boolean } = {}) {
+  if (disabled)
+    return 'pointer-events-none bg-surface-sunken text-muted placeholder:text-muted outline-line-muted'
+  if (readOnly) return 'bg-surface-muted text-fg placeholder:text-muted outline-line-muted'
+  return 'bg-field text-fg placeholder:text-gray-400 outline-line'
+}
+
+/**
  * The classes of a text field's box: border, background, focus ring and the size's padding and
  * text. Shared by Input and the fields built like it (SelectBox, MobilePicker).
  */
@@ -36,22 +51,27 @@ export function buildInputClass(
   {
     isFocusWithin = false,
     disabled = false,
+    readOnly = false,
     hasError = false,
     size = 'md',
-  }: { isFocusWithin?: boolean; disabled?: boolean; hasError?: boolean; size?: InputSize } = {},
+  }: {
+    isFocusWithin?: boolean
+    disabled?: boolean
+    readOnly?: boolean
+    hasError?: boolean
+    size?: InputSize
+  } = {},
 ) {
   const currentSize = sizeClasses[size] || sizeClasses.md
 
   return buildClassName(
     'transition-all duration-150',
     // A faint shadow lifts every field off the page the same way (Input, SelectBox, ...).
-    'block w-full rounded-lg bg-white shadow-2xs',
+    'block w-full rounded-lg shadow-2xs',
     currentSize.input,
-    'text-gray-900 outline outline-1 -outline-offset-1',
-    hasError ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500' : 'outline-line',
-    disabled
-      ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 dark:text-gray-600 dark:placeholder-gray-600 placeholder-gray-400 outline-line-muted'
-      : 'bg-white dark:bg-gray-700 dark:text-white outline-line dark:placeholder-gray-400 placeholder-gray-400',
+    'outline outline-1 -outline-offset-1',
+    fieldStateClass({ disabled, readOnly }),
+    hasError && '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500',
     isFocusWithin
       ? 'focus-within:outline-focus-ring focus-within:outline-2 focus-within:-outline-offset-2'
       : 'focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2',

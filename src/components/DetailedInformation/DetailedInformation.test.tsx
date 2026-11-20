@@ -137,7 +137,7 @@ describe('DetailedInformation Component', () => {
 
     const outer =
       document.querySelector('dl')!.closest('div.p-2') ||
-      document.querySelector('div.bg-gray-50\\/60')
+      document.querySelector('div.bg-surface-muted')
     expect(outer).not.toBeNull()
   })
 

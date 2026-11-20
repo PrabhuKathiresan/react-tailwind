@@ -102,4 +102,13 @@ describe('<Textarea />', () => {
     render(<Textarea label="Notes" />)
     expect(screen.getByLabelText('Notes').tagName).toBe('TEXTAREA')
   })
+
+  it('styles disabled and read-only as Input does', () => {
+    const { rerender } = render(<Textarea aria-label="Notes" disabled />)
+    expect(screen.getByRole('textbox')).toHaveClass('bg-surface-sunken', 'text-muted')
+    rerender(<Textarea aria-label="Notes" readOnly />)
+    expect(screen.getByRole('textbox')).toHaveClass('bg-surface-muted', 'text-fg')
+    rerender(<Textarea aria-label="Notes" />)
+    expect(screen.getByRole('textbox')).toHaveClass('bg-field')
+  })
 })

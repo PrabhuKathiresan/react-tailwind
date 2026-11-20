@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <div className="flex rounded-lg">
         {/* Static Prefix Addon */}
         {prefix && (
-          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-line bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
+          <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-line bg-surface-muted text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {prefix}
           </span>
         )}
@@ -210,6 +210,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             className={buildClassName(
               buildInputClass(className, {
                 disabled: inputProps.disabled,
+                readOnly: inputProps.readOnly,
                 hasError,
                 size,
               }),
@@ -266,7 +267,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
         {/* Static Suffix Addon */}
         {suffix && (
-          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-line bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
+          <span className="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-line bg-surface-muted text-gray-500 dark:text-gray-400 text-xs font-medium shrink-0 shadow-2xs">
             {suffix}
           </span>
         )}

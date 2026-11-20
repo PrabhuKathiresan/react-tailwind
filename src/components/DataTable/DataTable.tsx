@@ -230,7 +230,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
             {selectable && (
               <TableHeaderCell
                 className={buildClassName(
-                  'bg-gray-50 dark:bg-gray-800 w-px',
+                  'bg-surface-muted w-px',
                   densityCellClass,
                   stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
                 )}
@@ -262,7 +262,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                   style={{ width: column.width || 'auto' }}
                   aria-sort={ariaSortValue}
                   className={buildClassName(
-                    'bg-gray-50 dark:bg-gray-800',
+                    'bg-surface-muted',
                     densityCellClass,
                     stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
                     column.sticky === 'left' &&
@@ -300,7 +300,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               <TableHeaderCell
                 align="right"
                 className={buildClassName(
-                  'bg-gray-50 dark:bg-gray-800 text-right w-px',
+                  'bg-surface-muted text-right w-px',
                   densityCellClass,
                   stickyHeader && 'sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.06)]',
                 )}
@@ -313,7 +313,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                 align="right"
                 style={{ padding: 0, width: 0, minWidth: 0, maxWidth: 0 }}
                 className={buildClassName(
-                  'sticky right-0 z-20 !p-0 !pr-0 !pl-0 !py-0 w-0 max-w-0 min-w-0 border-0 bg-gray-50 dark:bg-gray-800',
+                  'sticky right-0 z-20 !p-0 !pr-0 !pl-0 !py-0 w-0 max-w-0 min-w-0 border-0 bg-surface-muted',
                   stickyHeader && 'top-0',
                 )}
               >
@@ -336,7 +336,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                     className={buildClassName(
                       'group',
                       onRowClick && 'cursor-pointer',
-                      striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                      striped && idx % 2 === 1 && 'bg-surface-muted',
                       getRowClass(item, idx),
                     )}
                     onClick={onRowClick ? () => onRowClick(item, idx) : undefined}
@@ -345,7 +345,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                       <TableCell
                         className={buildClassName(
                           densityCellClass,
-                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                          striped && idx % 2 === 1 && 'bg-surface-muted',
                         )}
                       >
                         <span onClick={(e) => e.stopPropagation()}>
@@ -364,7 +364,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                         align={column.align}
                         className={buildClassName(
                           densityCellClass,
-                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                          striped && idx % 2 === 1 && 'bg-surface-muted',
                           column.sticky === 'left' &&
                             'sticky left-0 z-10 shadow-[2px_0_6px_rgba(0,0,0,0.06)]',
                           column.sticky === 'right' &&
@@ -382,7 +382,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                         align="right"
                         className={buildClassName(
                           densityCellClass,
-                          striped && idx % 2 === 1 && 'bg-gray-50 dark:bg-gray-800/40',
+                          striped && idx % 2 === 1 && 'bg-surface-muted',
                         )}
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -408,7 +408,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
                           className={buildClassName(
                             'absolute right-0 top-0 bottom-0 h-full opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150 flex items-center justify-end gap-1 px-3 z-30 pointer-events-none group-hover:pointer-events-auto whitespace-nowrap',
                             striped && idx % 2 === 1
-                              ? 'bg-gray-100 dark:bg-gray-800'
+                              ? 'bg-surface-sunken'
                               : 'bg-white group-hover:bg-gray-50 dark:bg-gray-900 dark:group-hover:bg-gray-800',
                             rowHoverActionClass,
                           )}
@@ -442,7 +442,7 @@ export function DataTable<T extends Record<string, any> = Record<string, any>>({
               {...pagination}
               {...paginationProps}
               className={buildClassName(
-                'rounded-t-none rounded-b-lg border border-line bg-white dark:bg-gray-800',
+                'rounded-t-none rounded-b-lg border border-line bg-surface-raised',
                 paginationClass,
                 paginationProps?.className,
               )}

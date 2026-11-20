@@ -4,15 +4,14 @@ import ChevronDownIcon from '../Icons/ChevronDown.svg'
 import type { AccordionItem, AccordionProps, AccordionVariant } from './Accordion.types'
 
 const CONTAINER_CLASS: Record<AccordionVariant, string> = {
-  bordered:
-    'rounded-lg border border-line divide-y divide-line bg-white dark:bg-gray-800 overflow-hidden',
+  bordered: 'rounded-lg border border-line divide-y divide-line bg-surface-raised overflow-hidden',
   separated: 'space-y-2',
   plain: 'divide-y divide-line',
 }
 
 const ITEM_CLASS: Record<AccordionVariant, string> = {
   bordered: '',
-  separated: 'rounded-lg border border-line bg-white dark:bg-gray-800 overflow-hidden',
+  separated: 'rounded-lg border border-line bg-surface-raised overflow-hidden',
   plain: '',
 }
 

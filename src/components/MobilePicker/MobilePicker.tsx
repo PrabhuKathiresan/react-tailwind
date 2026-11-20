@@ -503,7 +503,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
           <DialogPanel
             transition
             className={buildClassName(
-              'w-full max-w-full md:max-w-lg bg-white dark:bg-gray-900 shadow-2xl rounded-t-3xl max-h-[85vh] max-h-[85dvh] flex flex-col pointer-events-auto overscroll-contain touch-pan-y',
+              'w-full max-w-full md:max-w-lg bg-surface shadow-2xl rounded-t-3xl max-h-[85vh] max-h-[85dvh] flex flex-col pointer-events-auto overscroll-contain touch-pan-y',
               'duration-200 ease-out data-[closed]:translate-y-full data-[closed]:opacity-0',
               sheetClass,
             )}
@@ -566,7 +566,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
                     data-autofocus={autoFocusSearch || undefined}
                     enterKeyHint="search"
                     // 16px text: iOS zooms the page into any field with smaller text.
-                    className="w-full pl-9 pr-10 py-2 text-base bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-9 pr-10 py-2 text-base bg-surface-raised border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     data-testid="mobile-picker-search-input"
                   />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
@@ -591,7 +591,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Quick Choice Chips Row */}
             {quickOptions && quickOptions.length > 0 && (
-              <div className="px-3 py-2 bg-gray-50/60 dark:bg-gray-800/40 border-b border-line-muted shrink-0">
+              <div className="px-3 py-2 bg-surface-muted border-b border-line-muted shrink-0">
                 <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5 px-1">
                   {quickOptionsTitle}
                 </div>
@@ -607,7 +607,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
                           'px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors cursor-pointer border',
                           isSelected
                             ? 'bg-blue-600 text-white border-blue-600'
-                            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700',
+                            : 'bg-surface-raised text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700',
                         )}
                       >
                         {getDisplayValue(chip)}
@@ -791,7 +791,7 @@ export function MobilePicker<T extends BaseOption | string = BaseOption>(
 
             {/* Sticky Footer for Multi-Select Confirmation */}
             {multiple && (
-              <div className="p-4 border-t border-line-muted bg-white dark:bg-gray-900 shrink-0">
+              <div className="p-4 border-t border-line-muted bg-surface shrink-0">
                 <Button
                   fullWidth
                   theme="primary"

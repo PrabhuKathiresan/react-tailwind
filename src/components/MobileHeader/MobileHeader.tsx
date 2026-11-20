@@ -111,7 +111,7 @@ export function MobileHeader({
         sticky && 'sticky top-0',
         transparent
           ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-line-muted'
-          : 'bg-white dark:bg-gray-900 border-b border-line shadow-xs',
+          : 'bg-surface border-b border-line shadow-xs',
         'pt-[env(safe-area-inset-top,0px)]',
         className,
       )}
@@ -142,7 +142,7 @@ export function MobileHeader({
                 }}
                 autoFocus
                 // 16px text: iOS zooms the page into any field with smaller text.
-                className="w-full pl-9 pr-8 py-2 text-base bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-full border border-transparent focus:border-blue-500 focus:outline-hidden transition-all"
+                className="w-full pl-9 pr-8 py-2 text-base bg-surface-sunken text-gray-900 dark:text-white rounded-full border border-transparent focus:border-blue-500 focus:outline-hidden transition-all"
                 data-testid="mobile-header-search-input"
               />
               {searchValue && (

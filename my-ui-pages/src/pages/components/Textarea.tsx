@@ -126,6 +126,30 @@ const [text, setText] = useState('...')
   error="Please provide at least 20 characters describing the issue."
 />`,
     },
+    {
+      title: 'Disabled & Read-only',
+      description:
+        'A disabled field is dimmed but its value stays readable. A read-only one keeps the value at full strength on a muted ground, focusable and selectable for copying, so it reads as a value rather than an input.',
+      render: (
+        <div className="max-w-md flex flex-col gap-4">
+          <Textarea
+            label="Notes (disabled)"
+            defaultValue="Delivered to the back gate."
+            rows={2}
+            disabled
+          />
+          <Textarea
+            label="Terms (read-only)"
+            defaultValue="Payment due within 15 days of the invoice date."
+            rows={2}
+            readOnly
+          />
+        </div>
+      ),
+      code: `
+<Textarea label="Notes (disabled)" defaultValue="Delivered to the back gate." rows={2} disabled />
+<Textarea label="Terms (read-only)" defaultValue="Payment due within 15 days of the invoice date." rows={2} readOnly />`,
+    },
   ]
 
   return (

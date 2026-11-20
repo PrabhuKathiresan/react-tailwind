@@ -138,7 +138,7 @@ export const QuantityStepper = forwardRef<HTMLInputElement, QuantityStepperProps
             ? '!outline-red-500 !ring-1 !ring-red-500/50 dark:!outline-red-500'
             : 'outline-line',
           disabled
-            ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 outline-line-muted'
+            ? 'pointer-events-none bg-surface-sunken outline-line-muted'
             : 'bg-white dark:bg-gray-700',
           'focus-within:outline-focus-ring focus-within:outline-2 focus-within:-outline-offset-2',
         )}

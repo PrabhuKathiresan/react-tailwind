@@ -64,7 +64,7 @@ export const Tabs: React.FC<TabsProps> = ({
             className={
               tab.panelClass !== undefined
                 ? tab.panelClass
-                : 'rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm'
+                : 'rounded-lg bg-surface-raised p-4 shadow-sm'
             }
           >
             {tab.content}

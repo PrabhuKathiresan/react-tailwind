@@ -102,7 +102,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                   'focus-within:ring-2 focus-within:ring-primary-ring focus-within:border-primary',
                   isSelected
                     ? 'border-primary bg-blue-50/40 dark:bg-blue-950/30 ring-2 ring-primary-ring/30'
-                    : 'border-line bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600',
+                    : 'border-line bg-surface-raised hover:border-gray-300 dark:hover:border-gray-600',
                   isItemDisabled &&
                     'opacity-50 cursor-not-allowed pointer-events-none bg-gray-50 dark:bg-gray-800/50',
                 )}

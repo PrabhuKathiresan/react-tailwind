@@ -126,7 +126,7 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>((props, ref) 
                 <button
                   type="button"
                   onClick={() => setExpanded(true)}
-                  className="px-1.5 py-0.5 rounded-md text-xs font-semibold bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
+                  className="px-1.5 py-0.5 rounded-md text-xs font-semibold bg-surface-sunken hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
                   aria-label={`Expand ${hiddenItems.length} hidden breadcrumbs`}
                   title={`Show ${hiddenItems.length} hidden levels`}
                 >
