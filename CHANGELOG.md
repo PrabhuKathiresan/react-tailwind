@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.21.2 (2026-11-20)</small>
+
+* Merge pull request #47 from PrabhuKathiresan/fix/dropdown-selected-description ([053d226a0e007128cb0d860969c0ed282e96d5a3](https://github.com/PrabhuKathiresan/react-tailwind/commit/053d226a0e007128cb0d860969c0ed282e96d5a3)), closes [#47](https://github.com/PrabhuKathiresan/react-tailwind/issues/47)
+* fix(dropdown): a selected item's description is readable on its tint ([499a648d8a4fdfa246b6aef652149f7399c91d03](https://github.com/PrabhuKathiresan/react-tailwind/commit/499a648d8a4fdfa246b6aef652149f7399c91d03))
+
 ## <small>1.21.1 (2026-11-20)</small>
 
 * Merge pull request #46 from PrabhuKathiresan/fix/quantity-stepper-fill ([55ca098b0f1c9c02039f674492d4df5224ef7371](https://github.com/PrabhuKathiresan/react-tailwind/commit/55ca098b0f1c9c02039f674492d4df5224ef7371)), closes [#46](https://github.com/PrabhuKathiresan/react-tailwind/issues/46)
