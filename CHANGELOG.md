@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## 1.22.0 (2026-11-20)
+
+* Merge pull request #48 from PrabhuKathiresan/feat/surface-tokens ([0adb39351fde629643d92109ad60dc49920a9588](https://github.com/PrabhuKathiresan/react-tailwind/commit/0adb39351fde629643d92109ad60dc49920a9588)), closes [#48](https://github.com/PrabhuKathiresan/react-tailwind/issues/48)
+* docs(colors): a page for the colour system and its tokens ([e54743002e79d672c408468f21e8ec422d6bc6c8](https://github.com/PrabhuKathiresan/react-tailwind/commit/e54743002e79d672c408468f21e8ec422d6bc6c8))
+* docs(fields): disabled and read-only examples ([87cff36bbf7055a8181c61c5f44932629d23b756](https://github.com/PrabhuKathiresan/react-tailwind/commit/87cff36bbf7055a8181c61c5f44932629d23b756))
+* feat(fields): disabled and read-only states from the theme ([2762fbb003e88ebedbb0bad354b3d965a3abe638](https://github.com/PrabhuKathiresan/react-tailwind/commit/2762fbb003e88ebedbb0bad354b3d965a3abe638))
+* feat(theme): background tokens by surface role ([a678ad5c93e58de65aaca593a9df3beb2562de4a](https://github.com/PrabhuKathiresan/react-tailwind/commit/a678ad5c93e58de65aaca593a9df3beb2562de4a))
+
 ## <small>1.21.2 (2026-11-20)</small>
 
 * Merge pull request #47 from PrabhuKathiresan/fix/dropdown-selected-description ([053d226a0e007128cb0d860969c0ed282e96d5a3](https://github.com/PrabhuKathiresan/react-tailwind/commit/053d226a0e007128cb0d860969c0ed282e96d5a3)), closes [#47](https://github.com/PrabhuKathiresan/react-tailwind/issues/47)

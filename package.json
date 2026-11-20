@@ -1,6 +1,6 @@
 {
   "name": "@pk-design/react-tailwind",
-  "version": "1.21.2",
+  "version": "1.22.0",
   "main": "dist/react-tailwind.cjs.js",
   "module": "dist/es/index.js",
   "types": "dist/types/index.d.ts",
