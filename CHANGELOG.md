@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.22.1 (2026-11-20)</small>
+
+* Merge pull request #49 from PrabhuKathiresan/fix/checkbox-outline ([cee94e3a4a0dad27ecf8705df866a0200b1c93eb](https://github.com/PrabhuKathiresan/react-tailwind/commit/cee94e3a4a0dad27ecf8705df866a0200b1c93eb)), closes [#49](https://github.com/PrabhuKathiresan/react-tailwind/issues/49)
+* fix(checkbox): outline an unticked box so it shows on fields and surfaces ([42bd2f19af209551d53e11a91358ddb794871776](https://github.com/PrabhuKathiresan/react-tailwind/commit/42bd2f19af209551d53e11a91358ddb794871776))
+
 ## 1.22.0 (2026-11-20)
 
 * Merge pull request #48 from PrabhuKathiresan/feat/surface-tokens ([0adb39351fde629643d92109ad60dc49920a9588](https://github.com/PrabhuKathiresan/react-tailwind/commit/0adb39351fde629643d92109ad60dc49920a9588)), closes [#48](https://github.com/PrabhuKathiresan/react-tailwind/issues/48)
