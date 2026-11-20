@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented here.
 
+## 1.21.0 (2026-11-20)
+
+* Merge pull request #45 from PrabhuKathiresan/feat/dropdown-selected-listrow-open-label ([ad1fe3b2780c9a5f3290b595a6608463bc0f6507](https://github.com/PrabhuKathiresan/react-tailwind/commit/ad1fe3b2780c9a5f3290b595a6608463bc0f6507)), closes [#45](https://github.com/PrabhuKathiresan/react-tailwind/issues/45)
+* feat(dropdown): a selected item; ListRow takes an openLabel ([2a4f02aa3e6e9f6927df3736dc86f7a6a9100304](https://github.com/PrabhuKathiresan/react-tailwind/commit/2a4f02aa3e6e9f6927df3736dc86f7a6a9100304))
+
 ## 1.20.0 (2026-11-19)
 
 * Merge pull request #44 from PrabhuKathiresan/feat/theme-colors-and-selectbox-button-name ([e7b5ecd4e7b3adf014544ef3c48a72f8aaa0c232](https://github.com/PrabhuKathiresan/react-tailwind/commit/e7b5ecd4e7b3adf014544ef3c48a72f8aaa0c232)), closes [#44](https://github.com/PrabhuKathiresan/react-tailwind/issues/44)
