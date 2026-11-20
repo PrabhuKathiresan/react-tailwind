@@ -122,7 +122,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
                 'focus:ring-focus-ring dark:focus:ring-offset-gray-900',
                 disabled
                   ? 'border-line-muted bg-surface-sunken pointer-events-none'
-                  : 'bg-white dark:bg-gray-700 border-line hover:border-gray-400 dark:hover:border-gray-500',
+                  : 'bg-field border-gray-500 dark:border-gray-400 hover:border-gray-600 dark:hover:border-gray-300',
                 indeterminate &&
                   '!bg-blue-600 !border-blue-600 dark:!bg-blue-600 dark:!border-blue-600',
                 className,
