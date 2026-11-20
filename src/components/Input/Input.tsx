@@ -210,6 +210,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             className={buildClassName(
               buildInputClass(className, {
                 disabled: inputProps.disabled,
+                readOnly: inputProps.readOnly,
                 hasError,
                 size,
               }),

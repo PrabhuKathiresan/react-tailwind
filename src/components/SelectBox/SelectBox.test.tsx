@@ -563,4 +563,30 @@ describe('SelectBox', () => {
     expect(panel).toHaveClass('z-50')
     expect(panel).not.toHaveClass('z-20')
   })
+
+  describe('readOnly', () => {
+    it('shows the selection as a read-only field, with no list to open', () => {
+      render(<SelectBox label="Category" readOnly options={options} selected={options[1]} />)
+      const field = screen.getByLabelText('Category')
+      expect(field).toHaveAttribute('readonly')
+      expect(field).toHaveValue(options[1].label)
+      expect(field).toHaveClass('bg-surface-muted')
+      expect(screen.queryByTestId('combobox-button')).toBeNull()
+    })
+
+    it('still submits its value under its name', () => {
+      const { container } = render(
+        <SelectBox
+          label="Category"
+          name="category"
+          readOnly
+          options={options}
+          selected={options[1]}
+        />,
+      )
+      expect(container.querySelector('input[type="hidden"][name="category"]')).toHaveValue(
+        String(options[1].value),
+      )
+    })
+  })
 })

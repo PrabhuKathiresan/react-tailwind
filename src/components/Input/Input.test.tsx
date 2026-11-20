@@ -193,4 +193,24 @@ describe('Input Component', () => {
     // The text stops short of the adornment.
     expect(screen.getByLabelText('Price').style.paddingInlineEnd).not.toBe('')
   })
+
+  describe('field states', () => {
+    it('is the field colour when editable', () => {
+      render(<Input aria-label="Name" />)
+      expect(screen.getByRole('textbox')).toHaveClass('bg-field', 'text-fg', 'outline-line')
+    })
+
+    it('dims a disabled field, but keeps its value readable', () => {
+      render(<Input aria-label="Name" disabled defaultValue="Asha" />)
+      expect(screen.getByRole('textbox')).toHaveClass('bg-surface-sunken', 'text-muted')
+      expect(screen.getByRole('textbox')).not.toHaveClass('bg-field')
+    })
+
+    it('shows a read-only field as a value: muted ground, full-strength text', () => {
+      render(<Input aria-label="Name" readOnly defaultValue="Asha" />)
+      const input = screen.getByRole('textbox')
+      expect(input).toHaveClass('bg-surface-muted', 'text-fg', 'outline-line-muted')
+      expect(input).not.toHaveClass('pointer-events-none')
+    })
+  })
 })

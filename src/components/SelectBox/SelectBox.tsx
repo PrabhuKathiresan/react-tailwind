@@ -91,6 +91,7 @@ export const SelectBox = forwardRef(
       labelClass = '',
       labelHint = null,
       disabled = false,
+      readOnly = false,
       containerClass = '',
       onChange: onChangeProp = NOOP,
       placeholder,
@@ -520,288 +521,334 @@ export const SelectBox = forwardRef(
           </div>
         )}
 
-        <Combobox
-          multiple={multiple}
-          immediate={immediate}
-          name={name}
-          value={normalizedSelected as any}
-          onChange={comboboxOnChangeWrapper as any}
-          onClose={() => setQuery('')}
-          disabled={disabled}
-          by={(a: any, b: any) => (a && b ? getValue(a) === getValue(b) : a === b)}
-        >
-          {multiple ? (
-            <div
+        {readOnly ? (
+          <>
+            <input
+              ref={inputRef}
+              id={id}
+              readOnly
+              disabled={disabled}
+              value={
+                Array.isArray(normalizedSelected)
+                  ? normalizedSelected.map((option) => getDisplayValue(option)).join(', ')
+                  : normalizedSelected
+                    ? getDisplayValue(normalizedSelected as T)
+                    : ''
+              }
+              placeholder={placeholder}
+              aria-invalid={hasError ? true : undefined}
               className={buildClassName(
-                baseInputClass,
-                'flex flex-wrap gap-2 peer relative',
-                rightPaddingClass,
+                buildInputClass('', { disabled, readOnly: true, hasError, size }),
+                'text-ellipsis',
                 hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
               )}
-              ref={fieldRef}
-            >
-              {hasLeftGroup && (
-                <span
-                  className={buildClassName(
-                    'absolute left-0 top-0 h-full flex items-center justify-center text-gray-400 dark:text-gray-500',
-                    currentSize.group,
-                  )}
-                >
-                  {leftGroup}
-                </span>
-              )}
-
-              {isArray(normalizedSelected) &&
-                normalizedSelected?.length > 0 &&
-                normalizedSelected.map((option, idx) => (
-                  <Badge
-                    key={`${getValue(option)}-${idx}`}
-                    theme="secondary"
-                    size={currentSize.badgeSize}
-                    removable={!disabled}
-                    onRemove={() => removeSelection(idx)}
-                  >
-                    {getDisplayValue(option)}
-                  </Badge>
-                ))}
-
-              <ComboboxInput
-                className="outline-none flex-1 dark:placeholder-gray-400 placeholder-gray-400 bg-transparent"
-                aria-label={name}
-                value={query}
-                autoComplete="off"
-                placeholder={normalizedSelected?.length ? '' : placeholder}
-                onChange={(e) => {
-                  const val = e.target.value
-                  if (allowFreeText && multiple && val.includes(',')) {
-                    const parts = val.split(',')
-                    parts.forEach((p) => {
-                      if (p.trim()) handleFreeTextCommit(p.trim())
-                    })
-                    setQuery('')
-                  } else {
-                    setQuery(val)
-                  }
-                }}
-                id={id}
-                ref={inputRef}
-                {...openOnTap}
-                onKeyDown={(e) => {
-                  if (allowFreeText && (e.key === 'Enter' || e.key === ',') && query.trim()) {
-                    e.preventDefault()
-                    handleFreeTextCommit(query.replace(/,/g, ''))
-                  } else if (multiple && e.key === 'Backspace' && !query) {
-                    if (Array.isArray(normalizedSelected) && normalizedSelected.length > 0) {
-                      removeSelection(normalizedSelected.length - 1)
-                    }
-                  }
-                }}
-                onBlur={() => {
-                  if (allowFreeText && query.trim()) {
-                    handleFreeTextCommit(query.replace(/,/g, ''))
-                  }
-                }}
-                data-testid="combobox-input"
-              />
-
-              <ComboboxButton
-                ref={toggleRef}
-                aria-label={toggleLabel}
-                className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
-                data-testid="combobox-button"
-              >
-                <ChevronDownIcon className={chevronIconClass} />
-              </ComboboxButton>
-            </div>
-          ) : (
-            <div className="relative" ref={forwardedRef as any}>
-              {hasLeftGroup && (
-                <span
-                  className={buildClassName(
-                    'absolute left-0 top-0 h-full flex items-center justify-center text-gray-400 dark:text-gray-500 z-10',
-                    currentSize.group,
-                  )}
-                >
-                  {leftGroup}
-                </span>
-              )}
-
-              <ComboboxInput
-                aria-label={name}
-                displayValue={(option: any) => (option ? getDisplayValue(option) : null)}
-                autoComplete="off"
-                placeholder={placeholder}
-                onChange={(event) => setQuery(event.target.value)}
-                onKeyDown={(e) => {
-                  if (allowFreeText && e.key === 'Enter' && query.trim()) {
-                    e.preventDefault()
-                    handleFreeTextCommit(query)
-                  }
-                }}
-                onBlur={() => {
-                  if (allowFreeText && query.trim()) {
-                    handleFreeTextCommit(query)
-                  }
-                }}
-                onFocus={() => {
-                  setQuery('')
-                }}
+              data-testid="combobox-input"
+            />
+            {name &&
+              (Array.isArray(normalizedSelected)
+                ? normalizedSelected
+                : normalizedSelected
+                  ? [normalizedSelected as T]
+                  : []
+              ).map((option) => (
+                <input
+                  key={String(getValue(option))}
+                  type="hidden"
+                  name={multiple ? `${name}[]` : name}
+                  value={String(getValue(option))}
+                />
+              ))}
+          </>
+        ) : (
+          <Combobox
+            multiple={multiple}
+            immediate={immediate}
+            name={name}
+            value={normalizedSelected as any}
+            onChange={comboboxOnChangeWrapper as any}
+            onClose={() => setQuery('')}
+            disabled={disabled}
+            by={(a: any, b: any) => (a && b ? getValue(a) === getValue(b) : a === b)}
+          >
+            {multiple ? (
+              <div
                 className={buildClassName(
                   baseInputClass,
-                  'text-ellipsis',
-                  // Not searchable: picked from the list, not typed into, so no text caret.
-                  !searchable && 'cursor-pointer caret-transparent',
+                  'flex flex-wrap gap-2 peer relative',
                   rightPaddingClass,
                   hasLeftGroup ? (size === 'lg' ? 'ps-12' : size === 'sm' ? 'ps-8' : 'ps-10') : '',
                 )}
-                disabled={disabled}
-                id={id}
-                readOnly={!searchable}
-                ref={inputRef}
-                {...openOnTap}
-                data-testid="combobox-input"
-              />
+                ref={fieldRef}
+              >
+                {hasLeftGroup && (
+                  <span
+                    className={buildClassName(
+                      'absolute left-0 top-0 h-full flex items-center justify-center text-gray-400 dark:text-gray-500',
+                      currentSize.group,
+                    )}
+                  >
+                    {leftGroup}
+                  </span>
+                )}
 
-              {showClearButton && (
-                <Button
-                  size="xs"
-                  iconOnly
-                  aria-label="Clear selection"
-                  theme="secondary"
-                  variant="plain"
-                  className="group absolute inset-y-0 right-8 h-6 top-2"
-                  onClick={() => handleOnChangeInternal(multiple ? ([] as T[]) : null)}
-                  disabled={disabled}
-                  data-testid="combobox-clear-button"
+                {isArray(normalizedSelected) &&
+                  normalizedSelected?.length > 0 &&
+                  normalizedSelected.map((option, idx) => (
+                    <Badge
+                      key={`${getValue(option)}-${idx}`}
+                      theme="secondary"
+                      size={currentSize.badgeSize}
+                      removable={!disabled}
+                      onRemove={() => removeSelection(idx)}
+                    >
+                      {getDisplayValue(option)}
+                    </Badge>
+                  ))}
+
+                <ComboboxInput
+                  className="outline-none flex-1 dark:placeholder-gray-400 placeholder-gray-400 bg-transparent"
+                  aria-label={name}
+                  value={query}
+                  autoComplete="off"
+                  placeholder={normalizedSelected?.length ? '' : placeholder}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    if (allowFreeText && multiple && val.includes(',')) {
+                      const parts = val.split(',')
+                      parts.forEach((p) => {
+                        if (p.trim()) handleFreeTextCommit(p.trim())
+                      })
+                      setQuery('')
+                    } else {
+                      setQuery(val)
+                    }
+                  }}
+                  id={id}
+                  ref={inputRef}
+                  {...openOnTap}
+                  onKeyDown={(e) => {
+                    if (allowFreeText && (e.key === 'Enter' || e.key === ',') && query.trim()) {
+                      e.preventDefault()
+                      handleFreeTextCommit(query.replace(/,/g, ''))
+                    } else if (multiple && e.key === 'Backspace' && !query) {
+                      if (Array.isArray(normalizedSelected) && normalizedSelected.length > 0) {
+                        removeSelection(normalizedSelected.length - 1)
+                      }
+                    }
+                  }}
+                  onBlur={() => {
+                    if (allowFreeText && query.trim()) {
+                      handleFreeTextCommit(query.replace(/,/g, ''))
+                    }
+                  }}
+                  data-testid="combobox-input"
+                />
+
+                <ComboboxButton
+                  ref={toggleRef}
+                  aria-label={toggleLabel}
+                  className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
+                  data-testid="combobox-button"
                 >
-                  <XIcon className="size-4 stroke-gray-500 dark:stroke-gray-300" />
-                </Button>
+                  <ChevronDownIcon className={chevronIconClass} />
+                </ComboboxButton>
+              </div>
+            ) : (
+              <div className="relative" ref={forwardedRef as any}>
+                {hasLeftGroup && (
+                  <span
+                    className={buildClassName(
+                      'absolute left-0 top-0 h-full flex items-center justify-center text-gray-400 dark:text-gray-500 z-10',
+                      currentSize.group,
+                    )}
+                  >
+                    {leftGroup}
+                  </span>
+                )}
+
+                <ComboboxInput
+                  aria-label={name}
+                  displayValue={(option: any) => (option ? getDisplayValue(option) : null)}
+                  autoComplete="off"
+                  placeholder={placeholder}
+                  onChange={(event) => setQuery(event.target.value)}
+                  onKeyDown={(e) => {
+                    if (allowFreeText && e.key === 'Enter' && query.trim()) {
+                      e.preventDefault()
+                      handleFreeTextCommit(query)
+                    }
+                  }}
+                  onBlur={() => {
+                    if (allowFreeText && query.trim()) {
+                      handleFreeTextCommit(query)
+                    }
+                  }}
+                  onFocus={() => {
+                    setQuery('')
+                  }}
+                  className={buildClassName(
+                    baseInputClass,
+                    'text-ellipsis',
+                    // Not searchable: picked from the list, not typed into, so no text caret.
+                    !searchable && 'cursor-pointer caret-transparent',
+                    rightPaddingClass,
+                    hasLeftGroup
+                      ? size === 'lg'
+                        ? 'ps-12'
+                        : size === 'sm'
+                          ? 'ps-8'
+                          : 'ps-10'
+                      : '',
+                  )}
+                  disabled={disabled}
+                  id={id}
+                  readOnly={!searchable}
+                  ref={inputRef}
+                  {...openOnTap}
+                  data-testid="combobox-input"
+                />
+
+                {showClearButton && (
+                  <Button
+                    size="xs"
+                    iconOnly
+                    aria-label="Clear selection"
+                    theme="secondary"
+                    variant="plain"
+                    className="group absolute inset-y-0 right-8 h-6 top-2"
+                    onClick={() => handleOnChangeInternal(multiple ? ([] as T[]) : null)}
+                    disabled={disabled}
+                    data-testid="combobox-clear-button"
+                  >
+                    <XIcon className="size-4 stroke-gray-500 dark:stroke-gray-300" />
+                  </Button>
+                )}
+
+                <ComboboxButton
+                  ref={toggleRef}
+                  aria-label={toggleLabel}
+                  className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
+                  data-testid="combobox-button"
+                >
+                  <ChevronDownIcon className={chevronIconClass} />
+                </ComboboxButton>
+              </div>
+            )}
+
+            <ComboboxOptions
+              anchor={{ to: 'bottom start', gap: 5, padding: 8, offset: fieldAnchor?.offset ?? 0 }}
+              as="div"
+              modal={modalDropdown}
+              // Matches the field width by default; min-width lets the panel grow wider than a narrow field.
+              style={{
+                ...(fieldAnchor ? { width: fieldAnchor.width } : undefined),
+                ...(dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined),
+              }}
+              className={buildClassName(
+                'w-[var(--input-width)] rounded-lg border border-line bg-surface-raised p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
+                '[--anchor-max-height:20rem]',
+                'origin-top border transition duration-200 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)] data-[closed]:translate-y-[-15%] data-[closed]:opacity-0',
+                dropdownContainerClass,
+              )}
+              transition
+              data-testid="combobox-options"
+            >
+              {/* Multi-Select "Select All" Action Bar */}
+              {multiple && showSelectAll && allOptions.length > 0 && (
+                <div className="pb-1 mb-1 border-b border-line-muted px-3 pt-1 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={handleToggleSelectAll}
+                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                  >
+                    {isAllSelected ? 'Deselect All' : 'Select All'}
+                  </button>
+                  <span className="text-[11px] font-medium text-gray-400">
+                    {Array.isArray(normalizedSelected) ? normalizedSelected.length : 0} of{' '}
+                    {allOptions.length}
+                  </span>
+                </div>
               )}
 
-              <ComboboxButton
-                ref={toggleRef}
-                aria-label={toggleLabel}
-                className="group absolute inset-y-0 right-0 px-2.5 flex items-center justify-center"
-                data-testid="combobox-button"
-              >
-                <ChevronDownIcon className={chevronIconClass} />
-              </ComboboxButton>
-            </div>
-          )}
-
-          <ComboboxOptions
-            anchor={{ to: 'bottom start', gap: 5, padding: 8, offset: fieldAnchor?.offset ?? 0 }}
-            as="div"
-            modal={modalDropdown}
-            // Matches the field width by default; min-width lets the panel grow wider than a narrow field.
-            style={{
-              ...(fieldAnchor ? { width: fieldAnchor.width } : undefined),
-              ...(dropdownMinWidth != null ? { minWidth: dropdownMinWidth } : undefined),
-            }}
-            className={buildClassName(
-              'w-[var(--input-width)] rounded-lg border border-line bg-surface-raised p-1 shadow-lg max-h-80 overflow-y-auto z-50 [--anchor-gap:var(--spacing-1)]',
-              '[--anchor-max-height:20rem]',
-              'origin-top border transition duration-200 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)] data-[closed]:translate-y-[-15%] data-[closed]:opacity-0',
-              dropdownContainerClass,
-            )}
-            transition
-            data-testid="combobox-options"
-          >
-            {/* Multi-Select "Select All" Action Bar */}
-            {multiple && showSelectAll && allOptions.length > 0 && (
-              <div className="pb-1 mb-1 border-b border-line-muted px-3 pt-1 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={handleToggleSelectAll}
-                  className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+              {optionsLoading || searchPending ? (
+                <BodyText
+                  data-testid="options-loading"
+                  className="flex items-center justify-center py-2 px-3 select-none"
                 >
-                  {isAllSelected ? 'Deselect All' : 'Select All'}
-                </button>
-                <span className="text-[11px] font-medium text-gray-400">
-                  {Array.isArray(normalizedSelected) ? normalizedSelected.length : 0} of{' '}
-                  {allOptions.length}
-                </span>
-              </div>
-            )}
+                  <Loader size="sm" />
+                </BodyText>
+              ) : shouldShowTypeToSearch ? (
+                <BodyText className="flex items-center justify-between py-2 px-3 select-none">
+                  Type to search...
+                </BodyText>
+              ) : (
+                <div>
+                  {/* Render Free-Text Option if query does not match an option exactly */}
+                  {allowFreeText &&
+                    query.trim() &&
+                    !allOptions.some(
+                      (opt) => getDisplayValue(opt)?.toLowerCase() === query.trim().toLowerCase(),
+                    ) && (
+                      <ComboboxOption
+                        key={`freetext-${query.trim()}`}
+                        value={createFreeTextOption(query.trim()) as any}
+                        className="group flex items-center gap-2 rounded-lg py-1.5 px-3 select-none text-sm data-[focus]:bg-blue-50 dark:data-[focus]:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium cursor-pointer w-full"
+                        data-testid="freetext-option"
+                      >
+                        <span>Use "{query.trim()}"</span>
+                      </ComboboxOption>
+                    )}
 
-            {optionsLoading || searchPending ? (
-              <BodyText
-                data-testid="options-loading"
-                className="flex items-center justify-center py-2 px-3 select-none"
-              >
-                <Loader size="sm" />
-              </BodyText>
-            ) : shouldShowTypeToSearch ? (
-              <BodyText className="flex items-center justify-between py-2 px-3 select-none">
-                Type to search...
-              </BodyText>
-            ) : (
-              <div>
-                {/* Render Free-Text Option if query does not match an option exactly */}
-                {allowFreeText &&
-                  query.trim() &&
-                  !allOptions.some(
-                    (opt) => getDisplayValue(opt)?.toLowerCase() === query.trim().toLowerCase(),
-                  ) && (
-                    <ComboboxOption
-                      key={`freetext-${query.trim()}`}
-                      value={createFreeTextOption(query.trim()) as any}
-                      className="group flex items-center gap-2 rounded-lg py-1.5 px-3 select-none text-sm data-[focus]:bg-blue-50 dark:data-[focus]:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium cursor-pointer w-full"
-                      data-testid="freetext-option"
+                  {/* Render Grouped Options */}
+                  {filteredGroups
+                    ? filteredGroups.map((grp, gIdx) => (
+                        <div key={gIdx}>
+                          <div className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 py-1 select-none">
+                            {grp.group}
+                          </div>
+                          {grp.options.map(renderOptionItem)}
+                        </div>
+                      ))
+                    : /* Render Standard Flat Options */
+                      filteredOptions.map(renderOptionItem)}
+
+                  {!hasAnyOptionsToDisplay && Boolean(noOptionsText) && (
+                    <div
+                      data-testid="no-result-found"
+                      className="flex items-center gap-2 py-1.5 px-3 select-none"
                     >
-                      <span>Use "{query.trim()}"</span>
-                    </ComboboxOption>
+                      <TextContent muted small>
+                        {noOptionsText}
+                      </TextContent>
+                      {Boolean(query.trim()) && (
+                        <TextContent strong small>
+                          "{query.trim()}"
+                        </TextContent>
+                      )}
+                    </div>
                   )}
 
-                {/* Render Grouped Options */}
-                {filteredGroups
-                  ? filteredGroups.map((grp, gIdx) => (
-                      <div key={gIdx}>
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 py-1 select-none">
-                          {grp.group}
-                        </div>
-                        {grp.options.map(renderOptionItem)}
+                  {/* Creatable option (allowAdd) - suppressed when allowFreeText is true */}
+                  {!allowFreeText && allowAdd && Boolean(query.trim()) && (
+                    <ComboboxOption
+                      key={`add-${query.trim()}`}
+                      value={query}
+                      className="group rounded-lg py-1.5 px-3 cursor-pointer text-gray-700 dark:text-gray-300 data-[focus]:bg-gray-100 dark:data-[focus]:bg-gray-700"
+                      onClick={() => void handleAddAndSelect(query)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <CirclePlusIcon className="size-4.5" />
+                        <TextContent>
+                          {addNewText} "{query}"
+                        </TextContent>
                       </div>
-                    ))
-                  : /* Render Standard Flat Options */
-                    filteredOptions.map(renderOptionItem)}
-
-                {!hasAnyOptionsToDisplay && Boolean(noOptionsText) && (
-                  <div
-                    data-testid="no-result-found"
-                    className="flex items-center gap-2 py-1.5 px-3 select-none"
-                  >
-                    <TextContent muted small>
-                      {noOptionsText}
-                    </TextContent>
-                    {Boolean(query.trim()) && (
-                      <TextContent strong small>
-                        "{query.trim()}"
-                      </TextContent>
-                    )}
-                  </div>
-                )}
-
-                {/* Creatable option (allowAdd) - suppressed when allowFreeText is true */}
-                {!allowFreeText && allowAdd && Boolean(query.trim()) && (
-                  <ComboboxOption
-                    key={`add-${query.trim()}`}
-                    value={query}
-                    className="group rounded-lg py-1.5 px-3 cursor-pointer text-gray-700 dark:text-gray-300 data-[focus]:bg-gray-100 dark:data-[focus]:bg-gray-700"
-                    onClick={() => void handleAddAndSelect(query)}
-                  >
-                    <div className="flex items-center gap-2">
-                      <CirclePlusIcon className="size-4.5" />
-                      <TextContent>
-                        {addNewText} "{query}"
-                      </TextContent>
-                    </div>
-                  </ComboboxOption>
-                )}
-              </div>
-            )}
-          </ComboboxOptions>
-        </Combobox>
+                    </ComboboxOption>
+                  )}
+                </div>
+              )}
+            </ComboboxOptions>
+          </Combobox>
+        )}
 
         {showErrorMessage && error && (
           <div className="mt-1">

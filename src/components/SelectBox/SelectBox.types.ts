@@ -88,6 +88,12 @@ export interface SelectBoxProps<T extends BaseOption | string = BaseOption> {
   /** Whether the entire SelectBox is disabled */
   disabled?: boolean
 
+  /**
+   * Shows the selection as a read-only field: focusable and selectable, but no list opens and
+   * the value can't change. The value still submits with a form, under `name`.
+   */
+  readOnly?: boolean
+
   /** Additional CSS classes for the outer container */
   containerClass?: string
 

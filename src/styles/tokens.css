@@ -75,6 +75,7 @@
   --ui-bg-surface-raised: #ffffff; /* drawers, dialogs, menus, popovers */
   --ui-bg-surface-muted: #f9fafb; /* gray-50: table headers, quiet strips, add-ons */
   --ui-bg-surface-sunken: #f3f4f6; /* gray-100: chips, tracks, disabled fields */
+  --ui-bg-field: #ffffff; /* an editable text field or select */
 
   /* Border radius scale */
   --ui-radius-sm: 0.25rem;
@@ -139,6 +140,7 @@
   --ui-bg-surface-raised: #1f2937; /* gray-800 */
   --ui-bg-surface-muted: #18202f; /* gray-800 at 50% on gray-900: a step up from a card */
   --ui-bg-surface-sunken: #2b3544; /* between gray-800 and 700: still shows inside a raised layer */
+  --ui-bg-field: #374151; /* gray-700: lighter than any surface it sits on */
 }
 
 /*
@@ -199,4 +201,5 @@
   --color-surface-raised: var(--ui-bg-surface-raised);
   --color-surface-muted: var(--ui-bg-surface-muted);
   --color-surface-sunken: var(--ui-bg-surface-sunken);
+  --color-field: var(--ui-bg-field);
 }
