@@ -7574,6 +7574,13 @@
         "defaultValue": null
       },
       {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Shows the selection as a read-only field: focusable and selectable, but no list opens and\nthe value can't change. The value still submits with a form, under `name`.",
+        "defaultValue": null
+      },
+      {
         "name": "containerClass",
         "type": "string",
         "required": false,
@@ -7780,6 +7787,7 @@
       "labelwrapperclass",
       "labelclass",
       "labelhint",
+      "readonly",
       "containerclass",
       "placeholder",
       "dropdowncontainerclass",
@@ -7864,6 +7872,11 @@
       "optional",
       "hint",
       "beside",
+      "focusable",
+      "selectable",
+      "opens",
+      "submits",
+      "under",
       "outer",
       "container",
       "applied",
@@ -7942,7 +7955,6 @@
       "asks",
       "shown",
       "before",
-      "readonly",
       "mark",
       "used",
       "accessibility",
