@@ -162,7 +162,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           <DialogPanel
             transition
             className={buildClassName(
-              'w-full max-w-full bg-white dark:bg-gray-800 shadow-xl flex flex-col min-w-0',
+              'w-full max-w-full bg-surface-raised shadow-xl flex flex-col min-w-0',
               'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
               ...(fullscreen
                 ? ['h-full data-[closed]:translate-y-4']
@@ -208,7 +208,7 @@ export const Drawer: React.FC<DrawerProps> = ({
               <div
                 className={buildClassName(
                   'space-y-1 py-3 px-4 md:px-6 flex flex-col border-b border-line shrink-0',
-                  titleSticky && 'sticky top-0 bg-white dark:bg-gray-800 z-10',
+                  titleSticky && 'sticky top-0 bg-surface-raised z-10',
                 )}
               >
                 <div className="flex items-center justify-between gap-3 min-w-0">
@@ -291,7 +291,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             {!fullscreen && footer && (
               <div
                 className={buildClassName(
-                  'p-4 border-t border-line-muted bg-white dark:bg-gray-800 shrink-0 min-w-0',
+                  'p-4 border-t border-line-muted bg-surface-raised shrink-0 min-w-0',
                   footerSticky && 'sticky bottom-0 z-10',
                 )}
               >

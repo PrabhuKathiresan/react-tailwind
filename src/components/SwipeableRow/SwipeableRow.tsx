@@ -225,7 +225,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({
     <div
       ref={containerRef}
       className={buildClassName(
-        'relative overflow-hidden rounded-xl border border-line-muted bg-white dark:bg-gray-800 select-none touch-pan-y',
+        'relative overflow-hidden rounded-xl border border-line-muted bg-surface-raised select-none touch-pan-y',
         className,
       )}
       data-testid="swipeable-row"
@@ -266,7 +266,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({
           transition: isDragging ? 'none' : 'transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1)',
         }}
         className={buildClassName(
-          'relative z-10 w-full bg-white dark:bg-gray-800 shadow-xs cursor-grab active:cursor-grabbing',
+          'relative z-10 w-full bg-surface-raised shadow-xs cursor-grab active:cursor-grabbing',
           contentClassName,
         )}
         data-testid="swipeable-row-content"

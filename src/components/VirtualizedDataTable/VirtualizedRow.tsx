@@ -54,9 +54,9 @@ export const VirtualizedRow = ({
     <div
       role="row"
       className={buildClassName(
-        'grid border-b border-line bg-white dark:bg-gray-900 group',
+        'grid border-b border-line bg-surface group',
         onRowClick && 'cursor-pointer',
-        isStriped && 'bg-gray-50 dark:bg-gray-800/40',
+        isStriped && 'bg-surface-muted',
         resolvedRowClass,
       )}
       style={{
@@ -73,7 +73,7 @@ export const VirtualizedRow = ({
           className={buildClassName(
             'flex items-center whitespace-nowrap border-r last:border-r-0 border-line',
             densityCellClass,
-            isStriped && 'bg-gray-50 dark:bg-gray-800/40',
+            isStriped && 'bg-surface-muted',
           )}
           onClick={(e) => e.stopPropagation()}
         >
@@ -98,10 +98,10 @@ export const VirtualizedRow = ({
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-right',
               col.sticky === 'left' &&
-                'sticky left-0 z-10 bg-white dark:bg-gray-900 shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
+                'sticky left-0 z-10 bg-surface shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
               col.sticky === 'right' &&
-                'sticky right-0 z-10 bg-white dark:bg-gray-900 shadow-[-2px_0_4px_rgba(0,0,0,0.05)]',
-              isStriped && 'bg-gray-50 dark:bg-gray-800/40',
+                'sticky right-0 z-10 bg-surface shadow-[-2px_0_4px_rgba(0,0,0,0.05)]',
+              isStriped && 'bg-surface-muted',
               getCellClass(col),
             )}
           >

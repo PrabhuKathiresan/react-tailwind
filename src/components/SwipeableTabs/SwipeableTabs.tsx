@@ -114,7 +114,7 @@ export function SwipeableTabs({
                   'flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold transition-all duration-150 cursor-pointer',
                   item.disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
                   isActive
-                    ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-xs'
+                    ? 'bg-surface text-gray-900 dark:text-white shadow-xs'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white',
                 )}
                 data-testid={`swipeable-tab-btn-${item.id}`}
@@ -142,7 +142,7 @@ export function SwipeableTabs({
                   item.disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
                   isActive
                     ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700',
+                    : 'bg-surface-sunken text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700',
                 )}
                 data-testid={`swipeable-tab-btn-${item.id}`}
               >

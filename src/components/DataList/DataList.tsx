@@ -522,11 +522,11 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
       {/* Items List */}
       <div className="space-y-3">
         {loading ? (
-          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-line">
+          <div className="p-8 text-center text-sm text-gray-500 bg-surface-raised rounded-xl border border-line">
             Loading items...
           </div>
         ) : processedItems.length === 0 ? (
-          <div className="p-8 text-center text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-line">
+          <div className="p-8 text-center text-sm text-gray-500 bg-surface-raised rounded-xl border border-line">
             {emptyMessage}
           </div>
         ) : (
@@ -542,7 +542,7 @@ export function DataList<T extends Record<string, any> = Record<string, any>>({
               <div
                 onClick={() => onItemClick?.(item, idx)}
                 className={buildClassName(
-                  'p-4 bg-white dark:bg-gray-800 rounded-xl border border-line shadow-xs space-y-3 transition-colors',
+                  'p-4 bg-surface-raised rounded-xl border border-line shadow-xs space-y-3 transition-colors',
                   onItemClick && 'cursor-pointer hover:border-blue-500/50',
                   selected && 'ring-2 ring-blue-500/50 bg-blue-50/20 dark:bg-blue-950/20',
                   customClass,

@@ -46,12 +46,12 @@ const progressBarColorMap: Record<ToastType, string> = {
 const variantStyleMap: Record<ToastVariant, Record<ToastType, string>> = {
   accent: {
     success:
-      'bg-white dark:bg-gray-900 border-l-4 border-success text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
+      'bg-surface border-l-4 border-success text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
     error:
-      'bg-white dark:bg-gray-900 border-l-4 border-danger text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
-    info: 'bg-white dark:bg-gray-900 border-l-4 border-info text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
+      'bg-surface border-l-4 border-danger text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
+    info: 'bg-surface border-l-4 border-info text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
     warning:
-      'bg-white dark:bg-gray-900 border-l-4 border-warning text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
+      'bg-surface border-l-4 border-warning text-gray-900 dark:text-gray-100 shadow-lg border-y border-r border-line',
   },
   filled: {
     success: 'bg-success text-white shadow-lg',
@@ -60,13 +60,10 @@ const variantStyleMap: Record<ToastVariant, Record<ToastType, string>> = {
     warning: 'bg-warning text-white shadow-lg',
   },
   outlined: {
-    success:
-      'bg-white dark:bg-gray-900 border-2 border-success text-gray-900 dark:text-gray-100 shadow-md',
-    error:
-      'bg-white dark:bg-gray-900 border-2 border-danger text-gray-900 dark:text-gray-100 shadow-md',
-    info: 'bg-white dark:bg-gray-900 border-2 border-info text-gray-900 dark:text-gray-100 shadow-md',
-    warning:
-      'bg-white dark:bg-gray-900 border-2 border-warning text-gray-900 dark:text-gray-100 shadow-md',
+    success: 'bg-surface border-2 border-success text-gray-900 dark:text-gray-100 shadow-md',
+    error: 'bg-surface border-2 border-danger text-gray-900 dark:text-gray-100 shadow-md',
+    info: 'bg-surface border-2 border-info text-gray-900 dark:text-gray-100 shadow-md',
+    warning: 'bg-surface border-2 border-warning text-gray-900 dark:text-gray-100 shadow-md',
   },
   glass: {
     success:

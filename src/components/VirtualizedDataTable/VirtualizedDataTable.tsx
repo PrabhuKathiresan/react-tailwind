@@ -133,7 +133,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
   const Header = (
     <div ref={headerRef} className="overflow-hidden w-full">
       <div
-        className="grid bg-gray-50 dark:bg-gray-800 border-b border-line"
+        className="grid bg-surface-muted border-b border-line"
         style={{ gridTemplateColumns: gridTemplate, minWidth: 'fit-content' }}
       >
         {selectable && (
@@ -163,9 +163,9 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
               densityCellClass,
               'border-r last:border-r-0 border-line',
               col.sticky === 'left' &&
-                'sticky left-0 z-20 bg-gray-50 dark:bg-gray-800 shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
+                'sticky left-0 z-20 bg-surface-muted shadow-[2px_0_4px_rgba(0,0,0,0.05)]',
               col.sticky === 'right' &&
-                'sticky right-0 z-20 bg-gray-50 dark:bg-gray-800 shadow-[-2px_0_4px_rgba(0,0,0,0.05)]',
+                'sticky right-0 z-20 bg-surface-muted shadow-[-2px_0_4px_rgba(0,0,0,0.05)]',
               col.headerClass,
             )}
           >
@@ -200,7 +200,7 @@ export function VirtualizedDataTable<T extends Record<string, any> = Record<stri
               <div
                 key={idx}
                 data-testid="skeleton-row"
-                className="grid animate-pulse bg-white dark:bg-gray-900 border-b border-line-muted"
+                className="grid animate-pulse bg-surface border-b border-line-muted"
                 style={{ gridTemplateColumns: gridTemplate, height: rowHeight }}
               >
                 {selectable && <div className={densityCellClass} />}

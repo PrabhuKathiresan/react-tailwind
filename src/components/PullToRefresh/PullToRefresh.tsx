@@ -230,7 +230,7 @@ export function PullToRefresh({
           aria-hidden="true"
           data-testid="pull-to-refresh-indicator"
         >
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-line shadow-md text-xs font-semibold text-gray-700 dark:text-gray-200">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-raised border border-line shadow-md text-xs font-semibold text-gray-700 dark:text-gray-200">
             {isRefreshing
               ? (refreshingContent ?? (
                   <>

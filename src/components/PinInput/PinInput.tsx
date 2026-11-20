@@ -126,12 +126,12 @@ export function PinInput({
                 'text-center font-bold transition-all duration-150 outline outline-1 -outline-offset-1 select-none',
                 sizeClasses,
                 disabled
-                  ? 'pointer-events-none bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 outline-line-muted'
+                  ? 'pointer-events-none bg-surface-sunken text-gray-400 dark:text-gray-600 outline-line-muted'
                   : error
                     ? 'bg-red-50/50 dark:bg-red-950/20 text-red-600 dark:text-red-400 outline-red-500 focus:outline-red-500 focus:outline-2 focus:-outline-offset-2'
                     : isFilled
                       ? 'bg-blue-50/30 dark:bg-blue-950/30 text-gray-900 dark:text-white outline-blue-500 dark:outline-blue-400 focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2'
-                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white outline-line focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2',
+                      : 'bg-surface-raised text-gray-900 dark:text-white outline-line focus:outline-focus-ring focus:outline-2 focus:-outline-offset-2',
                 inputClass,
               )}
               data-testid={`pin-input-box-${index}`}

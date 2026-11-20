@@ -73,9 +73,8 @@ export const Card = forwardRef(
       zeroPadding ? '' : compact ? 'p-3 sm:p-4' : 'p-5 sm:p-6',
 
       // Surface variants
-      isOutlined && 'bg-white dark:bg-gray-900 border border-line',
-      isElevated &&
-        'bg-white dark:bg-gray-900 border border-line shadow-md shadow-gray-200/50 dark:shadow-none',
+      isOutlined && 'bg-surface border border-line',
+      isElevated && 'bg-surface border border-line shadow-md shadow-gray-200/50 dark:shadow-none',
       isFilled && 'bg-gray-50/80 dark:bg-gray-800/60 border border-transparent',
       isGhost && 'bg-transparent border border-transparent',
 

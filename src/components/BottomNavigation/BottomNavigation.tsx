@@ -28,7 +28,7 @@ export function BottomNavigation({
   if (hidden) return null
 
   const themeStyles = {
-    light: 'bg-white dark:bg-gray-900 border-t border-line text-gray-600 dark:text-gray-400',
+    light: 'bg-surface border-t border-line text-gray-600 dark:text-gray-400',
     dark: 'bg-gray-900 text-gray-400 border-t border-gray-800',
     primary: 'bg-blue-600 text-blue-100 border-t border-blue-700',
   }[theme]
