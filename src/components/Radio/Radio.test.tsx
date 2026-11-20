@@ -82,4 +82,13 @@ describe('Radio', () => {
     expect(screen.getByText('A')).toHaveClass('label-test')
     expect(input).toHaveClass('radio-test')
   })
+
+  it('outlines an unselected circle so it shows on a field or a surface', () => {
+    render(<Radio label="Monthly" name="plan" value="monthly" />)
+    expect(screen.getByRole('radio')).toHaveClass(
+      'bg-field',
+      'border-gray-500',
+      'dark:border-gray-400',
+    )
+  })
 })

@@ -113,4 +113,13 @@ describe('Checkbox Component', () => {
     render(<Checkbox checked={true} onChange={() => {}} />)
     expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true')
   })
+
+  it('outlines an unticked box so it shows on a field or a surface', () => {
+    render(<Checkbox label="Accept" />)
+    expect(screen.getByRole('checkbox')).toHaveClass(
+      'bg-field',
+      'border-gray-500',
+      'dark:border-gray-400',
+    )
+  })
 })
