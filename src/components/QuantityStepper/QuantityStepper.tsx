@@ -55,10 +55,12 @@ const ICON_SIZE_CLASS: Record<QuantityStepperSize, string> = {
 
 // Typed text is 16px below 768px: iOS Safari zooms the page into any field
 // with smaller text when it's focused. From md the size steps down as designed.
+// The number field keeps its width, and grows when the stepper is stretched (a grid or
+// full-width column), so - and + stay at the frame's two ends with no empty space.
 const INPUT_TEXT_CLASS: Record<QuantityStepperSize, string> = {
-  sm: 'w-12 text-base md:text-xs',
-  md: 'w-16 text-base md:text-sm',
-  lg: 'w-20 text-base',
+  sm: 'w-12 grow text-base md:text-xs',
+  md: 'w-16 grow text-base md:text-sm',
+  lg: 'w-20 grow text-base',
 }
 
 export const QuantityStepper = forwardRef<HTMLInputElement, QuantityStepperProps>((props, ref) => {

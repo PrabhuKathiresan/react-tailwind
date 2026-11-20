@@ -66,4 +66,9 @@ describe('QuantityStepper', () => {
     expect(screen.getByText('$')).toBeInTheDocument()
     expect(screen.getByText('items')).toBeInTheDocument()
   })
+
+  test('the number field grows to fill a stretched stepper', () => {
+    render(<QuantityStepper value={1} onChange={() => {}} />)
+    expect(screen.getByTestId('stepper-input')).toHaveClass('grow')
+  })
 })
