@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react'
 import {
   Badge,
+  Input,
+  SelectBox,
   BodyText,
   Breadcrumb,
   HeadingText,
@@ -59,6 +61,11 @@ const BACKGROUNDS: [string, string][] = [
     'A quiet step from a surface: table headers and footers, striped rows, input add-ons, row hover.',
   ],
   ['surface-sunken', 'Set into a surface: chips, progress tracks, skeletons, disabled controls.'],
+]
+const FIELDS: [string, string][] = [
+  ['field', 'An editable text field, textarea or select.'],
+  ['surface-sunken', 'A disabled field, with text-muted: dimmed, still readable.'],
+  ['surface-muted', 'A read-only field, with text-fg: a value to read or copy, not to change.'],
 ]
 const TEXT: [string, string][] = [
   ['fg', 'Body text and headings.'],
@@ -259,6 +266,29 @@ function LayeredPreview({ mode }: { mode: 'light' | 'dark' }) {
   )
 }
 
+/** Input and SelectBox in each state, pinned to one theme. */
+function FieldPreview({ mode }: { mode: 'light' | 'dark' }) {
+  const options = [{ value: 'in', label: 'Karnataka (29)' }]
+  return (
+    <div
+      style={pinned(mode === 'light' ? LIGHT : DARK)}
+      className="space-y-3 rounded-2xl bg-surface p-4 text-fg ring-1 ring-line"
+    >
+      <span className="text-xs font-semibold tracking-wide text-subtle uppercase">{mode}</span>
+      <Input label="Editable" defaultValue="Sharma Traders" size="sm" />
+      <Input label="Disabled" defaultValue="20 Nov 2026" disabled size="sm" />
+      <Input label="Read-only" defaultValue="INV-0305" readOnly size="sm" />
+      <SelectBox
+        label="Read-only select"
+        options={options}
+        selected={options[0]}
+        readOnly
+        size="sm"
+      />
+    </div>
+  )
+}
+
 export default function ColorsDocsPage() {
   return (
     <motion.div
@@ -327,6 +357,24 @@ export default function ColorsDocsPage() {
           <LayeredPreview mode="dark" />
         </div>
         <TokenTable rows={described(BACKGROUNDS, 'bg', 'fill')} />
+      </Section>
+
+      <Section
+        title="Fields"
+        intro={
+          <>
+            Input, Textarea and SelectBox take their colours by state. A disabled field is dimmed
+            but its value stays readable; a read-only one (
+            <code className="font-mono text-xs">readOnly</code>) keeps its value at full strength on
+            a muted ground, focusable and selectable, so it reads as a value rather than an input.
+          </>
+        }
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <FieldPreview mode="light" />
+          <FieldPreview mode="dark" />
+        </div>
+        <TokenTable rows={described(FIELDS, 'bg', 'fill')} />
       </Section>
 
       <Section

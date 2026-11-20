@@ -223,6 +223,22 @@ const [text, setText] = useState('John Doe')
   helperText="Username can contain letters, numbers, and underscores."
 />`,
     },
+    {
+      title: 'Disabled & Read-only',
+      description:
+        'A disabled field is dimmed but its value stays readable. A read-only one keeps the value at full strength on a muted ground, focusable and selectable for copying, so it reads as a value rather than an input.',
+      render: (
+        <div className="max-w-md flex flex-col gap-4">
+          <Input label="Invoice number" defaultValue="INV-0305" />
+          <Input label="Invoice date (disabled)" defaultValue="20 Nov 2026" disabled />
+          <Input label="Reference (read-only)" defaultValue="PO-88412" readOnly />
+        </div>
+      ),
+      code: `
+<Input label="Invoice number" defaultValue="INV-0305" />
+<Input label="Invoice date (disabled)" defaultValue="20 Nov 2026" disabled />
+<Input label="Reference (read-only)" defaultValue="PO-88412" readOnly />`,
+    },
   ]
 
   return (

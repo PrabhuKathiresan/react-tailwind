@@ -536,6 +536,37 @@ const [tags, setTags] = useState(['React', 'Tailwind', 'Design System'])
   error="Please choose a valid fruit before proceeding."
 />`,
     },
+    {
+      title: 'Disabled & Read-only',
+      description:
+        'A disabled field is dimmed but its value stays readable. A read-only one keeps the value at full strength on a muted ground, focusable and selectable for copying, so it reads as a value rather than an input. A read-only SelectBox opens no list and still submits its value under name.',
+      render: (
+        <div className="max-w-md flex flex-col gap-4">
+          <SelectBox
+            label="Department"
+            options={departmentOptions}
+            selected={departmentOptions[0]}
+          />
+          <SelectBox
+            label="Department (disabled)"
+            options={departmentOptions}
+            selected={departmentOptions[1]}
+            disabled
+          />
+          <SelectBox
+            label="Department (read-only)"
+            name="department"
+            options={departmentOptions}
+            selected={departmentOptions[2]}
+            readOnly
+          />
+        </div>
+      ),
+      code: `
+<SelectBox label="Department" options={departments} selected={departments[0]} />
+<SelectBox label="Department (disabled)" options={departments} selected={departments[1]} disabled />
+<SelectBox label="Department (read-only)" name="department" options={departments} selected={departments[2]} readOnly />`,
+    },
   ]
 
   return (
