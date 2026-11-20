@@ -61,6 +61,7 @@ import StatusPillDocsPage from './pages/components/StatusPill'
 import StickyActionBarDocsPage from './pages/components/StickyActionBar'
 import SkeletonDocsPage from './pages/components/Skeleton'
 import UtilitiesDocsPage from './pages/UtilitiesDocs'
+import ColorsDocsPage from './pages/ColorsDocs'
 import HooksDocsPage from './pages/HooksDocs'
 
 export default function App() {
@@ -70,6 +71,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route element={<DocsLayout />}>
           <Route path="installation" element={<InstallationPage />} />
+          <Route path="colors" element={<ColorsDocsPage />} />
           <Route path="utilities" element={<UtilitiesDocsPage />} />
           <Route path="hooks" element={<HooksDocsPage />} />
           <Route path="accordion" element={<AccordionDocsPage />} />

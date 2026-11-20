@@ -11,7 +11,10 @@ interface NavSection {
 export const navSections: NavSection[] = [
   {
     title: 'Getting Started',
-    items: [{ path: '/installation', label: 'Installation' }],
+    items: [
+      { path: '/installation', label: 'Installation' },
+      { path: '/colors', label: 'Colors & tokens' },
+    ],
   },
   {
     title: 'Mobile & Touch',

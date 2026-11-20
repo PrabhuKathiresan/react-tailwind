@@ -6,12 +6,6 @@ import {
   RadioSwitch,
   Badge,
   Tabs,
-  Table,
-  TableHead,
-  TableHeaderCell,
-  TableBody,
-  TableRow,
-  TableCell,
 } from '@pk-design/react-tailwind'
 import { Link } from 'react-router'
 import { CodeBlock } from '../components/CodeBlock'
@@ -32,49 +26,6 @@ const optionalInstallCommands: Record<PackageManager, string> = {
   yarn: 'yarn add react-window @types/react-window',
   bun: 'bun add react-window @types/react-window',
 }
-
-const cssTokens = [
-  {
-    token: '--ui-primary',
-    defaultVal: '#3b82f6',
-    usage: 'Primary action buttons, active tab indicators, focus rings',
-  },
-  {
-    token: '--ui-primary-hover',
-    defaultVal: '#2563eb',
-    usage: 'Hover state for primary buttons and interactive elements',
-  },
-  {
-    token: '--ui-success',
-    defaultVal: '#10b981',
-    usage: 'Success toasts, badges, and positive alerts',
-  },
-  {
-    token: '--ui-danger',
-    defaultVal: '#ef4444',
-    usage: 'Error messages, danger buttons, and critical alerts',
-  },
-  {
-    token: '--ui-warning',
-    defaultVal: '#f59e0b',
-    usage: 'Warning banners, caution pills, and attention toasts',
-  },
-  {
-    token: '--ui-info',
-    defaultVal: '#3b82f6',
-    usage: 'Informational toasts, banners, and help tooltips',
-  },
-  {
-    token: '--ui-text',
-    defaultVal: '#111827 / #f3f4f6',
-    usage: 'Base typography color across BodyText, HeadingText, and TextContent',
-  },
-  {
-    token: '--ui-border',
-    defaultVal: '#e5e7eb / #374151',
-    usage: 'Structural card outlines, table dividers, and panel borders',
-  },
-]
 
 export default function InstallationPage() {
   const [pkgManager, setPkgManager] = useState<PackageManager>('pnpm')
@@ -480,52 +431,21 @@ import { Input } from "@pk-design/react-tailwind/components/Input"`}
       </section>
 
       {/* Theming & Tokens Reference */}
-      <section className="space-y-6">
-        <div className="space-y-2">
-          <HeadingText level={2} size="2xl" weight="bold">
-            CSS Custom Properties &amp; Tokens
-          </HeadingText>
-          <BodyText muted>
-            Customize component colors, backgrounds, and text shades without rebuilding JavaScript
-            bundles. Override any token in your CSS:
-          </BodyText>
-        </div>
-
-        {/* Tokens Table */}
-        <div className="overflow-hidden border border-[var(--ui-border)] rounded-2xl shadow-xs">
-          <Table>
-            <TableHead>
-              <TableHeaderCell className="w-48 whitespace-nowrap">CSS Token</TableHeaderCell>
-              <TableHeaderCell className="w-64 whitespace-nowrap">
-                Default Color Swatch
-              </TableHeaderCell>
-              <TableHeaderCell>Usage &amp; Purpose</TableHeaderCell>
-            </TableHead>
-            <TableBody>
-              {cssTokens.map((item) => (
-                <TableRow key={item.token} hoverable>
-                  <TableCell className="w-48 whitespace-nowrap font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
-                    {item.token}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="size-5 rounded-md border border-black/10 dark:border-white/10 shadow-xs shrink-0"
-                        style={{ backgroundColor: item.defaultVal.split(' / ')[0] }}
-                      />
-                      <span className="font-mono text-xs text-gray-700 dark:text-gray-300">
-                        {item.defaultVal}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-xs text-gray-600 dark:text-gray-400">
-                    {item.usage}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+      <section className="space-y-2">
+        <HeadingText level={2} size="2xl" weight="bold">
+          Colors &amp; tokens
+        </HeadingText>
+        <BodyText muted>
+          Every colour is a CSS variable with a light and a dark value, and a Tailwind class (
+          <code className="font-mono text-xs">bg-surface</code>,{' '}
+          <code className="font-mono text-xs">text-muted</code>,{' '}
+          <code className="font-mono text-xs">border-line</code>…) that follows dark mode by itself.
+          Override the variables to rebrand. The full list, with what each is for, is on{' '}
+          <Link to="/colors" className="font-medium text-primary-fg hover:underline">
+            Colors &amp; tokens
+          </Link>
+          .
+        </BodyText>
       </section>
 
       {/* Dependency Insights */}
