@@ -408,4 +408,13 @@ describe('Drawer Component', () => {
     )
     expect(screen.getByTestId('panel')).toHaveClass('max-h-[min(88dvh,100%)]')
   })
+
+  it('keeps a centred panel within the screen, so a long one scrolls inside instead of past both edges', () => {
+    render(
+      <Drawer isOpen align="center" title="Long form">
+        Fields
+      </Drawer>,
+    )
+    expect(screen.getByTestId('panel')).toHaveClass('max-h-[min(calc(100dvh-2rem),100%)]')
+  })
 })
