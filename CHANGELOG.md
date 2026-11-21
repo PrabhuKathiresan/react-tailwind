@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.22.2 (2026-11-21)</small>
+
+* Merge pull request #50 from PrabhuKathiresan/fix/drawer-center-height ([8ef767b022df6f1aaca3d98ca1bc02d0fdad0b8a](https://github.com/PrabhuKathiresan/react-tailwind/commit/8ef767b022df6f1aaca3d98ca1bc02d0fdad0b8a)), closes [#50](https://github.com/PrabhuKathiresan/react-tailwind/issues/50)
+* fix(action-sheet): from tablets up, close from the header, rows highlight on hover, no Cancel ([ab9c6459147e5f751c7a18b4c39ba1c2fe919a65](https://github.com/PrabhuKathiresan/react-tailwind/commit/ab9c6459147e5f751c7a18b4c39ba1c2fe919a65))
+* fix(action-sheet): open as a centred dialog from tablets up, a bottom sheet on phones ([4fd6a6cfa7507c3977be1c80dd03f2bfbb15cb9d](https://github.com/PrabhuKathiresan/react-tailwind/commit/4fd6a6cfa7507c3977be1c80dd03f2bfbb15cb9d))
+* fix(drawer): keep a centred panel within the screen so a long one scrolls inside ([f8b1169a55b168c46d27b1310c8203a562c35c04](https://github.com/PrabhuKathiresan/react-tailwind/commit/f8b1169a55b168c46d27b1310c8203a562c35c04))
+* fix(drawer): keep showing what was open while it fades out, not the caller's reset state ([2084a3c2a9fd62488ab1672da7ef7ca68fd381d5](https://github.com/PrabhuKathiresan/react-tailwind/commit/2084a3c2a9fd62488ab1672da7ef7ca68fd381d5))
+
 ## <small>1.22.1 (2026-11-20)</small>
 
 * Merge pull request #49 from PrabhuKathiresan/fix/checkbox-outline ([cee94e3a4a0dad27ecf8705df866a0200b1c93eb](https://github.com/PrabhuKathiresan/react-tailwind/commit/cee94e3a4a0dad27ecf8705df866a0200b1c93eb)), closes [#49](https://github.com/PrabhuKathiresan/react-tailwind/issues/49)
