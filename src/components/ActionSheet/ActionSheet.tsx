@@ -3,6 +3,7 @@ import type { ActionSheetProps } from './ActionSheet.types'
 import { Drawer } from '../Drawer'
 import { Button } from '../Button'
 import { buildClassName } from '../../utils/build-classname'
+import { useResponsiveValue } from '../../hooks/use-breakpoint'
 
 export function ActionSheet({
   isOpen,
@@ -18,6 +19,10 @@ export function ActionSheet({
   panelClass = '',
   containerClass = '',
 }: ActionSheetProps) {
+  // A sheet from the bottom on phones, where a thumb reaches it; from tablets up, where it
+  // would stretch along the screen's foot, a dialog in the middle, without a drag handle.
+  const sheet = useResponsiveValue({ base: true, md: false })
+
   const handleItemClick = (action: (typeof actions)[0]) => {
     if (action.disabled) return
     action.onClick?.()
@@ -33,11 +38,15 @@ export function ActionSheet({
     <Drawer
       isOpen={isOpen}
       onClose={onClose}
-      align="bottom"
+      align={sheet ? 'bottom' : 'center'}
+      size="md"
       closeOnOutsideClick={closeOnBackdropClick}
       showCloseButton={false}
-      dragHandle={dragHandle}
-      panelClass={buildClassName('rounded-t-2xl max-h-[85vh] overflow-hidden', panelClass)}
+      dragHandle={sheet && dragHandle}
+      panelClass={buildClassName(
+        sheet ? 'rounded-t-2xl max-h-[85vh] overflow-hidden' : 'pt-4',
+        panelClass,
+      )}
       data-testid="action-sheet-drawer"
     >
       <div className={buildClassName('space-y-4 py-1', containerClass)} data-testid="action-sheet">
