@@ -6,6 +6,7 @@ import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import XIcon from '../Icons/X.svg'
 import { useBreakpoint, useResponsiveValue } from '../../hooks/use-breakpoint'
 import { useCloseOnBack } from '../../hooks/use-close-on-back'
+import { useHeldWhileClosing } from '../../hooks/use-held-while-closing'
 import type { AlignmentMap, DrawerProps, SizeMap } from './Drawer.types'
 
 const alignmentMap: AlignmentMap = {
@@ -50,10 +51,10 @@ export const Drawer: React.FC<DrawerProps> = ({
   align: alignProp = 'end',
   size: sizeProp = 'md',
   backdrop = true,
-  title,
-  description,
-  children,
-  footer,
+  title: titleProp,
+  description: descriptionProp,
+  children: childrenProp,
+  footer: footerProp,
   footerSticky = false,
   panelClass = '',
   contentClass = '',
@@ -64,8 +65,16 @@ export const Drawer: React.FC<DrawerProps> = ({
   showCloseButton = true,
   dragHandle,
   phoneLayout = 'default',
-  headerAction,
+  headerAction: headerActionProp,
 }) => {
+  // Shown as they were while open until it has faded out, not as the caller has since reset them.
+  const { title, description, children, footer, headerAction } = useHeldWhileClosing(isOpen, {
+    title: titleProp,
+    description: descriptionProp,
+    children: childrenProp,
+    footer: footerProp,
+    headerAction: headerActionProp,
+  })
   const align = useResponsiveValue(alignProp)
   const size = useResponsiveValue(sizeProp)
   const breakpoint = useBreakpoint()
