@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { ActionSheet } from './ActionSheet'
 import { ActionSheetItem } from './ActionSheet.types'
+import { mockViewport } from '../../test-utils/mock-viewport'
 
 describe('ActionSheet', () => {
   const actions: ActionSheetItem[] = [
@@ -85,5 +86,29 @@ describe('ActionSheet', () => {
 
     expect(disabledOnClick).not.toHaveBeenCalled()
     expect(onCloseMock).not.toHaveBeenCalled()
+  })
+
+  describe('by screen size', () => {
+    afterEach(() => mockViewport.restore())
+
+    it('rises from the bottom with a drag handle on phones', () => {
+      mockViewport(390)
+      render(<ActionSheet isOpen onClose={jest.fn()} title="Options" actions={actions} />)
+      expect(screen.getByTestId('drawer-drag-handle')).toBeInTheDocument()
+    })
+
+    it('opens as a dialog in the middle, without a drag handle, from tablets up', () => {
+      mockViewport(1280)
+      render(<ActionSheet isOpen onClose={jest.fn()} title="Options" actions={actions} />)
+      expect(screen.queryByTestId('drawer-drag-handle')).not.toBeInTheDocument()
+      // Closed from its header, as a dialog; no Cancel button at its foot.
+      expect(screen.getByRole('button', { name: 'Close drawer' })).toBeInTheDocument()
+      expect(screen.queryByTestId('action-sheet-cancel-btn')).not.toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'Options' })).toBeInTheDocument()
+      // The panel holding the actions: rounded all round, as a dialog, not only on top.
+      const content = screen.getByTestId('action-sheet')
+      expect(content.closest('.rounded-2xl')).not.toBeNull()
+      expect(content.closest('.rounded-t-2xl')).toBeNull()
+    })
   })
 })

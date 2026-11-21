@@ -6,6 +6,7 @@ import ChevronLeftIcon from '../Icons/ChevronLeft.svg'
 import XIcon from '../Icons/X.svg'
 import { useBreakpoint, useResponsiveValue } from '../../hooks/use-breakpoint'
 import { useCloseOnBack } from '../../hooks/use-close-on-back'
+import { useHeldWhileClosing } from '../../hooks/use-held-while-closing'
 import type { AlignmentMap, DrawerProps, SizeMap } from './Drawer.types'
 
 const alignmentMap: AlignmentMap = {
@@ -17,7 +18,9 @@ const alignmentMap: AlignmentMap = {
 }
 
 const panelAlignmentMap: AlignmentMap = {
-  center: 'data-[closed]:scale-95 rounded-2xl',
+  // Never taller than the screen, less a margin: past it, a centred panel overflows both
+  // edges, its title and actions off screen and out of reach, instead of scrolling within.
+  center: 'data-[closed]:scale-95 rounded-2xl max-h-[min(calc(100dvh-2rem),100%)]',
   start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
   end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
   top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
@@ -48,10 +51,10 @@ export const Drawer: React.FC<DrawerProps> = ({
   align: alignProp = 'end',
   size: sizeProp = 'md',
   backdrop = true,
-  title,
-  description,
-  children,
-  footer,
+  title: titleProp,
+  description: descriptionProp,
+  children: childrenProp,
+  footer: footerProp,
   footerSticky = false,
   panelClass = '',
   contentClass = '',
@@ -62,8 +65,16 @@ export const Drawer: React.FC<DrawerProps> = ({
   showCloseButton = true,
   dragHandle,
   phoneLayout = 'default',
-  headerAction,
+  headerAction: headerActionProp,
 }) => {
+  // Shown as they were while open until it has faded out, not as the caller has since reset them.
+  const { title, description, children, footer, headerAction } = useHeldWhileClosing(isOpen, {
+    title: titleProp,
+    description: descriptionProp,
+    children: childrenProp,
+    footer: footerProp,
+    headerAction: headerActionProp,
+  })
   const align = useResponsiveValue(alignProp)
   const size = useResponsiveValue(sizeProp)
   const breakpoint = useBreakpoint()
