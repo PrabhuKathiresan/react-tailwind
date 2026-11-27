@@ -290,6 +290,17 @@ describe('Drawer Component', () => {
 
     afterEach(() => window.history.replaceState(null, ''))
 
+    it('scrolls a focused field below its sticky bar, label included, not under it', () => {
+      render(
+        <Drawer isOpen phoneLayout="fullscreen" title="New customer">
+          <input aria-label="Name" />
+        </Drawer>,
+      )
+      expect(screen.getByTestId('panel')).toHaveClass(
+        'scroll-pt-[calc(3.5rem+1px+env(safe-area-inset-top,0px)+2.25rem)]',
+      )
+    })
+
     it('puts close, title and the main action in one bar, with no footer', () => {
       renderForm()
 

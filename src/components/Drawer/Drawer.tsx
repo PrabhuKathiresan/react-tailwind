@@ -184,7 +184,13 @@ export const Drawer: React.FC<DrawerProps> = ({
               'w-full max-w-full bg-surface-raised shadow-xl flex flex-col min-w-0',
               'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
               ...(fullscreen
-                ? ['h-full data-[closed]:translate-y-4']
+                ? [
+                    'h-full data-[closed]:translate-y-4',
+                    // Focusing a field scrolls it into view; without this the browser lines it up
+                    // with the panel's top, under the sticky bar. Clears the bar (3.5rem, its
+                    // border and the status bar) and leaves room for the field's label.
+                    'scroll-pt-[calc(3.5rem+1px+env(safe-area-inset-top,0px)+2.25rem)]',
+                  ]
                 : [panelAlignmentMap[align], panelSizeMap[size], panelClass]),
             )}
             data-layout={fullscreen ? 'fullscreen' : undefined}
