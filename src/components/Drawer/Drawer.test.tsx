@@ -290,6 +290,17 @@ describe('Drawer Component', () => {
 
     afterEach(() => window.history.replaceState(null, ''))
 
+    it('scrolls a focused field below its sticky bar, label included, not under it', () => {
+      render(
+        <Drawer isOpen phoneLayout="fullscreen" title="New customer">
+          <input aria-label="Name" />
+        </Drawer>,
+      )
+      expect(screen.getByTestId('panel')).toHaveClass(
+        'scroll-pt-[calc(3.5rem+1px+env(safe-area-inset-top,0px)+2.25rem)]',
+      )
+    })
+
     it('puts close, title and the main action in one bar, with no footer', () => {
       renderForm()
 
@@ -416,5 +427,29 @@ describe('Drawer Component', () => {
       </Drawer>,
     )
     expect(screen.getByTestId('panel')).toHaveClass('max-h-[min(calc(100dvh-2rem),100%)]')
+  })
+
+  it('keeps side and top panels clear of the status bar and home indicator', () => {
+    const top = 'border-t-[length:env(safe-area-inset-top,0px)]'
+    const bottom = 'border-b-[length:env(safe-area-inset-bottom,0px)]'
+    const panelFor = (align: 'start' | 'end' | 'top' | 'bottom' | 'center') => {
+      const { unmount } = render(
+        <Drawer isOpen align={align} title="Bulk upload">
+          Fields
+        </Drawer>,
+      )
+      const className = screen.getByTestId('panel').className
+      unmount()
+      return className
+    }
+
+    for (const align of ['start', 'end'] as const) {
+      expect(panelFor(align)).toContain(top)
+      expect(panelFor(align)).toContain(bottom)
+    }
+    expect(panelFor('top')).toContain(top)
+    // A bottom sheet pads for the home indicator itself, and a centred panel touches neither edge.
+    expect(panelFor('bottom')).not.toContain(top)
+    expect(panelFor('center')).not.toContain(top)
   })
 })

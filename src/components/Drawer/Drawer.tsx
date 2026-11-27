@@ -17,13 +17,21 @@ const alignmentMap: AlignmentMap = {
   bottom: 'items-end justify-center h-full',
 }
 
+const SAFE_TOP = 'border-t-[length:env(safe-area-inset-top,0px)] border-t-transparent'
+const SAFE_BOTTOM = 'border-b-[length:env(safe-area-inset-bottom,0px)] border-b-transparent'
+
 const panelAlignmentMap: AlignmentMap = {
   // Never taller than the screen, less a margin: past it, a centred panel overflows both
   // edges, its title and actions off screen and out of reach, instead of scrolling within.
   center: 'data-[closed]:scale-95 rounded-2xl max-h-[min(calc(100dvh-2rem),100%)]',
-  start: 'data-[closed]:-translate-x-1/2 rounded-r-2xl',
-  end: 'data-[closed]:translate-x-1/2 rounded-l-2xl',
-  top: 'data-[closed]:-translate-y-1/2 rounded-b-2xl',
+  // Panels that reach the top or bottom of the screen keep clear of the status bar
+  // and the home indicator (0 in most browsers; real in an edge-to-edge app WebView
+  // or a standalone web app). A transparent border rather than padding: the border
+  // is outside the scrolling area, so a sticky title stops below the status bar
+  // and content never scrolls under it. The panel's background fills it.
+  start: `data-[closed]:-translate-x-1/2 rounded-r-2xl ${SAFE_TOP} ${SAFE_BOTTOM}`,
+  end: `data-[closed]:translate-x-1/2 rounded-l-2xl ${SAFE_TOP} ${SAFE_BOTTOM}`,
+  top: `data-[closed]:-translate-y-1/2 rounded-b-2xl ${SAFE_TOP}`,
   // Bottom sheets clear the home indicator on notched phones (0 elsewhere). Never
   // taller than the container: with the keyboard up it's shorter than 88dvh, and a
   // bottom-anchored panel past its top is off screen and can't be scrolled to.
@@ -176,7 +184,13 @@ export const Drawer: React.FC<DrawerProps> = ({
               'w-full max-w-full bg-surface-raised shadow-xl flex flex-col min-w-0',
               'overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] duration-200 ease-out data-[closed]:opacity-0',
               ...(fullscreen
-                ? ['h-full data-[closed]:translate-y-4']
+                ? [
+                    'h-full data-[closed]:translate-y-4',
+                    // Focusing a field scrolls it into view; without this the browser lines it up
+                    // with the panel's top, under the sticky bar. Clears the bar (3.5rem, its
+                    // border and the status bar) and leaves room for the field's label.
+                    'scroll-pt-[calc(3.5rem+1px+env(safe-area-inset-top,0px)+2.25rem)]',
+                  ]
                 : [panelAlignmentMap[align], panelSizeMap[size], panelClass]),
             )}
             data-layout={fullscreen ? 'fullscreen' : undefined}
