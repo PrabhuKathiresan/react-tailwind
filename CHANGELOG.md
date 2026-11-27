@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented here.
 
+## <small>1.22.3 (2026-11-27)</small>
+
+* Merge pull request #51 from PrabhuKathiresan/fix/drawer-safe-area-edges ([3769b32255e0958a46b1b45f42666f848971fb1d](https://github.com/PrabhuKathiresan/react-tailwind/commit/3769b32255e0958a46b1b45f42666f848971fb1d)), closes [#51](https://github.com/PrabhuKathiresan/react-tailwind/issues/51)
+* fix(drawer): keep side and top panels clear of the system bars ([22b22275fa7ee4cad1312dbb48da85959c5a68f9](https://github.com/PrabhuKathiresan/react-tailwind/commit/22b22275fa7ee4cad1312dbb48da85959c5a68f9))
+* fix(drawer): scroll a focused field below the full-screen bar ([436babf8066185a47caa17291a6d03e4d190ecf2](https://github.com/PrabhuKathiresan/react-tailwind/commit/436babf8066185a47caa17291a6d03e4d190ecf2))
+
 ## <small>1.22.2 (2026-11-21)</small>
 
 * Merge pull request #50 from PrabhuKathiresan/fix/drawer-center-height ([8ef767b022df6f1aaca3d98ca1bc02d0fdad0b8a](https://github.com/PrabhuKathiresan/react-tailwind/commit/8ef767b022df6f1aaca3d98ca1bc02d0fdad0b8a)), closes [#50](https://github.com/PrabhuKathiresan/react-tailwind/issues/50)
